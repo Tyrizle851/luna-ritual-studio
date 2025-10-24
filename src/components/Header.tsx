@@ -31,7 +31,7 @@ export const Header = () => {
         isScrolled ? "bg-background/60 backdrop-blur-md" : "bg-background/95 backdrop-blur"
       }`}
     >
-      <div className="container-custom flex h-16 items-center justify-between">
+      <div className="container-custom flex h-16 items-center">
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="LunaRituals Logo" className="h-12 w-12 logo-3d" />
           <span className="font-display text-2xl font-semibold text-foreground">
@@ -39,8 +39,8 @@ export const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation - Centered */}
+        <nav className="hidden md:flex items-center gap-8 mx-auto">
           <Link 
             to="/" 
             className={`text-sm transition-all duration-200 relative py-1 ${
@@ -134,6 +134,20 @@ export const Header = () => {
           >
             Contact
             {isActive('/contact') && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+            )}
+          </Link>
+
+          <Link 
+            to="/affirmation-builder" 
+            className={`text-sm transition-all duration-200 relative py-1 ${
+              isActive('/affirmation-builder') 
+                ? 'text-clay font-medium' 
+                : 'text-foreground hover:text-clay'
+            }`}
+          >
+            Builder
+            {isActive('/affirmation-builder') && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
             )}
           </Link>
@@ -253,6 +267,20 @@ export const Header = () => {
                 >
                   Contact
                   {isActive('/contact') && (
+                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                  )}
+                </Link>
+                <Link
+                  to="/affirmation-builder"
+                  className={`text-lg transition-colors relative ${
+                    isActive('/affirmation-builder') 
+                      ? 'text-clay font-medium' 
+                      : 'text-foreground hover:text-clay'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Builder
+                  {isActive('/affirmation-builder') && (
                     <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
                   )}
                 </Link>

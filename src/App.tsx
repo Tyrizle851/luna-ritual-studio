@@ -13,6 +13,7 @@ import Journal from "./pages/Journal";
 import ArticleDetail from "./pages/ArticleDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AffirmationBuilder from "./pages/AffirmationBuilder";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/journal/:slug" element={<ArticleDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/affirmation-builder" element={<AffirmationBuilder />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
