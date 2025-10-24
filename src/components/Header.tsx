@@ -4,6 +4,7 @@ import { Menu, ShoppingCart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import logo from "@/assets/logo.png";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,8 +27,11 @@ export const Header = () => {
       }`}
     >
       <div className="container-custom flex h-16 items-center justify-between">
-        <Link to="/" className="font-display text-2xl font-semibold text-clay">
-          LunaRituals
+        <Link to="/" className="flex items-center gap-3">
+          <img src={logo} alt="LunaRituals Logo" className="h-8 w-8" />
+          <span className="font-display text-2xl font-semibold text-foreground">
+            LunaRituals
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
