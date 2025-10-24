@@ -26,7 +26,7 @@ export const NewsletterSection = () => {
   return (
     <section className="section-padding bg-card">
       <div className="container-custom max-w-2xl text-center">
-        <h2 className="mb-4">Join The Ritual</h2>
+        <h2 className="mb-4">Stay Connected</h2>
         <p className="text-lg text-text-secondary mb-8">
           Weekly reflections, new affirmations, and curated finds delivered to your inbox
         </p>

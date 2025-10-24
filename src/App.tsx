@@ -8,8 +8,7 @@ import { Footer } from "./components/Footer";
 import { Cart } from "./components/Cart";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
-import ShopAffirmations from "./pages/ShopAffirmations";
-import ShopLifestyle from "./pages/ShopLifestyle";
+import Shop from "./pages/Shop";
 import Journal from "./pages/Journal";
 import ArticleDetail from "./pages/ArticleDetail";
 import About from "./pages/About";
@@ -32,8 +31,7 @@ const App = () => (
         <Cart />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/shop/affirmations" element={<ShopAffirmations />} />
-          <Route path="/shop/lifestyle" element={<ShopLifestyle />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/journal/:slug" element={<ArticleDetail />} />
           <Route path="/about" element={<About />} />
