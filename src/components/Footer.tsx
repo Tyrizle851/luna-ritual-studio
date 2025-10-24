@@ -42,13 +42,23 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/shop/affirmations" className="text-text-secondary hover:text-clay transition-colors">
-                  Digital Affirmations
+                <Link to="/shop?tab=fashion" className="text-text-secondary hover:text-clay transition-colors">
+                  Fashion
                 </Link>
               </li>
               <li>
-                <Link to="/shop/lifestyle" className="text-text-secondary hover:text-clay transition-colors">
-                  The Ritual Edit
+                <Link to="/shop?tab=candles" className="text-text-secondary hover:text-clay transition-colors">
+                  Candles
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop?tab=supplements" className="text-text-secondary hover:text-clay transition-colors">
+                  Supplements
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop?tab=affirmations" className="text-text-secondary hover:text-clay transition-colors">
+                  Affirmations
                 </Link>
               </li>
             </ul>
@@ -78,7 +88,7 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-semibold mb-4">Join The Ritual</h4>
+            <h4 className="font-semibold mb-4">Stay Connected</h4>
             <p className="text-sm text-text-secondary mb-4">
               Weekly reflections and curated finds
             </p>
@@ -104,7 +114,7 @@ export const Footer = () => {
         </div>
 
         {/* Social & Bottom */}
-        <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <div className="flex gap-4">
             <a
               href="https://instagram.com"

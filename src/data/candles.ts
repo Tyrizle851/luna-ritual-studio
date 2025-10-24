@@ -1,3 +1,6 @@
+import productCandle1 from "@/assets/product-candle-1.jpg";
+import productCandle2 from "@/assets/product-candle-2.jpg";
+
 export interface Candle {
   id: string;
   name: string;
@@ -19,7 +22,7 @@ export const candles: Candle[] = [
     description: "Light this when you need to come home to yourself",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -30,7 +33,7 @@ export const candles: Candle[] = [
     description: "Your evening ritual begins here",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -41,7 +44,7 @@ export const candles: Candle[] = [
     description: "Cleanse your space, clear your mind",
     price: 42,
     burnTime: "60 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -52,7 +55,7 @@ export const candles: Candle[] = [
     description: "Cozy comfort in a jar",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -63,7 +66,7 @@ export const candles: Candle[] = [
     description: "Bloom where you are planted",
     price: 40,
     burnTime: "55 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -74,7 +77,7 @@ export const candles: Candle[] = [
     description: "Bring the sea to your sanctuary",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -85,7 +88,7 @@ export const candles: Candle[] = [
     description: "Find your center in the chaos",
     price: 42,
     burnTime: "60 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -96,7 +99,7 @@ export const candles: Candle[] = [
     description: "Start your day with intention",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -107,7 +110,7 @@ export const candles: Candle[] = [
     description: "Clarity and warmth combined",
     price: 40,
     burnTime: "55 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -118,7 +121,7 @@ export const candles: Candle[] = [
     description: "Breathe deeply, let go completely",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -129,7 +132,7 @@ export const candles: Candle[] = [
     description: "Indulgence meets elegance",
     price: 42,
     burnTime: "60 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -140,7 +143,7 @@ export const candles: Candle[] = [
     description: "Sophistication in every flame",
     price: 45,
     burnTime: "65 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -151,7 +154,7 @@ export const candles: Candle[] = [
     description: "Ancient ritual for modern souls",
     price: 40,
     burnTime: "55 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
   {
@@ -162,7 +165,7 @@ export const candles: Candle[] = [
     description: "Gentle beauty for gentle souls",
     price: 38,
     burnTime: "50 hours",
-    image: "/placeholder.svg",
+    image: productCandle2,
     inStock: true,
   },
   {
@@ -173,7 +176,7 @@ export const candles: Candle[] = [
     description: "Where forest meets sunlight",
     price: 42,
     burnTime: "60 hours",
-    image: "/placeholder.svg",
+    image: productCandle1,
     inStock: true,
   },
 ];

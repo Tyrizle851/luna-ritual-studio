@@ -1,3 +1,6 @@
+import productSupplement1 from "@/assets/product-supplement-1.jpg";
+import productSupplement2 from "@/assets/product-supplement-2.jpg";
+
 export interface Supplement {
   id: string;
   name: string;
@@ -19,7 +22,7 @@ export const supplements: Supplement[] = [
     benefits: ["Hormone balance", "Mood support", "Energy stability"],
     price: 48,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -30,7 +33,7 @@ export const supplements: Supplement[] = [
     benefits: ["Stress relief", "Mental clarity", "Emotional balance"],
     price: 42,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -41,7 +44,7 @@ export const supplements: Supplement[] = [
     benefits: ["Glowing skin", "Strong hair", "Healthy nails"],
     price: 52,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -52,7 +55,7 @@ export const supplements: Supplement[] = [
     benefits: ["Better sleep", "Relaxation", "Morning freshness"],
     price: 38,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -63,7 +66,7 @@ export const supplements: Supplement[] = [
     benefits: ["Digestive balance", "Immune support", "Reduced bloating"],
     price: 45,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -74,7 +77,7 @@ export const supplements: Supplement[] = [
     benefits: ["Natural energy", "Focus", "Stamina"],
     price: 40,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -85,7 +88,7 @@ export const supplements: Supplement[] = [
     benefits: ["Immune support", "Antioxidants", "Seasonal wellness"],
     price: 36,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -96,7 +99,7 @@ export const supplements: Supplement[] = [
     benefits: ["Bone strength", "Joint health", "Mobility"],
     price: 44,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -107,7 +110,7 @@ export const supplements: Supplement[] = [
     benefits: ["Mood elevation", "Stress relief", "Emotional stability"],
     price: 46,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -118,7 +121,7 @@ export const supplements: Supplement[] = [
     benefits: ["Gentle detox", "Liver support", "Renewed energy"],
     price: 42,
     servings: "15 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -129,7 +132,7 @@ export const supplements: Supplement[] = [
     benefits: ["Heart support", "Circulation", "Healthy cholesterol"],
     price: 48,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -140,7 +143,7 @@ export const supplements: Supplement[] = [
     benefits: ["Eye health", "Blue light protection", "Clear vision"],
     price: 38,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -151,7 +154,7 @@ export const supplements: Supplement[] = [
     benefits: ["Prenatal support", "Folic acid", "Iron & DHA"],
     price: 55,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
   {
@@ -162,7 +165,7 @@ export const supplements: Supplement[] = [
     benefits: ["Energy", "Prostate health", "Vitality"],
     price: 50,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement2,
     inStock: true,
   },
   {
@@ -173,7 +176,7 @@ export const supplements: Supplement[] = [
     benefits: ["Hormonal balance", "Energy", "Overall wellness"],
     price: 50,
     servings: "30 day supply",
-    image: "/placeholder.svg",
+    image: productSupplement1,
     inStock: true,
   },
 ];

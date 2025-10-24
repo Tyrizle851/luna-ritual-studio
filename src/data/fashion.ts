@@ -1,6 +1,18 @@
 import productLinenRobe from "@/assets/product-linen-robe.jpg";
 import productHoops from "@/assets/product-hoops.jpg";
 import productTote from "@/assets/product-tote.jpg";
+import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
+import productGoldNecklace from "@/assets/product-gold-necklace.jpg";
+import productCottonTee from "@/assets/product-cotton-tee.jpg";
+import productLinenPants from "@/assets/product-linen-pants.jpg";
+import productCashmereCardigan from "@/assets/product-cashmere-cardigan.jpg";
+import productLeatherBag from "@/assets/product-leather-bag.jpg";
+import productScrunchies from "@/assets/product-scrunchies.jpg";
+import productFedora from "@/assets/product-fedora.jpg";
+import productSunglasses from "@/assets/product-sunglasses.jpg";
+import productLinenShirt from "@/assets/product-linen-shirt.jpg";
+import productBeanie from "@/assets/product-beanie.jpg";
+import productSlipDress from "@/assets/product-slip-dress.jpg";
 
 export interface FashionProduct {
   id: string;
@@ -58,7 +70,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 165,
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Ivory", "Blush", "Charcoal"],
-    image: "/placeholder.svg",
+    image: productSilkSleepSet,
     inStock: true,
   },
   {
@@ -68,7 +80,7 @@ export const fashionProducts: FashionProduct[] = [
     category: "Jewelry",
     description: "Delicate and timeless",
     price: 68,
-    image: "/placeholder.svg",
+    image: productGoldNecklace,
     inStock: true,
   },
   {
@@ -80,7 +92,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 38,
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: ["White", "Black", "Clay", "Sage"],
-    image: "/placeholder.svg",
+    image: productCottonTee,
     inStock: true,
   },
   {
@@ -92,7 +104,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 148,
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Natural", "Black", "Navy"],
-    image: "/placeholder.svg",
+    image: productLinenPants,
     inStock: true,
   },
   {
@@ -104,7 +116,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 198,
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Cream", "Camel", "Grey"],
-    image: "/placeholder.svg",
+    image: productCashmereCardigan,
     inStock: true,
   },
   {
@@ -115,7 +127,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Timeless and versatile",
     price: 185,
     colors: ["Tan", "Black", "Cognac"],
-    image: "/placeholder.svg",
+    image: productLeatherBag,
     inStock: true,
   },
   {
@@ -126,7 +138,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Gentle on your hair, kind to your style",
     price: 32,
     colors: ["Mixed Neutrals", "Mixed Pastels"],
-    image: "/placeholder.svg",
+    image: productScrunchies,
     inStock: true,
   },
   {
@@ -137,7 +149,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Effortless style for every season",
     price: 78,
     colors: ["Camel", "Black", "Olive"],
-    image: "/placeholder.svg",
+    image: productFedora,
     inStock: true,
   },
   {
@@ -147,7 +159,7 @@ export const fashionProducts: FashionProduct[] = [
     category: "Accessories",
     description: "Sustainable style meets sun protection",
     price: 95,
-    image: "/placeholder.svg",
+    image: productSunglasses,
     inStock: true,
   },
   {
@@ -159,7 +171,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 88,
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["White", "Natural", "Chambray"],
-    image: "/placeholder.svg",
+    image: productLinenShirt,
     inStock: true,
   },
   {
@@ -170,7 +182,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Cozy luxury for chilly days",
     price: 58,
     colors: ["Charcoal", "Cream", "Navy"],
-    image: "/placeholder.svg",
+    image: productBeanie,
     inStock: true,
   },
   {
@@ -182,7 +194,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 178,
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Black", "Champagne", "Sage"],
-    image: "/placeholder.svg",
+    image: productSlipDress,
     inStock: true,
   },
 ];
