@@ -1,3 +1,28 @@
+import affirmationRest from "@/assets/affirmation-rest.jpg";
+import affirmationJoy from "@/assets/affirmation-joy.jpg";
+import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
+import affirmationTrust from "@/assets/affirmation-trust.jpg";
+import affirmationEnough from "@/assets/affirmation-enough.jpg";
+import affirmationCalm from "@/assets/affirmation-calm.jpg";
+import affirmationReceive from "@/assets/affirmation-receive.jpg";
+import affirmationHonor from "@/assets/affirmation-honor.jpg";
+import affirmationRelease from "@/assets/affirmation-release.jpg";
+import affirmationNaturalJoy from "@/assets/affirmation-natural-joy.jpg";
+import affirmationSafe from "@/assets/affirmation-safe.jpg";
+import affirmationVoice from "@/assets/affirmation-voice.jpg";
+import affirmationDreams from "@/assets/affirmation-dreams.jpg";
+import affirmationPeace from "@/assets/affirmation-peace.jpg";
+import affirmationProgress from "@/assets/affirmation-progress.jpg";
+import affirmationIntuition from "@/assets/affirmation-intuition.jpg";
+import affirmationMiracles from "@/assets/affirmation-miracles.jpg";
+import affirmationFeel from "@/assets/affirmation-feel.jpg";
+import affirmationCreating from "@/assets/affirmation-creating.jpg";
+import affirmationPossibility from "@/assets/affirmation-possibility.jpg";
+import affirmationChange from "@/assets/affirmation-change.jpg";
+import affirmationProductiveRest from "@/assets/affirmation-productive-rest.jpg";
+import affirmationAttract from "@/assets/affirmation-attract.jpg";
+import affirmationDuality from "@/assets/affirmation-duality.jpg";
+
 export interface Affirmation {
   id: string;
   title: string;
@@ -9,15 +34,6 @@ export interface Affirmation {
   featured?: boolean;
   tags: string[];
 }
-
-import affirmationRest from "@/assets/affirmation-rest.jpg";
-import affirmationJoy from "@/assets/affirmation-joy.jpg";
-import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
-import affirmationTrust from "@/assets/affirmation-trust.jpg";
-import affirmationEnough from "@/assets/affirmation-enough.jpg";
-import affirmationCalm from "@/assets/affirmation-calm.jpg";
-import affirmationRelease from "@/assets/affirmation-release.jpg";
-import affirmationVoice from "@/assets/affirmation-voice.jpg";
 
 export const affirmations: Affirmation[] = [
   {
@@ -92,7 +108,7 @@ export const affirmations: Affirmation[] = [
     description: "Your desires are not selfish—they are signposts to your purpose.",
     price: 15,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationReceive,
     tags: ["receiving", "desire", "manifestation"],
   },
   {
@@ -102,7 +118,7 @@ export const affirmations: Affirmation[] = [
     description: "Small acts of self-honor create a life you do not need to escape from.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationHonor,
     tags: ["honor", "self-care", "daily"],
   },
   {
@@ -122,7 +138,7 @@ export const affirmations: Affirmation[] = [
     description: "You do not have to earn joy. It is already yours.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationNaturalJoy,
     tags: ["joy", "natural", "happiness"],
   },
   {
@@ -132,7 +148,7 @@ export const affirmations: Affirmation[] = [
     description: "Your body is not your enemy. It is your home.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationSafe,
     tags: ["body", "safety", "acceptance"],
   },
   {
@@ -152,7 +168,7 @@ export const affirmations: Affirmation[] = [
     description: "Your dreams chose you for a reason. Honor them.",
     price: 15,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationDreams,
     tags: ["dreams", "worthiness", "purpose"],
   },
   {
@@ -162,7 +178,7 @@ export const affirmations: Affirmation[] = [
     description: "Perfection is exhausting. Peace is possible.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationPeace,
     tags: ["peace", "perfection", "rest"],
   },
   {
@@ -172,7 +188,7 @@ export const affirmations: Affirmation[] = [
     description: "Every step forward deserves recognition, no matter how small.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationProgress,
     tags: ["progress", "celebration", "growth"],
   },
   {
@@ -182,7 +198,7 @@ export const affirmations: Affirmation[] = [
     description: "That whisper inside? It knows the way.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationIntuition,
     tags: ["intuition", "guidance", "inner-wisdom"],
   },
   {
@@ -192,7 +208,7 @@ export const affirmations: Affirmation[] = [
     description: "Magic happens when you believe it can.",
     price: 15,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationMiracles,
     tags: ["miracles", "magic", "possibility"],
   },
   {
@@ -202,7 +218,7 @@ export const affirmations: Affirmation[] = [
     description: "All feelings are welcome here. You do not have to be strong all the time.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationFeel,
     tags: ["feelings", "permission", "vulnerability"],
   },
   {
@@ -212,7 +228,7 @@ export const affirmations: Affirmation[] = [
     description: "Every choice is a brushstroke. You are the artist.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationCreating,
     tags: ["creation", "life", "intention"],
   },
   {
@@ -222,7 +238,7 @@ export const affirmations: Affirmation[] = [
     description: "Each sunrise brings infinite potential. What will you choose?",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationPossibility,
     tags: ["possibility", "potential", "today"],
   },
   {
@@ -232,7 +248,7 @@ export const affirmations: Affirmation[] = [
     description: "Growth means evolution. You are not stuck with old decisions.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationChange,
     tags: ["change", "growth", "permission"],
   },
   {
@@ -242,7 +258,7 @@ export const affirmations: Affirmation[] = [
     description: "Rest is not laziness. It is how you recharge your magic.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationProductiveRest,
     tags: ["rest", "productivity", "recharge"],
   },
   {
@@ -252,7 +268,7 @@ export const affirmations: Affirmation[] = [
     description: "Become the energy you wish to attract.",
     price: 15,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationAttract,
     tags: ["attraction", "embodiment", "energy"],
   },
   {
@@ -262,7 +278,7 @@ export const affirmations: Affirmation[] = [
     description: "You contain multitudes. All of you is welcome.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationDuality,
     tags: ["duality", "wholeness", "acceptance"],
   },
 ];

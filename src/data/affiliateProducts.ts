@@ -1,3 +1,10 @@
+import productLinenRobe from "@/assets/product-linen-robe.jpg";
+import productCandle from "@/assets/product-candle.jpg";
+import productBook from "@/assets/product-book.jpg";
+import productHoops from "@/assets/product-hoops.jpg";
+import productTote from "@/assets/product-tote.jpg";
+import productCarafe from "@/assets/product-carafe.jpg";
+
 export interface AffiliateProduct {
   id: string;
   name: string;
@@ -18,7 +25,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "Sunday mornings deserve softness",
     priceRange: "$88-$112",
     affiliateLink: "https://example.com/linen-robe",
-    image: "/placeholder.svg",
+    image: productLinenRobe,
   },
   {
     id: "afl-002",
@@ -28,7 +35,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "Light this when you need to come home to yourself",
     priceRange: "$38",
     affiliateLink: "https://example.com/candle",
-    image: "/placeholder.svg",
+    image: productCandle,
   },
   {
     id: "afl-003",
@@ -38,7 +45,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "The book that helps you remember who you were before the world told you who to be",
     priceRange: "$18",
     affiliateLink: "https://example.com/artists-way",
-    image: "/placeholder.svg",
+    image: productBook,
   },
   {
     id: "afl-004",
@@ -48,7 +55,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "Everyday elegance",
     priceRange: "$98",
     affiliateLink: "https://example.com/gold-hoops",
-    image: "/placeholder.svg",
+    image: productHoops,
   },
   {
     id: "afl-005",
@@ -58,7 +65,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "For farmers market mornings and spontaneous adventures",
     priceRange: "$125",
     affiliateLink: "https://example.com/tote",
-    image: "/placeholder.svg",
+    image: productTote,
   },
   {
     id: "afl-006",
@@ -68,7 +75,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     caption: "Beauty in the everyday ritual of drinking water",
     priceRange: "$45",
     affiliateLink: "https://example.com/carafe",
-    image: "/placeholder.svg",
+    image: productCarafe,
   },
   {
     id: "afl-007",

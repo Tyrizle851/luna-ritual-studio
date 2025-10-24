@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { FeaturedProducts } from "@/components/FeaturedProducts";
+import { FeaturedArticles } from "@/components/FeaturedArticles";
 import heroImage from "@/assets/hero-home.jpg";
 import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationJoy from "@/assets/affirmation-joy.jpg";
 import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
 import affirmationEnough from "@/assets/affirmation-enough.jpg";
 import affirmationCalm from "@/assets/affirmation-calm.jpg";
+import affirmationTrust from "@/assets/affirmation-trust.jpg";
 
 const Index = () => {
   const featuredAffirmations = [
@@ -15,6 +18,7 @@ const Index = () => {
     { id: "aff-003", title: "Abundance flows to me", price: 15, image: affirmationAbundance },
     { id: "aff-005", title: "I am enough, always", price: 12, image: affirmationEnough },
     { id: "aff-006", title: "My calm is my power", price: 12, image: affirmationCalm },
+    { id: "aff-004", title: "I trust my journey", price: 12, image: affirmationTrust },
   ];
 
   return (
@@ -78,6 +82,12 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* The Ritual Edit */}
+      <FeaturedProducts />
+
+      {/* Featured Journal Articles */}
+      <FeaturedArticles />
 
       {/* About Preview */}
       <section className="section-padding bg-secondary">
