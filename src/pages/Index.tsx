@@ -45,10 +45,10 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-clay hover:bg-clay-dark text-white">
-              <Link to="/shop/affirmations">Shop Affirmations</Link>
+              <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
-              <Link to="/shop/lifestyle">Explore The Edit</Link>
+              <Link to="/journal">Explore The Journal</Link>
             </Button>
           </div>
         </div>
