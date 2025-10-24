@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 
 interface Affirmation {
   id: string;
   title: string;
   price: number;
   image: string;
+  description?: string;
 }
 
 interface AffirmationCarouselProps {
@@ -15,6 +18,7 @@ interface AffirmationCarouselProps {
 
 export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const { addItem } = useCartStore();
   
   const scroll = (direction: "left" | "right") => {
     const container = document.getElementById("affirmation-scroll");
@@ -27,6 +31,17 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
     
     container.scrollTo({ left: newPosition, behavior: "smooth" });
     setScrollPosition(newPosition);
+  };
+
+  const handleAddToCart = (affirmation: Affirmation) => {
+    addItem({
+      id: affirmation.id,
+      title: affirmation.title,
+      price: affirmation.price,
+      image: affirmation.image,
+      type: 'affirmation',
+    });
+    toast.success("Added to cart!");
   };
 
   return (
@@ -47,7 +62,20 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
               />
             </div>
             <h3 className="font-display text-lg sm:text-xl mb-2">{affirmation.title}</h3>
-            <span className="font-semibold">${affirmation.price}</span>
+            {affirmation.description && (
+              <p className="text-sm text-text-secondary italic mb-3">{affirmation.description}</p>
+            )}
+            <div className="flex items-center justify-between">
+              <span className="font-semibold">${affirmation.price}</span>
+              <Button
+                size="sm"
+                variant="outline"
+                className="border-clay text-clay hover:bg-clay/10"
+                onClick={() => handleAddToCart(affirmation)}
+              >
+                Add <ShoppingCart className="ml-1 h-3 w-3" />
+              </Button>
+            </div>
           </div>
         ))}
       </div>

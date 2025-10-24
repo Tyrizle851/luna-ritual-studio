@@ -14,12 +14,12 @@ import affirmationTrust from "@/assets/affirmation-trust.jpg";
 
 const Index = () => {
   const featuredAffirmations = [
-    { id: "aff-001", title: "I am worthy of rest", price: 12, image: affirmationRest },
-    { id: "aff-002", title: "I choose joy today", price: 12, image: affirmationJoy },
-    { id: "aff-003", title: "Abundance flows to me", price: 15, image: affirmationAbundance },
-    { id: "aff-005", title: "I am enough, always", price: 12, image: affirmationEnough },
-    { id: "aff-006", title: "My calm is my power", price: 12, image: affirmationCalm },
-    { id: "aff-004", title: "I trust my journey", price: 12, image: affirmationTrust },
+    { id: "aff-001", title: "I am worthy of rest", price: 12, image: affirmationRest, description: "Permission to pause" },
+    { id: "aff-002", title: "I choose joy today", price: 12, image: affirmationJoy, description: "Small moments, big magic" },
+    { id: "aff-003", title: "Abundance flows to me", price: 15, image: affirmationAbundance, description: "Open to receive" },
+    { id: "aff-005", title: "I am enough, always", price: 12, image: affirmationEnough, description: "You are complete" },
+    { id: "aff-006", title: "My calm is my power", price: 12, image: affirmationCalm, description: "Peace over pressure" },
+    { id: "aff-004", title: "I trust my journey", price: 12, image: affirmationTrust, description: "Every step is sacred" },
   ];
 
   return (
