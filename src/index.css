@@ -8,89 +8,57 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* LunaRituals Brand Colors - Warm, Earthy, Feminine */
+    --bg-primary: 33 33% 97%;        /* #FAF7F2 - warm off-white */
+    --bg-secondary: 33 25% 91%;      /* #EDE8E0 - soft stone */
+    --bg-cream: 36 29% 95%;          /* #F5F1EA - cream */
+    
+    --clay: 27 36% 68%;              /* #C8A992 - warm clay */
+    --clay-dark: 27 32% 61%;         /* #B59780 - darker clay */
+    --taupe: 24 13% 56%;             /* #9D8B7F - soft taupe */
+    --gold: 32 41% 70%;              /* #D4AF8E - warm gold */
+    
+    --text-primary: 20 27% 15%;      /* #2C2420 - deep warm black */
+    --text-secondary: 25 13% 32%;    /* #5A5047 - medium warm gray */
+    --text-muted: 25 9% 51%;         /* #8A7F76 - muted warm gray */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Semantic tokens for components */
+    --background: 33 33% 97%;
+    --foreground: 20 27% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: 36 29% 95%;
+    --card-foreground: 20 27% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --popover: 36 29% 95%;
+    --popover-foreground: 20 27% 15%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --primary: 27 36% 68%;
+    --primary-foreground: 20 27% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: 33 25% 91%;
+    --secondary-foreground: 20 27% 15%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 33 25% 91%;
+    --muted-foreground: 25 13% 32%;
+
+    --accent: 32 41% 70%;
+    --accent-foreground: 20 27% 15%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 33 33% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 33 25% 91%;
+    --input: 33 25% 91%;
+    --ring: 27 36% 68%;
 
-    --radius: 0.5rem;
+    --radius: 2px;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom shadows */
+    --shadow-subtle: 0 4px 12px hsl(20 27% 15% / 0.08);
+    --shadow-medium: 0 8px 24px hsl(20 27% 15% / 0.12);
+    
+    /* Transitions */
+    --transition-smooth: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -100,6 +68,40 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
+  }
+
+  h1 {
+    @apply text-5xl leading-tight tracking-tight md:text-6xl lg:text-7xl;
+  }
+
+  h2 {
+    @apply text-3xl leading-snug tracking-tight md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl leading-snug md:text-3xl;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 md:py-20 lg:py-24;
   }
 }
