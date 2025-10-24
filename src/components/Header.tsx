@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,11 +7,24 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { getItemCount, toggleCart } = useCartStore();
   const itemCount = getItemCount();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+    <header 
+      className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
+        isScrolled ? "bg-background/60 backdrop-blur-md" : "bg-background/95 backdrop-blur"
+      }`}
+    >
       <div className="container-custom flex h-16 items-center justify-between">
         <Link to="/" className="font-display text-2xl font-semibold text-clay">
           LunaRituals

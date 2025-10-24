@@ -3,7 +3,7 @@ import { articles } from "@/data/articles";
 import { Button } from "@/components/ui/button";
 
 export const FeaturedArticles = () => {
-  const featured = articles.slice(0, 3);
+  const featured = articles.slice(0, 1);
 
   return (
     <section className="section-padding">
@@ -13,7 +13,7 @@ export const FeaturedArticles = () => {
           <p className="text-lg text-text-secondary">Stories on slow living and intentional design</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="max-w-2xl mx-auto mb-8">
           {featured.map((article) => (
             <Link
               key={article.id}

@@ -23,13 +23,13 @@ All colors MUST be HSL.
     --text-muted: 25 9% 51%;         /* #8A7F76 - muted warm gray */
 
     /* Semantic tokens for components */
-    --background: 33 33% 97%;
+    --background: 36 29% 95%;        /* Using cream color */
     --foreground: 20 27% 15%;
 
-    --card: 36 29% 95%;
+    --card: 33 33% 97%;              /* Lighter cream for cards */
     --card-foreground: 20 27% 15%;
 
-    --popover: 36 29% 95%;
+    --popover: 33 33% 97%;
     --popover-foreground: 20 27% 15%;
 
     --primary: 27 36% 68%;
@@ -103,5 +103,14 @@ All colors MUST be HSL.
 
   .section-padding {
     @apply py-12 md:py-20 lg:py-24;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

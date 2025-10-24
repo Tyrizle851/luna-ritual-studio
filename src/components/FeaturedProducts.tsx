@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const FeaturedProducts = () => {
-  const featured = affiliateProducts.slice(0, 4);
+  const featured = affiliateProducts.slice(0, 3);
 
   return (
     <section className="section-padding bg-secondary">
@@ -13,7 +13,7 @@ export const FeaturedProducts = () => {
           <p className="text-lg text-text-secondary">Curated finds for intentional living</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {featured.map((product) => (
             <div key={product.id} className="group animate-fade-up">
               <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-background">
@@ -38,6 +38,12 @@ export const FeaturedProducts = () => {
               </Button>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay/10">
+            <a href="/shop/lifestyle">View All Products</a>
+          </Button>
         </div>
       </div>
     </section>

@@ -37,14 +37,24 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen section-padding">
-      <div className="container-custom max-w-2xl">
-        <h1 className="mb-4 text-center">Get in Touch</h1>
-        <p className="text-center text-text-secondary mb-12">
-          We would love to hear from you
-        </p>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="section-padding bg-secondary">
+        <div className="container-custom max-w-3xl text-center">
+          <h1 className="mb-6">Let's Connect</h1>
+          <p className="text-xl text-text-secondary mb-4">
+            Have a question or want to collaborate? We'd love to hear from you.
+          </p>
+          <p className="text-text-muted">
+            We typically respond within 24-48 hours
+          </p>
+        </div>
+      </section>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Contact Form */}
+      <section className="section-padding">
+        <div className="container-custom max-w-2xl">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-card p-8 rounded-lg shadow-subtle">
           <div>
             <Input
               placeholder="Your Name"
@@ -106,7 +116,33 @@ const Contact = () => {
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
         </form>
+
+        {/* Additional Contact Info */}
+        <div className="mt-12 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 text-text-secondary">
+            <span className="text-sm">Follow our journey</span>
+          </div>
+          <div className="flex justify-center gap-6">
+            <a 
+              href="https://instagram.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-clay hover:text-clay-dark transition-colors"
+            >
+              Instagram
+            </a>
+            <a 
+              href="https://pinterest.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-clay hover:text-clay-dark transition-colors"
+            >
+              Pinterest
+            </a>
+          </div>
+        </div>
       </div>
+      </section>
     </div>
   );
 };

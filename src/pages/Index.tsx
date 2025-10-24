@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
+import { AffirmationCarousel } from "@/components/AffirmationCarousel";
 import heroImage from "@/assets/hero-home.jpg";
 import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationJoy from "@/assets/affirmation-joy.jpg";
@@ -59,23 +60,9 @@ const Index = () => {
             <p className="text-lg text-text-secondary">Words to carry with you</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            {featuredAffirmations.slice(0, 6).map((affirmation) => (
-              <div key={affirmation.id} className="group animate-fade-up">
-                <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
-                  <img
-                    src={affirmation.image}
-                    alt={affirmation.title}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                <span className="font-semibold">${affirmation.price}</span>
-              </div>
-            ))}
-          </div>
+          <AffirmationCarousel affirmations={featuredAffirmations} />
 
-          <div className="text-center">
+          <div className="text-center mt-8">
             <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
               <Link to="/shop/affirmations">View All Affirmations</Link>
             </Button>
