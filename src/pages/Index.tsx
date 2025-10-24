@@ -43,13 +43,23 @@ const Index = () => {
           <p className="text-xl md:text-2xl mb-8 text-balance text-text-secondary">
             Digital art and curated goods for intentional living
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-clay hover:bg-clay-dark text-white">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
               <Link to="/journal">Explore The Journal</Link>
             </Button>
+          </div>
+          
+          {/* Affirmation Builder Link */}
+          <div className="mt-8 text-center">
+            <Link 
+              to="/affirmation-builder" 
+              className="text-sm md:text-base text-white hover:text-clay-light transition-colors underline underline-offset-4"
+            >
+              View Affirmation Builder
+            </Link>
           </div>
         </div>
       </section>

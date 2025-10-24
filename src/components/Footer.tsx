@@ -74,6 +74,11 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/affirmation-builder" className="text-text-secondary hover:text-clay transition-colors">
+                  Affirmation Builder
+                </Link>
+              </li>
+              <li>
                 <Link to="/about" className="text-text-secondary hover:text-clay transition-colors">
                   About Us
                 </Link>

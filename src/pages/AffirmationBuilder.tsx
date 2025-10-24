@@ -235,19 +235,19 @@ const AffirmationBuilder = () => {
         <meta name="description" content="Create custom affirmation posters. Describe your energy and we'll build the perfect print for your space." />
       </Helmet>
 
-      <div className="min-h-screen bg-neutral-100 py-16">
+      <div className="min-h-screen bg-neutral-100 py-8 md:py-16">
         <div className="container-custom max-w-screen-xl mx-auto px-4">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="font-display text-4xl md:text-5xl mb-4 text-clay">Affirmation Builder</h1>
-            <p className="text-xl text-text-secondary mb-2">Describe your energy. We'll build the print.</p>
-            <p className="text-sm text-text-secondary italic">
+          <div className="text-center mb-8 md:mb-12">
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 text-clay">Affirmation Builder</h1>
+            <p className="text-lg md:text-xl text-text-secondary mb-2">Describe your energy. We'll build the print.</p>
+            <p className="text-xs md:text-sm text-text-secondary italic px-4">
               This creates a high-resolution printable affirmation layout you can download later.
             </p>
           </div>
 
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
             {/* Left Column: Input Form */}
             <Card className="bg-white shadow-sm border border-neutral-200 rounded-xl">
               <CardHeader>
@@ -357,26 +357,26 @@ const AffirmationBuilder = () => {
                 <CardDescription>Your custom affirmation print concept</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Mock Poster Container */}
-                <div className="relative bg-gradient-to-br from-stone-50 to-stone-100 rounded-lg shadow-lg border border-neutral-200 p-8 aspect-[4/5]">
+                 {/* Mock Poster Container */}
+                <div className="relative bg-gradient-to-br from-stone-50 to-stone-100 rounded-lg shadow-lg border border-neutral-200 p-4 md:p-6 lg:p-8 aspect-[4/5]">
                   {/* Paper texture effect */}
                   <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,_rgba(0,0,0,0.1)_1px,_transparent_1px)] bg-[length:20px_20px] rounded-lg" />
                   
                   <div className="relative h-full flex flex-col justify-between">
                     {/* Main Headline */}
-                    <div className="text-center mb-6">
-                      <h2 className="font-display text-3xl md:text-4xl font-bold tracking-wider text-clay mb-2 uppercase">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-clay mb-2 uppercase">
                         {generatedData.mainAffirmation}
                       </h2>
-                      <div className="w-24 h-0.5 bg-clay/30 mx-auto" />
+                      <div className="w-16 md:w-24 h-0.5 bg-clay/30 mx-auto" />
                     </div>
 
                     {/* Supporting Affirmations */}
-                    <div className="flex-1 space-y-3">
+                    <div className="flex-1 space-y-2 md:space-y-3">
                       {generatedData.supportingPhrases.map((phrase, idx) => (
                         <p
                           key={idx}
-                          className={`text-sm md:text-base ${
+                          className={`text-xs md:text-sm lg:text-base ${
                             idx % 3 === 0
                               ? "italic text-clay-dark font-light"
                               : idx % 3 === 1
@@ -390,7 +390,7 @@ const AffirmationBuilder = () => {
                     </div>
 
                     {/* Style Metadata */}
-                    <div className="mt-6 pt-6 border-t border-neutral-300 space-y-2 text-xs text-text-secondary">
+                    <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-neutral-300 space-y-1 md:space-y-2 text-[10px] md:text-xs text-text-secondary">
                       <p>
                         <span className="font-semibold text-clay">Palette:</span> {generatedData.palette}
                       </p>
