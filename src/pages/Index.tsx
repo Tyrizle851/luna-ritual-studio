@@ -4,7 +4,7 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
-import heroImage from "@/assets/hero-home.jpg";
+
 import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationJoy from "@/assets/affirmation-joy.jpg";
 import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
@@ -25,15 +25,17 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
-        className="relative h-[85vh] flex items-center justify-center text-center"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-background/40" />
+      <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-background/60" />
         <div className="relative z-10 container-custom max-w-4xl">
           <h1 className="mb-6 text-balance">
             Affirmations for women building calm, beautiful lives
