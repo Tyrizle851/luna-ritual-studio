@@ -30,15 +30,15 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
   };
 
   return (
-    <div className="relative">
+    <div className="relative px-4 sm:px-0">
       {/* Scroll Container */}
       <div
         id="affirmation-scroll"
-        className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+        className="flex gap-4 sm:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {affirmations.map((affirmation) => (
-          <div key={affirmation.id} className="flex-none w-[300px] group animate-fade-up">
+          <div key={affirmation.id} className="flex-none w-[280px] sm:w-[300px] group animate-fade-up">
             <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
               <img
                 src={affirmation.image}
@@ -46,30 +46,30 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
                 className="w-full h-full object-cover transition-transform group-hover:scale-105"
               />
             </div>
-            <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+            <h3 className="font-display text-lg sm:text-xl mb-2">{affirmation.title}</h3>
             <span className="font-semibold">${affirmation.price}</span>
           </div>
         ))}
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-center gap-4 mt-6">
+      <div className="flex justify-center gap-3 sm:gap-4 mt-6">
         <Button
           variant="outline"
           size="icon"
           onClick={() => scroll("left")}
-          className="rounded-full border-clay text-clay hover:bg-clay/10"
+          className="rounded-full border-clay text-clay hover:bg-clay/10 h-10 w-10 sm:h-11 sm:w-11"
           disabled={scrollPosition === 0}
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={() => scroll("right")}
-          className="rounded-full border-clay text-clay hover:bg-clay/10"
+          className="rounded-full border-clay text-clay hover:bg-clay/10 h-10 w-10 sm:h-11 sm:w-11"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
         </Button>
       </div>
     </div>

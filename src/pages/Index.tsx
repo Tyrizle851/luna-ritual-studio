@@ -57,16 +57,16 @@ const Index = () => {
       {/* Featured Affirmations */}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Featured Affirmations</h2>
-            <p className="text-lg text-text-secondary">Words to carry with you</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Featured Affirmations</h2>
+            <p className="text-base sm:text-lg text-text-secondary">Words to carry with you</p>
           </div>
           
           <AffirmationCarousel affirmations={featuredAffirmations} />
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-6 sm:mt-8">
             <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
-              <Link to="/shop/affirmations">View All Affirmations</Link>
+              <Link to="/shop?tab=affirmations">View All Affirmations</Link>
             </Button>
           </div>
         </div>

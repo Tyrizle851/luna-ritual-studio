@@ -124,17 +124,17 @@ const Shop = () => {
   return (
     <div className="min-h-screen section-padding">
       <div className="container-custom">
-        <h1 className="mb-4 text-center">Shop Collection</h1>
-        <p className="text-center text-text-secondary mb-12 max-w-2xl mx-auto">
+        <h1 className="mb-3 sm:mb-4 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Shop Collection</h1>
+        <p className="text-center text-text-secondary mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
           Curated essentials for intentional living
         </p>
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-12">
-            <TabsTrigger value="fashion">Fashion</TabsTrigger>
-            <TabsTrigger value="candles">Candles</TabsTrigger>
-            <TabsTrigger value="supplements">Supplements</TabsTrigger>
-            <TabsTrigger value="affirmations">Affirmations</TabsTrigger>
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8 sm:mb-12 h-auto">
+            <TabsTrigger value="fashion" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Fashion</TabsTrigger>
+            <TabsTrigger value="candles" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Candles</TabsTrigger>
+            <TabsTrigger value="supplements" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Supplements</TabsTrigger>
+            <TabsTrigger value="affirmations" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Affirmations</TabsTrigger>
           </TabsList>
 
           {/* Fashion Tab */}
