@@ -28,7 +28,7 @@ export const Header = () => {
     >
       <div className="container-custom flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="LunaRituals Logo" className="h-8 w-8" />
+          <img src={logo} alt="LunaRituals Logo" className="h-12 w-12" />
           <span className="font-display text-2xl font-semibold text-foreground">
             LunaRituals
           </span>
