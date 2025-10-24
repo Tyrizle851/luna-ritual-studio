@@ -31,11 +31,11 @@ const Index = () => {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards]"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/60 to-background/70" />
         <div className="relative z-10 container-custom max-w-4xl">
           <h1 className="mb-6 text-balance">
             Affirmations for women building calm, beautiful lives
