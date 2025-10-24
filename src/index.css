@@ -113,4 +113,25 @@ All colors MUST be HSL.
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* 3D Effects */
+  .effect-3d {
+    @apply transition-all duration-300 ease-out;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+
+  .effect-3d:hover {
+    transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateY(-4px);
+    box-shadow: 0 10px 30px hsl(20 27% 15% / 0.15);
+  }
+
+  .logo-3d {
+    @apply transition-all duration-500 ease-out;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+
+  .logo-3d:hover {
+    transform: perspective(1000px) rotateX(-5deg) rotateY(5deg) scale(1.05);
+    filter: drop-shadow(0 8px 16px hsl(27 36% 68% / 0.3));
+  }
 }

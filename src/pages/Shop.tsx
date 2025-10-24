@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart } from "lucide-react";
@@ -22,8 +22,16 @@ import { ProductModal } from "@/components/ProductModal";
 const ITEMS_PER_PAGE = 6;
 
 const Shop = () => {
+  const [searchParams] = useSearchParams();
   const [selectedTab, setSelectedTab] = useState("fashion");
   const [fashionPage, setFashionPage] = useState(1);
+  
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ["fashion", "candles", "supplements", "affirmations"].includes(tab)) {
+      setSelectedTab(tab);
+    }
+  }, [searchParams]);
   const [candlesPage, setCandlesPage] = useState(1);
   const [supplementsPage, setSupplementsPage] = useState(1);
   const [affirmationsPage, setAffirmationsPage] = useState(1);
