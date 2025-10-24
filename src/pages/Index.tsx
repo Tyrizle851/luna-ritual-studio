@@ -1,8 +1,22 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { NewsletterSection } from "@/components/NewsletterSection";
 import heroImage from "@/assets/hero-home.jpg";
+import affirmationRest from "@/assets/affirmation-rest.jpg";
+import affirmationJoy from "@/assets/affirmation-joy.jpg";
+import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
+import affirmationEnough from "@/assets/affirmation-enough.jpg";
+import affirmationCalm from "@/assets/affirmation-calm.jpg";
 
 const Index = () => {
+  const featuredAffirmations = [
+    { id: "aff-001", title: "I am worthy of rest", price: 12, image: affirmationRest },
+    { id: "aff-002", title: "I choose joy today", price: 12, image: affirmationJoy },
+    { id: "aff-003", title: "Abundance flows to me", price: 15, image: affirmationAbundance },
+    { id: "aff-005", title: "I am enough, always", price: 12, image: affirmationEnough },
+    { id: "aff-006", title: "My calm is my power", price: 12, image: affirmationCalm },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -33,6 +47,38 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Affirmations */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="mb-4">Featured Affirmations</h2>
+            <p className="text-lg text-text-secondary">Words to carry with you</p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {featuredAffirmations.slice(0, 6).map((affirmation) => (
+              <div key={affirmation.id} className="group animate-fade-up">
+                <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
+                  <img
+                    src={affirmation.image}
+                    alt={affirmation.title}
+                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+                <span className="font-semibold">${affirmation.price}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
+              <Link to="/shop/affirmations">View All Affirmations</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* About Preview */}
       <section className="section-padding bg-secondary">
         <div className="container-custom max-w-3xl text-center">
@@ -46,6 +92,9 @@ const Index = () => {
           </Button>
         </div>
       </section>
+
+      {/* Newsletter */}
+      <NewsletterSection />
     </div>
   );
 };

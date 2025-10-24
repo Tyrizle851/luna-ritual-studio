@@ -33,14 +33,15 @@ export const useCartStore = create<CartStore>()(
 
       addItem: (item) => {
         const items = get().items;
+        const itemId = `${item.id}-${item.format || 'default'}`;
         const existingItem = items.find(
-          (i) => i.id === item.id && i.format === item.format
+          (i) => `${i.id}-${i.format || 'default'}` === itemId
         );
 
         if (existingItem) {
           set({
             items: items.map((i) =>
-              i.id === item.id && i.format === item.format
+              `${i.id}-${i.format || 'default'}` === itemId
                 ? { ...i, quantity: i.quantity + 1 }
                 : i
             ),
@@ -52,18 +53,18 @@ export const useCartStore = create<CartStore>()(
         get().openCart();
       },
 
-      removeItem: (id) => {
-        set({ items: get().items.filter((item) => item.id !== id) });
+      removeItem: (itemId) => {
+        set({ items: get().items.filter((item) => `${item.id}-${item.format || 'default'}` !== itemId) });
       },
 
-      updateQuantity: (id, quantity) => {
+      updateQuantity: (itemId, quantity) => {
         if (quantity <= 0) {
-          get().removeItem(id);
+          get().removeItem(itemId);
           return;
         }
         set({
           items: get().items.map((item) =>
-            item.id === id ? { ...item, quantity } : item
+            `${item.id}-${item.format || 'default'}` === itemId ? { ...item, quantity } : item
           ),
         });
       },

@@ -2,9 +2,13 @@ import { useState } from "react";
 import { affirmations } from "@/data/affirmations";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
+import { ProductModal } from "@/components/ProductModal";
+import { Affirmation } from "@/data/affirmations";
 
 const ShopAffirmations = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedProduct, setSelectedProduct] = useState<Affirmation | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const { addItem } = useCartStore();
 
   const categories = ["All", "Self-Love", "Abundance", "Rest", "Joy", "Strength"];
@@ -50,24 +54,39 @@ const ShopAffirmations = () => {
               <p className="text-sm text-text-secondary mb-3">{affirmation.description}</p>
               <div className="flex items-center justify-between">
                 <span className="font-semibold">${affirmation.price}</span>
-                <Button
-                  size="sm"
-                  className="bg-clay hover:bg-clay-dark text-white"
-                  onClick={() => addItem({
-                    id: affirmation.id,
-                    title: affirmation.title,
-                    price: affirmation.price,
-                    image: affirmation.image,
-                    format: affirmation.formats[0],
-                    type: "affirmation"
-                  })}
-                >
-                  Add to Cart
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-clay text-clay hover:bg-clay/10"
+                    onClick={() => {
+                      setSelectedProduct(affirmation);
+                      setModalOpen(true);
+                    }}
+                  >
+                    Preview
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-clay hover:bg-clay-dark text-white"
+                    onClick={() => {
+                      setSelectedProduct(affirmation);
+                      setModalOpen(true);
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
         </div>
+
+        <ProductModal
+          product={selectedProduct}
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+        />
       </div>
     </div>
   );

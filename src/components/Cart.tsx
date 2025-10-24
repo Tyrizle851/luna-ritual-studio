@@ -25,7 +25,7 @@ export const Cart = () => {
             <div className="flex-1 overflow-auto py-6">
               <div className="space-y-6">
                 {items.map((item) => (
-                  <div key={`${item.id}-${item.format}`} className="flex gap-4">
+                  <div key={`${item.id}-${item.format || 'default'}`} className="flex gap-4">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -41,7 +41,7 @@ export const Cart = () => {
                           variant="outline"
                           size="icon"
                           className="h-8 w-8"
-                          onClick={() => updateQuantity(`${item.id}-${item.format}`, item.quantity - 1)}
+                          onClick={() => updateQuantity(`${item.id}-${item.format || 'default'}`, item.quantity - 1)}
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
@@ -50,7 +50,7 @@ export const Cart = () => {
                           variant="outline"
                           size="icon"
                           className="h-8 w-8"
-                          onClick={() => updateQuantity(`${item.id}-${item.format}`, item.quantity + 1)}
+                          onClick={() => updateQuantity(`${item.id}-${item.format || 'default'}`, item.quantity + 1)}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
@@ -62,7 +62,7 @@ export const Cart = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => removeItem(`${item.id}-${item.format}`)}
+                        onClick={() => removeItem(`${item.id}-${item.format || 'default'}`)}
                       >
                         <X className="h-4 w-4" />
                       </Button>

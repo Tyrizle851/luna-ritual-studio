@@ -10,6 +10,15 @@ export interface Affirmation {
   tags: string[];
 }
 
+import affirmationRest from "@/assets/affirmation-rest.jpg";
+import affirmationJoy from "@/assets/affirmation-joy.jpg";
+import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
+import affirmationTrust from "@/assets/affirmation-trust.jpg";
+import affirmationEnough from "@/assets/affirmation-enough.jpg";
+import affirmationCalm from "@/assets/affirmation-calm.jpg";
+import affirmationRelease from "@/assets/affirmation-release.jpg";
+import affirmationVoice from "@/assets/affirmation-voice.jpg";
+
 export const affirmations: Affirmation[] = [
   {
     id: "aff-001",
@@ -18,7 +27,7 @@ export const affirmations: Affirmation[] = [
     description: "A gentle reminder that rest is not earned—it is your right. Soft earth tones with delicate script.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationRest,
     featured: true,
     tags: ["rest", "self-care", "boundaries"],
   },
@@ -29,7 +38,7 @@ export const affirmations: Affirmation[] = [
     description: "Every morning brings a choice. Choose joy, choose lightness, choose yourself.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationJoy,
     featured: true,
     tags: ["joy", "intention", "morning"],
   },
@@ -40,7 +49,7 @@ export const affirmations: Affirmation[] = [
     description: "Open your hands and heart. Abundance is your natural state.",
     price: 15,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationAbundance,
     featured: true,
     tags: ["abundance", "wealth", "receiving"],
   },
@@ -51,7 +60,7 @@ export const affirmations: Affirmation[] = [
     description: "Every step is exactly where you need to be. Trust the unfolding.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationTrust,
     tags: ["trust", "journey", "faith"],
   },
   {
@@ -61,7 +70,7 @@ export const affirmations: Affirmation[] = [
     description: "Not when you achieve more, not when you do more. Right now, as you are.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationEnough,
     featured: true,
     tags: ["self-love", "worthiness", "acceptance"],
   },
@@ -72,7 +81,7 @@ export const affirmations: Affirmation[] = [
     description: "In a world of chaos, your peace is revolutionary.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10"],
-    image: "/placeholder.svg",
+    image: affirmationCalm,
     featured: true,
     tags: ["calm", "power", "peace"],
   },
@@ -103,7 +112,7 @@ export const affirmations: Affirmation[] = [
     description: "Letting go is not giving up. It is making room for what is meant for you.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationRelease,
     tags: ["release", "letting-go", "growth"],
   },
   {
@@ -133,7 +142,7 @@ export const affirmations: Affirmation[] = [
     description: "Speak your truth, even when your voice shakes.",
     price: 12,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 8x10", "Print 11x14"],
-    image: "/placeholder.svg",
+    image: affirmationVoice,
     tags: ["voice", "truth", "courage"],
   },
   {
