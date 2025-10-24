@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingCart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import logo from "@/assets/logo.png";
 
 export const Header = () => {
@@ -17,6 +11,8 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { getItemCount, toggleCart } = useCartStore();
   const itemCount = getItemCount();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +21,9 @@ export const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isActive = (path: string) => currentPath === path;
+  const isShopActive = currentPath.includes('/shop');
 
   return (
     <header 
@@ -42,36 +41,101 @@ export const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-sm hover:text-clay transition-colors">
+          <Link 
+            to="/" 
+            className={`text-sm transition-all duration-200 relative py-1 ${
+              isActive('/') 
+                ? 'text-clay font-medium' 
+                : 'text-foreground hover:text-clay'
+            }`}
+          >
             Home
+            {isActive('/') && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+            )}
           </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm hover:text-clay transition-colors outline-none">
+          
+          <div className="relative group">
+            <button 
+              className={`flex items-center gap-1 text-sm transition-all duration-200 relative py-1 ${
+                isShopActive 
+                  ? 'text-clay font-medium' 
+                  : 'text-foreground hover:text-clay'
+              }`}
+            >
               Shop <ChevronDown className="h-3 w-3" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-background border-border z-50">
-              <DropdownMenuItem asChild>
-                <Link to="/shop?tab=fashion" className="cursor-pointer">Fashion</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/shop?tab=candles" className="cursor-pointer">Candles</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/shop?tab=supplements" className="cursor-pointer">Supplements</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/shop?tab=affirmations" className="cursor-pointer">Affirmations</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Link to="/journal" className="text-sm hover:text-clay transition-colors">
+              {isShopActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+              )}
+            </button>
+            <div className="absolute top-full left-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <Link 
+                to="/shop?tab=fashion" 
+                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+              >
+                Fashion
+              </Link>
+              <Link 
+                to="/shop?tab=candles" 
+                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+              >
+                Candles
+              </Link>
+              <Link 
+                to="/shop?tab=supplements" 
+                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+              >
+                Supplements
+              </Link>
+              <Link 
+                to="/shop?tab=affirmations" 
+                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+              >
+                Affirmations
+              </Link>
+            </div>
+          </div>
+
+          <Link 
+            to="/journal" 
+            className={`text-sm transition-all duration-200 relative py-1 ${
+              isActive('/journal') 
+                ? 'text-clay font-medium' 
+                : 'text-foreground hover:text-clay'
+            }`}
+          >
             Journal
+            {isActive('/journal') && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+            )}
           </Link>
-          <Link to="/about" className="text-sm hover:text-clay transition-colors">
+
+          <Link 
+            to="/about" 
+            className={`text-sm transition-all duration-200 relative py-1 ${
+              isActive('/about') 
+                ? 'text-clay font-medium' 
+                : 'text-foreground hover:text-clay'
+            }`}
+          >
             About
+            {isActive('/about') && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+            )}
           </Link>
-          <Link to="/contact" className="text-sm hover:text-clay transition-colors">
+
+          <Link 
+            to="/contact" 
+            className={`text-sm transition-all duration-200 relative py-1 ${
+              isActive('/contact') 
+                ? 'text-clay font-medium' 
+                : 'text-foreground hover:text-clay'
+            }`}
+          >
             Contact
+            {isActive('/contact') && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
+            )}
           </Link>
         </nav>
 
@@ -102,13 +166,25 @@ export const Header = () => {
               <nav className="flex flex-col gap-6 mt-8">
                 <Link
                   to="/"
-                  className="text-lg hover:text-clay transition-colors"
+                  className={`text-lg transition-colors relative ${
+                    isActive('/') 
+                      ? 'text-clay font-medium' 
+                      : 'text-foreground hover:text-clay'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Home
+                  {isActive('/') && (
+                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                  )}
                 </Link>
                 <div className="flex flex-col gap-3">
-                  <span className="text-lg font-medium">Shop</span>
+                  <span className={`text-lg font-medium ${isShopActive ? 'text-clay' : ''}`}>
+                    Shop
+                    {isShopActive && (
+                      <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                    )}
+                  </span>
                   <Link
                     to="/shop?tab=fashion"
                     className="text-base hover:text-clay transition-colors pl-4"
@@ -140,24 +216,45 @@ export const Header = () => {
                 </div>
                 <Link
                   to="/journal"
-                  className="text-lg hover:text-clay transition-colors"
+                  className={`text-lg transition-colors relative ${
+                    isActive('/journal') 
+                      ? 'text-clay font-medium' 
+                      : 'text-foreground hover:text-clay'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Journal
+                  {isActive('/journal') && (
+                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                  )}
                 </Link>
                 <Link
                   to="/about"
-                  className="text-lg hover:text-clay transition-colors"
+                  className={`text-lg transition-colors relative ${
+                    isActive('/about') 
+                      ? 'text-clay font-medium' 
+                      : 'text-foreground hover:text-clay'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   About
+                  {isActive('/about') && (
+                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                  )}
                 </Link>
                 <Link
                   to="/contact"
-                  className="text-lg hover:text-clay transition-colors"
+                  className={`text-lg transition-colors relative ${
+                    isActive('/contact') 
+                      ? 'text-clay font-medium' 
+                      : 'text-foreground hover:text-clay'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Contact
+                  {isActive('/contact') && (
+                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
+                  )}
                 </Link>
               </nav>
             </SheetContent>
