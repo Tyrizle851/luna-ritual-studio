@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "dev:server": "node server/index.js",
+    "dev:full": "concurrently \"npm run dev:server\" \"npm run dev\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -48,6 +50,7 @@
     "framer-motion": "^12.23.24",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
+    "express": "^4.19.2",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
@@ -65,6 +68,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.16.5",

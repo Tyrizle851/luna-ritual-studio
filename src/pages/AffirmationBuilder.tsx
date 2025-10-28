@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "@/lib/api";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +39,7 @@ const AffirmationBuilder = () => {
     layoutStyle: "Organic flowing arrangement with curved phrases",
     accentStyle: "Botanical line art with soft circular accents"
   });
+  const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
 
   // TODO: This will be replaced with actual AI call to backend
   const buildPrompt = (theme: string, mood: string, keywords: string, seed: string) => {
@@ -91,12 +93,33 @@ const AffirmationBuilder = () => {
 
   const handleGenerate = async () => {
     setLoading(true);
-    
-    // Simulate async AI call
-    // TODO: Replace with actual call to Supabase Edge Function -> OpenAI
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Simple mapping based on theme for demo purposes
+    setGeneratedImageB64(null);
+    try {
+      const resp = await apiFetch('/api/affirmation/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme, mood, text: userKeywords, styleSeed: seed || undefined }),
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        const spec = data?.designSpec;
+        if (spec) {
+          setGeneratedData({
+            mainAffirmation: spec.mainAffirmation,
+            supportingPhrases: spec.supportingPhrases,
+            palette: spec.palette,
+            layoutStyle: spec.layoutStyle,
+            accentStyle: spec.accentStyle,
+          });
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (e) {
+      // fall through to local mapping
+    }
+
+    // Fallback local mapping if API not available
     const themeMap: Record<string, GeneratedData> = {
       "calm-morning": {
         mainAffirmation: "SOFT WITHIN",
@@ -214,6 +237,25 @@ const AffirmationBuilder = () => {
 
     buildPrompt(theme, mood, userKeywords, seed); // For future use
     setLoading(false);
+  };
+
+  const handleGenerateUnique = async () => {
+    setLoading(true);
+    try {
+      const resp = await apiFetch('/api/affirmation/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme, mood, text: userKeywords, styleSeed: seed || undefined }),
+      });
+      const data = await resp.json();
+      if (resp.ok && data?.imageB64) {
+        setGeneratedImageB64(`data:image/png;base64,${data.imageB64}`);
+      }
+    } catch (e) {
+      // ignore for now
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleRandomize = () => {
@@ -339,6 +381,24 @@ const AffirmationBuilder = () => {
                     )}
                   </Button>
                   <Button
+                    onClick={handleGenerateUnique}
+                    disabled={loading}
+                    variant="outline"
+                    className="border-clay text-clay hover:bg-clay/10"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Generating Image...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Generate Unique Image
+                      </>
+                    )}
+                  </Button>
+                  <Button
                     onClick={handleRandomize}
                     variant="outline"
                     disabled={loading}
@@ -403,6 +463,14 @@ const AffirmationBuilder = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Model Image (optional) */}
+                {generatedImageB64 && (
+                  <div className="space-y-2">
+                    <img src={generatedImageB64} alt="Generated" className="w-full rounded-md border" />
+                    <p className="text-xs text-center text-text-secondary">Unique AI image preview (square). Final print will be cropped to 4:5.</p>
+                  </div>
+                )}
 
                 {/* Disclaimer */}
                 <p className="text-xs text-center text-text-secondary italic">
