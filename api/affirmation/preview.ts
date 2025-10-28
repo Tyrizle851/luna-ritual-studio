@@ -1,9 +1,15 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { mapTheme, mapMood, normalizeText, makePreviewSpec, buildBasePrompt, moderateText } from "./_shared";
+import { mapTheme, mapMood, normalizeText, makePreviewSpec, buildBasePrompt, moderateText } from "../_shared";
 
 const previews = new Map<string, any>();
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
+  // CORS headers (allow Lovable domain or * for testing)
+  const allowOrigin = process.env.CORS_ALLOW_ORIGIN || "*";
+  res.setHeader("Access-Control-Allow-Origin", allowOrigin);
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(204).end();
+
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
     const { theme, mood, text, styleSeed } = (req.body || {}) as any;
