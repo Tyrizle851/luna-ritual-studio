@@ -406,15 +406,13 @@ const AffirmationBuilder = () => {
                     </SelectContent>
                   </Select>
                   {!showMoreThemes && (
-                    <Button
+                    <button
                       type="button"
-                      variant="ghost"
-                      size="sm"
                       onClick={() => setShowMoreThemes(true)}
-                      className="w-full text-xs"
+                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Show 10 more themes
-                    </Button>
+                      +10 more
+                    </button>
                   )}
                 </div>
 
@@ -443,15 +441,13 @@ const AffirmationBuilder = () => {
                     </SelectContent>
                   </Select>
                   {!showMoreMoods && (
-                    <Button
+                    <button
                       type="button"
-                      variant="ghost"
-                      size="sm"
                       onClick={() => setShowMoreMoods(true)}
-                      className="w-full text-xs"
+                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Show 5 more moods
-                    </Button>
+                      +5 more
+                    </button>
                   )}
                 </div>
 
@@ -481,15 +477,13 @@ const AffirmationBuilder = () => {
                     </SelectContent>
                   </Select>
                   {!showMoreLayouts && (
-                    <Button
+                    <button
                       type="button"
-                      variant="ghost"
-                      size="sm"
                       onClick={() => setShowMoreLayouts(true)}
-                      className="w-full text-xs"
+                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Show 5 more layouts
-                    </Button>
+                      +5 more
+                    </button>
                   )}
                 </div>
 
@@ -580,39 +574,39 @@ const AffirmationBuilder = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-muted/50 p-8 rounded-lg">
-                      <h3 className="font-display text-2xl text-center mb-4">
+                    <div className="bg-background p-8 rounded-lg border">
+                      <h3 className="font-display text-2xl md:text-3xl text-center mb-6 tracking-wide" style={{ color: '#c9a961' }}>
                         {generatedData.headline}
                       </h3>
-                      <div className="space-y-1.5 text-sm">
+                      <div className="space-y-3 text-sm">
                         {generatedData.supportingLines.map((line, i) => (
-                          <p key={i} className="text-center opacity-80">{line}</p>
+                          <p 
+                            key={i} 
+                            className="text-center leading-relaxed"
+                            style={{ 
+                              color: i % 3 === 0 ? '#2c2c2c' : i % 3 === 1 ? '#8b8b8b' : '#a89078',
+                              fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                              fontWeight: i % 2 === 0 ? '600' : '400'
+                            }}
+                          >
+                            {line}
+                          </p>
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 text-xs">
                       <div>
-                        <p className="text-xs font-medium mb-2">Palette</p>
-                        <div className="flex gap-2">
-                          {generatedData.paletteNames.map((color, i) => (
-                            <div key={i} className="flex flex-col items-center gap-1">
-                              <div 
-                                className="w-10 h-10 rounded border" 
-                                style={{ backgroundColor: color }}
-                              />
-                              <span className="text-[10px] opacity-60">{color}</span>
-                            </div>
-                          ))}
-                        </div>
+                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Palette:</p>
+                        <p className="text-muted-foreground">{generatedData.paletteNames.join(' / ')}</p>
                       </div>
                       <div>
-                        <p className="text-xs font-medium mb-1">Style</p>
-                        <p className="text-xs opacity-70">{generatedData.layoutStyle}</p>
+                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Layout Style:</p>
+                        <p className="text-muted-foreground">{generatedData.layoutStyle}</p>
                       </div>
                       <div>
-                        <p className="text-xs font-medium mb-1">Accents</p>
-                        <p className="text-xs opacity-70">{generatedData.accentElements}</p>
+                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Accent Elements:</p>
+                        <p className="text-muted-foreground">{generatedData.accentElements}</p>
                       </div>
                     </div>
                   </div>
