@@ -17,6 +17,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { buildDesignSpec } from "@/lib/designSpecBuilder";
+import type { ThemeSlug, MoodSlug } from "@/types/design-spec";
 
 interface GeneratedData {
   headline: string;
@@ -419,13 +421,17 @@ const AffirmationBuilder = () => {
     try {
       const previewForAPI = generatePreviewData();
       
+      // Build proper DesignSpec using the new system
+      const designSpec = buildDesignSpec({
+        theme: theme as ThemeSlug,
+        mood: mood as MoodSlug,
+        keywords: userKeywords,
+        seed: seed ? parseInt(seed) : undefined
+      });
+      
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
         body: {
-          theme,
-          mood,
-          text: userKeywords,
-          styleSeed: seed || Math.floor(Math.random() * 10000).toString(),
-          preview: previewForAPI
+          designSpec
         }
       });
       
