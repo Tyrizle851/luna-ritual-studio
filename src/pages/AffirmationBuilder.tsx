@@ -88,7 +88,7 @@ const AffirmationBuilder = () => {
   const staffPresets: StaffPreset[] = [
     {
       name: "Morning Ritual",
-      description: "Peaceful sunrise energy to start your day",
+      description: "Peaceful sunrise energy",
       theme: "peace",
       mood: "coastal",
       layoutStyle: "halo",
@@ -96,7 +96,7 @@ const AffirmationBuilder = () => {
     },
     {
       name: "Power Hour",
-      description: "Bold confidence for big moves",
+      description: "Bold confidence energy",
       theme: "confidence",
       mood: "monochrome",
       layoutStyle: "grit",
@@ -104,7 +104,7 @@ const AffirmationBuilder = () => {
     },
     {
       name: "Gratitude Garden",
-      description: "Warm thankfulness with botanical vibes",
+      description: "Warm botanical vibes",
       theme: "gratitude",
       mood: "bohemian",
       layoutStyle: "botanical",
@@ -117,14 +117,6 @@ const AffirmationBuilder = () => {
       mood: "minimalist",
       layoutStyle: "grid",
       keywords: "clarity, precision"
-    },
-    {
-      name: "Cosmic Dreamer",
-      description: "Celestial wonder and limitless potential",
-      theme: "freedom",
-      mood: "pastel",
-      layoutStyle: "celestial",
-      keywords: "stars, dreams, infinite"
     }
   ];
 
@@ -677,12 +669,12 @@ const AffirmationBuilder = () => {
                     </div>
                     <ChevronDown className={`h-5 w-5 transition-transform ${showPresets ? 'rotate-180' : ''}`} />
                   </div>
-                  <CardDescription>Curated preset combinations that look amazing</CardDescription>
+                  <CardDescription>Curated preset combinations</CardDescription>
                 </CardHeader>
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {staffPresets.map((preset) => (
                       <Button
                         key={preset.name}
@@ -693,8 +685,8 @@ const AffirmationBuilder = () => {
                           setActiveTab("preview");
                         }}
                       >
-                        <span className="font-semibold mb-1 text-sm">{preset.name}</span>
-                        <span className="text-xs text-muted-foreground line-clamp-2">{preset.description}</span>
+                        <span className="font-semibold mb-1 text-sm leading-tight">{preset.name}</span>
+                        <span className="text-xs text-muted-foreground">{preset.description}</span>
                       </Button>
                     ))}
                   </div>
@@ -1001,8 +993,8 @@ const AffirmationBuilder = () => {
                     </DropdownMenu>
                   </div>
                 ) : (
-                  <div className="space-y-6">
-                    <div className="bg-gradient-to-br from-background to-muted/20 p-12 rounded-lg border-2 border-muted min-h-[600px] flex flex-col justify-between relative overflow-hidden">
+                  <div className="space-y-4">
+                    <div className="bg-gradient-to-br from-background to-muted/20 p-6 rounded-lg border-2 border-muted min-h-[400px] flex flex-col justify-between relative overflow-hidden">
                       {/* Decorative corner elements */}
                       <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-muted-foreground/30"></div>
                       <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-muted-foreground/30"></div>
@@ -1024,24 +1016,24 @@ const AffirmationBuilder = () => {
                           <Input
                             value={editedHeadline}
                             onChange={(e) => setEditedHeadline(e.target.value.toUpperCase())}
-                            className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase bg-transparent border-2 border-dashed"
+                            className="font-display text-2xl md:text-5xl text-center mb-2 tracking-wider uppercase bg-transparent border-2 border-dashed"
                             style={{ color: generatedData.palette[1] || '#c9a961' }}
                           />
                         ) : (
-                          <h3 className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
+                          <h3 className="font-display text-2xl md:text-5xl text-center mb-2 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
                             {generatedData.headline}
                           </h3>
                         )}
-                        <div className="flex justify-center mb-8">
-                          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
+                        <div className="flex justify-center mb-4">
+                          <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
                         </div>
                       </div>
                       
                       {/* Middle section with supporting lines */}
-                      <div className="relative z-10 space-y-5 mb-8">
-                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 6).map((line, i) => (
-                          <div key={i} className="flex items-center justify-center gap-3">
-                            {i % 2 === 0 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
+                      <div className="relative z-10 space-y-3 mb-4">
+                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 4).map((line, i) => (
+                          <div key={i} className="flex items-center justify-center gap-2">
+                            {i % 2 === 0 && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
                             {isEditing ? (
                               <Input
                                 value={line}
@@ -1050,7 +1042,7 @@ const AffirmationBuilder = () => {
                                   newLines[i] = e.target.value;
                                   setEditedLines(newLines);
                                 }}
-                                className="text-center leading-relaxed text-base md:text-lg bg-transparent border border-dashed"
+                                className="text-center leading-relaxed text-sm md:text-lg bg-transparent border border-dashed"
                                 style={{ 
                                   color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
                                   fontStyle: i % 2 === 1 ? 'italic' : 'normal',
@@ -1059,7 +1051,7 @@ const AffirmationBuilder = () => {
                               />
                             ) : (
                               <p 
-                                className="text-center leading-relaxed text-base md:text-lg"
+                                className="text-center leading-relaxed text-sm md:text-lg"
                                 style={{ 
                                   color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
                                   fontStyle: i % 2 === 1 ? 'italic' : 'normal',
@@ -1069,7 +1061,7 @@ const AffirmationBuilder = () => {
                                 {line}
                               </p>
                             )}
-                            {i % 2 === 1 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
+                            {i % 2 === 1 && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
                           </div>
                         ))}
                       </div>
@@ -1084,40 +1076,51 @@ const AffirmationBuilder = () => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{theme}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{mood}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{layoutStyle || 'Auto'}</p>
+                    <div className="space-y-3">
+                      <div className="bg-muted/30 p-3 rounded-lg">
+                        <div className="grid grid-cols-3 gap-3 mb-3">
+                          <div>
+                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
+                            <p className="text-foreground text-xs font-medium capitalize">{theme}</p>
+                          </div>
+                          <div>
+                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
+                            <p className="text-foreground text-xs font-medium capitalize">{mood}</p>
+                          </div>
+                          <div>
+                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
+                            <p className="text-foreground text-xs font-medium capitalize">{layoutStyle || 'Auto'}</p>
+                          </div>
                         </div>
                       </div>
                       
-                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Palette</p>
-                          <div className="flex gap-2 flex-wrap">
+                      <div className="bg-muted/30 p-3 rounded-lg">
+                        <div className="mb-2">
+                          <p className="font-semibold mb-1.5 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Palette</p>
+                          <div className="flex gap-1.5 flex-wrap">
                             {generatedData.palette.map((color, i) => (
-                              <div key={i} className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded border border-muted" style={{ backgroundColor: color }}></div>
-                                <span className="text-xs text-muted-foreground">{color}</span>
+                              <div key={i} className="flex items-center gap-1.5">
+                                <div className="w-5 h-5 rounded border border-muted" style={{ backgroundColor: color }}></div>
+                                <span className="text-[10px] text-muted-foreground">{color}</span>
                               </div>
                             ))}
                           </div>
                         </div>
                         <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Accents</p>
-                          <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.accentElements}</p>
+                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Accents</p>
+                          <p className="text-muted-foreground text-[10px] leading-relaxed">{generatedData.accentElements}</p>
                         </div>
                       </div>
                     </div>
+
+                    <Button 
+                      onClick={handleGenerateUnique}
+                      className="w-full h-11 bg-primary hover:bg-primary/90"
+                      disabled={loading}
+                    >
+                      {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                      Generate Unique Image
+                    </Button>
                   </div>
                 )}
               </CardContent>
