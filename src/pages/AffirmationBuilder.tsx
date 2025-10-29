@@ -96,123 +96,164 @@ const AffirmationBuilder = () => {
     setLoading(true);
     setGeneratedImageB64(null);
     
-    // Use local mapping for preview (fast, no API needed)
-    const themeMap: Record<string, GeneratedData> = {
-      "calm-morning": {
-        mainAffirmation: "SOFT WITHIN",
-        supportingPhrases: [
-          "I rise with intention",
-          "Morning light guides me",
-          "Peace starts here",
-          "Gentle beginnings matter",
-          "I breathe in clarity",
-          "Today I choose calm",
-          "Stillness is my strength",
-          "I trust this moment"
-        ],
-        palette: "Soft Peach / Warm Cream / Pale Gold",
-        layoutStyle: "Cascading diagonal with sunrise-inspired flow",
-        accentStyle: "Delicate sun rays and morning botanical sprigs"
-      },
-      "focus": {
-        mainAffirmation: "CLEAR MIND",
-        supportingPhrases: [
-          "One thing at a time",
-          "Distraction fades, clarity remains",
-          "I am fully present",
-          "My attention is powerful",
-          "Focus creates momentum",
-          "I choose depth over speed",
-          "Intentional energy flows",
-          "This task matters"
-        ],
-        palette: "Charcoal / Sage / Crisp White",
-        layoutStyle: "Geometric grid with bold typography hierarchy",
-        accentStyle: "Minimal lines and directional arrows"
-      },
-      "gratitude": {
-        mainAffirmation: "I AM GRATEFUL",
-        supportingPhrases: [
-          "Small joys fill my heart",
-          "Abundance surrounds me",
-          "I notice beauty daily",
-          "Thank you for this moment",
-          "Appreciation flows freely",
-          "I celebrate what is",
-          "Grateful for growth",
-          "Joy lives in the present"
-        ],
-        palette: "Warm Terracotta / Gold / Cream",
-        layoutStyle: "Circular arrangement with heart-centered focal point",
-        accentStyle: "Hand-drawn hearts and organic floral elements"
-      },
-      "confidence": {
-        mainAffirmation: "I AM CAPABLE",
-        supportingPhrases: [
-          "My voice matters",
-          "I trust my decisions",
-          "Doubt does not define me",
-          "I stand in my power",
-          "Courage lives within",
-          "I am enough, always",
-          "My light shines bright",
-          "I believe in myself"
-        ],
-        palette: "Deep Navy / Copper / Ivory",
-        layoutStyle: "Bold vertical stack with powerful typography",
-        accentStyle: "Geometric frames and confident underlines"
-      },
-      "peace": {
-        mainAffirmation: "INNER CALM",
-        supportingPhrases: [
-          "I release what I cannot control",
-          "Peace flows through me",
-          "Stillness is my refuge",
-          "I choose serenity",
-          "My breath anchors me",
-          "Gentle is powerful",
-          "I am safe here",
-          "Quiet heals"
-        ],
-        palette: "Soft Blue / Pale Sage / Warm Gray",
-        layoutStyle: "Organic waves with gentle curved text flow",
-        accentStyle: "Watercolor texture with flowing botanical lines"
-      },
-      "custom": {
-        mainAffirmation: userKeywords.split(" ").slice(0, 3).join(" ").toUpperCase() || "YOUR INTENTION",
-        supportingPhrases: [
-          "I honor my unique path",
-          "My vision is valid",
-          "I create what I need",
-          "This is my story",
-          "I trust my direction",
-          "My way is the right way",
-          "I design my life",
-          "Authenticity guides me"
-        ],
-        palette: "Custom palette based on mood",
-        layoutStyle: "Personalized arrangement reflecting your energy",
-        accentStyle: "Mixed elements tailored to your keywords"
+    // Generate preview based on user inputs - incorporating keywords
+    const generatePreviewData = (): GeneratedData => {
+      // Extract key words from user input
+      const keywords = userKeywords.toLowerCase();
+      
+      // Base data by theme
+      const themeMap: Record<string, { main: string, phrases: string[] }> = {
+        "calm-morning": {
+          main: "SOFT MORNING",
+          phrases: [
+            "I rise with intention",
+            "Morning light guides me",
+            "Peace starts here",
+            "Gentle beginnings matter",
+            "I breathe in clarity",
+            "Today I choose calm",
+            "Stillness is my strength",
+            "I trust this moment"
+          ]
+        },
+        "focus": {
+          main: "CLEAR MIND",
+          phrases: [
+            "One thing at a time",
+            "Distraction fades, clarity remains",
+            "I am fully present",
+            "My attention is powerful",
+            "Focus creates momentum",
+            "I choose depth over speed",
+            "Intentional energy flows",
+            "This task matters"
+          ]
+        },
+        "gratitude": {
+          main: "I AM GRATEFUL",
+          phrases: [
+            "Small joys fill my heart",
+            "Abundance surrounds me",
+            "I notice beauty daily",
+            "Thank you for this moment",
+            "Appreciation flows freely",
+            "I celebrate what is",
+            "Grateful for growth",
+            "Joy lives in the present"
+          ]
+        },
+        "confidence": {
+          main: "I AM CAPABLE",
+          phrases: [
+            "My voice matters",
+            "I trust my decisions",
+            "Doubt does not define me",
+            "I stand in my power",
+            "Courage lives within",
+            "I am enough, always",
+            "My light shines bright",
+            "I believe in myself"
+          ]
+        },
+        "peace": {
+          main: "INNER CALM",
+          phrases: [
+            "I release what I cannot control",
+            "Peace flows through me",
+            "Stillness is my refuge",
+            "I choose serenity",
+            "My breath anchors me",
+            "Gentle is powerful",
+            "I am safe here",
+            "Quiet heals"
+          ]
+        },
+        "custom": {
+          main: userKeywords.split(" ").slice(0, 3).join(" ").toUpperCase() || "YOUR INTENTION",
+          phrases: [
+            "I honor my unique path",
+            "My vision is valid",
+            "I create what I need",
+            "This is my story",
+            "I trust my direction",
+            "My way is the right way",
+            "I design my life",
+            "Authenticity guides me"
+          ]
+        }
+      };
+      
+      const baseData = themeMap[theme] || themeMap["peace"];
+      
+      // Enhance with user keywords if provided
+      let mainAffirmation = baseData.main;
+      let supportingPhrases = [...baseData.phrases];
+      
+      if (userKeywords.trim()) {
+        // If user provided keywords, weave them into the phrases
+        const words = userKeywords.split(/[,\s]+/).filter(w => w.length > 2);
+        if (words.length > 0) {
+          // Add custom phrases based on keywords
+          supportingPhrases = supportingPhrases.slice(0, 6); // Keep fewer default
+          
+          // Add keyword-inspired phrases
+          if (keywords.includes('heal') || keywords.includes('healing')) {
+            supportingPhrases.push("Healing flows through me");
+          }
+          if (keywords.includes('trust')) {
+            supportingPhrases.push("I trust the journey");
+          }
+          if (keywords.includes('feminine') || keywords.includes('soft')) {
+            supportingPhrases.push("Soft strength guides me");
+          }
+          if (keywords.includes('gentle')) {
+            supportingPhrases.push("Gentle is my power");
+          }
+          if (keywords.includes('warm') || keywords.includes('warmth')) {
+            supportingPhrases.push("Warmth radiates within");
+          }
+          if (keywords.includes('sunrise') || keywords.includes('dawn')) {
+            supportingPhrases.push("Each dawn brings renewal");
+          }
+        }
       }
+      
+      // Apply mood styling to palette
+      const moodPalettes: Record<string, string> = {
+        "minimalist": "Black / White / Single Accent Color",
+        "bohemian": "Terracotta / Mustard / Sage / Warm Cream",
+        "modern-serif": "Charcoal / Blush / Ivory / Gold",
+        "coastal": "Soft Blue / Sandy Beige / Sea Foam / White",
+        "earthy": "Forest Green / Clay / Cream / Rust"
+      };
+      
+      const moodLayouts: Record<string, string> = {
+        "minimalist": "Geometric grid with bold typography hierarchy",
+        "bohemian": "Organic flowing arrangement with natural curves",
+        "modern-serif": "Elegant vertical stack with serif emphasis",
+        "coastal": "Airy waves with breezy text placement",
+        "earthy": "Nature-inspired scattered layout with botanical flow"
+      };
+      
+      const moodAccents: Record<string, string> = {
+        "minimalist": "Minimal lines and geometric shapes",
+        "bohemian": "Hand-drawn botanical elements and organic flourishes",
+        "modern-serif": "Elegant underlines and refined borders",
+        "coastal": "Flowing waves and nautical line art",
+        "earthy": "Botanical line art with leaves and natural elements"
+      };
+      
+      return {
+        mainAffirmation,
+        supportingPhrases,
+        palette: moodPalettes[mood] || moodPalettes["minimalist"],
+        layoutStyle: moodLayouts[mood] || moodLayouts["minimalist"],
+        accentStyle: moodAccents[mood] || moodAccents["minimalist"]
+      };
     };
-
-    const newData = themeMap[theme] || themeMap["peace"];
     
-    // Apply mood styling variations to palette
-    const moodPalettes: Record<string, string> = {
-      "minimalist": "Black / White / Single Accent Color",
-      "bohemian": "Terracotta / Mustard / Sage / Warm Cream",
-      "modern-serif": "Charcoal / Blush / Ivory / Gold",
-      "coastal": "Soft Blue / Sandy Beige / Sea Foam / White",
-      "earthy": "Forest Green / Clay / Cream / Rust"
-    };
-
-    setGeneratedData({
-      ...newData,
-      palette: moodPalettes[mood] || newData.palette
-    });
-
-    buildPrompt(theme, mood, userKeywords, seed); // For future use
+    setGeneratedData(generatePreviewData());
+    buildPrompt(theme, mood, userKeywords, seed);
     setLoading(false);
   };
 
