@@ -319,7 +319,29 @@ const AffirmationBuilder = () => {
       
       if (error) {
         console.error('Edge function error:', error);
-        toast.error('Failed to generate image. Please try again.');
+        
+        // Check for specific error types
+        const errorMessage = error.message || JSON.stringify(error);
+        if (errorMessage.includes('402') || errorMessage.includes('credits depleted') || errorMessage.includes('payment')) {
+          toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+        } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
+          toast.error('Rate limit exceeded. Please wait a moment and try again.');
+        } else {
+          toast.error('Failed to generate image. Please try again.');
+        }
+        return;
+      }
+      
+      if (data?.error) {
+        // Handle error returned in data object
+        console.error('API error:', data.error);
+        if (data.error.includes('credits depleted') || data.error.includes('payment')) {
+          toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+        } else if (data.error.includes('rate limit')) {
+          toast.error('Rate limit exceeded. Please wait a moment and try again.');
+        } else {
+          toast.error(data.error);
+        }
         return;
       }
       
