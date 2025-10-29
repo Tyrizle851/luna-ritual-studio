@@ -25,9 +25,6 @@ const AffirmationBuilder = () => {
   const [layoutStyle, setLayoutStyle] = useState("");
   const [userKeywords, setUserKeywords] = useState("");
   const [seed, setSeed] = useState("");
-  const [showMoreThemes, setShowMoreThemes] = useState(false);
-  const [showMoreMoods, setShowMoreMoods] = useState(false);
-  const [showMoreLayouts, setShowMoreLayouts] = useState(false);
   const [loading, setLoading] = useState(false);
   const [generatedData, setGeneratedData] = useState<GeneratedData>({
     headline: "FEARLESS FORWARD",
@@ -369,6 +366,7 @@ const AffirmationBuilder = () => {
     setMood(moods[Math.floor(Math.random() * moods.length)]);
     setLayoutStyle(layouts[Math.floor(Math.random() * layouts.length)]);
     setSeed(Math.floor(Math.random() * 10000).toString());
+    handleGenerate();
   };
 
   return (
@@ -378,7 +376,7 @@ const AffirmationBuilder = () => {
         <meta name="description" content="Create custom affirmation posters. Describe your energy and we'll build the perfect print for your space." />
       </Helmet>
 
-      <div className="min-h-screen bg-neutral-100 py-8 md:py-16">
+      <div className="min-h-screen bg-background py-8 md:py-16">
         <div className="container-custom max-w-screen-xl mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-8 md:mb-12">
@@ -392,7 +390,7 @@ const AffirmationBuilder = () => {
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column: Input Form */}
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
                 <CardTitle>Your Inputs</CardTitle>
                 <CardDescription>Choose your affirmation style</CardDescription>
@@ -411,31 +409,18 @@ const AffirmationBuilder = () => {
                       <SelectItem value="focus">Focus</SelectItem>
                       <SelectItem value="gratitude">Gratitude</SelectItem>
                       <SelectItem value="abundance">Abundance</SelectItem>
-                      {showMoreThemes && (
-                        <>
-                          <SelectItem value="healing">Healing</SelectItem>
-                          <SelectItem value="strength">Strength</SelectItem>
-                          <SelectItem value="joy">Joy</SelectItem>
-                          <SelectItem value="balance">Balance</SelectItem>
-                          <SelectItem value="courage">Courage</SelectItem>
-                          <SelectItem value="clarity">Clarity</SelectItem>
-                          <SelectItem value="renewal">Renewal</SelectItem>
-                          <SelectItem value="freedom">Freedom</SelectItem>
-                          <SelectItem value="passion">Passion</SelectItem>
-                          <SelectItem value="wisdom">Wisdom</SelectItem>
-                        </>
-                      )}
+                      <SelectItem value="healing">Healing</SelectItem>
+                      <SelectItem value="strength">Strength</SelectItem>
+                      <SelectItem value="joy">Joy</SelectItem>
+                      <SelectItem value="balance">Balance</SelectItem>
+                      <SelectItem value="courage">Courage</SelectItem>
+                      <SelectItem value="clarity">Clarity</SelectItem>
+                      <SelectItem value="renewal">Renewal</SelectItem>
+                      <SelectItem value="freedom">Freedom</SelectItem>
+                      <SelectItem value="passion">Passion</SelectItem>
+                      <SelectItem value="wisdom">Wisdom</SelectItem>
                     </SelectContent>
                   </Select>
-                  {!showMoreThemes && (
-                    <button
-                      type="button"
-                      onClick={() => setShowMoreThemes(true)}
-                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      +10 more
-                    </button>
-                  )}
                 </div>
 
                 {/* Mood Selection */}
@@ -451,26 +436,13 @@ const AffirmationBuilder = () => {
                       <SelectItem value="modern-serif">Modern Serif</SelectItem>
                       <SelectItem value="coastal">Coastal</SelectItem>
                       <SelectItem value="earthy">Earthy</SelectItem>
-                      {showMoreMoods && (
-                        <>
-                          <SelectItem value="vibrant">Vibrant</SelectItem>
-                          <SelectItem value="pastel">Pastel</SelectItem>
-                          <SelectItem value="monochrome">Monochrome</SelectItem>
-                          <SelectItem value="sunset">Sunset</SelectItem>
-                          <SelectItem value="forest">Forest</SelectItem>
-                        </>
-                      )}
+                      <SelectItem value="vibrant">Vibrant</SelectItem>
+                      <SelectItem value="pastel">Pastel</SelectItem>
+                      <SelectItem value="monochrome">Monochrome</SelectItem>
+                      <SelectItem value="sunset">Sunset</SelectItem>
+                      <SelectItem value="forest">Forest</SelectItem>
                     </SelectContent>
                   </Select>
-                  {!showMoreMoods && (
-                    <button
-                      type="button"
-                      onClick={() => setShowMoreMoods(true)}
-                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      +5 more
-                    </button>
-                  )}
                 </div>
 
                 {/* Layout Style Selection */}
@@ -487,26 +459,13 @@ const AffirmationBuilder = () => {
                       <SelectItem value="grit">Grit</SelectItem>
                       <SelectItem value="halo">Halo</SelectItem>
                       <SelectItem value="grid">Grid</SelectItem>
-                      {showMoreLayouts && (
-                        <>
-                          <SelectItem value="organic">Organic</SelectItem>
-                          <SelectItem value="celestial">Celestial</SelectItem>
-                          <SelectItem value="geometric">Geometric</SelectItem>
-                          <SelectItem value="vintage">Vintage</SelectItem>
-                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
-                        </>
-                      )}
+                      <SelectItem value="organic">Organic</SelectItem>
+                      <SelectItem value="celestial">Celestial</SelectItem>
+                      <SelectItem value="geometric">Geometric</SelectItem>
+                      <SelectItem value="vintage">Vintage</SelectItem>
+                      <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
                     </SelectContent>
                   </Select>
-                  {!showMoreLayouts && (
-                    <button
-                      type="button"
-                      onClick={() => setShowMoreLayouts(true)}
-                      className="text-xs text-center w-full py-2 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      +5 more
-                    </button>
-                  )}
                 </div>
 
                 {/* User Keywords */}
@@ -533,27 +492,17 @@ const AffirmationBuilder = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-2 pt-2">
+                <div className="grid grid-cols-2 gap-2 pt-2">
                   <Button 
                     onClick={handleGenerate}
                     className="w-full"
                     disabled={loading}
                   >
                     {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    Generate Preview
+                    Preview
                   </Button>
                   
                   <Button 
-                    onClick={handleGenerateUnique}
-                    variant="secondary"
-                    className="w-full"
-                    disabled={loading}
-                  >
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Generate Unique
-                  </Button>
-
-                  <Button
                     onClick={handleRandomize}
                     variant="outline"
                     className="w-full"
@@ -562,11 +511,21 @@ const AffirmationBuilder = () => {
                     Randomize
                   </Button>
                 </div>
+                
+                <Button 
+                  onClick={handleGenerateUnique}
+                  variant="default"
+                  className="w-full mt-2"
+                  disabled={loading}
+                >
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  Generate Unique Image
+                </Button>
               </CardContent>
             </Card>
 
             {/* Right Column: Preview */}
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
                 <CardTitle>Preview</CardTitle>
                 <CardDescription>Generated affirmation design</CardDescription>
@@ -595,40 +554,52 @@ const AffirmationBuilder = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    <div className="bg-background p-8 rounded-lg border">
-                      <h3 className="font-display text-2xl md:text-3xl text-center mb-6 tracking-wide" style={{ color: '#c9a961' }}>
-                        {generatedData.headline}
-                      </h3>
-                      <div className="space-y-3 text-sm">
-                        {generatedData.supportingLines.map((line, i) => (
-                          <p 
-                            key={i} 
-                            className="text-center leading-relaxed"
-                            style={{ 
-                              color: i % 3 === 0 ? '#2c2c2c' : i % 3 === 1 ? '#8b8b8b' : '#a89078',
-                              fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                              fontWeight: i % 2 === 0 ? '600' : '400'
-                            }}
-                          >
-                            {line}
-                          </p>
-                        ))}
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-br from-background to-muted/20 p-10 rounded-lg border-2 border-muted min-h-[500px] flex flex-col justify-center relative overflow-hidden">
+                      {/* Decorative corner elements */}
+                      <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-muted-foreground/20"></div>
+                      <div className="absolute top-4 right-4 w-12 h-12 border-r-2 border-t-2 border-muted-foreground/20"></div>
+                      <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-muted-foreground/20"></div>
+                      <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-muted-foreground/20"></div>
+                      
+                      {/* Decorative center line */}
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/30 to-transparent"></div>
+                      
+                      <div className="relative z-10">
+                        <h3 className="font-display text-3xl md:text-4xl text-center mb-8 tracking-wide" style={{ color: '#c9a961' }}>
+                          {generatedData.headline}
+                        </h3>
+                        
+                        <div className="space-y-4 mb-8">
+                          {generatedData.supportingLines.map((line, i) => (
+                            <p 
+                              key={i} 
+                              className="text-center leading-relaxed text-base"
+                              style={{ 
+                                color: i % 3 === 0 ? '#2c2c2c' : i % 3 === 1 ? '#8b8b8b' : '#a89078',
+                                fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                                fontWeight: i % 2 === 0 ? '600' : '400'
+                              }}
+                            >
+                              {line}
+                            </p>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="space-y-3 text-xs">
+                    <div className="space-y-4 bg-muted/30 p-4 rounded-lg">
                       <div>
-                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Palette:</p>
-                        <p className="text-muted-foreground">{generatedData.paletteNames.join(' / ')}</p>
+                        <p className="font-semibold mb-2 text-sm" style={{ color: '#c9a961' }}>Palette:</p>
+                        <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.paletteNames.join(' / ')}</p>
                       </div>
                       <div>
-                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Layout Style:</p>
-                        <p className="text-muted-foreground">{generatedData.layoutStyle}</p>
+                        <p className="font-semibold mb-2 text-sm" style={{ color: '#c9a961' }}>Layout Style:</p>
+                        <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.layoutStyle}</p>
                       </div>
                       <div>
-                        <p className="font-medium mb-2" style={{ color: '#c9a961' }}>Accent Elements:</p>
-                        <p className="text-muted-foreground">{generatedData.accentElements}</p>
+                        <p className="font-semibold mb-2 text-sm" style={{ color: '#c9a961' }}>Accent Elements:</p>
+                        <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.accentElements}</p>
                       </div>
                     </div>
                   </div>
