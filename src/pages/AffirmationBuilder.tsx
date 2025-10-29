@@ -368,14 +368,14 @@ const AffirmationBuilder = () => {
           </div>
 
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column: Input Form */}
-            <Card className="bg-white shadow-sm border border-neutral-200 rounded-xl">
+            <Card>
               <CardHeader>
-                <CardTitle className="font-display text-2xl">Your Inputs</CardTitle>
-                <CardDescription>Define your affirmation poster style</CardDescription>
+                <CardTitle>Your Inputs</CardTitle>
+                <CardDescription>Choose your affirmation style</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4">
                 {/* Theme Selection */}
                 <div className="space-y-2">
                   <Label htmlFor="theme">Theme</Label>
@@ -458,17 +458,16 @@ const AffirmationBuilder = () => {
                 {/* Layout Style Selection */}
                 <div className="space-y-2">
                   <Label htmlFor="layout">Layout Style</Label>
-                  <p className="text-xs text-text-secondary mb-2">Leave blank for auto-pick based on theme</p>
                   <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
                     <SelectTrigger id="layout">
-                      <SelectValue placeholder="Auto (based on theme)" />
+                      <SelectValue placeholder="Auto" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="auto">Auto (based on theme)</SelectItem>
-                      <SelectItem value="clean-serif">Clean Serif Poster</SelectItem>
-                      <SelectItem value="botanical">Botanical / Feminine</SelectItem>
-                      <SelectItem value="grit">Grit / Directional</SelectItem>
-                      <SelectItem value="halo">Halo / Orbital</SelectItem>
+                      <SelectItem value="auto">Auto</SelectItem>
+                      <SelectItem value="clean-serif">Clean Serif</SelectItem>
+                      <SelectItem value="botanical">Botanical</SelectItem>
+                      <SelectItem value="grit">Grit</SelectItem>
+                      <SelectItem value="halo">Halo</SelectItem>
                       <SelectItem value="grid">Grid</SelectItem>
                       {showMoreLayouts && (
                         <>
@@ -496,39 +495,32 @@ const AffirmationBuilder = () => {
 
                 {/* User Keywords */}
                 <div className="space-y-2">
-                  <Label htmlFor="keywords">Words / Phrases (Optional)</Label>
-                  <p className="text-xs text-text-secondary mb-2">
-                    Add keywords like "cold", "fire", "rain" to influence colors and design elements
-                  </p>
+                  <Label htmlFor="keywords">Keywords (Optional)</Label>
                   <Textarea
                     id="keywords"
-                    placeholder="e.g., cold, fire, earth, rain, forest, sun..."
+                    placeholder="e.g., cold, fire, earth, rain..."
                     value={userKeywords}
                     onChange={(e) => setUserKeywords(e.target.value)}
-                    rows={3}
-                    className="font-sans text-sm"
+                    rows={2}
                   />
                 </div>
 
                 {/* Style Seed */}
                 <div className="space-y-2">
                   <Label htmlFor="seed">Style Seed (Optional)</Label>
-                  <p className="text-xs text-text-secondary mb-2">For reproducible results</p>
                   <Input
                     id="seed"
-                    type="text"
-                    placeholder="e.g., 1234"
+                    placeholder="1234"
                     value={seed}
                     onChange={(e) => setSeed(e.target.value)}
                   />
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-3 pt-4">
+                <div className="space-y-2 pt-2">
                   <Button 
                     onClick={handleGenerate}
                     className="w-full"
-                    size="lg"
                     disabled={loading}
                   >
                     {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
@@ -539,36 +531,34 @@ const AffirmationBuilder = () => {
                     onClick={handleGenerateUnique}
                     variant="secondary"
                     className="w-full"
-                    size="lg"
                     disabled={loading}
                   >
                     <Sparkles className="mr-2 h-4 w-4" />
-                    Generate Unique Image
+                    Generate Unique
                   </Button>
 
                   <Button
                     onClick={handleRandomize}
                     variant="outline"
                     className="w-full"
-                    size="sm"
                     disabled={loading}
                   >
-                    Randomize All
+                    Randomize
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
             {/* Right Column: Preview */}
-            <Card className="bg-white shadow-sm border border-neutral-200 rounded-xl">
+            <Card>
               <CardHeader>
-                <CardTitle className="font-display text-2xl">Preview</CardTitle>
-                <CardDescription>Your generated affirmation poster preview</CardDescription>
+                <CardTitle>Preview</CardTitle>
+                <CardDescription>Generated affirmation design</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent>
                 {generatedImageB64 ? (
                   <div className="space-y-4">
-                    <div className="rounded-lg overflow-hidden border border-border">
+                    <div className="rounded-lg overflow-hidden border">
                       <img 
                         src={generatedImageB64} 
                         alt="Generated Affirmation" 
@@ -589,43 +579,43 @@ const AffirmationBuilder = () => {
                     </Button>
                   </div>
                 ) : (
-                  <>
-                    <div className="bg-neutral-50 p-6 rounded-lg border border-border">
-                      <h3 className="text-2xl font-bold text-center mb-4 text-clay">
+                  <div className="space-y-4">
+                    <div className="bg-muted/50 p-8 rounded-lg">
+                      <h3 className="font-display text-2xl text-center mb-4">
                         {generatedData.headline}
                       </h3>
-                      <div className="space-y-2 text-sm text-text-primary">
+                      <div className="space-y-1.5 text-sm">
                         {generatedData.supportingLines.map((line, i) => (
-                          <p key={i} className="text-center">{line}</p>
+                          <p key={i} className="text-center opacity-80">{line}</p>
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-4 text-sm">
+                    <div className="space-y-3">
                       <div>
-                        <h4 className="font-semibold text-text-primary mb-2">Palette</h4>
-                        <div className="flex gap-2 flex-wrap">
+                        <p className="text-xs font-medium mb-2">Palette</p>
+                        <div className="flex gap-2">
                           {generatedData.paletteNames.map((color, i) => (
-                            <div key={i} className="flex items-center gap-2">
+                            <div key={i} className="flex flex-col items-center gap-1">
                               <div 
-                                className="w-8 h-8 rounded border border-border" 
+                                className="w-10 h-10 rounded border" 
                                 style={{ backgroundColor: color }}
                               />
-                              <span className="text-xs text-text-secondary">{color}</span>
+                              <span className="text-[10px] opacity-60">{color}</span>
                             </div>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-text-primary mb-2">Layout Style</h4>
-                        <p className="text-text-secondary">{generatedData.layoutStyle}</p>
+                        <p className="text-xs font-medium mb-1">Style</p>
+                        <p className="text-xs opacity-70">{generatedData.layoutStyle}</p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-text-primary mb-2">Accent Elements</h4>
-                        <p className="text-text-secondary">{generatedData.accentElements}</p>
+                        <p className="text-xs font-medium mb-1">Accents</p>
+                        <p className="text-xs opacity-70">{generatedData.accentElements}</p>
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
               </CardContent>
             </Card>
