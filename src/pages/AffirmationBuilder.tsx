@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { apiFetch } from "@/lib/api";
 import { Helmet } from "react-helmet";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -95,32 +95,8 @@ const AffirmationBuilder = () => {
   const handleGenerate = async () => {
     setLoading(true);
     setGeneratedImageB64(null);
-    try {
-      const resp = await apiFetch('/api/affirmation/preview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme, mood, text: userKeywords, styleSeed: seed || undefined }),
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        const spec = data?.designSpec;
-        if (spec) {
-          setGeneratedData({
-            mainAffirmation: spec.mainAffirmation,
-            supportingPhrases: spec.supportingPhrases,
-            palette: spec.palette,
-            layoutStyle: spec.layoutStyle,
-            accentStyle: spec.accentStyle,
-          });
-          setLoading(false);
-          return;
-        }
-      }
-    } catch (e) {
-      // fall through to local mapping
-    }
-
-    // Fallback local mapping if API not available
+    
+    // Use local mapping for preview (fast, no API needed)
     const themeMap: Record<string, GeneratedData> = {
       "calm-morning": {
         mainAffirmation: "SOFT WITHIN",
@@ -244,16 +220,18 @@ const AffirmationBuilder = () => {
     setLoading(true);
     setGeneratedImageB64(null);
     try {
-      const resp = await apiFetch('/api/affirmation/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme, mood, text: userKeywords, styleSeed: seed || undefined }),
+      const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
+        body: { 
+          theme, 
+          mood, 
+          text: userKeywords, 
+          styleSeed: seed || undefined 
+        },
       });
-      const data = await resp.json();
       
-      if (!resp.ok) {
-        console.error('Image generation API error:', resp.status, data);
-        toast.error(data?.error || 'Failed to generate image. Please check your API configuration.');
+      if (error) {
+        console.error('Edge function error:', error);
+        toast.error('Failed to generate image. Please try again.');
         return;
       }
       
@@ -266,7 +244,7 @@ const AffirmationBuilder = () => {
       }
     } catch (e) {
       console.error('Image generation error:', e);
-      toast.error(e instanceof Error ? e.message : 'Network error. Please check your connection.');
+      toast.error(e instanceof Error ? e.message : 'An unexpected error occurred.');
     } finally {
       setLoading(false);
     }

@@ -1,0 +1,4 @@
+project_id = "tfximqohiizipawvzkms"
+
+[functions.generate-affirmation-image]
+verify_jwt = false
