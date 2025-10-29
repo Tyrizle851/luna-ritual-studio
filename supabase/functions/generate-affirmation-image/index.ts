@@ -1,4 +1,4 @@
-// Edge function for generating affirmation images using OpenAI
+// Edge function for generating affirmation images using Lovable AI
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,9 +19,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('OPENAI_API_KEY');
+    const apiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!apiKey) {
-      console.error('OPENAI_API_KEY not configured');
+      console.error('LOVABLE_API_KEY not configured');
       return new Response(
         JSON.stringify({ error: 'API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -36,46 +36,69 @@ Deno.serve(async (req) => {
     // Build the prompt for image generation
     const prompt = buildAffirmationPrompt(theme, mood, text || '', styleSeed);
     
-    console.log('Calling OpenAI with prompt length:', prompt.length);
+    console.log('Calling Lovable AI with prompt length:', prompt.length);
 
-    // Call OpenAI's image generation API
-    const openaiResponse = await fetch('https://api.openai.com/v1/images/generations', {
+    // Call Lovable AI's image generation API (Nano banana model)
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-image-1',
-        prompt: prompt,
-        size: '1024x1024',
-        n: 1,
+        model: 'google/gemini-2.5-flash-image-preview',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        modalities: ['image', 'text']
       }),
     });
 
-    if (!openaiResponse.ok) {
-      const errorText = await openaiResponse.text();
-      console.error('OpenAI API error:', openaiResponse.status, errorText);
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      console.error('Lovable AI error:', aiResponse.status, errorText);
+      
+      // Handle rate limiting and payment errors
+      if (aiResponse.status === 429) {
+        return new Response(
+          JSON.stringify({ error: 'Rate limit exceeded. Please try again in a moment.' }),
+          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (aiResponse.status === 402) {
+        return new Response(
+          JSON.stringify({ error: 'AI credits depleted. Please add credits to continue.' }),
+          { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
       return new Response(
         JSON.stringify({ 
           error: 'Image generation failed', 
-          detail: `OpenAI returned ${openaiResponse.status}`,
+          detail: `AI Gateway returned ${aiResponse.status}`,
           message: errorText 
         }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const openaiData = await openaiResponse.json();
-    const imageB64 = openaiData?.data?.[0]?.b64_json;
+    const aiData = await aiResponse.json();
+    const imageUrl = aiData?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-    if (!imageB64) {
-      console.error('No image data in OpenAI response');
+    if (!imageUrl) {
+      console.error('No image data in AI response');
       return new Response(
-        JSON.stringify({ error: 'No image returned from API' }),
+        JSON.stringify({ error: 'No image returned from AI' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Extract base64 data from data URL (format: data:image/png;base64,...)
+    const base64Match = imageUrl.match(/^data:image\/\w+;base64,(.+)$/);
+    const imageB64 = base64Match ? base64Match[1] : imageUrl;
 
     console.log('Successfully generated image, size:', imageB64.length);
 
@@ -120,7 +143,7 @@ function buildAffirmationPrompt(theme: string, mood: string, userText: string, s
   const themeDesc = themeDescriptions[theme] || themeDescriptions['peace'];
   const moodStyle = moodStyles[mood] || moodStyles['minimalist'];
 
-  return `Create a high-quality, printable motivational affirmation poster with these specifications:
+  return `Generate a high-quality, printable motivational affirmation poster design with these specifications:
 
 THEME & ENERGY: ${themeDesc}
 VISUAL STYLE: ${moodStyle}
@@ -135,28 +158,28 @@ DESIGN REQUIREMENTS:
 - White space: Generous breathing room, professional spacing
 
 CONTENT:
-- 1 main affirmation (2-4 words, bold, uppercase, powerful)
-- 8-12 supporting short affirmations about ${themeDesc}
-- Mix of self-belief, grounding, calm assertions, forward motion
+- 1 main affirmation (2-4 words, bold, uppercase, powerful) about ${themeDesc}
+- 8-12 supporting short affirmations mixing self-belief, grounding, calm assertions, forward motion
+- All text should be clearly readable and well-composed
 
 DECORATIVE ELEMENTS:
 - 4-8 delicate accent elements: botanical line art, geometric shapes, or organic flourishes
 - Hand-drawn, organic feel (not overly digital/perfect)
-- Elements enhance but don't overwhelm
+- Elements enhance but don't overwhelm the text
 
 ARTISTIC STYLE:
 - Modern farmhouse meets minimalist aesthetic
 - Subtle paper texture or organic imperfection
 - Hand-drawn appearance with slight irregularity
 - Asymmetrical but visually balanced
-- Professional yet approachable
+- Professional yet approachable, suitable for wall art
 
 TECHNICAL:
-- 300 DPI print-ready quality
+- High-quality print-ready appearance
 - Excellent readability and contrast
 - Clean background (white/cream) or subtle texture
 - No complex gradients, print-safe colors
 - No neon, no inappropriate content
 
-Create a design that feels handcrafted, intentional, and premium - suitable for wall art or digital download.`;
+Create a beautiful, handcrafted-looking design that feels intentional and premium - perfect for printing or digital display.`;
 }
