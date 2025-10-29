@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History } from "lucide-react";
+import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface GeneratedData {
   headline: string;
@@ -79,6 +80,9 @@ const AffirmationBuilder = () => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showGallery, setShowGallery] = useState(false);
+  const [activeTab, setActiveTab] = useState("create");
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showPresets, setShowPresets] = useState(true);
 
   // Staff Picks Presets
   const staffPresets: StaffPreset[] = [
@@ -661,36 +665,54 @@ const AffirmationBuilder = () => {
             </p>
           </div>
 
-          {/* Staff Picks Section */}
-          <Card className="mb-8 bg-gradient-to-br from-card to-muted/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                Staff Picks
-              </CardTitle>
-              <CardDescription>Curated preset combinations that look amazing</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                {staffPresets.map((preset) => (
-                  <Button
-                    key={preset.name}
-                    variant="outline"
-                    className="flex flex-col h-auto p-4 text-left hover:bg-primary/10 hover:border-primary transition-all"
-                    onClick={() => applyPreset(preset)}
-                  >
-                    <span className="font-semibold mb-1">{preset.name}</span>
-                    <span className="text-xs text-muted-foreground">{preset.description}</span>
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Staff Picks Section - Collapsible on Mobile */}
+          <Collapsible open={showPresets} onOpenChange={setShowPresets} className="mb-8">
+            <Card className="bg-gradient-to-br from-card to-muted/20">
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/20 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      <CardTitle>Staff Picks</CardTitle>
+                    </div>
+                    <ChevronDown className={`h-5 w-5 transition-transform ${showPresets ? 'rotate-180' : ''}`} />
+                  </div>
+                  <CardDescription>Curated preset combinations that look amazing</CardDescription>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {staffPresets.map((preset) => (
+                      <Button
+                        key={preset.name}
+                        variant="outline"
+                        className="flex flex-col h-auto p-3 text-left hover:bg-primary/10 hover:border-primary transition-all"
+                        onClick={() => {
+                          applyPreset(preset);
+                          setActiveTab("preview");
+                        }}
+                      >
+                        <span className="font-semibold mb-1 text-sm">{preset.name}</span>
+                        <span className="text-xs text-muted-foreground line-clamp-2">{preset.description}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
-          {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column: Input Form */}
-            <Card className="bg-card">
+          {/* Mobile: Tabs, Desktop: Two Columns */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="lg:hidden">
+            <TabsList className="grid w-full grid-cols-2 mb-4 sticky top-0 z-10 bg-background">
+              <TabsTrigger value="create">Create</TabsTrigger>
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+            </TabsList>
+
+            {/* Mobile Create Tab */}
+            <TabsContent value="create">
+              <Card className="bg-card">
               <CardHeader>
                 <CardTitle>Your Inputs</CardTitle>
                 <CardDescription>Choose your affirmation style</CardDescription>
@@ -745,51 +767,511 @@ const AffirmationBuilder = () => {
                   </Select>
                 </div>
 
-                {/* Layout Style Selection */}
+                {/* Advanced Options - Collapsible */}
+                <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-between">
+                      <span>Advanced Options</span>
+                      <ChevronDown className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-4 pt-2">
+                    {/* Layout Style Selection */}
+                    <div className="space-y-2">
+                      <Label htmlFor="layout">Layout Style</Label>
+                      <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
+                        <SelectTrigger id="layout">
+                          <SelectValue placeholder="Auto" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="auto">Auto</SelectItem>
+                          <SelectItem value="clean-serif">Clean Serif</SelectItem>
+                          <SelectItem value="botanical">Botanical</SelectItem>
+                          <SelectItem value="grit">Grit</SelectItem>
+                          <SelectItem value="halo">Halo</SelectItem>
+                          <SelectItem value="grid">Grid</SelectItem>
+                          <SelectItem value="organic">Organic</SelectItem>
+                          <SelectItem value="celestial">Celestial</SelectItem>
+                          <SelectItem value="geometric">Geometric</SelectItem>
+                          <SelectItem value="vintage">Vintage</SelectItem>
+                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* User Keywords */}
+                    <div className="space-y-2">
+                      <Label htmlFor="keywords">Keywords</Label>
+                      <Textarea
+                        id="keywords"
+                        placeholder="e.g., cold, fire, earth, rain..."
+                        value={userKeywords}
+                        onChange={(e) => setUserKeywords(e.target.value)}
+                        rows={2}
+                      />
+                    </div>
+
+                    {/* Style Seed */}
+                    <div className="space-y-2">
+                      <Label htmlFor="seed">Style Seed</Label>
+                      <Input
+                        id="seed"
+                        placeholder="1234"
+                        value={seed}
+                        onChange={(e) => setSeed(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Color Customization */}
+                    <div className="border-t pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <Label className="flex items-center gap-2">
+                          <Palette className="h-4 w-4" />
+                          Custom Colors
+                        </Label>
+                        {customPalette.length > 0 && (
+                          <Button variant="ghost" size="sm" onClick={resetPalette}>
+                            Reset
+                          </Button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {(customPalette.length > 0 ? customPalette : generatedData.palette).map((color, i) => (
+                          <div key={i} className="flex flex-col gap-1">
+                            <Input
+                              type="color"
+                              value={color}
+                              onChange={(e) => updatePaletteColor(i, e.target.value)}
+                              className="h-12 cursor-pointer"
+                            />
+                            <Input
+                              type="text"
+                              value={color}
+                              onChange={(e) => updatePaletteColor(i, e.target.value)}
+                              className="h-8 text-xs text-center"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Action Buttons */}
+                <div className="space-y-3 pt-4">
+                  <Button 
+                    onClick={() => {
+                      handleGenerate();
+                      setActiveTab("preview");
+                    }}
+                    variant="outline"
+                    className="w-full h-11"
+                    disabled={loading}
+                  >
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                    Preview
+                  </Button>
+                  
+                  <Button 
+                    onClick={handleRandomize}
+                    variant="secondary"
+                    className="w-full h-11"
+                    disabled={loading}
+                  >
+                    Randomize
+                  </Button>
+                
+                  <Button 
+                    onClick={handleGenerateUnique}
+                    className="w-full h-12 bg-primary hover:bg-primary/90"
+                    disabled={loading}
+                  >
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Generate Unique Image
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+            </TabsContent>
+
+            {/* Mobile Preview Tab */}
+            <TabsContent value="preview">
+
+              <Card className="bg-card">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                <div>
+                  <CardTitle>Preview</CardTitle>
+                  <CardDescription>Generated affirmation design</CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  {!isEditing && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={toggleFavorite}
+                        className={isFavorite ? "text-red-500" : ""}
+                      >
+                        <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={startEditing}
+                      >
+                        <Edit2 className="h-4 w-4" />
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="icon">
+                            <Share2 className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
+                            Share to X/Twitter
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
+                            Share to Facebook
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('pinterest')}>
+                            Pin to Pinterest
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('copy')}>
+                            Copy Caption
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </>
+                  )}
+                  {isEditing && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={saveEdits}
+                      >
+                        <Check className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={cancelEdits}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                {generatedImageB64 ? (
+                  <div className="space-y-4">
+                    <div className="rounded-lg overflow-hidden border">
+                      <img 
+                        src={generatedImageB64} 
+                        alt="Generated Affirmation" 
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button className="w-full">
+                          <Download className="mr-2 h-4 w-4" />
+                          Download Image
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        <DropdownMenuItem onClick={() => downloadImage('original')}>
+                          Original Size
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
+                          Instagram Square (1080x1080)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
+                          Instagram Story (1080x1920)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
+                          Print 8x10
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
+                          Print 11x14
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-br from-background to-muted/20 p-12 rounded-lg border-2 border-muted min-h-[600px] flex flex-col justify-between relative overflow-hidden">
+                      {/* Decorative corner elements */}
+                      <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-muted-foreground/30"></div>
+                      <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-muted-foreground/30"></div>
+                      <div className="absolute bottom-4 left-4 w-16 h-16 border-l-2 border-b-2 border-muted-foreground/30"></div>
+                      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-muted-foreground/30"></div>
+                      
+                      {/* Additional decorative elements */}
+                      <div className="absolute top-1/4 left-8 w-8 h-8 rounded-full border border-muted-foreground/20"></div>
+                      <div className="absolute bottom-1/4 right-8 w-6 h-6 rounded-full border border-muted-foreground/20"></div>
+                      <div className="absolute top-1/3 right-12 w-1 h-16 bg-gradient-to-b from-muted-foreground/20 to-transparent"></div>
+                      <div className="absolute bottom-1/3 left-12 w-1 h-16 bg-gradient-to-t from-muted-foreground/20 to-transparent"></div>
+                      
+                      {/* Top section */}
+                      <div className="relative z-10">
+                        <div className="flex justify-center mb-3">
+                          <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
+                        </div>
+                        {isEditing ? (
+                          <Input
+                            value={editedHeadline}
+                            onChange={(e) => setEditedHeadline(e.target.value.toUpperCase())}
+                            className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase bg-transparent border-2 border-dashed"
+                            style={{ color: generatedData.palette[1] || '#c9a961' }}
+                          />
+                        ) : (
+                          <h3 className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
+                            {generatedData.headline}
+                          </h3>
+                        )}
+                        <div className="flex justify-center mb-8">
+                          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
+                        </div>
+                      </div>
+                      
+                      {/* Middle section with supporting lines */}
+                      <div className="relative z-10 space-y-5 mb-8">
+                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 6).map((line, i) => (
+                          <div key={i} className="flex items-center justify-center gap-3">
+                            {i % 2 === 0 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
+                            {isEditing ? (
+                              <Input
+                                value={line}
+                                onChange={(e) => {
+                                  const newLines = [...editedLines];
+                                  newLines[i] = e.target.value;
+                                  setEditedLines(newLines);
+                                }}
+                                className="text-center leading-relaxed text-base md:text-lg bg-transparent border border-dashed"
+                                style={{ 
+                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
+                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                                  fontWeight: i % 2 === 0 ? '600' : '400'
+                                }}
+                              />
+                            ) : (
+                              <p 
+                                className="text-center leading-relaxed text-base md:text-lg"
+                                style={{ 
+                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
+                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                                  fontWeight: i % 2 === 0 ? '600' : '400'
+                                }}
+                              >
+                                {line}
+                              </p>
+                            )}
+                            {i % 2 === 1 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Bottom decorative line */}
+                      <div className="relative z-10">
+                        <div className="flex justify-center items-center gap-2">
+                          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-muted-foreground/30"></div>
+                          <div className="w-3 h-3 rotate-45 border border-muted-foreground/30"></div>
+                          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-muted-foreground/30"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
+                        <div>
+                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
+                          <p className="text-foreground text-sm font-medium capitalize">{theme}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
+                          <p className="text-foreground text-sm font-medium capitalize">{mood}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
+                          <p className="text-foreground text-sm font-medium capitalize">{layoutStyle || 'Auto'}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
+                        <div>
+                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Palette</p>
+                          <div className="flex gap-2 flex-wrap">
+                            {generatedData.palette.map((color, i) => (
+                              <div key={i} className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded border border-muted" style={{ backgroundColor: color }}></div>
+                                <span className="text-xs text-muted-foreground">{color}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Accents</p>
+                          <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.accentElements}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            </TabsContent>
+          </Tabs>
+
+          {/* Desktop: Two Column Layout (unchanged) */}
+          <div className="hidden lg:grid grid-cols-2 gap-8">
+            {/* Left Column: Input Form */}
+            <Card className="bg-card">
+              <CardHeader>
+                <CardTitle>Your Inputs</CardTitle>
+                <CardDescription>Choose your affirmation style</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Theme Selection */}
                 <div className="space-y-2">
-                  <Label htmlFor="layout">Layout Style</Label>
-                  <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
-                    <SelectTrigger id="layout">
-                      <SelectValue placeholder="Auto" />
+                  <Label htmlFor="theme-desktop">Theme</Label>
+                  <Select value={theme} onValueChange={setTheme}>
+                    <SelectTrigger id="theme-desktop">
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="auto">Auto</SelectItem>
-                      <SelectItem value="clean-serif">Clean Serif</SelectItem>
-                      <SelectItem value="botanical">Botanical</SelectItem>
-                      <SelectItem value="grit">Grit</SelectItem>
-                      <SelectItem value="halo">Halo</SelectItem>
-                      <SelectItem value="grid">Grid</SelectItem>
-                      <SelectItem value="organic">Organic</SelectItem>
-                      <SelectItem value="celestial">Celestial</SelectItem>
-                      <SelectItem value="geometric">Geometric</SelectItem>
-                      <SelectItem value="vintage">Vintage</SelectItem>
-                      <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                      <SelectItem value="confidence">Confidence</SelectItem>
+                      <SelectItem value="peace">Peace</SelectItem>
+                      <SelectItem value="focus">Focus</SelectItem>
+                      <SelectItem value="gratitude">Gratitude</SelectItem>
+                      <SelectItem value="abundance">Abundance</SelectItem>
+                      <SelectItem value="healing">Healing</SelectItem>
+                      <SelectItem value="strength">Strength</SelectItem>
+                      <SelectItem value="joy">Joy</SelectItem>
+                      <SelectItem value="balance">Balance</SelectItem>
+                      <SelectItem value="courage">Courage</SelectItem>
+                      <SelectItem value="clarity">Clarity</SelectItem>
+                      <SelectItem value="renewal">Renewal</SelectItem>
+                      <SelectItem value="freedom">Freedom</SelectItem>
+                      <SelectItem value="passion">Passion</SelectItem>
+                      <SelectItem value="wisdom">Wisdom</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* User Keywords */}
+                {/* Mood Selection */}
                 <div className="space-y-2">
-                  <Label htmlFor="keywords">Keywords (Optional)</Label>
-                  <Textarea
-                    id="keywords"
-                    placeholder="e.g., cold, fire, earth, rain..."
-                    value={userKeywords}
-                    onChange={(e) => setUserKeywords(e.target.value)}
-                    rows={2}
-                  />
+                  <Label htmlFor="mood-desktop">Mood</Label>
+                  <Select value={mood} onValueChange={setMood}>
+                    <SelectTrigger id="mood-desktop">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="minimalist">Minimalist</SelectItem>
+                      <SelectItem value="bohemian">Bohemian</SelectItem>
+                      <SelectItem value="modern-serif">Modern Serif</SelectItem>
+                      <SelectItem value="coastal">Coastal</SelectItem>
+                      <SelectItem value="earthy">Earthy</SelectItem>
+                      <SelectItem value="vibrant">Vibrant</SelectItem>
+                      <SelectItem value="pastel">Pastel</SelectItem>
+                      <SelectItem value="monochrome">Monochrome</SelectItem>
+                      <SelectItem value="sunset">Sunset</SelectItem>
+                      <SelectItem value="forest">Forest</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
-                {/* Style Seed */}
-                <div className="space-y-2">
-                  <Label htmlFor="seed">Style Seed (Optional)</Label>
-                  <Input
-                    id="seed"
-                    placeholder="1234"
-                    value={seed}
-                    onChange={(e) => setSeed(e.target.value)}
-                  />
-                </div>
+                {/* Advanced Options - Collapsible */}
+                <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-between">
+                      <span>Advanced Options</span>
+                      <ChevronDown className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-4 pt-2">
+                    {/* Layout Style Selection */}
+                    <div className="space-y-2">
+                      <Label htmlFor="layout-desktop">Layout Style</Label>
+                      <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
+                        <SelectTrigger id="layout-desktop">
+                          <SelectValue placeholder="Auto" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="auto">Auto</SelectItem>
+                          <SelectItem value="clean-serif">Clean Serif</SelectItem>
+                          <SelectItem value="botanical">Botanical</SelectItem>
+                          <SelectItem value="grit">Grit</SelectItem>
+                          <SelectItem value="halo">Halo</SelectItem>
+                          <SelectItem value="grid">Grid</SelectItem>
+                          <SelectItem value="organic">Organic</SelectItem>
+                          <SelectItem value="celestial">Celestial</SelectItem>
+                          <SelectItem value="geometric">Geometric</SelectItem>
+                          <SelectItem value="vintage">Vintage</SelectItem>
+                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* User Keywords */}
+                    <div className="space-y-2">
+                      <Label htmlFor="keywords-desktop">Keywords</Label>
+                      <Textarea
+                        id="keywords-desktop"
+                        placeholder="e.g., cold, fire, earth, rain..."
+                        value={userKeywords}
+                        onChange={(e) => setUserKeywords(e.target.value)}
+                        rows={2}
+                      />
+                    </div>
+
+                    {/* Style Seed */}
+                    <div className="space-y-2">
+                      <Label htmlFor="seed-desktop">Style Seed</Label>
+                      <Input
+                        id="seed-desktop"
+                        placeholder="1234"
+                        value={seed}
+                        onChange={(e) => setSeed(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Color Customization */}
+                    <div className="border-t pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <Label className="flex items-center gap-2">
+                          <Palette className="h-4 w-4" />
+                          Custom Colors
+                        </Label>
+                        {customPalette.length > 0 && (
+                          <Button variant="ghost" size="sm" onClick={resetPalette}>
+                            Reset
+                          </Button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {(customPalette.length > 0 ? customPalette : generatedData.palette).map((color, i) => (
+                          <div key={i} className="flex flex-col gap-1">
+                            <Input
+                              type="color"
+                              value={color}
+                              onChange={(e) => updatePaletteColor(i, e.target.value)}
+                              className="h-12 cursor-pointer"
+                            />
+                            <Input
+                              type="text"
+                              value={color}
+                              onChange={(e) => updatePaletteColor(i, e.target.value)}
+                              className="h-8 text-xs text-center"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4">
@@ -821,43 +1303,10 @@ const AffirmationBuilder = () => {
                     Generate Unique Image
                   </Button>
                 </div>
-
-                {/* Color Customization */}
-                <div className="border-t pt-4 mt-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <Label className="flex items-center gap-2">
-                      <Palette className="h-4 w-4" />
-                      Custom Colors
-                    </Label>
-                    {customPalette.length > 0 && (
-                      <Button variant="ghost" size="sm" onClick={resetPalette}>
-                        Reset
-                      </Button>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(customPalette.length > 0 ? customPalette : generatedData.palette).map((color, i) => (
-                      <div key={i} className="flex flex-col gap-1">
-                        <Input
-                          type="color"
-                          value={color}
-                          onChange={(e) => updatePaletteColor(i, e.target.value)}
-                          className="h-12 cursor-pointer"
-                        />
-                        <Input
-                          type="text"
-                          value={color}
-                          onChange={(e) => updatePaletteColor(i, e.target.value)}
-                          className="h-8 text-xs text-center"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </CardContent>
             </Card>
 
-            {/* Right Column: Preview */}
+            {/* Right Column: Preview (Desktop) */}
             <Card className="bg-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
                 <div>
