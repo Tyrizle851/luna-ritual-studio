@@ -5,18 +5,41 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface GenerateRequest {
+// DesignSpec type (shared with frontend)
+interface DesignSpec {
   theme: string;
   mood: string;
-  text: string;
-  styleSeed?: string;
-  preview?: {
-    headline: string;
-    supportingLines: string[];
-    paletteNames: string[];
-    layoutStyle: string;
-    accentElements: string;
+  energyLevel: string;
+  layoutArchetype: string;
+  paletteToken: {
+    name: string;
+    description: string;
+    hex: string[];
+    contrast: string;
   };
+  accentSet: string[];
+  typography: {
+    headline: string;
+    support: string;
+  };
+  mainAffirmation: string;
+  supportingPhrases: string[];
+  styleVariant?: number;
+  accentVariant?: number;
+  paletteVariant?: number;
+  copyVariant?: number;
+  textureVariant?: number;
+  seed?: number | string;
+  specVersion: number;
+  constraints: {
+    ratio: string;
+    dpi: number;
+    ban: string[];
+  };
+}
+
+interface GenerateRequest {
+  designSpec: DesignSpec;
 }
 
 Deno.serve(async (req) => {
@@ -36,30 +59,12 @@ Deno.serve(async (req) => {
     }
 
     const body: GenerateRequest = await req.json();
-    const { theme, mood, text, styleSeed, preview } = body;
+    const { designSpec } = body;
 
-    console.log('Generating affirmation image:', { theme, mood, textLength: text?.length || 0, styleSeed });
+    console.log('Generating affirmation image with designSpec:', JSON.stringify(designSpec, null, 2));
 
-    // Build the prompt for image generation
-    let prompt = buildAffirmationPrompt(theme, mood, text || '', styleSeed);
-    
-    // Enhance prompt with preview data if provided
-    if (preview) {
-      prompt += `\n\nDESIGN SPECIFICATION:\n`;
-      prompt += `Headline: "${preview.headline}"\n`;
-      prompt += `Supporting lines: ${preview.supportingLines.join(', ')}\n`;
-      prompt += `Color palette (use these exact colors): ${preview.paletteNames.join(', ')}\n`;
-      prompt += `Layout: ${preview.layoutStyle}\n`;
-      prompt += `Accent elements (MUST include these visible elements): ${preview.accentElements}\n`;
-      prompt += `\n\nCRITICAL REQUIREMENTS:\n`;
-      prompt += `- The generated image MUST visually incorporate ALL specified accent elements\n`;
-      prompt += `- If arrows are mentioned, include visible arrows in the design\n`;
-      prompt += `- If leaves are mentioned, include clear botanical leaf elements\n`;
-      prompt += `- If geometric shapes are mentioned, include those shapes prominently\n`;
-      prompt += `- Use the EXACT color palette provided - these colors must be visible in the design\n`;
-      prompt += `- Match the layout description precisely\n`;
-      prompt += `- All text must be readable and match the specified headline and supporting lines`;
-    }
+    // Build the master prompt using the complete design spec
+    const prompt = buildMasterPrompt(designSpec);
     
     console.log('Calling Lovable AI with prompt length:', prompt.length);
 
@@ -147,73 +152,91 @@ Deno.serve(async (req) => {
   }
 });
 
-function buildAffirmationPrompt(theme: string, mood: string, userText: string, styleSeed?: string): string {
-  const themeDescriptions: Record<string, string> = {
-    'calm-morning': 'Peaceful sunrise energy, gentle awakening, soft optimism, fresh starts',
-    'focus': 'Sharp, clear, purposeful energy, clarity, determination, mental strength',
-    'gratitude': 'Warm, abundant, heart-centered energy, thankfulness, appreciation, love',
-    'confidence': 'Bold, empowered, strong energy, self-belief, courage, capability',
-    'peace': 'Serene, calming, meditative energy, tranquility, balance, inner calm',
-    'custom': 'Personalized affirmation based on user intent',
+// Master prompt builder - leads with spec, no conflicts
+function buildMasterPrompt(spec: DesignSpec): string {
+  const themeFragment = getThemeFragment(spec.theme);
+  const moodFragment = getMoodFragment(spec.mood);
+  const layoutFragment = getLayoutFragment(spec.layoutArchetype);
+
+  return `You are generating a PRINT-READY affirmation poster that must EXACTLY match the provided spec.
+
+### DESIGN SPEC (authoritative; do not deviate)
+THEME: ${spec.theme} | MOOD: ${spec.mood} | ENERGY: ${spec.energyLevel}
+LAYOUT_ARCHETYPE: ${spec.layoutArchetype}
+PALETTE_TOKEN: ${spec.paletteToken.name}
+PALETTE_HEX_ALLOWED: ${spec.paletteToken.hex.join(", ")} // Use only these colors.
+TYPOGRAPHY: headline=${spec.typography.headline}, support=${spec.typography.support}
+ACCENTS_ALLOWED: ${spec.accentSet.join(", ")}
+MAIN_AFFIRMATION (use exact text & casing): "${spec.mainAffirmation}"
+SUPPORTING_LINES (use all; keep one thought per line):
+${spec.supportingPhrases.map(line => `- ${line}`).join("\n")}
+
+### THEME TONE GUIDANCE
+${themeFragment}
+
+### MOOD VISUAL GUIDANCE
+${moodFragment}
+
+### LAYOUT RULES
+${layoutFragment}
+
+### TECHNICAL CONSTRAINTS
+- Aspect ratio: ${spec.constraints.ratio}. Resolution: ${spec.constraints.dpi} DPI. High legibility. Print-safe.
+- Banned: ${spec.constraints.ban.join(", ")}.
+- Maintain generous white space.
+- Use only PALETTE_HEX_ALLOWED and ACCENTS_ALLOWED.
+- Keep MAIN_AFFIRMATION large and dominant (3-4× smallest text).
+- NO BORDERS OR MARGINS: Content must fill the entire canvas edge-to-edge.
+- Background extends to all edges (no white space around poster).
+- Return a single finished poster image honoring all constraints.`;
+}
+
+// Theme tone fragments
+function getThemeFragment(theme: string): string {
+  const fragments: Record<string, string> = {
+    confidence: "Assertive, forward, strong. No soft/soothing phrasing. Direct empowerment.",
+    peace: "Calm, gentle, restorative. Soft edges, tranquil energy. Soothing and safe.",
+    focus: "Disciplined, clear, centered. Sharp clarity, minimal distraction. Purposeful.",
+    gratitude: "Warm, appreciative, abundant. Celebratory energy, joyful tone.",
+    abundance: "Rich, flowing, prosperous. Open and expansive. Welcoming overflow.",
+    healing: "Restorative, gentle, nurturing. Patient energy. Soft recovery tone.",
+    strength: "Solid, resilient, enduring. Unshakeable foundation. Powerful stability.",
+    joy: "Bright, radiant, uplifting. Light-filled and celebratory. Pure delight.",
+    balance: "Steady, harmonious, aligned. Centered equilibrium. Calm stability.",
+    courage: "Brave, bold, fearless. Forward momentum despite fear. Daring action.",
+    clarity: "Clear, sharp, discerning. Cutting through fog. Truth-seeing.",
+    renewal: "Fresh, beginning, emerging. New life energy. Clean slate.",
+    freedom: "Open, liberated, unbound. Expansive and wild. Unrestricted.",
+    passion: "Fiery, intense, burning. Full-hearted commitment. Alive with purpose.",
+    wisdom: "Knowing, discerning, insightful. Deep trust. Inner guidance."
   };
+  return fragments[theme] || "Empowering and inspirational tone.";
+}
 
-  const moodStyles: Record<string, string> = {
-    'minimalist': 'Black and white with single accent color, clean, modern',
-    'bohemian': 'Terracotta, mustard, sage, warm cream, organic textures',
-    'modern-serif': 'Charcoal, blush, ivory, gold accents, elegant typography',
-    'coastal': 'Soft blue, sandy beige, sea foam, white, airy and fresh',
-    'earthy': 'Forest green, clay, cream, rust, botanical elements',
+// Mood visual fragments
+function getMoodFragment(mood: string): string {
+  const fragments: Record<string, string> = {
+    minimalist: "Black on warm cream. High contrast. Clean lines, ample negative space. Typography-focused.",
+    "modern-serif": "Charcoal, blush, ivory. Medium contrast. Elegant serifs, refined spacing.",
+    bohemian: "Terracotta, sage, cream. Low contrast. Organic textures, botanical elements.",
+    coastal: "Seafoam, sand, driftwood. Soft blues and sandy neutrals. Airy spacing, sunray or simple geometric accents.",
+    earthy: "Forest green, clay, cream. Medium contrast. Grounded natural textures, botanical motifs.",
+    vibrant: "Black with bright blue, red, orange accents. High contrast. Bold geometric or directional elements.",
+    pastel: "Soft peach, lavender, mint. Low contrast. Halo dots, delicate botanical accents.",
+    monochrome: "Black, cream, gray. High contrast. Geometric precision, minimalist aesthetic.",
+    sunset: "Coral, amber, blush. Medium contrast. Warm radiating energy, sunray or botanical accents.",
+    forest: "Deep green, olive, moss, cream. Medium contrast. Rich botanical elements, natural depth."
   };
+  return fragments[mood] || "Clean and modern aesthetic.";
+}
 
-  const themeDesc = themeDescriptions[theme] || themeDescriptions['peace'];
-  const moodStyle = moodStyles[mood] || moodStyles['minimalist'];
-
-  return `Generate a high-quality, printable motivational affirmation poster design with these specifications:
-
-THEME & ENERGY: ${themeDesc}
-VISUAL STYLE: ${moodStyle}
-USER INTENT: ${userText || 'General positive affirmation'}
-${styleSeed ? `STYLE SEED: ${styleSeed} (use for consistent artistic direction)` : ''}
-
-CRITICAL CANVAS REQUIREMENTS:
-- EXACT ASPECT RATIO: 4:5 portrait orientation (e.g., 2000x2500 pixels, 8x10 inches)
-- NO BORDERS OR MARGINS: Content must fill the entire canvas edge-to-edge
-- NO WHITE SPACE AROUND EDGES: The background/design extends to all four edges
-- The poster itself IS the canvas - not a poster floating on a background
-- Every pixel from edge to edge is part of the designed poster
-
-DESIGN REQUIREMENTS:
-- Layout: Vertical composition perfectly filling 4:5 aspect ratio canvas
-- Typography: Mix 3-5 complementary fonts (serif, sans-serif, script/handwritten)
-- Font hierarchy: Vary sizes dramatically - largest 3-4x larger than smallest
-- Text arrangement: Organic, non-grid layout with phrases at gentle angles (0-15 degrees)
-- Internal white space: Generous breathing room within the design, professional spacing
-- Background: Solid color or subtle texture that extends edge-to-edge (white/cream/themed color)
-
-CONTENT:
-- 1 main affirmation (2-4 words, bold, uppercase, powerful) about ${themeDesc}
-- 8-12 supporting short affirmations mixing self-belief, grounding, calm assertions, forward motion
-- All text should be clearly readable and well-composed
-
-DECORATIVE ELEMENTS:
-- 4-8 delicate accent elements: botanical line art, geometric shapes, or organic flourishes
-- Hand-drawn, organic feel (not overly digital/perfect)
-- Elements enhance but don't overwhelm the text
-
-ARTISTIC STYLE:
-- Modern farmhouse meets minimalist aesthetic
-- Subtle paper texture or organic imperfection (part of the background, not outside it)
-- Hand-drawn appearance with slight irregularity
-- Asymmetrical but visually balanced
-- Professional yet approachable, suitable for wall art
-
-TECHNICAL:
-- High-quality print-ready appearance at 4:5 aspect ratio
-- Excellent readability and contrast
-- Background fills entire canvas (no transparent areas, no surrounding borders)
-- No complex gradients, print-safe colors
-- No neon, no inappropriate content
-- The final image should be ready to download and print without any cropping needed
-
-Create a beautiful, handcrafted-looking poster design that occupies the FULL canvas from edge to edge - perfect for immediate printing or digital display without any additional processing.`;
+// Layout archetype fragments
+function getLayoutFragment(layout: string): string {
+  const fragments: Record<string, string> = {
+    "clean-serif": "Centered headline with horizontal rules or underlines. Clear grid rhythm. Strong vertical alignment. Typography-forward with minimal decoration.",
+    "botanical": "Curved, organic text flow with leaf and floral accents. Soft edges. Text may wrap gently or follow natural curves.",
+    "grit-directional": "Central bold type with angled fragments, arrows, or compass motifs. Directional energy, dynamic placement.",
+    "halo-orbital": "Circular or radial text arrangement with dot clusters or radiating lines. Central focal point with orbital supporting elements."
+  };
+  return fragments[layout] || "Clear hierarchy with the main affirmation as the dominant element.";
 }
