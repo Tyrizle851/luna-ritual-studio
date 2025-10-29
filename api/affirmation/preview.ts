@@ -12,7 +12,13 @@ export default async function handler(req: any, res: any) {
 
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
-    const { theme, mood, text, styleSeed } = (req.body || {}) as any;
+    // Parse request body manually for Vercel serverless runtime
+    let body = '';
+    for await (const chunk of req) {
+      body += chunk;
+    }
+    const parsedBody = body ? JSON.parse(body) : {};
+    const { theme, mood, text, styleSeed } = parsedBody;
     const mappedTheme = mapTheme(theme);
     const mappedMood = mapMood(mood);
     const normalizedText = normalizeText(text);
@@ -27,7 +33,8 @@ export default async function handler(req: any, res: any) {
 
     return res.status(200).json({ previewId, themeMapped: mappedTheme, moodMapped: mappedMood, designSpec });
   } catch (e) {
-    return res.status(500).json({ error: "Preview failed" });
+    console.error("Preview handler error:", e);
+    return res.status(500).json({ error: "Preview failed", detail: e instanceof Error ? e.message : String(e) });
   }
 }
 
