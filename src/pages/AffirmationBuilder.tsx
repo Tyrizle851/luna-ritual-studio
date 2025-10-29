@@ -11,231 +11,293 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Sparkles } from "lucide-react";
 
 interface GeneratedData {
-  mainAffirmation: string;
-  supportingPhrases: string[];
-  palette: string;
+  headline: string;
+  supportingLines: string[];
+  palette: string[];
+  paletteNames: string[];
   layoutStyle: string;
-  accentStyle: string;
+  accentElements: string;
 }
 
 const AffirmationBuilder = () => {
-  const [theme, setTheme] = useState("calm-morning");
+  const [theme, setTheme] = useState("confidence");
   const [mood, setMood] = useState("minimalist");
-  const [energyLevel, setEnergyLevel] = useState("supportive");
   const [layoutStyle, setLayoutStyle] = useState("");
   const [userKeywords, setUserKeywords] = useState("");
   const [seed, setSeed] = useState("");
+  const [showMoreThemes, setShowMoreThemes] = useState(false);
+  const [showMoreMoods, setShowMoreMoods] = useState(false);
+  const [showMoreLayouts, setShowMoreLayouts] = useState(false);
   const [loading, setLoading] = useState(false);
   const [generatedData, setGeneratedData] = useState<GeneratedData>({
-    mainAffirmation: "PEACE WITHIN",
-    supportingPhrases: [
-      "I honor my journey",
-      "Breathe before you begin",
-      "Quiet creates clarity",
-      "Stillness is strength",
-      "I am grounded in this moment",
-      "My calm is my power",
-      "I trust the process",
-      "Gentle progress, lasting change"
+    headline: "FEARLESS FORWARD",
+    supportingLines: [
+      "I trust my decisions",
+      "I claim my power",
+      "I rise boldly",
+      "My voice matters"
     ],
-    palette: "Warm Cream / Sage / Terracotta",
-    layoutStyle: "Organic flowing arrangement with curved phrases",
-    accentStyle: "Botanical line art with soft circular accents"
+    palette: ["#1a1a1a", "#d4af37", "#ffffff"],
+    paletteNames: ["#1a1a1a", "#d4af37", "#ffffff"],
+    layoutStyle: "Centered headline with elegant underline bar",
+    accentElements: "thin horizontal bars, serif typography"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
 
-  // TODO: This will be replaced with actual AI call to backend
-  const buildPrompt = (theme: string, mood: string, keywords: string, seed: string) => {
-    /*
-    PROMPT STRUCTURE FOR AI:
+  const generatePreviewData = (): GeneratedData => {
+    // Expanded theme definitions (15 themes)
+    const themeData: Record<string, { 
+      headline: string; 
+      phrases: string[];
+      colors: string[];
+    }> = {
+      confidence: { 
+        headline: "FEARLESS FORWARD", 
+        phrases: ["I trust my decisions", "I claim my power", "I rise boldly", "My voice matters", "I lead with courage", "Doubt has no place here"],
+        colors: ["#1a1a1a", "#d4af37", "#ffffff"]
+      },
+      peace: { 
+        headline: "QUIET WITHIN", 
+        phrases: ["I breathe deeply", "Calm fills my soul", "I release tension", "Peace is my nature", "Stillness guides me", "I am enough"],
+        colors: ["#e8d5c4", "#9ab8b8", "#f5f5f5"]
+      },
+      focus: { 
+        headline: "CLEAR PATH", 
+        phrases: ["One step forward", "My mind is sharp", "I see clearly", "Purpose drives me", "Distractions fade", "I stay present"],
+        colors: ["#2c3e50", "#3498db", "#ecf0f1"]
+      },
+      gratitude: { 
+        headline: "THANKFUL HEART", 
+        phrases: ["I honor this moment", "Joy surrounds me", "Blessings flow", "I appreciate fully", "Grace is mine", "Life is generous"],
+        colors: ["#f4e4d7", "#d4a574", "#8b6f47"]
+      },
+      abundance: { 
+        headline: "OVERFLOW MINDSET", 
+        phrases: ["Wealth finds me", "I receive fully", "Prosperity flows", "I am worthy", "Plenty surrounds me", "Success is natural"],
+        colors: ["#2d5016", "#ffd700", "#f8f4e6"]
+      },
+      healing: { 
+        headline: "GENTLE GROWTH", 
+        phrases: ["I am mending", "Softness heals me", "I forgive myself", "Rest restores me", "I release pain", "Wholeness returns"],
+        colors: ["#faf3e0", "#b5d3d1", "#e8b4a0"]
+      },
+      strength: { 
+        headline: "UNBREAKABLE CORE", 
+        phrases: ["I endure anything", "My roots run deep", "I stand tall", "Resilience is mine", "I overcome all", "Power lives in me"],
+        colors: ["#4a4a4a", "#c9a961", "#1c1c1c"]
+      },
+      joy: { 
+        headline: "RADIANT LIGHT", 
+        phrases: ["Laughter fills me", "I choose happiness", "Delight is mine", "My spirit soars", "I celebrate today", "Joy is my truth"],
+        colors: ["#fff5e1", "#ffb347", "#ff6b9d"]
+      },
+      balance: { 
+        headline: "CENTERED BEING", 
+        phrases: ["Harmony guides me", "I find equilibrium", "All is aligned", "I flow with ease", "Balance is natural", "I am grounded"],
+        colors: ["#d5c4a1", "#8fbc8f", "#f0ead6"]
+      },
+      courage: { 
+        headline: "BRAVE SOUL", 
+        phrases: ["Fear bows to me", "I leap anyway", "My heart is bold", "I face everything", "Bravery is mine", "I am unstoppable"],
+        colors: ["#8b0000", "#ffa500", "#2f4f4f"]
+      },
+      clarity: { 
+        headline: "CRYSTAL VISION", 
+        phrases: ["Truth reveals itself", "I see clearly now", "Wisdom is mine", "Insight flows", "My path is lit", "Understanding deepens"],
+        colors: ["#e0f7fa", "#00acc1", "#006064"]
+      },
+      renewal: { 
+        headline: "FRESH START", 
+        phrases: ["I begin again", "New life blooms", "Change embraces me", "I shed the old", "Rebirth is here", "I am reborn"],
+        colors: ["#a8d5a3", "#77c593", "#4a7c59"]
+      },
+      freedom: { 
+        headline: "UNCHAINED SPIRIT", 
+        phrases: ["I release all limits", "Boundless I fly", "Liberty is mine", "I am untethered", "Wings unfold", "I choose my way"],
+        colors: ["#87ceeb", "#ffffff", "#4682b4"]
+      },
+      passion: { 
+        headline: "FIRE WITHIN", 
+        phrases: ["I burn brightly", "Desire fuels me", "My heart blazes", "Intensity is mine", "I am alive", "Flames guide me"],
+        colors: ["#ff4500", "#dc143c", "#8b0000"]
+      },
+      wisdom: { 
+        headline: "ANCIENT KNOWING", 
+        phrases: ["I trust my knowing", "Deep truth guides me", "Age enriches me", "I honor my journey", "Experience speaks", "I am wise"],
+        colors: ["#8b7355", "#daa520", "#f5deb3"]
+      }
+    };
+
+    // Expanded mood definitions (10 moods)
+    const moodPalettes: Record<string, string[]> = {
+      minimalist: ["#ffffff", "#1a1a1a", "#f5f5f5"],
+      bohemian: ["#d4a574", "#8b6f47", "#f4e4d7"],
+      "modern-serif": ["#2c3e50", "#ecf0f1", "#95a5a6"],
+      coastal: ["#9ab8b8", "#e8d5c4", "#5a7d7c"],
+      earthy: ["#8b7355", "#a89078", "#d4c5b0"],
+      vibrant: ["#ff6b6b", "#4ecdc4", "#ffe66d"],
+      pastel: ["#ffc8dd", "#bde0fe", "#a2d2ff"],
+      monochrome: ["#000000", "#808080", "#ffffff"],
+      sunset: ["#ff6f61", "#ffb347", "#ffd700"],
+      forest: ["#2d5016", "#4a7c59", "#8fbc8f"]
+    };
+
+    // Expanded layout definitions (10 layouts)
+    const layoutArchetypes: Record<string, {
+      description: string;
+      palette: string[];
+      accents: string[];
+    }> = {
+      "clean-serif": {
+        description: "Centered headline with elegant underline bar, alternating bold and italic supporting lines in a structured vertical flow.",
+        palette: ["#1a1a1a", "#f5f5f5", "#d4af37"],
+        accents: ["thin horizontal bars", "subtle drop shadows", "serif typography"]
+      },
+      botanical: {
+        description: "Warm creamy background with gentle curved phrases, adorned with delicate leaf sprigs and botanical line drawings.",
+        palette: ["#faf3e0", "#d4a574", "#8b6f47"],
+        accents: ["eucalyptus leaves", "vine tendrils", "watercolor washes", "floral corners"]
+      },
+      grit: {
+        description: "Central bold headline with angled text fragments radiating outward, featuring directional arrows and compass elements for a raw, adventurous feel.",
+        palette: ["#2f4f4f", "#ffa500", "#1c1c1c"],
+        accents: ["compass points", "diagonal arrows", "textured overlays", "geometric fragments"]
+      },
+      halo: {
+        description: "Headline centered with supporting phrases orbiting in a soft circular arrangement, gentle pastel accents creating a peaceful halo effect.",
+        palette: ["#e8d5c4", "#9ab8b8", "#f5f5f5"],
+        accents: ["orbital rings", "scattered stars", "soft glows", "circular frames"]
+      },
+      grid: {
+        description: "Structured grid layout with phrases in aligned boxes, clean lines and organized spacing for a modern architectural feel.",
+        palette: ["#ecf0f1", "#2c3e50", "#95a5a6"],
+        accents: ["rectangular borders", "grid lines", "minimal dividers"]
+      },
+      organic: {
+        description: "Flowing, hand-drawn style with irregular placement, natural curves and asymmetric balance mimicking nature's patterns.",
+        palette: ["#a8d5a3", "#77c593", "#4a7c59"],
+        accents: ["wavy lines", "organic shapes", "hand-drawn elements", "irregular borders"]
+      },
+      celestial: {
+        description: "Deep cosmic background with phrases floating like constellations, featuring stars, moons, and ethereal light.",
+        palette: ["#191970", "#ffd700", "#e0e0e0"],
+        accents: ["stars", "crescent moons", "cosmic dust", "light rays"]
+      },
+      geometric: {
+        description: "Bold geometric shapes framing text, featuring triangles, hexagons, and angular patterns for a modern abstract look.",
+        palette: ["#ff6b6b", "#4ecdc4", "#1a1a1a"],
+        accents: ["triangles", "hexagons", "angular lines", "intersecting shapes"]
+      },
+      vintage: {
+        description: "Aged aesthetic with ornate borders, classic typography, and decorative flourishes reminiscent of old posters.",
+        palette: ["#8b7355", "#daa520", "#f5deb3"],
+        accents: ["ornate corners", "filigree", "vintage frames", "distressed texture"]
+      },
+      "minimal-zen": {
+        description: "Maximum whitespace with single focal point, inspired by Japanese minimalism with subtle stone or water motifs.",
+        palette: ["#ffffff", "#d3d3d3", "#808080"],
+        accents: ["zen circles", "single brushstrokes", "negative space", "pebble shapes"]
+      }
+    };
+
+    // Incorporate user keywords into color and design
+    const keywordInfluence = (keywords: string) => {
+      const lower = keywords.toLowerCase();
+      const influences: { colors?: string[]; accents?: string[] } = {};
+      
+      if (lower.includes("cold") || lower.includes("ice") || lower.includes("winter")) {
+        influences.colors = ["#e0f7fa", "#b3e5fc", "#4fc3f7"];
+        influences.accents = ["snowflakes", "ice crystals", "frost patterns"];
+      }
+      if (lower.includes("fire") || lower.includes("heat") || lower.includes("flame")) {
+        influences.colors = ["#ff4500", "#ff6347", "#ffa500"];
+        influences.accents = ["flame shapes", "heat waves", "ember glows"];
+      }
+      if (lower.includes("earth") || lower.includes("soil") || lower.includes("ground")) {
+        influences.colors = ["#8b7355", "#a0522d", "#d2b48c"];
+        influences.accents = ["soil textures", "rocks", "terrain lines"];
+      }
+      if (lower.includes("rain") || lower.includes("water") || lower.includes("ocean")) {
+        influences.colors = ["#4682b4", "#5f9ea0", "#add8e6"];
+        influences.accents = ["water droplets", "wave patterns", "ripples"];
+      }
+      if (lower.includes("sun") || lower.includes("light") || lower.includes("bright")) {
+        influences.colors = ["#ffd700", "#ffeb3b", "#fff59d"];
+        influences.accents = ["sun rays", "light bursts", "radiant lines"];
+      }
+      if (lower.includes("forest") || lower.includes("tree") || lower.includes("leaf")) {
+        influences.colors = ["#2d5016", "#4a7c59", "#8fbc8f"];
+        influences.accents = ["tree branches", "leaves", "pine needles"];
+      }
+      if (lower.includes("night") || lower.includes("dark") || lower.includes("moon")) {
+        influences.colors = ["#191970", "#2f4f4f", "#1c1c1c"];
+        influences.accents = ["stars", "moon phases", "night sky"];
+      }
+      if (lower.includes("spring") || lower.includes("bloom") || lower.includes("flower")) {
+        influences.colors = ["#ffb6d9", "#ffd9e8", "#ffeaa7"];
+        influences.accents = ["blossoms", "flower petals", "spring vines"];
+      }
+      
+      return influences;
+    };
+
+    const selectedTheme = themeData[theme] || themeData.confidence;
+    const selectedMoodPalette = moodPalettes[mood] || moodPalettes.minimalist;
     
-    Generate a printable affirmation poster with the following specifications:
+    // Auto-select layout if not chosen
+    let finalLayout = layoutStyle;
+    if (!finalLayout) {
+      const layoutMap: Record<string, string> = {
+        minimalist: "clean-serif",
+        bohemian: "botanical",
+        "modern-serif": "grid",
+        coastal: "halo",
+        earthy: "organic",
+        vibrant: "geometric",
+        pastel: "celestial",
+        monochrome: "minimal-zen",
+        sunset: "grit",
+        forest: "vintage"
+      };
+      finalLayout = layoutMap[mood] || "clean-serif";
+    }
     
-    Theme: ${theme}
-    Mood/Style: ${mood}
-    Keywords: ${keywords}
-    Style Seed: ${seed || 'random'}
+    const selectedLayout = layoutArchetypes[finalLayout] || layoutArchetypes["clean-serif"];
     
-    Color Palette Direction: 
-    - If earthy: terracotta, sage, warm cream, clay
-    - If floral: blush pink, lavender, soft peach
-    - If coastal: soft blues, sandy beige, sea foam
-    - If minimalist: black, white, gray, one accent
-    - If botanical: deep green, cream, gold accents
+    // Blend user keyword influences
+    const keywordEffects = keywordInfluence(userKeywords);
+    const finalPalette = keywordEffects.colors || selectedLayout.palette || selectedMoodPalette;
+    const finalAccents = keywordEffects.accents 
+      ? [...selectedLayout.accents, ...keywordEffects.accents]
+      : selectedLayout.accents;
     
-    Layout Style Options:
-    - Organic flow with scattered placement
-    - Cascading diagonal arrangement
-    - Circular focal point with radiating text
-    - Constellation pattern with mixed sizes
-    
-    Accent Style:
-    - Botanical line art (leaves, stems)
-    - Geometric dots and lines
-    - Watercolor texture blobs
-    - Hand-drawn arrows and underlines
-    
-    Generate:
-    1. One main affirmation (2-4 words, powerful, uppercase)
-    2. 8-12 supporting short affirmations mixing:
-       - Self-belief statements
-       - Grounding reminders
-       - Calm assertions
-       - Forward motion phrases
-    
-    Style Requirements:
-    - 300 DPI print-ready
-    - Portrait orientation (4:5 ratio)
-    - Handcrafted modern aesthetic
-    - Minimalist + modern farmhouse blend
-    - No neon colors
-    - Professional typography hierarchy
-    */
-    return `Theme: ${theme}, Mood: ${mood}, Keywords: ${keywords}`;
+    // Incorporate keywords into phrases if provided
+    let finalPhrases = [...selectedTheme.phrases];
+    if (userKeywords.trim()) {
+      const keywordList = userKeywords.split(/[,\s]+/).filter(k => k.length > 2);
+      finalPhrases = finalPhrases.map((phrase, i) => {
+        if (keywordList[i]) {
+          return `${phrase.replace(/\.$/, "")} ${keywordList[i]}`;
+        }
+        return phrase;
+      });
+    }
+
+    return {
+      headline: selectedTheme.headline,
+      supportingLines: finalPhrases.slice(0, 10),
+      palette: finalPalette,
+      paletteNames: finalPalette.map(c => c),
+      layoutStyle: selectedLayout.description,
+      accentElements: finalAccents.join(", ")
+    };
   };
 
   const handleGenerate = async () => {
     setLoading(true);
     setGeneratedImageB64(null);
     
-    // Generate preview based on user inputs
-    const generatePreviewData = (): GeneratedData => {
-      const keywords = userKeywords.toLowerCase();
-      
-      // STRICT THEME-BASED CONTENT - Never mix vibes
-      const themeData: Record<string, { main: string, soft: string[], supportive: string[], direct: string[], intense: string[] }> = {
-        "calm-morning": {
-          main: "SOFT MORNING",
-          soft: ["Gentle light awakens me", "I rise without rushing", "Morning stillness is sacred", "Today begins with ease", "Quiet hours hold power", "I welcome this fresh day"],
-          supportive: ["I greet this day ready", "Morning light guides my path", "Each sunrise brings renewal", "I start with clarity", "Today I choose presence", "This morning is mine"],
-          direct: ["I own my morning", "First light, first wins", "Morning momentum starts now", "I rise with purpose", "Today I take the lead", "Morning energy fuels me"],
-          intense: ["Morning warrior rises", "Dawn breaks, I conquer", "First light, full force", "I dominate this day", "Morning power unleashed", "Sunrise ignites my fire"]
-        },
-        "focus": {
-          main: "CLEAR MIND",
-          soft: ["Gentle attention flows", "I ease into clarity", "Focus comes naturally", "Calm concentration guides me", "I softly center myself", "My mind finds quiet"],
-          supportive: ["I choose focus now", "Clarity is my strength", "One task at a time", "My attention is valuable", "I direct my energy well", "Focus creates results"],
-          direct: ["I command my focus", "Distraction ends here", "My mind is sharp", "I execute with precision", "Focus is my weapon", "I lock in completely"],
-          intense: ["Laser focus activated", "Zero distraction tolerated", "My concentration is unbreakable", "I dominate every task", "Focus mode: warrior", "Nothing breaks my attention"]
-        },
-        "gratitude": {
-          main: "I AM GRATEFUL",
-          soft: ["Thankful for small moments", "Appreciation lives in me", "I notice beauty gently", "Grateful for this breath", "Joy whispers around me", "I hold thanks softly"],
-          supportive: ["I choose gratitude daily", "Abundance surrounds me", "Thank you for this gift", "I celebrate what I have", "Appreciation flows freely", "I see the good clearly"],
-          direct: ["Gratitude drives my success", "I claim my blessings", "Thankful and taking action", "I own my abundance", "Gratitude fuels momentum", "I appreciate and advance"],
-          intense: ["Grateful warrior mindset", "I seize every blessing", "Thankful and unstoppable", "Gratitude is my power", "I dominate with thanks", "Blessed and relentless"]
-        },
-        "confidence": {
-          main: "I AM CAPABLE",
-          soft: ["I trust myself gently", "My worth is inherent", "I believe in my path", "Confidence grows in me", "I am enough today", "Self-trust comes easy"],
-          supportive: ["I trust my abilities", "My voice deserves space", "I stand in my power", "Confidence is my right", "I believe in myself", "I am worthy always"],
-          direct: ["I own my capability", "Doubt has no place here", "I execute with confidence", "My power is undeniable", "I command respect", "I trust my strength fully"],
-          intense: ["Unshakeable confidence", "I am a force of nature", "Doubt dies in my presence", "I dominate with certainty", "My power is absolute", "I am unstoppable"]
-        },
-        "peace": {
-          main: "INNER CALM",
-          soft: ["Peace flows through me", "I breathe in stillness", "Gentle quiet heals me", "Serenity is my home", "I rest in tranquility", "Soft peace surrounds me"],
-          supportive: ["I choose peace today", "Calm is my foundation", "I release what I can't control", "Peace guides my choices", "Stillness strengthens me", "I anchor in serenity"],
-          direct: ["I create my peace", "Calm is my power move", "I control my inner state", "Peace is my strategy", "I execute from stillness", "Serenity drives results"],
-          intense: ["Peace warrior stands strong", "Unshakeable inner fortress", "Calm through any storm", "I dominate through peace", "Stillness is my weapon", "Tranquil and unstoppable"]
-        },
-        "custom": {
-          main: userKeywords.split(/\s+/).slice(0, 3).join(" ").toUpperCase() || "MY INTENTION",
-          soft: ["I honor my unique path", "My vision unfolds gently", "I trust my direction", "This journey is mine", "I create with ease", "My way feels right"],
-          supportive: ["I design my life", "My vision matters", "I trust my choices", "This path is valid", "I create what I need", "My direction is clear"],
-          direct: ["I own my vision", "My path, my rules", "I execute my plan", "This is my design", "I build my reality", "My vision drives action"],
-          intense: ["My vision, my conquest", "I dominate my path", "Unstoppable in my direction", "My way or nothing", "I forge my destiny", "Vision becomes victory"]
-        }
-      };
-
-      const baseData = themeData[theme] || themeData["peace"];
-      
-      // Select phrases based on energy level
-      const energyPhrases: Record<string, string[]> = {
-        "soft": baseData.soft,
-        "supportive": baseData.supportive,
-        "direct": baseData.direct,
-        "intense": baseData.intense
-      };
-      
-      let supportingPhrases = [...(energyPhrases[energyLevel] || baseData.supportive)];
-      
-      // Blend keywords intelligently without compromising quality
-      if (userKeywords.trim()) {
-        const words = userKeywords.toLowerCase().split(/[,\s]+/).filter(w => w.length > 2);
-        const extraPhrases: string[] = [];
-        
-        words.forEach(word => {
-          if (energyLevel === "soft" || energyLevel === "supportive") {
-            if (word.includes("heal")) extraPhrases.push("Healing flows through me");
-            if (word.includes("trust")) extraPhrases.push("I trust the journey");
-            if (word.includes("soft") || word.includes("gentle")) extraPhrases.push("Gentle strength guides me");
-            if (word.includes("peace") || word.includes("calm")) extraPhrases.push("Peace anchors my day");
-          } else if (energyLevel === "direct" || energyLevel === "intense") {
-            if (word.includes("power")) extraPhrases.push("I own my power");
-            if (word.includes("strong")) extraPhrases.push("Strength defines me");
-            if (word.includes("bold")) extraPhrases.push("Boldness is my path");
-            if (word.includes("win")) extraPhrases.push("I create wins daily");
-          }
-        });
-        
-        // Add up to 2 keyword phrases without duplicating existing ones
-        extraPhrases.forEach(phrase => {
-          if (supportingPhrases.length < 10 && !supportingPhrases.includes(phrase)) {
-            supportingPhrases.push(phrase);
-          }
-        });
-      }
-      
-      // Limit to 6-10 phrases
-      supportingPhrases = supportingPhrases.slice(0, 10);
-      
-      // LAYOUT STYLE ARCHETYPES
-      const layoutArchetypes: Record<string, { description: string, palette: string, accents: string }> = {
-        "clean-serif": {
-          description: "Centered headline with elegant underline bar, alternating bold and italic lines in structured vertical stack",
-          palette: "Charcoal, Ivory, Soft Gold accents",
-          accents: "Minimal serif underlines and refined geometric borders"
-        },
-        "botanical": {
-          description: "Warm organic flow with gentle curved text placement, soft feminine energy throughout",
-          palette: "Warm Cream, Terracotta, Sage Green, Blush Pink",
-          accents: "Delicate leaf sprigs, botanical line drawings, soft circular flourishes"
-        },
-        "grit": {
-          description: "Bold central headline with angled text fragments radiating outward, high contrast directional layout",
-          palette: "Deep Charcoal, Rust, Cream, High Contrast Black",
-          accents: "Arrows, compass points, angular lines, directional markers"
-        },
-        "halo": {
-          description: "Central focal headline with supporting affirmations orbiting in a gentle ring pattern",
-          palette: "Soft Pastels - Lavender, Peach, Mint, Cloud White",
-          accents: "Circular guides, orbital dots, celestial soft lines"
-        }
-      };
-      
-      // Auto-select layout if not specified
-      let selectedLayout = layoutStyle;
-      if (!selectedLayout) {
-        if (mood === "minimalist" || mood === "modern-serif") selectedLayout = "clean-serif";
-        else if (mood === "bohemian" || mood === "earthy") selectedLayout = "botanical";
-        else if (mood === "coastal") selectedLayout = "halo";
-        else selectedLayout = "clean-serif";
-      }
-      
-      const archetype = layoutArchetypes[selectedLayout] || layoutArchetypes["clean-serif"];
-      
-      return {
-        mainAffirmation: baseData.main,
-        supportingPhrases,
-        palette: archetype.palette,
-        layoutStyle: archetype.description,
-        accentStyle: archetype.accents
-      };
-    };
-    
     setGeneratedData(generatePreviewData());
-    buildPrompt(theme, mood, userKeywords, seed);
     setLoading(false);
   };
 
@@ -243,13 +305,16 @@ const AffirmationBuilder = () => {
     setLoading(true);
     setGeneratedImageB64(null);
     try {
+      const previewForAPI = generatePreviewData();
+      
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
-        body: { 
-          theme, 
-          mood, 
-          text: userKeywords, 
-          styleSeed: seed || undefined 
-        },
+        body: {
+          theme,
+          mood,
+          text: userKeywords,
+          styleSeed: seed || Math.floor(Math.random() * 10000).toString(),
+          preview: previewForAPI
+        }
       });
       
       if (error) {
@@ -274,14 +339,12 @@ const AffirmationBuilder = () => {
   };
 
   const handleRandomize = () => {
-    const themes = ["calm-morning", "focus", "gratitude", "confidence", "peace"];
-    const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy"];
-    const energies = ["soft", "supportive", "direct", "intense"];
-    const layouts = ["clean-serif", "botanical", "grit", "halo"];
+    const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
+    const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
+    const layouts = ["clean-serif", "botanical", "grit", "halo", "grid", "organic", "celestial", "geometric", "vintage", "minimal-zen"];
     
     setTheme(themes[Math.floor(Math.random() * themes.length)]);
     setMood(moods[Math.floor(Math.random() * moods.length)]);
-    setEnergyLevel(energies[Math.floor(Math.random() * energies.length)]);
     setLayoutStyle(layouts[Math.floor(Math.random() * layouts.length)]);
     setSeed(Math.floor(Math.random() * 10000).toString());
   };
@@ -315,56 +378,81 @@ const AffirmationBuilder = () => {
               <CardContent className="space-y-6">
                 {/* Theme Selection */}
                 <div className="space-y-2">
-                  <Label htmlFor="theme">Theme / Intention</Label>
-                  <p className="text-xs text-text-secondary mb-2">What are you centering on?</p>
+                  <Label htmlFor="theme">Theme</Label>
                   <Select value={theme} onValueChange={setTheme}>
                     <SelectTrigger id="theme">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="calm-morning">Calm Morning</SelectItem>
-                      <SelectItem value="focus">Focus</SelectItem>
-                      <SelectItem value="gratitude">Gratitude</SelectItem>
                       <SelectItem value="confidence">Confidence</SelectItem>
                       <SelectItem value="peace">Peace</SelectItem>
-                      <SelectItem value="custom">Custom</SelectItem>
+                      <SelectItem value="focus">Focus</SelectItem>
+                      <SelectItem value="gratitude">Gratitude</SelectItem>
+                      <SelectItem value="abundance">Abundance</SelectItem>
+                      {showMoreThemes && (
+                        <>
+                          <SelectItem value="healing">Healing</SelectItem>
+                          <SelectItem value="strength">Strength</SelectItem>
+                          <SelectItem value="joy">Joy</SelectItem>
+                          <SelectItem value="balance">Balance</SelectItem>
+                          <SelectItem value="courage">Courage</SelectItem>
+                          <SelectItem value="clarity">Clarity</SelectItem>
+                          <SelectItem value="renewal">Renewal</SelectItem>
+                          <SelectItem value="freedom">Freedom</SelectItem>
+                          <SelectItem value="passion">Passion</SelectItem>
+                          <SelectItem value="wisdom">Wisdom</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
+                  {!showMoreThemes && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowMoreThemes(true)}
+                      className="w-full text-xs"
+                    >
+                      Show 10 more themes
+                    </Button>
+                  )}
                 </div>
 
                 {/* Mood Selection */}
                 <div className="space-y-2">
-                  <Label htmlFor="mood">Design Mood</Label>
-                  <p className="text-xs text-text-secondary mb-2">Visual styling direction</p>
+                  <Label htmlFor="mood">Mood</Label>
                   <Select value={mood} onValueChange={setMood}>
                     <SelectTrigger id="mood">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="minimalist">Minimalist</SelectItem>
-                      <SelectItem value="bohemian">Bohemian Organic</SelectItem>
+                      <SelectItem value="bohemian">Bohemian</SelectItem>
                       <SelectItem value="modern-serif">Modern Serif</SelectItem>
-                      <SelectItem value="coastal">Coastal / Soft Blues</SelectItem>
-                      <SelectItem value="earthy">Earthy / Botanical</SelectItem>
+                      <SelectItem value="coastal">Coastal</SelectItem>
+                      <SelectItem value="earthy">Earthy</SelectItem>
+                      {showMoreMoods && (
+                        <>
+                          <SelectItem value="vibrant">Vibrant</SelectItem>
+                          <SelectItem value="pastel">Pastel</SelectItem>
+                          <SelectItem value="monochrome">Monochrome</SelectItem>
+                          <SelectItem value="sunset">Sunset</SelectItem>
+                          <SelectItem value="forest">Forest</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
-                </div>
-
-                {/* Energy Level Selection */}
-                <div className="space-y-2">
-                  <Label htmlFor="energy">Energy Level</Label>
-                  <p className="text-xs text-text-secondary mb-2">Tone and intensity of affirmations</p>
-                  <Select value={energyLevel} onValueChange={setEnergyLevel}>
-                    <SelectTrigger id="energy">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="soft">Soft / Healing</SelectItem>
-                      <SelectItem value="supportive">Supportive / Reassuring</SelectItem>
-                      <SelectItem value="direct">Direct / Motivational</SelectItem>
-                      <SelectItem value="intense">Intense / Warrior</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  {!showMoreMoods && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowMoreMoods(true)}
+                      className="w-full text-xs"
+                    >
+                      Show 5 more moods
+                    </Button>
+                  )}
                 </div>
 
                 {/* Layout Style Selection */}
@@ -381,31 +469,54 @@ const AffirmationBuilder = () => {
                       <SelectItem value="botanical">Botanical / Feminine</SelectItem>
                       <SelectItem value="grit">Grit / Directional</SelectItem>
                       <SelectItem value="halo">Halo / Orbital</SelectItem>
+                      <SelectItem value="grid">Grid</SelectItem>
+                      {showMoreLayouts && (
+                        <>
+                          <SelectItem value="organic">Organic</SelectItem>
+                          <SelectItem value="celestial">Celestial</SelectItem>
+                          <SelectItem value="geometric">Geometric</SelectItem>
+                          <SelectItem value="vintage">Vintage</SelectItem>
+                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
+                  {!showMoreLayouts && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowMoreLayouts(true)}
+                      className="w-full text-xs"
+                    >
+                      Show 5 more layouts
+                    </Button>
+                  )}
                 </div>
 
-                {/* Keywords Textarea */}
+                {/* User Keywords */}
                 <div className="space-y-2">
-                  <Label htmlFor="keywords">Words, tone, or personal details to include</Label>
+                  <Label htmlFor="keywords">Words / Phrases (Optional)</Label>
+                  <p className="text-xs text-text-secondary mb-2">
+                    Add keywords like "cold", "fire", "rain" to influence colors and design elements
+                  </p>
                   <Textarea
                     id="keywords"
-                    placeholder="soft feminine energy, healing, gentle self-trust, sunrise warmth"
+                    placeholder="e.g., cold, fire, earth, rain, forest, sun..."
                     value={userKeywords}
                     onChange={(e) => setUserKeywords(e.target.value)}
-                    className="min-h-[100px] resize-none"
-                    maxLength={300}
+                    rows={3}
+                    className="font-sans text-sm"
                   />
-                  <p className="text-xs text-text-secondary text-right">{userKeywords.length}/300</p>
                 </div>
 
-                {/* Optional Seed */}
+                {/* Style Seed */}
                 <div className="space-y-2">
-                  <Label htmlFor="seed">Style Seed (optional)</Label>
-                  <p className="text-xs text-text-secondary mb-2">Use the same seed to get a consistent style again</p>
+                  <Label htmlFor="seed">Style Seed (Optional)</Label>
+                  <p className="text-xs text-text-secondary mb-2">For reproducible results</p>
                   <Input
                     id="seed"
-                    type="number"
+                    type="text"
                     placeholder="e.g., 1234"
                     value={seed}
                     onChange={(e) => setSeed(e.target.value)}
@@ -413,149 +524,109 @@ const AffirmationBuilder = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button
+                <div className="space-y-3 pt-4">
+                  <Button 
                     onClick={handleGenerate}
+                    className="w-full"
+                    size="lg"
                     disabled={loading}
-                    className="flex-1 bg-clay hover:bg-clay-dark text-white"
                   >
-                    {loading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        Generate Preview
-                      </>
-                    )}
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                    Generate Preview
                   </Button>
-                  <Button
+                  
+                  <Button 
                     onClick={handleGenerateUnique}
+                    variant="secondary"
+                    className="w-full"
+                    size="lg"
                     disabled={loading}
-                    variant="outline"
-                    className="border-clay text-clay hover:bg-clay/10"
                   >
-                    {loading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Generating Image...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        Generate Unique Image
-                      </>
-                    )}
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Generate Unique Image
                   </Button>
+
                   <Button
                     onClick={handleRandomize}
                     variant="outline"
+                    className="w-full"
+                    size="sm"
                     disabled={loading}
-                    className="border-clay text-clay hover:bg-clay/10"
                   >
-                    Randomize
+                    Randomize All
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Right Column: Poster Preview */}
+            {/* Right Column: Preview */}
             <Card className="bg-white shadow-sm border border-neutral-200 rounded-xl">
               <CardHeader>
-                <CardTitle className="font-display text-2xl">Poster Preview</CardTitle>
-                <CardDescription>Your custom affirmation print concept</CardDescription>
+                <CardTitle className="font-display text-2xl">Preview</CardTitle>
+                <CardDescription>Your generated affirmation poster preview</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Show either text preview OR generated image */}
                 {generatedImageB64 ? (
-                  /* Generated Unique Image */
                   <div className="space-y-4">
-                    <img 
-                      src={generatedImageB64} 
-                      alt="Generated affirmation poster" 
-                      className="w-full rounded-lg shadow-md"
-                    />
-                    <p className="text-xs text-center text-text-secondary">
-                      Your AI-generated affirmation poster
-                    </p>
+                    <div className="rounded-lg overflow-hidden border border-border">
+                      <img 
+                        src={generatedImageB64} 
+                        alt="Generated Affirmation" 
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <Button 
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = generatedImageB64;
+                        link.download = `affirmation-${Date.now()}.png`;
+                        link.click();
+                        toast.success('Image downloaded!');
+                      }}
+                      className="w-full"
+                    >
+                      Download Image
+                    </Button>
                   </div>
                 ) : (
-                  /* Text-based Preview */
                   <>
-                    {/* Mock Poster Container */}
-                    <div className="relative bg-gradient-to-br from-stone-50 to-stone-100 rounded-lg shadow-lg border border-neutral-200 p-4 md:p-6 lg:p-8 aspect-[4/5]">
-                      {/* Paper texture effect */}
-                      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,_rgba(0,0,0,0.1)_1px,_transparent_1px)] bg-[length:20px_20px] rounded-lg" />
-                      
-                      <div className="relative h-full flex flex-col justify-between">
-                        {/* Main Headline */}
-                        <div className="text-center mb-4 md:mb-6">
-                          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-clay mb-2 uppercase">
-                            {generatedData.mainAffirmation}
-                          </h2>
-                          <div className="w-16 md:w-24 h-0.5 bg-clay/30 mx-auto" />
-                        </div>
-
-                        {/* Supporting Affirmations */}
-                        <div className="flex-1 space-y-2 md:space-y-3">
-                          {generatedData.supportingPhrases.map((phrase, idx) => (
-                            <p
-                              key={idx}
-                              className={`text-xs md:text-sm lg:text-base ${
-                                idx % 3 === 0
-                                  ? "italic text-clay-dark font-light"
-                                  : idx % 3 === 1
-                                  ? "font-semibold text-text-primary tracking-wide"
-                                  : "text-text-secondary font-medium"
-                              }`}
-                            >
-                              {phrase}
-                            </p>
-                          ))}
-                        </div>
-
-                        {/* Style Metadata */}
-                        <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-neutral-300 space-y-1 md:space-y-2 text-[10px] md:text-xs text-text-secondary">
-                          <p>
-                            <span className="font-semibold text-clay">Palette:</span> {generatedData.palette}
-                          </p>
-                          <p>
-                            <span className="font-semibold text-clay">Layout Style:</span> {generatedData.layoutStyle}
-                          </p>
-                          <p>
-                            <span className="font-semibold text-clay">Accent Elements:</span> {generatedData.accentStyle}
-                          </p>
-                        </div>
+                    <div className="bg-neutral-50 p-6 rounded-lg border border-border">
+                      <h3 className="text-2xl font-bold text-center mb-4 text-clay">
+                        {generatedData.headline}
+                      </h3>
+                      <div className="space-y-2 text-sm text-text-primary">
+                        {generatedData.supportingLines.map((line, i) => (
+                          <p key={i} className="text-center">{line}</p>
+                        ))}
                       </div>
                     </div>
 
-                    {/* Disclaimer */}
-                    <p className="text-xs text-center text-text-secondary italic">
-                      This is a preview. Final high-resolution print will include full styling and export at 300 DPI.
-                    </p>
+                    <div className="space-y-4 text-sm">
+                      <div>
+                        <h4 className="font-semibold text-text-primary mb-2">Palette</h4>
+                        <div className="flex gap-2 flex-wrap">
+                          {generatedData.paletteNames.map((color, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div 
+                                className="w-8 h-8 rounded border border-border" 
+                                style={{ backgroundColor: color }}
+                              />
+                              <span className="text-xs text-text-secondary">{color}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-text-primary mb-2">Layout Style</h4>
+                        <p className="text-text-secondary">{generatedData.layoutStyle}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-text-primary mb-2">Accent Elements</h4>
+                        <p className="text-text-secondary">{generatedData.accentElements}</p>
+                      </div>
+                    </div>
                   </>
                 )}
-
-                {/* CTA Footer */}
-                <div className="space-y-3 pt-4 border-t border-neutral-200">
-                  <Button
-                    disabled
-                    className="w-full bg-clay/50 text-white cursor-not-allowed"
-                  >
-                    Download High-Res (Coming Soon)
-                  </Button>
-                  <p className="text-xs text-center text-text-secondary">
-                    Need a change?{" "}
-                    <button
-                      onClick={() => document.getElementById("theme")?.focus()}
-                      className="text-clay hover:underline"
-                    >
-                      Edit inputs on the left
-                    </button>
-                  </p>
-                </div>
               </CardContent>
             </Card>
           </div>

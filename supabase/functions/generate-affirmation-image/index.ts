@@ -10,6 +10,13 @@ interface GenerateRequest {
   mood: string;
   text: string;
   styleSeed?: string;
+  preview?: {
+    headline: string;
+    supportingLines: string[];
+    paletteNames: string[];
+    layoutStyle: string;
+    accentElements: string;
+  };
 }
 
 Deno.serve(async (req) => {
@@ -29,12 +36,30 @@ Deno.serve(async (req) => {
     }
 
     const body: GenerateRequest = await req.json();
-    const { theme, mood, text, styleSeed } = body;
+    const { theme, mood, text, styleSeed, preview } = body;
 
     console.log('Generating affirmation image:', { theme, mood, textLength: text?.length || 0, styleSeed });
 
     // Build the prompt for image generation
-    const prompt = buildAffirmationPrompt(theme, mood, text || '', styleSeed);
+    let prompt = buildAffirmationPrompt(theme, mood, text || '', styleSeed);
+    
+    // Enhance prompt with preview data if provided
+    if (preview) {
+      prompt += `\n\nDESIGN SPECIFICATION:\n`;
+      prompt += `Headline: "${preview.headline}"\n`;
+      prompt += `Supporting lines: ${preview.supportingLines.join(', ')}\n`;
+      prompt += `Color palette (use these exact colors): ${preview.paletteNames.join(', ')}\n`;
+      prompt += `Layout: ${preview.layoutStyle}\n`;
+      prompt += `Accent elements (MUST include these visible elements): ${preview.accentElements}\n`;
+      prompt += `\n\nCRITICAL REQUIREMENTS:\n`;
+      prompt += `- The generated image MUST visually incorporate ALL specified accent elements\n`;
+      prompt += `- If arrows are mentioned, include visible arrows in the design\n`;
+      prompt += `- If leaves are mentioned, include clear botanical leaf elements\n`;
+      prompt += `- If geometric shapes are mentioned, include those shapes prominently\n`;
+      prompt += `- Use the EXACT color palette provided - these colors must be visible in the design\n`;
+      prompt += `- Match the layout description precisely\n`;
+      prompt += `- All text must be readable and match the specified headline and supporting lines`;
+    }
     
     console.log('Calling Lovable AI with prompt length:', prompt.length);
 
