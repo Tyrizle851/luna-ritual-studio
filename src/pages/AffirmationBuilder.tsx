@@ -8,8 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Loader2, Sparkles, Heart, Edit2, Check, X, Download } from "lucide-react";
+import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface GeneratedData {
   headline: string;
@@ -27,6 +29,22 @@ interface FavoriteConfig {
   layoutStyle: string;
   userKeywords: string;
   seed: string;
+  generatedData: GeneratedData;
+  timestamp: number;
+}
+
+interface StaffPreset {
+  name: string;
+  description: string;
+  theme: string;
+  mood: string;
+  layoutStyle: string;
+  keywords: string;
+}
+
+interface HistoryItem {
+  id: string;
+  imageB64: string;
   generatedData: GeneratedData;
   timestamp: number;
 }
@@ -57,15 +75,72 @@ const AffirmationBuilder = () => {
   const [editedLines, setEditedLines] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<FavoriteConfig[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [customPalette, setCustomPalette] = useState<string[]>([]);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [showGallery, setShowGallery] = useState(false);
 
-  // Load favorites from localStorage on mount
+  // Staff Picks Presets
+  const staffPresets: StaffPreset[] = [
+    {
+      name: "Morning Ritual",
+      description: "Peaceful sunrise energy to start your day",
+      theme: "peace",
+      mood: "coastal",
+      layoutStyle: "halo",
+      keywords: "light, fresh, calm"
+    },
+    {
+      name: "Power Hour",
+      description: "Bold confidence for big moves",
+      theme: "confidence",
+      mood: "monochrome",
+      layoutStyle: "grit",
+      keywords: "strong, fearless"
+    },
+    {
+      name: "Gratitude Garden",
+      description: "Warm thankfulness with botanical vibes",
+      theme: "gratitude",
+      mood: "bohemian",
+      layoutStyle: "botanical",
+      keywords: "flowers, warmth, joy"
+    },
+    {
+      name: "Focus Flow",
+      description: "Clear mind, sharp vision",
+      theme: "focus",
+      mood: "minimalist",
+      layoutStyle: "grid",
+      keywords: "clarity, precision"
+    },
+    {
+      name: "Cosmic Dreamer",
+      description: "Celestial wonder and limitless potential",
+      theme: "freedom",
+      mood: "pastel",
+      layoutStyle: "celestial",
+      keywords: "stars, dreams, infinite"
+    }
+  ];
+
+  // Load favorites and history from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('affirmation-favorites');
-    if (stored) {
+    const storedFavorites = localStorage.getItem('affirmation-favorites');
+    if (storedFavorites) {
       try {
-        setFavorites(JSON.parse(stored));
+        setFavorites(JSON.parse(storedFavorites));
       } catch (e) {
         console.error('Failed to load favorites:', e);
+      }
+    }
+
+    const storedHistory = localStorage.getItem('affirmation-history');
+    if (storedHistory) {
+      try {
+        setHistory(JSON.parse(storedHistory));
+      } catch (e) {
+        console.error('Failed to load history:', e);
       }
     }
   }, []);
@@ -323,7 +398,13 @@ const AffirmationBuilder = () => {
     setLoading(true);
     setGeneratedImageB64(null);
     
-    setGeneratedData(generatePreviewData());
+    const preview = generatePreviewData();
+    // Apply custom palette if set
+    if (customPalette.length > 0) {
+      preview.palette = customPalette;
+      preview.paletteNames = customPalette;
+    }
+    setGeneratedData(preview);
     setLoading(false);
   };
 
@@ -372,7 +453,20 @@ const AffirmationBuilder = () => {
       }
       
       if (data?.imageB64) {
-        setGeneratedImageB64(`data:image/png;base64,${data.imageB64}`);
+        const imageData = `data:image/png;base64,${data.imageB64}`;
+        setGeneratedImageB64(imageData);
+        
+        // Save to history
+        const newHistoryItem: HistoryItem = {
+          id: `history-${Date.now()}`,
+          imageB64: imageData,
+          generatedData,
+          timestamp: Date.now()
+        };
+        const updatedHistory = [newHistoryItem, ...history].slice(0, 20); // Keep last 20
+        setHistory(updatedHistory);
+        localStorage.setItem('affirmation-history', JSON.stringify(updatedHistory));
+        
         toast.success('Unique image generated successfully!');
       } else {
         console.error('No image data in response:', data);
@@ -470,6 +564,51 @@ const AffirmationBuilder = () => {
     toast.success(`Downloaded ${sizeMap[format]} format!`);
   };
 
+  const applyPreset = (preset: StaffPreset) => {
+    setTheme(preset.theme);
+    setMood(preset.mood);
+    setLayoutStyle(preset.layoutStyle);
+    setUserKeywords(preset.keywords);
+    toast.success(`Applied "${preset.name}" preset!`);
+    handleGenerate();
+  };
+
+  const updatePaletteColor = (index: number, color: string) => {
+    const newPalette = [...(customPalette.length > 0 ? customPalette : generatedData.palette)];
+    newPalette[index] = color;
+    setCustomPalette(newPalette);
+    setGeneratedData({
+      ...generatedData,
+      palette: newPalette,
+      paletteNames: newPalette
+    });
+  };
+
+  const resetPalette = () => {
+    setCustomPalette([]);
+    handleGenerate();
+    toast.success('Palette reset to default');
+  };
+
+  const shareToSocial = (platform: string) => {
+    const text = encodeURIComponent(`${generatedData.headline}\n\n${generatedData.supportingLines.slice(0, 3).join(' • ')}\n\nCreated with Minimaluxe Affirmation Builder`);
+    const url = encodeURIComponent(window.location.href);
+    
+    const urls: Record<string, string> = {
+      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      pinterest: `https://pinterest.com/pin/create/button/?url=${url}&description=${text}`,
+      copy: ''
+    };
+
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(`${generatedData.headline}\n\n${generatedData.supportingLines.slice(0, 3).join('\n')}\n\nCreated with Minimaluxe Affirmation Builder - ${window.location.href}`);
+      toast.success('Caption copied to clipboard!');
+    } else {
+      window.open(urls[platform], '_blank');
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -481,12 +620,72 @@ const AffirmationBuilder = () => {
         <div className="container-custom max-w-screen-xl mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-8 md:mb-12">
-            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 text-clay">Affirmation Builder</h1>
+            <div className="flex justify-center items-center gap-4 mb-4">
+              <h1 className="font-display text-3xl md:text-4xl lg:text-5xl text-clay">Affirmation Builder</h1>
+              <Dialog open={showGallery} onOpenChange={setShowGallery}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <History className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Your Gallery</DialogTitle>
+                    <DialogDescription>Previously generated affirmations</DialogDescription>
+                  </DialogHeader>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                    {history.length === 0 ? (
+                      <p className="col-span-full text-center text-muted-foreground py-8">No history yet. Generate your first affirmation!</p>
+                    ) : (
+                      history.map((item) => (
+                        <div key={item.id} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => {
+                          setGeneratedImageB64(item.imageB64);
+                          setGeneratedData(item.generatedData);
+                          setShowGallery(false);
+                          toast.success('Loaded from gallery');
+                        }}>
+                          <img src={item.imageB64} alt="History" className="w-full h-auto" />
+                          <div className="p-2 bg-muted/50">
+                            <p className="text-xs text-muted-foreground">{new Date(item.timestamp).toLocaleDateString()}</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
             <p className="text-lg md:text-xl text-text-secondary mb-2">Describe your energy. We'll build the print.</p>
             <p className="text-xs md:text-sm text-text-secondary italic px-4">
               This creates a high-resolution printable affirmation layout you can download later.
             </p>
           </div>
+
+          {/* Staff Picks Section */}
+          <Card className="mb-8 bg-gradient-to-br from-card to-muted/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Staff Picks
+              </CardTitle>
+              <CardDescription>Curated preset combinations that look amazing</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                {staffPresets.map((preset) => (
+                  <Button
+                    key={preset.name}
+                    variant="outline"
+                    className="flex flex-col h-auto p-4 text-left hover:bg-primary/10 hover:border-primary transition-all"
+                    onClick={() => applyPreset(preset)}
+                  >
+                    <span className="font-semibold mb-1">{preset.name}</span>
+                    <span className="text-xs text-muted-foreground">{preset.description}</span>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -622,6 +821,39 @@ const AffirmationBuilder = () => {
                     Generate Unique Image
                   </Button>
                 </div>
+
+                {/* Color Customization */}
+                <div className="border-t pt-4 mt-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="flex items-center gap-2">
+                      <Palette className="h-4 w-4" />
+                      Custom Colors
+                    </Label>
+                    {customPalette.length > 0 && (
+                      <Button variant="ghost" size="sm" onClick={resetPalette}>
+                        Reset
+                      </Button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {(customPalette.length > 0 ? customPalette : generatedData.palette).map((color, i) => (
+                      <div key={i} className="flex flex-col gap-1">
+                        <Input
+                          type="color"
+                          value={color}
+                          onChange={(e) => updatePaletteColor(i, e.target.value)}
+                          className="h-12 cursor-pointer"
+                        />
+                        <Input
+                          type="text"
+                          value={color}
+                          onChange={(e) => updatePaletteColor(i, e.target.value)}
+                          className="h-8 text-xs text-center"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -650,6 +882,27 @@ const AffirmationBuilder = () => {
                       >
                         <Edit2 className="h-4 w-4" />
                       </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="icon">
+                            <Share2 className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
+                            Share to X/Twitter
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
+                            Share to Facebook
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('pinterest')}>
+                            Pin to Pinterest
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareToSocial('copy')}>
+                            Copy Caption
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </>
                   )}
                   {isEditing && (
