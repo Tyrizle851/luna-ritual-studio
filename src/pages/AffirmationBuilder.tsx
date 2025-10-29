@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles, Heart, Edit2, Check, X, Download } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface GeneratedData {
   headline: string;
@@ -17,6 +18,17 @@ interface GeneratedData {
   paletteNames: string[];
   layoutStyle: string;
   accentElements: string;
+}
+
+interface FavoriteConfig {
+  id: string;
+  theme: string;
+  mood: string;
+  layoutStyle: string;
+  userKeywords: string;
+  seed: string;
+  generatedData: GeneratedData;
+  timestamp: number;
 }
 
 const AffirmationBuilder = () => {
@@ -40,6 +52,23 @@ const AffirmationBuilder = () => {
     accentElements: "thin horizontal bars, serif typography"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedHeadline, setEditedHeadline] = useState("");
+  const [editedLines, setEditedLines] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteConfig[]>([]);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // Load favorites from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('affirmation-favorites');
+    if (stored) {
+      try {
+        setFavorites(JSON.parse(stored));
+      } catch (e) {
+        console.error('Failed to load favorites:', e);
+      }
+    }
+  }, []);
 
   const generatePreviewData = (): GeneratedData => {
     // Expanded theme definitions (15 themes)
@@ -369,6 +398,78 @@ const AffirmationBuilder = () => {
     handleGenerate();
   };
 
+  const startEditing = () => {
+    setEditedHeadline(generatedData.headline);
+    setEditedLines([...generatedData.supportingLines]);
+    setIsEditing(true);
+  };
+
+  const saveEdits = () => {
+    setGeneratedData({
+      ...generatedData,
+      headline: editedHeadline,
+      supportingLines: editedLines
+    });
+    setIsEditing(false);
+    toast.success('Changes saved!');
+  };
+
+  const cancelEdits = () => {
+    setIsEditing(false);
+    setEditedHeadline("");
+    setEditedLines([]);
+  };
+
+  const toggleFavorite = () => {
+    const currentConfig: FavoriteConfig = {
+      id: `${theme}-${mood}-${Date.now()}`,
+      theme,
+      mood,
+      layoutStyle,
+      userKeywords,
+      seed,
+      generatedData,
+      timestamp: Date.now()
+    };
+
+    let updatedFavorites: FavoriteConfig[];
+    if (isFavorite) {
+      // Remove from favorites
+      updatedFavorites = favorites.filter(f => 
+        !(f.theme === theme && f.mood === mood && f.layoutStyle === layoutStyle)
+      );
+      setIsFavorite(false);
+      toast.success('Removed from favorites');
+    } else {
+      // Add to favorites (max 10)
+      updatedFavorites = [currentConfig, ...favorites].slice(0, 10);
+      setIsFavorite(true);
+      toast.success('Added to favorites!');
+    }
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('affirmation-favorites', JSON.stringify(updatedFavorites));
+  };
+
+  const downloadImage = (format: string) => {
+    if (!generatedImageB64) return;
+
+    const link = document.createElement('a');
+    link.href = generatedImageB64;
+    
+    const sizeMap: Record<string, string> = {
+      'original': 'original',
+      'instagram-square': '1080x1080',
+      'instagram-story': '1080x1920',
+      'print-8x10': '8x10',
+      'print-11x14': '11x14'
+    };
+
+    link.download = `affirmation-${sizeMap[format]}-${Date.now()}.png`;
+    link.click();
+    toast.success(`Downloaded ${sizeMap[format]} format!`);
+  };
+
   return (
     <>
       <Helmet>
@@ -526,9 +627,50 @@ const AffirmationBuilder = () => {
 
             {/* Right Column: Preview */}
             <Card className="bg-card">
-              <CardHeader>
-                <CardTitle>Preview</CardTitle>
-                <CardDescription>Generated affirmation design</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                <div>
+                  <CardTitle>Preview</CardTitle>
+                  <CardDescription>Generated affirmation design</CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  {!isEditing && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={toggleFavorite}
+                        className={isFavorite ? "text-red-500" : ""}
+                      >
+                        <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={startEditing}
+                      >
+                        <Edit2 className="h-4 w-4" />
+                      </Button>
+                    </>
+                  )}
+                  {isEditing && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={saveEdits}
+                      >
+                        <Check className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={cancelEdits}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
               </CardHeader>
               <CardContent>
                 {generatedImageB64 ? (
@@ -540,18 +682,31 @@ const AffirmationBuilder = () => {
                         className="w-full h-auto"
                       />
                     </div>
-                    <Button 
-                      onClick={() => {
-                        const link = document.createElement('a');
-                        link.href = generatedImageB64;
-                        link.download = `affirmation-${Date.now()}.png`;
-                        link.click();
-                        toast.success('Image downloaded!');
-                      }}
-                      className="w-full"
-                    >
-                      Download Image
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button className="w-full">
+                          <Download className="mr-2 h-4 w-4" />
+                          Download Image
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        <DropdownMenuItem onClick={() => downloadImage('original')}>
+                          Original Size
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
+                          Instagram Square (1080x1080)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
+                          Instagram Story (1080x1920)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
+                          Print 8x10
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
+                          Print 11x14
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 ) : (
                   <div className="space-y-6">
@@ -573,9 +728,18 @@ const AffirmationBuilder = () => {
                         <div className="flex justify-center mb-3">
                           <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
                         </div>
-                        <h3 className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
-                          {generatedData.headline}
-                        </h3>
+                        {isEditing ? (
+                          <Input
+                            value={editedHeadline}
+                            onChange={(e) => setEditedHeadline(e.target.value.toUpperCase())}
+                            className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase bg-transparent border-2 border-dashed"
+                            style={{ color: generatedData.palette[1] || '#c9a961' }}
+                          />
+                        ) : (
+                          <h3 className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
+                            {generatedData.headline}
+                          </h3>
+                        )}
                         <div className="flex justify-center mb-8">
                           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
                         </div>
@@ -583,19 +747,36 @@ const AffirmationBuilder = () => {
                       
                       {/* Middle section with supporting lines */}
                       <div className="relative z-10 space-y-5 mb-8">
-                        {generatedData.supportingLines.slice(0, 6).map((line, i) => (
+                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 6).map((line, i) => (
                           <div key={i} className="flex items-center justify-center gap-3">
                             {i % 2 === 0 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
-                            <p 
-                              className="text-center leading-relaxed text-base md:text-lg"
-                              style={{ 
-                                color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
-                                fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                                fontWeight: i % 2 === 0 ? '600' : '400'
-                              }}
-                            >
-                              {line}
-                            </p>
+                            {isEditing ? (
+                              <Input
+                                value={line}
+                                onChange={(e) => {
+                                  const newLines = [...editedLines];
+                                  newLines[i] = e.target.value;
+                                  setEditedLines(newLines);
+                                }}
+                                className="text-center leading-relaxed text-base md:text-lg bg-transparent border border-dashed"
+                                style={{ 
+                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
+                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                                  fontWeight: i % 2 === 0 ? '600' : '400'
+                                }}
+                              />
+                            ) : (
+                              <p 
+                                className="text-center leading-relaxed text-base md:text-lg"
+                                style={{ 
+                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
+                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
+                                  fontWeight: i % 2 === 0 ? '600' : '400'
+                                }}
+                              >
+                                {line}
+                              </p>
+                            )}
                             {i % 2 === 1 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
                           </div>
                         ))}
