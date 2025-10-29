@@ -9,6 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown } from "lucide-react";
+import morningRitualImg from "@/assets/affirmation-peace.jpg";
+import powerHourImg from "@/assets/affirmation-progress.jpg";
+import gratitudeGardenImg from "@/assets/affirmation-joy.jpg";
+import focusFlowImg from "@/assets/affirmation-trust.jpg";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -41,6 +45,7 @@ interface StaffPreset {
   mood: string;
   layoutStyle: string;
   keywords: string;
+  previewImage: string;
 }
 
 interface HistoryItem {
@@ -88,35 +93,39 @@ const AffirmationBuilder = () => {
   const staffPresets: StaffPreset[] = [
     {
       name: "Morning Ritual",
-      description: "Peaceful sunrise energy",
+      description: "Peaceful sunrise",
       theme: "peace",
       mood: "coastal",
       layoutStyle: "halo",
-      keywords: "light, fresh, calm"
+      keywords: "light, fresh, calm",
+      previewImage: morningRitualImg
     },
     {
       name: "Power Hour",
-      description: "Bold confidence energy",
+      description: "Bold confidence",
       theme: "confidence",
       mood: "monochrome",
       layoutStyle: "grit",
-      keywords: "strong, fearless"
+      keywords: "strong, fearless",
+      previewImage: powerHourImg
     },
     {
       name: "Gratitude Garden",
-      description: "Warm botanical vibes",
+      description: "Warm botanicals",
       theme: "gratitude",
       mood: "bohemian",
       layoutStyle: "botanical",
-      keywords: "flowers, warmth, joy"
+      keywords: "flowers, warmth, joy",
+      previewImage: gratitudeGardenImg
     },
     {
       name: "Focus Flow",
-      description: "Clear mind, sharp vision",
+      description: "Clear sharp vision",
       theme: "focus",
       mood: "minimalist",
       layoutStyle: "grid",
-      keywords: "clarity, precision"
+      keywords: "clarity, precision",
+      previewImage: focusFlowImg
     }
   ];
 
@@ -485,7 +494,7 @@ const AffirmationBuilder = () => {
     setMood(moods[Math.floor(Math.random() * moods.length)]);
     setLayoutStyle(layouts[Math.floor(Math.random() * layouts.length)]);
     setSeed(Math.floor(Math.random() * 10000).toString());
-    handleGenerate();
+    toast.success('Randomized! Click Preview to see it.');
   };
 
   const startEditing = () => {
@@ -566,7 +575,13 @@ const AffirmationBuilder = () => {
     setLayoutStyle(preset.layoutStyle);
     setUserKeywords(preset.keywords);
     toast.success(`Applied "${preset.name}" preset!`);
-    handleGenerate();
+    // Auto-generate when preset is selected
+    const preview = generatePreviewData();
+    if (customPalette.length > 0) {
+      preview.palette = customPalette;
+      preview.paletteNames = customPalette;
+    }
+    setGeneratedData(preview);
   };
 
   const updatePaletteColor = (index: number, color: string) => {
@@ -674,20 +689,28 @@ const AffirmationBuilder = () => {
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {staffPresets.map((preset) => (
-                      <Button
+                      <div
                         key={preset.name}
-                        variant="outline"
-                        className="flex flex-col h-auto p-3 text-left hover:bg-primary/10 hover:border-primary transition-all"
+                        className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:border-primary transition-all"
                         onClick={() => {
                           applyPreset(preset);
                           setActiveTab("preview");
                         }}
                       >
-                        <span className="font-semibold mb-1 text-sm leading-tight">{preset.name}</span>
-                        <span className="text-xs text-muted-foreground">{preset.description}</span>
-                      </Button>
+                        <div className="aspect-square relative overflow-hidden">
+                          <img 
+                            src={preset.previewImage} 
+                            alt={preset.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="p-2 bg-card">
+                          <p className="font-semibold text-xs leading-tight mb-0.5">{preset.name}</p>
+                          <p className="text-[10px] text-muted-foreground leading-tight">{preset.description}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </CardContent>
