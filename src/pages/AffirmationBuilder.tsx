@@ -409,65 +409,75 @@ const AffirmationBuilder = () => {
                 <CardDescription>Your custom affirmation print concept</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                 {/* Mock Poster Container */}
-                <div className="relative bg-gradient-to-br from-stone-50 to-stone-100 rounded-lg shadow-lg border border-neutral-200 p-4 md:p-6 lg:p-8 aspect-[4/5]">
-                  {/* Paper texture effect */}
-                  <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,_rgba(0,0,0,0.1)_1px,_transparent_1px)] bg-[length:20px_20px] rounded-lg" />
-                  
-                  <div className="relative h-full flex flex-col justify-between">
-                    {/* Main Headline */}
-                    <div className="text-center mb-4 md:mb-6">
-                      <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-clay mb-2 uppercase">
-                        {generatedData.mainAffirmation}
-                      </h2>
-                      <div className="w-16 md:w-24 h-0.5 bg-clay/30 mx-auto" />
-                    </div>
-
-                    {/* Supporting Affirmations */}
-                    <div className="flex-1 space-y-2 md:space-y-3">
-                      {generatedData.supportingPhrases.map((phrase, idx) => (
-                        <p
-                          key={idx}
-                          className={`text-xs md:text-sm lg:text-base ${
-                            idx % 3 === 0
-                              ? "italic text-clay-dark font-light"
-                              : idx % 3 === 1
-                              ? "font-semibold text-text-primary tracking-wide"
-                              : "text-text-secondary font-medium"
-                          }`}
-                        >
-                          {phrase}
-                        </p>
-                      ))}
-                    </div>
-
-                    {/* Style Metadata */}
-                    <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-neutral-300 space-y-1 md:space-y-2 text-[10px] md:text-xs text-text-secondary">
-                      <p>
-                        <span className="font-semibold text-clay">Palette:</span> {generatedData.palette}
-                      </p>
-                      <p>
-                        <span className="font-semibold text-clay">Layout Style:</span> {generatedData.layoutStyle}
-                      </p>
-                      <p>
-                        <span className="font-semibold text-clay">Accent Elements:</span> {generatedData.accentStyle}
-                      </p>
-                    </div>
+                {/* Show either text preview OR generated image */}
+                {generatedImageB64 ? (
+                  /* Generated Unique Image */
+                  <div className="space-y-4">
+                    <img 
+                      src={generatedImageB64} 
+                      alt="Generated affirmation poster" 
+                      className="w-full rounded-lg shadow-md"
+                    />
+                    <p className="text-xs text-center text-text-secondary">
+                      Your AI-generated affirmation poster
+                    </p>
                   </div>
-                </div>
+                ) : (
+                  /* Text-based Preview */
+                  <>
+                    {/* Mock Poster Container */}
+                    <div className="relative bg-gradient-to-br from-stone-50 to-stone-100 rounded-lg shadow-lg border border-neutral-200 p-4 md:p-6 lg:p-8 aspect-[4/5]">
+                      {/* Paper texture effect */}
+                      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,_rgba(0,0,0,0.1)_1px,_transparent_1px)] bg-[length:20px_20px] rounded-lg" />
+                      
+                      <div className="relative h-full flex flex-col justify-between">
+                        {/* Main Headline */}
+                        <div className="text-center mb-4 md:mb-6">
+                          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-clay mb-2 uppercase">
+                            {generatedData.mainAffirmation}
+                          </h2>
+                          <div className="w-16 md:w-24 h-0.5 bg-clay/30 mx-auto" />
+                        </div>
 
-                {/* Model Image (optional) */}
-                {generatedImageB64 && (
-                  <div className="space-y-2">
-                    <img src={generatedImageB64} alt="Generated" className="w-full rounded-md border" />
-                    <p className="text-xs text-center text-text-secondary">Unique AI image preview (square). Final print will be cropped to 4:5.</p>
-                  </div>
+                        {/* Supporting Affirmations */}
+                        <div className="flex-1 space-y-2 md:space-y-3">
+                          {generatedData.supportingPhrases.map((phrase, idx) => (
+                            <p
+                              key={idx}
+                              className={`text-xs md:text-sm lg:text-base ${
+                                idx % 3 === 0
+                                  ? "italic text-clay-dark font-light"
+                                  : idx % 3 === 1
+                                  ? "font-semibold text-text-primary tracking-wide"
+                                  : "text-text-secondary font-medium"
+                              }`}
+                            >
+                              {phrase}
+                            </p>
+                          ))}
+                        </div>
+
+                        {/* Style Metadata */}
+                        <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-neutral-300 space-y-1 md:space-y-2 text-[10px] md:text-xs text-text-secondary">
+                          <p>
+                            <span className="font-semibold text-clay">Palette:</span> {generatedData.palette}
+                          </p>
+                          <p>
+                            <span className="font-semibold text-clay">Layout Style:</span> {generatedData.layoutStyle}
+                          </p>
+                          <p>
+                            <span className="font-semibold text-clay">Accent Elements:</span> {generatedData.accentStyle}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Disclaimer */}
+                    <p className="text-xs text-center text-text-secondary italic">
+                      This is a preview. Final high-resolution print will include full styling and export at 300 DPI.
+                    </p>
+                  </>
                 )}
-
-                {/* Disclaimer */}
-                <p className="text-xs text-center text-text-secondary italic">
-                  This is a preview. Final high-resolution print will include full styling and export at 300 DPI.
-                </p>
 
                 {/* CTA Footer */}
                 <div className="space-y-3 pt-4 border-t border-neutral-200">
