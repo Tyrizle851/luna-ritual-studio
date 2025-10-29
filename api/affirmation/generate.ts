@@ -16,11 +16,11 @@ export default async function handler(req: any, res: any) {
     if (!apiKey) return res.status(500).json({ error: "Missing OPENAI_API_KEY" });
 
     // Parse request body manually for Vercel serverless runtime
-    let body = '';
+    let rawBody = "";
     for await (const chunk of req) {
-      body += chunk;
+      rawBody += chunk;
     }
-    const parsedBody = body ? JSON.parse(body) : {};
+    const parsedBody = rawBody ? JSON.parse(rawBody) : {};
     const { previewId, theme, mood, text, styleSeed } = parsedBody;
     let mappedTheme: string, mappedMood: string, normalizedText: string, prompt: string;
 

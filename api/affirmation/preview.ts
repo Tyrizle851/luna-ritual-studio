@@ -13,11 +13,11 @@ export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
     // Parse request body manually for Vercel serverless runtime
-    let body = '';
+    let rawBody = "";
     for await (const chunk of req) {
-      body += chunk;
+      rawBody += chunk;
     }
-    const parsedBody = body ? JSON.parse(body) : {};
+    const parsedBody = rawBody ? JSON.parse(rawBody) : {};
     const { theme, mood, text, styleSeed } = parsedBody;
     const mappedTheme = mapTheme(theme);
     const mappedMood = mapMood(mood);
