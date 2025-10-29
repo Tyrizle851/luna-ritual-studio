@@ -1,4 +1,5 @@
 // Edge function for generating affirmation images using Lovable AI
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -35,8 +36,15 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     const body: GenerateRequest = await req.json();
     const { theme, mood, text, styleSeed, preview } = body;
+
+    const startTime = Date.now();
 
     console.log('Generating affirmation image:', { theme, mood, textLength: text?.length || 0, styleSeed });
 
@@ -127,10 +135,72 @@ Deno.serve(async (req) => {
 
     console.log('Successfully generated image, size:', imageB64.length);
 
+    // Convert base64 to binary for storage
+    const binaryString = atob(imageB64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    // Generate unique filename
+    const generationId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const filename = `${generationId}.png`;
+    const filePath = `${theme}/${mood}/${filename}`;
+
+    // Upload to Supabase Storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('affirmation-images')
+      .upload(filePath, bytes, {
+        contentType: 'image/png',
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (uploadError) {
+      console.error('Storage upload error:', uploadError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to store image', detail: uploadError.message }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Get public URL
+    const { data: urlData } = supabase.storage
+      .from('affirmation-images')
+      .getPublicUrl(filePath);
+
+    const publicUrl = urlData.publicUrl;
+    const generationTime = Date.now() - startTime;
+
+    // Save metadata to database
+    const { error: dbError } = await supabase
+      .from('affirmation_generations')
+      .insert({
+        theme,
+        mood,
+        layout_style: preview?.layoutStyle || null,
+        keywords: text || null,
+        style_seed: styleSeed || null,
+        image_url: publicUrl,
+        image_path: filePath,
+        image_size_bytes: bytes.length,
+        generation_time_ms: generationTime
+      });
+
+    if (dbError) {
+      console.error('Database insert error:', dbError);
+      // Don't fail the request if DB insert fails - image is already stored
+    }
+
+    console.log('Image uploaded successfully:', publicUrl);
+
     return new Response(
-      JSON.stringify({ 
-        imageB64,
-        generationId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}` 
+      JSON.stringify({
+        imageUrl: publicUrl,
+        imagePath: filePath,
+        generationId,
+        sizeBytes: bytes.length,
+        generationTimeMs: generationTime
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

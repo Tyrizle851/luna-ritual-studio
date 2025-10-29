@@ -42,7 +42,7 @@ const AffirmationBuilder = () => {
     layoutStyle: "Centered headline with elegant underline bar",
     accentElements: "thin horizontal bars, serif typography"
   });
-  const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
 
   const generatePreviewData = (): GeneratedData => {
     // Expanded theme definitions (15 themes)
@@ -295,18 +295,18 @@ const AffirmationBuilder = () => {
 
   const handleGenerate = async () => {
     setLoading(true);
-    setGeneratedImageB64(null);
-    
+    setGeneratedImageUrl(null);
+
     setGeneratedData(generatePreviewData());
     setLoading(false);
   };
 
   const handleGenerateUnique = async () => {
     setLoading(true);
-    setGeneratedImageB64(null);
+    setGeneratedImageUrl(null);
     try {
       const previewForAPI = generatePreviewData();
-      
+
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
         body: {
           theme,
@@ -316,15 +316,15 @@ const AffirmationBuilder = () => {
           preview: previewForAPI
         }
       });
-      
+
       if (error) {
         console.error('Edge function error:', error);
         toast.error('Failed to generate image. Please try again.');
         return;
       }
-      
-      if (data?.imageB64) {
-        setGeneratedImageB64(`data:image/png;base64,${data.imageB64}`);
+
+      if (data?.imageUrl) {
+        setGeneratedImageUrl(data.imageUrl);
         toast.success('Unique image generated successfully!');
       } else {
         console.error('No image data in response:', data);
@@ -566,22 +566,35 @@ const AffirmationBuilder = () => {
                 <CardDescription>Your generated affirmation poster preview</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {generatedImageB64 ? (
+                {generatedImageUrl ? (
                   <div className="space-y-4">
                     <div className="rounded-lg overflow-hidden border border-border">
-                      <img 
-                        src={generatedImageB64} 
-                        alt="Generated Affirmation" 
+                      <img
+                        src={generatedImageUrl}
+                        alt="Generated Affirmation"
                         className="w-full h-auto"
+                        crossOrigin="anonymous"
                       />
                     </div>
-                    <Button 
-                      onClick={() => {
-                        const link = document.createElement('a');
-                        link.href = generatedImageB64;
-                        link.download = `affirmation-${Date.now()}.png`;
-                        link.click();
-                        toast.success('Image downloaded!');
+                    <Button
+                      onClick={async () => {
+                        try {
+                          // Fetch the image and download it
+                          const response = await fetch(generatedImageUrl);
+                          const blob = await response.blob();
+                          const url = URL.createObjectURL(blob);
+                          const link = document.createElement('a');
+                          link.href = url;
+                          link.download = `affirmation-${Date.now()}.png`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          URL.revokeObjectURL(url);
+                          toast.success('Image downloaded!');
+                        } catch (error) {
+                          console.error('Download error:', error);
+                          toast.error('Failed to download image');
+                        }
                       }}
                       className="w-full"
                     >
