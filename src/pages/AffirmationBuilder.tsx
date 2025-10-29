@@ -371,12 +371,12 @@ const AffirmationBuilder = () => {
                 <div className="space-y-2">
                   <Label htmlFor="layout">Layout Style</Label>
                   <p className="text-xs text-text-secondary mb-2">Leave blank for auto-pick based on theme</p>
-                  <Select value={layoutStyle} onValueChange={setLayoutStyle}>
+                  <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
                     <SelectTrigger id="layout">
                       <SelectValue placeholder="Auto (based on theme)" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Auto (based on theme)</SelectItem>
+                      <SelectItem value="auto">Auto (based on theme)</SelectItem>
                       <SelectItem value="clean-serif">Clean Serif Poster</SelectItem>
                       <SelectItem value="botanical">Botanical / Feminine</SelectItem>
                       <SelectItem value="grit">Grit / Directional</SelectItem>
