@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { apiFetch } from "@/lib/api";
 import { Helmet } from "react-helmet";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -241,6 +242,7 @@ const AffirmationBuilder = () => {
 
   const handleGenerateUnique = async () => {
     setLoading(true);
+    setGeneratedImageB64(null);
     try {
       const resp = await apiFetch('/api/affirmation/generate', {
         method: 'POST',
@@ -248,11 +250,23 @@ const AffirmationBuilder = () => {
         body: JSON.stringify({ theme, mood, text: userKeywords, styleSeed: seed || undefined }),
       });
       const data = await resp.json();
-      if (resp.ok && data?.imageB64) {
+      
+      if (!resp.ok) {
+        console.error('Image generation API error:', resp.status, data);
+        toast.error(data?.error || 'Failed to generate image. Please check your API configuration.');
+        return;
+      }
+      
+      if (data?.imageB64) {
         setGeneratedImageB64(`data:image/png;base64,${data.imageB64}`);
+        toast.success('Unique image generated successfully!');
+      } else {
+        console.error('No image data in response:', data);
+        toast.error('No image was returned. Please try again.');
       }
     } catch (e) {
-      // ignore for now
+      console.error('Image generation error:', e);
+      toast.error(e instanceof Error ? e.message : 'Network error. Please check your connection.');
     } finally {
       setLoading(false);
     }
