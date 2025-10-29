@@ -150,12 +150,20 @@ VISUAL STYLE: ${moodStyle}
 USER INTENT: ${userText || 'General positive affirmation'}
 ${styleSeed ? `STYLE SEED: ${styleSeed} (use for consistent artistic direction)` : ''}
 
+CRITICAL CANVAS REQUIREMENTS:
+- EXACT ASPECT RATIO: 4:5 portrait orientation (e.g., 2000x2500 pixels, 8x10 inches)
+- NO BORDERS OR MARGINS: Content must fill the entire canvas edge-to-edge
+- NO WHITE SPACE AROUND EDGES: The background/design extends to all four edges
+- The poster itself IS the canvas - not a poster floating on a background
+- Every pixel from edge to edge is part of the designed poster
+
 DESIGN REQUIREMENTS:
-- Layout: Vertical composition (portrait orientation, 8x10" suitable)
+- Layout: Vertical composition perfectly filling 4:5 aspect ratio canvas
 - Typography: Mix 3-5 complementary fonts (serif, sans-serif, script/handwritten)
 - Font hierarchy: Vary sizes dramatically - largest 3-4x larger than smallest
 - Text arrangement: Organic, non-grid layout with phrases at gentle angles (0-15 degrees)
-- White space: Generous breathing room, professional spacing
+- Internal white space: Generous breathing room within the design, professional spacing
+- Background: Solid color or subtle texture that extends edge-to-edge (white/cream/themed color)
 
 CONTENT:
 - 1 main affirmation (2-4 words, bold, uppercase, powerful) about ${themeDesc}
@@ -169,17 +177,18 @@ DECORATIVE ELEMENTS:
 
 ARTISTIC STYLE:
 - Modern farmhouse meets minimalist aesthetic
-- Subtle paper texture or organic imperfection
+- Subtle paper texture or organic imperfection (part of the background, not outside it)
 - Hand-drawn appearance with slight irregularity
 - Asymmetrical but visually balanced
 - Professional yet approachable, suitable for wall art
 
 TECHNICAL:
-- High-quality print-ready appearance
+- High-quality print-ready appearance at 4:5 aspect ratio
 - Excellent readability and contrast
-- Clean background (white/cream) or subtle texture
+- Background fills entire canvas (no transparent areas, no surrounding borders)
 - No complex gradients, print-safe colors
 - No neon, no inappropriate content
+- The final image should be ready to download and print without any cropping needed
 
-Create a beautiful, handcrafted-looking design that feels intentional and premium - perfect for printing or digital display.`;
+Create a beautiful, handcrafted-looking poster design that occupies the FULL canvas from edge to edge - perfect for immediate printing or digital display without any additional processing.`;
 }
