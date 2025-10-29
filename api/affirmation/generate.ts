@@ -15,7 +15,13 @@ export default async function handler(req: any, res: any) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: "Missing OPENAI_API_KEY" });
 
-    const { previewId, theme, mood, text, styleSeed } = (req.body || {}) as any;
+    // Parse request body manually for Vercel serverless runtime
+    let body = '';
+    for await (const chunk of req) {
+      body += chunk;
+    }
+    const parsedBody = body ? JSON.parse(body) : {};
+    const { previewId, theme, mood, text, styleSeed } = parsedBody;
     let mappedTheme: string, mappedMood: string, normalizedText: string, prompt: string;
 
     if (previewId && previews.has(previewId)) {
@@ -46,7 +52,8 @@ export default async function handler(req: any, res: any) {
     const generationId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     return res.status(200).json({ generationId, imageB64: b64 });
   } catch (e) {
-    return res.status(500).json({ error: "Generation failed" });
+    console.error("Generation handler error:", e);
+    return res.status(500).json({ error: "Generation failed", detail: e instanceof Error ? e.message : String(e) });
   }
 }
 
