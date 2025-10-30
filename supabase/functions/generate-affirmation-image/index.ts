@@ -49,11 +49,11 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    const apiKey = Deno.env.get('OPENAI_API_KEY');
     if (!apiKey) {
-      console.error('LOVABLE_API_KEY not configured');
+      console.error('OPENAI_API_KEY not configured');
       return new Response(
-        JSON.stringify({ error: 'API key not configured' }),
+        JSON.stringify({ error: 'OpenAI API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -66,30 +66,28 @@ Deno.serve(async (req) => {
     // Build the master prompt using the complete design spec
     const prompt = buildMasterPrompt(designSpec);
     
-    console.log('Calling Lovable AI with prompt length:', prompt.length);
+    console.log('Calling OpenAI GPT Image API with prompt length:', prompt.length);
 
-    // Call Lovable AI's image generation API (Nano banana model)
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    // Call OpenAI's GPT image generation API
+    const aiResponse = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash-image-preview',
-        messages: [
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        modalities: ['image', 'text']
+        model: 'gpt-image-1',
+        prompt: prompt,
+        size: '1024x1024',
+        quality: 'high',
+        response_format: 'b64_json',
+        n: 1
       }),
     });
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
-      console.error('Lovable AI error:', aiResponse.status, errorText);
+      console.error('OpenAI API error:', aiResponse.status, errorText);
       
       // Handle rate limiting and payment errors
       if (aiResponse.status === 429) {
@@ -98,9 +96,9 @@ Deno.serve(async (req) => {
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      if (aiResponse.status === 402) {
+      if (aiResponse.status === 402 || aiResponse.status === 401) {
         return new Response(
-          JSON.stringify({ error: 'AI credits depleted. Please add credits to continue.' }),
+          JSON.stringify({ error: 'OpenAI API authentication failed or credits depleted.' }),
           { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -108,7 +106,7 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           error: 'Image generation failed', 
-          detail: `AI Gateway returned ${aiResponse.status}`,
+          detail: `OpenAI API returned ${aiResponse.status}`,
           message: errorText 
         }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -116,19 +114,15 @@ Deno.serve(async (req) => {
     }
 
     const aiData = await aiResponse.json();
-    const imageUrl = aiData?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    const imageB64 = aiData?.data?.[0]?.b64_json;
 
-    if (!imageUrl) {
-      console.error('No image data in AI response');
+    if (!imageB64) {
+      console.error('No image data in OpenAI response');
       return new Response(
-        JSON.stringify({ error: 'No image returned from AI' }),
+        JSON.stringify({ error: 'No image returned from OpenAI' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-
-    // Extract base64 data from data URL (format: data:image/png;base64,...)
-    const base64Match = imageUrl.match(/^data:image\/\w+;base64,(.+)$/);
-    const imageB64 = base64Match ? base64Match[1] : imageUrl;
 
     console.log('Successfully generated image, size:', imageB64.length);
 
