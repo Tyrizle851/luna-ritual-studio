@@ -337,25 +337,34 @@ const AffirmationBuilder = () => {
       // Map layout style to archetype (supports both old and new names)
       const layoutMap: Record<string, LayoutArchetype> = {
         // Old names for backward compatibility
-        "vintage": "centered-stack",
-        "clean-serif": "minimal-focus",
+        "vintage": "arch-composition",
+        "clean-serif": "floating-cluster",
         "botanical": "flowing-curves",
         "grid": "angular-grid",
         "halo": "circular-orbit",
         "organic": "flowing-curves",
         "geometric": "angular-grid",
         "celestial": "circular-orbit",
-        "minimal-zen": "minimal-focus",
+        "minimal-zen": "floating-cluster",
         "grit": "diagonal-dynamic",
         // New archetype names (passthrough)
-        "centered-stack": "centered-stack",
+        "scattered-organic": "scattered-organic",
         "flowing-curves": "flowing-curves",
         "angular-grid": "angular-grid",
         "circular-orbit": "circular-orbit",
         "diagonal-dynamic": "diagonal-dynamic",
         "asymmetric-balance": "asymmetric-balance",
         "layered-depth": "layered-depth",
-        "minimal-focus": "minimal-focus"
+        "vertical-cascade": "vertical-cascade",
+        "horizontal-sweep": "horizontal-sweep",
+        "corner-radial": "corner-radial",
+        "spiral-flow": "spiral-flow",
+        "stepped-rhythm": "stepped-rhythm",
+        "arch-composition": "arch-composition",
+        "split-panel": "split-panel",
+        "floating-cluster": "floating-cluster",
+        "wave-pattern": "wave-pattern",
+        "botanical-branch": "botanical-branch"
       };
       
       const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || layoutMap[layoutStyle] || "asymmetric-balance";
