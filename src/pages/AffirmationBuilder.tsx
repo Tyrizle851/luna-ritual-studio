@@ -236,49 +236,58 @@ const AffirmationBuilder = () => {
       }
     };
 
-    // Mood only influences accents now - expanded to 4-6 accents per mood
+    // Mood only influences accents now - expanded nature-focused elements
     const moodAccents: Record<string, string[]> = {
-      minimalist: ["thin lines", "simple dots", "negative space", "subtle borders", "clean edges"],
-      bohemian: ["organic shapes", "flowing curves", "hand-drawn elements", "botanical motifs", "textured patterns", "whimsical details"],
-      "modern-serif": ["clean lines", "geometric shapes", "elegant serifs", "structured borders", "classic frames"],
-      coastal: ["wave patterns", "light rays", "nautical elements", "sea foam textures", "horizon lines", "tidal curves"],
-      earthy: ["natural textures", "botanical elements", "wood grain", "stone patterns", "organic shapes", "earth tones"],
-      vibrant: ["bold shapes", "dynamic angles", "energetic bursts", "color blocks", "abstract forms", "striking contrasts"],
-      pastel: ["soft dots", "gentle curves", "delicate wisps", "dreamy halos", "light washes", "tender shapes"],
-      monochrome: ["stark lines", "high contrast shapes", "graphic elements", "bold silhouettes", "crisp borders", "dramatic shadows"],
-      sunset: ["radiating lines", "gradient transitions", "golden rays", "warm glows", "horizon blends", "amber streaks"],
-      forest: ["leaf motifs", "branch patterns", "moss textures", "tree silhouettes", "woodland details", "nature sprigs"]
+      minimalist: ["delicate branch", "single leaf", "minimal botanical line", "subtle vine", "simple stem", "soft petal"],
+      bohemian: ["wildflower cluster", "flowing vines", "organic botanical shapes", "layered leaves", "dried flowers", "pampas grass", "botanical wreaths"],
+      "modern-serif": ["eucalyptus branch", "olive leaf", "minimalist botanical line", "simple leaf silhouette", "clean branch", "elegant frond"],
+      coastal: ["sea grass", "dune grass", "coastal botanicals", "beach grass clusters", "sand dollar accents", "driftwood element", "wave-like fronds"],
+      earthy: ["monstera leaf", "fern frond", "pressed botanical", "terracotta pot silhouette", "dried palm", "natural seed pods", "earth-tone leaves", "organic branch"],
+      vibrant: ["tropical palm", "bold monstera", "colorful botanical", "dynamic leaf patterns", "bright flower burst", "vivid frond", "energetic plant forms"],
+      pastel: ["soft eucalyptus", "gentle flower", "whisper leaves", "delicate botanical wisp", "tender petal", "light botanical spray", "dreamy floral"],
+      monochrome: ["bold botanical silhouette", "graphic leaf", "stark branch", "high-contrast botanical", "dramatic frond shadow", "silhouette fern", "black botanical"],
+      sunset: ["golden wheat", "amber grass", "warm botanical", "sun-kissed leaves", "golden palm", "harvest botanical", "warm-tone fronds"],
+      forest: ["oak leaf", "pine branch", "woodland fern", "moss clusters", "forest floor botanical", "acorn accents", "tree branch", "woodland flora", "natural wood elements"]
     };
 
-    // Layout only influences structure/placement now
+    // Layout only influences structure/placement now - 17 unique layouts
     const layoutDescriptions: Record<string, string> = {
-      "centered-stack": "Centered headline with vertical stack of phrases",
-      "flowing-curves": "Curved text flow with organic arrangement",
-      "angular-grid": "Structured grid with aligned boxes",
-      "circular-orbit": "Circular arrangement with orbital phrases",
-      "diagonal-dynamic": "Dynamic angled composition with movement",
-      "asymmetric-balance": "Asymmetric placement with visual balance",
-      "layered-depth": "Overlapping layers creating depth",
-      "minimal-focus": "Maximum whitespace with single focal point"
+      "scattered-organic": "Organic scattered text placement like natural elements",
+      "flowing-curves": "Curved text paths following natural flow",
+      "angular-grid": "Clean structured grid with alignment",
+      "circular-orbit": "Circular orbital arrangement",
+      "diagonal-dynamic": "Dynamic angled composition with energy",
+      "asymmetric-balance": "Off-center asymmetric visual balance",
+      "layered-depth": "Overlapping text layers with depth",
+      "vertical-cascade": "Cascading vertical text flow",
+      "horizontal-sweep": "Horizontal sweeping movement",
+      "corner-radial": "Radiating outward from corner",
+      "spiral-flow": "Spiral arrangement from center point",
+      "stepped-rhythm": "Stepped staggered text placement",
+      "arch-composition": "Arched text forming curves",
+      "split-panel": "Divided composition with distinct sections",
+      "floating-cluster": "Clustered text with breathing space",
+      "wave-pattern": "Undulating wave-like text arrangement",
+      "botanical-branch": "Branching structure mimicking plant growth"
     };
 
     const selectedTheme = themeData[theme] || themeData.confidence;
     const selectedMoodAccents = moodAccents[mood] || moodAccents.minimalist;
     
-    // Auto-select layout if not chosen - favor dynamic layouts
+    // Auto-select layout if not chosen - favor organic and dynamic layouts
     let finalLayout = layoutStyle;
     if (!finalLayout) {
       const layoutMap: Record<string, string> = {
-        minimalist: "minimal-focus",
+        minimalist: "floating-cluster",
         bohemian: "flowing-curves",
         "modern-serif": "angular-grid",
-        coastal: "circular-orbit",
-        earthy: "asymmetric-balance",
+        coastal: "wave-pattern",
+        earthy: "botanical-branch",
         vibrant: "diagonal-dynamic",
-        pastel: "circular-orbit",
+        pastel: "scattered-organic",
         monochrome: "layered-depth",
-        sunset: "diagonal-dynamic",
-        forest: "layered-depth"
+        sunset: "arch-composition",
+        forest: "botanical-branch"
       };
       finalLayout = layoutMap[mood] || "asymmetric-balance";
     }

@@ -13,14 +13,23 @@ export type MoodSlug =
   | "vibrant" | "pastel" | "monochrome" | "geometric" | "organic" | "celestial";
 
 export type LayoutArchetype =
-  | "centered-stack"      // classic centered with vertical flow
-  | "flowing-curves"      // organic curved text paths
-  | "angular-grid"        // structured boxes and lines
-  | "circular-orbit"      // radial arrangement around center
-  | "diagonal-dynamic"    // angled, energetic placement
-  | "asymmetric-balance"  // intentionally off-center harmony
-  | "layered-depth"       // overlapping text planes
-  | "minimal-focus";      // maximum whitespace, single focal point
+  | "scattered-organic"       // organic scattered placement like fallen leaves
+  | "flowing-curves"          // curved text paths following natural flow
+  | "angular-grid"            // structured grid with clean lines
+  | "circular-orbit"          // circular arrangement with orbital text
+  | "diagonal-dynamic"        // dynamic angles with directional energy
+  | "asymmetric-balance"      // intentionally off-center harmony
+  | "layered-depth"           // overlapping text creating visual depth
+  | "vertical-cascade"        // cascading downward flow
+  | "horizontal-sweep"        // horizontal movement across canvas
+  | "corner-radial"           // radiating from corner outward
+  | "spiral-flow"             // spiral arrangement from center
+  | "stepped-rhythm"          // stepped/staggered text placement
+  | "arch-composition"        // arched text forming curves
+  | "split-panel"             // divided composition with sections
+  | "floating-cluster"        // clustered text with breathing room
+  | "wave-pattern"            // undulating wave-like arrangement
+  | "botanical-branch";       // branching structure mimicking plants
 
 export type EnergyLevel = "soft" | "supportive" | "direct" | "intense";
 
