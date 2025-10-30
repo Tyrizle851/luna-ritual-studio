@@ -250,25 +250,28 @@ const AffirmationBuilder = () => {
       forest: ["oak leaf", "pine branch", "woodland fern", "moss clusters", "forest floor botanical", "acorn accents", "tree branch", "woodland flora", "natural wood elements"]
     };
 
-    // Layout only influences structure/placement now - 17 unique layouts
+    // Layout only influences structure/placement now - 20 unique layouts
     const layoutDescriptions: Record<string, string> = {
-      "scattered-organic": "Organic scattered text placement like natural elements",
-      "flowing-curves": "Curved text paths following natural flow",
-      "angular-grid": "Clean structured grid with alignment",
-      "circular-orbit": "Circular orbital arrangement",
-      "diagonal-dynamic": "Dynamic angled composition with energy",
-      "asymmetric-balance": "Off-center asymmetric visual balance",
-      "layered-depth": "Overlapping text layers with depth",
-      "vertical-cascade": "Cascading vertical text flow",
-      "horizontal-sweep": "Horizontal sweeping movement",
-      "corner-radial": "Radiating outward from corner",
-      "spiral-flow": "Spiral arrangement from center point",
-      "stepped-rhythm": "Stepped staggered text placement",
-      "arch-composition": "Arched text forming curves",
-      "split-panel": "Divided composition with distinct sections",
-      "floating-cluster": "Clustered text with breathing space",
-      "wave-pattern": "Undulating wave-like text arrangement",
-      "botanical-branch": "Branching structure mimicking plant growth"
+      "centered-serenity": "Headline centered, balanced margins, soft breathing space",
+      "vertical-flow": "Text cascades downward in a gentle vertical rhythm",
+      "floating-cluster": "Affirmations grouped in a soft cluster near center",
+      "asymmetric-balance": "Intentionally off-center, modern editorial balance",
+      "arc-flow": "Text follows a subtle curved line — uplifting arc",
+      "golden-spiral": "Spiral flow anchored by a focal point — meditative",
+      "botanical-frame": "Text surrounded by delicate foliage accents",
+      "minimal-horizon": "Headline top third, space below feels open like sky",
+      "radiant-center-burst": "Words radiate from a quiet center, halo effect",
+      "soft-anchor-left": "Text anchored left, breathing room to right",
+      "soft-anchor-right": "Opposite direction version — elegant asymmetry",
+      "gentle-column": "Headlines + statements aligned like poetry lines",
+      "pebble-scatter": "Text arranged as soft clusters like river stones",
+      "circle-harmony": "Circular composition, wholeness feeling",
+      "prayer-stack": "Vertical mantra stacking — spiritual form",
+      "ribbon-drift": "Text moves like a soft ribbon — organic motion",
+      "editorial-grid-luxe": "Clean magazine/grid system refinement",
+      "calm-waterfall": "Words fall downward like flowing water",
+      "sacred-geometry": "Subtle geometric cues (flower of life, triangle, etc.)",
+      "breath-space-minimal": "Very little text — stillness dominates canvas"
     };
 
     const selectedTheme = themeData[theme] || themeData.confidence;
@@ -278,21 +281,21 @@ const AffirmationBuilder = () => {
     let finalLayout = layoutStyle;
     if (!finalLayout) {
       const layoutMap: Record<string, string> = {
-        minimalist: "floating-cluster",
-        bohemian: "flowing-curves",
-        "modern-serif": "angular-grid",
-        coastal: "wave-pattern",
-        earthy: "botanical-branch",
-        vibrant: "diagonal-dynamic",
-        pastel: "scattered-organic",
-        monochrome: "layered-depth",
-        sunset: "arch-composition",
-        forest: "botanical-branch"
+        minimalist: "breath-space-minimal",
+        bohemian: "botanical-frame",
+        "modern-serif": "editorial-grid-luxe",
+        coastal: "soft-anchor-left",
+        earthy: "pebble-scatter",
+        vibrant: "radiant-center-burst",
+        pastel: "floating-cluster",
+        monochrome: "gentle-column",
+        sunset: "arc-flow",
+        forest: "botanical-frame"
       };
       finalLayout = layoutMap[mood] || "asymmetric-balance";
     }
     
-    const layoutDescription = layoutDescriptions[finalLayout] || layoutDescriptions["centered-stack"];
+    const layoutDescription = layoutDescriptions[finalLayout] || layoutDescriptions["centered-serenity"];
     
     // Theme controls colors - use theme colors with slightly transparent backgrounds
     const themeColors = selectedTheme.colors;
@@ -352,24 +355,27 @@ const AffirmationBuilder = () => {
         "celestial": "circular-orbit",
         "minimal-zen": "floating-cluster",
         "grit": "diagonal-dynamic",
-        // New archetype names (passthrough)
-        "scattered-organic": "scattered-organic",
-        "flowing-curves": "flowing-curves",
-        "angular-grid": "angular-grid",
-        "circular-orbit": "circular-orbit",
-        "diagonal-dynamic": "diagonal-dynamic",
-        "asymmetric-balance": "asymmetric-balance",
-        "layered-depth": "layered-depth",
-        "vertical-cascade": "vertical-cascade",
-        "horizontal-sweep": "horizontal-sweep",
-        "corner-radial": "corner-radial",
-        "spiral-flow": "spiral-flow",
-        "stepped-rhythm": "stepped-rhythm",
-        "arch-composition": "arch-composition",
-        "split-panel": "split-panel",
+        // New 20 layout names (passthrough)
+        "centered-serenity": "centered-serenity",
+        "vertical-flow": "vertical-flow",
         "floating-cluster": "floating-cluster",
-        "wave-pattern": "wave-pattern",
-        "botanical-branch": "botanical-branch"
+        "asymmetric-balance": "asymmetric-balance",
+        "arc-flow": "arc-flow",
+        "golden-spiral": "golden-spiral",
+        "botanical-frame": "botanical-frame",
+        "minimal-horizon": "minimal-horizon",
+        "radiant-center-burst": "radiant-center-burst",
+        "soft-anchor-left": "soft-anchor-left",
+        "soft-anchor-right": "soft-anchor-right",
+        "gentle-column": "gentle-column",
+        "pebble-scatter": "pebble-scatter",
+        "circle-harmony": "circle-harmony",
+        "prayer-stack": "prayer-stack",
+        "ribbon-drift": "ribbon-drift",
+        "editorial-grid-luxe": "editorial-grid-luxe",
+        "calm-waterfall": "calm-waterfall",
+        "sacred-geometry": "sacred-geometry",
+        "breath-space-minimal": "breath-space-minimal"
       };
       
       const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || layoutMap[layoutStyle] || "asymmetric-balance";
@@ -477,12 +483,11 @@ const AffirmationBuilder = () => {
   const handleRandomize = () => {
     const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
     const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
-    // Favor dynamic layouts - exclude boring centered ones
-    const dynamicLayouts = ["flowing-curves", "angular-grid", "circular-orbit", "diagonal-dynamic", "asymmetric-balance", "layered-depth"];
+    const allLayouts = ["centered-serenity", "vertical-flow", "floating-cluster", "asymmetric-balance", "arc-flow", "golden-spiral", "botanical-frame", "minimal-horizon", "radiant-center-burst", "soft-anchor-left", "soft-anchor-right", "gentle-column", "pebble-scatter", "circle-harmony", "prayer-stack", "ribbon-drift", "editorial-grid-luxe", "calm-waterfall", "sacred-geometry", "breath-space-minimal"];
     
     setTheme(themes[Math.floor(Math.random() * themes.length)]);
     setMood(moods[Math.floor(Math.random() * moods.length)]);
-    setLayoutStyle(dynamicLayouts[Math.floor(Math.random() * dynamicLayouts.length)]);
+    setLayoutStyle(allLayouts[Math.floor(Math.random() * allLayouts.length)]);
     toast.success('Randomized! Click Preview to see it.');
   };
 
@@ -795,16 +800,28 @@ const AffirmationBuilder = () => {
                         <SelectTrigger id="layout">
                           <SelectValue placeholder="Auto" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="max-h-[300px] bg-background z-50">
                           <SelectItem value="auto">Auto</SelectItem>
-                          <SelectItem value="flowing-curves">Flowing Curves</SelectItem>
-                          <SelectItem value="angular-grid">Angular Grid</SelectItem>
-                          <SelectItem value="circular-orbit">Circular Orbit</SelectItem>
-                          <SelectItem value="diagonal-dynamic">Diagonal Dynamic</SelectItem>
+                          <SelectItem value="centered-serenity">Centered Serenity</SelectItem>
+                          <SelectItem value="vertical-flow">Vertical Flow</SelectItem>
+                          <SelectItem value="floating-cluster">Floating Cluster</SelectItem>
                           <SelectItem value="asymmetric-balance">Asymmetric Balance</SelectItem>
-                          <SelectItem value="layered-depth">Layered Depth</SelectItem>
-                          <SelectItem value="minimal-focus">Minimal Focus</SelectItem>
-                          <SelectItem value="centered-stack">Centered Stack</SelectItem>
+                          <SelectItem value="arc-flow">Arc Flow</SelectItem>
+                          <SelectItem value="golden-spiral">Golden Spiral</SelectItem>
+                          <SelectItem value="botanical-frame">Botanical Frame</SelectItem>
+                          <SelectItem value="minimal-horizon">Minimal Horizon</SelectItem>
+                          <SelectItem value="radiant-center-burst">Radiant Center Burst</SelectItem>
+                          <SelectItem value="soft-anchor-left">Soft Anchor Left</SelectItem>
+                          <SelectItem value="soft-anchor-right">Soft Anchor Right</SelectItem>
+                          <SelectItem value="gentle-column">Gentle Column</SelectItem>
+                          <SelectItem value="pebble-scatter">Pebble Scatter</SelectItem>
+                          <SelectItem value="circle-harmony">Circle Harmony</SelectItem>
+                          <SelectItem value="prayer-stack">Prayer Stack</SelectItem>
+                          <SelectItem value="ribbon-drift">Ribbon Drift</SelectItem>
+                          <SelectItem value="editorial-grid-luxe">Editorial Grid Luxe</SelectItem>
+                          <SelectItem value="calm-waterfall">Calm Waterfall</SelectItem>
+                          <SelectItem value="sacred-geometry">Sacred Geometry</SelectItem>
+                          <SelectItem value="breath-space-minimal">Breath Space Minimal</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -1209,16 +1226,28 @@ const AffirmationBuilder = () => {
                         <SelectTrigger id="layout-desktop">
                           <SelectValue placeholder="Auto" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="max-h-[300px] bg-background z-50">
                           <SelectItem value="auto">Auto</SelectItem>
-                          <SelectItem value="flowing-curves">Flowing Curves</SelectItem>
-                          <SelectItem value="angular-grid">Angular Grid</SelectItem>
-                          <SelectItem value="circular-orbit">Circular Orbit</SelectItem>
-                          <SelectItem value="diagonal-dynamic">Diagonal Dynamic</SelectItem>
+                          <SelectItem value="centered-serenity">Centered Serenity</SelectItem>
+                          <SelectItem value="vertical-flow">Vertical Flow</SelectItem>
+                          <SelectItem value="floating-cluster">Floating Cluster</SelectItem>
                           <SelectItem value="asymmetric-balance">Asymmetric Balance</SelectItem>
-                          <SelectItem value="layered-depth">Layered Depth</SelectItem>
-                          <SelectItem value="minimal-focus">Minimal Focus</SelectItem>
-                          <SelectItem value="centered-stack">Centered Stack</SelectItem>
+                          <SelectItem value="arc-flow">Arc Flow</SelectItem>
+                          <SelectItem value="golden-spiral">Golden Spiral</SelectItem>
+                          <SelectItem value="botanical-frame">Botanical Frame</SelectItem>
+                          <SelectItem value="minimal-horizon">Minimal Horizon</SelectItem>
+                          <SelectItem value="radiant-center-burst">Radiant Center Burst</SelectItem>
+                          <SelectItem value="soft-anchor-left">Soft Anchor Left</SelectItem>
+                          <SelectItem value="soft-anchor-right">Soft Anchor Right</SelectItem>
+                          <SelectItem value="gentle-column">Gentle Column</SelectItem>
+                          <SelectItem value="pebble-scatter">Pebble Scatter</SelectItem>
+                          <SelectItem value="circle-harmony">Circle Harmony</SelectItem>
+                          <SelectItem value="prayer-stack">Prayer Stack</SelectItem>
+                          <SelectItem value="ribbon-drift">Ribbon Drift</SelectItem>
+                          <SelectItem value="editorial-grid-luxe">Editorial Grid Luxe</SelectItem>
+                          <SelectItem value="calm-waterfall">Calm Waterfall</SelectItem>
+                          <SelectItem value="sacred-geometry">Sacred Geometry</SelectItem>
+                          <SelectItem value="breath-space-minimal">Breath Space Minimal</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

@@ -14,23 +14,26 @@ export type MoodSlug =
   | "modern-serif" | "sunset" | "forest";
 
 export type LayoutArchetype =
-  | "scattered-organic"       // organic scattered placement like fallen leaves
-  | "flowing-curves"          // curved text paths following natural flow
-  | "angular-grid"            // structured grid with clean lines
-  | "circular-orbit"          // circular arrangement with orbital text
-  | "diagonal-dynamic"        // dynamic angles with directional energy
-  | "asymmetric-balance"      // intentionally off-center harmony
-  | "layered-depth"           // overlapping text creating visual depth
-  | "vertical-cascade"        // cascading downward flow
-  | "horizontal-sweep"        // horizontal movement across canvas
-  | "corner-radial"           // radiating from corner outward
-  | "spiral-flow"             // spiral arrangement from center
-  | "stepped-rhythm"          // stepped/staggered text placement
-  | "arch-composition"        // arched text forming curves
-  | "split-panel"             // divided composition with sections
-  | "floating-cluster"        // clustered text with breathing room
-  | "wave-pattern"            // undulating wave-like arrangement
-  | "botanical-branch";       // branching structure mimicking plants
+  | "centered-serenity"        // Headline centered, balanced margins, soft breathing space
+  | "vertical-flow"            // Text cascades downward in a gentle vertical rhythm
+  | "floating-cluster"         // Affirmations grouped in a soft cluster near center
+  | "asymmetric-balance"       // Intentionally off-center, modern editorial balance
+  | "arc-flow"                 // Text follows a subtle curved line — uplifting arc
+  | "golden-spiral"            // Spiral flow anchored by a focal point — meditative
+  | "botanical-frame"          // Text surrounded by delicate foliage accents
+  | "minimal-horizon"          // Headline top third, space below feels open like sky
+  | "radiant-center-burst"     // Words radiate from a quiet center, halo effect
+  | "soft-anchor-left"         // Text anchored left, breathing room to right
+  | "soft-anchor-right"        // Opposite direction version — elegant asymmetry
+  | "gentle-column"            // Headlines + statements aligned like poetry lines
+  | "pebble-scatter"           // Text arranged as soft clusters like river stones
+  | "circle-harmony"           // Circular composition, wholeness feeling
+  | "prayer-stack"             // Vertical mantra stacking — spiritual form
+  | "ribbon-drift"             // Text moves like a soft ribbon — organic motion
+  | "editorial-grid-luxe"      // Clean magazine/grid system refinement
+  | "calm-waterfall"           // Words fall downward like flowing water
+  | "sacred-geometry"          // Subtle geometric cues (flower of life, triangle, etc.)
+  | "breath-space-minimal";    // Very little text — stillness dominates canvas
 
 export type EnergyLevel = "soft" | "supportive" | "direct" | "intense";
 
