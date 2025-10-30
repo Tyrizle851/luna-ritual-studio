@@ -98,7 +98,7 @@ const AffirmationBuilder = () => {
       description: "Peaceful sunrise",
       theme: "peace",
       mood: "coastal",
-      layoutStyle: "halo",
+      layoutStyle: "circular-orbit",
       keywords: "light, fresh, calm",
       previewImage: morningRitualImg
     },
@@ -107,7 +107,7 @@ const AffirmationBuilder = () => {
       description: "Bold confidence",
       theme: "confidence",
       mood: "monochrome",
-      layoutStyle: "grit",
+      layoutStyle: "angular-grid",
       keywords: "strong, fearless",
       previewImage: powerHourImg
     },
@@ -116,7 +116,7 @@ const AffirmationBuilder = () => {
       description: "Warm botanicals",
       theme: "gratitude",
       mood: "bohemian",
-      layoutStyle: "botanical",
+      layoutStyle: "flowing-curves",
       keywords: "flowers, warmth, joy",
       previewImage: gratitudeGardenImg
     },
@@ -125,7 +125,7 @@ const AffirmationBuilder = () => {
       description: "Clear sharp vision",
       theme: "focus",
       mood: "minimalist",
-      layoutStyle: "grid",
+      layoutStyle: "minimal-focus",
       keywords: "clarity, precision",
       previewImage: focusFlowImg
     }
@@ -236,18 +236,18 @@ const AffirmationBuilder = () => {
       }
     };
 
-    // Mood only influences accents now
+    // Mood only influences accents now - expanded to 4-6 accents per mood
     const moodAccents: Record<string, string[]> = {
-      minimalist: ["thin lines", "simple dots"],
-      bohemian: ["organic shapes", "flowing curves"],
-      "modern-serif": ["clean lines", "geometric shapes"],
-      coastal: ["wave patterns", "light rays"],
-      earthy: ["natural textures", "botanical elements"],
-      vibrant: ["bold shapes", "dynamic angles"],
-      pastel: ["soft dots", "gentle curves"],
-      monochrome: ["stark lines", "high contrast shapes"],
-      sunset: ["radiating lines", "gradient transitions"],
-      forest: ["leaf motifs", "branch patterns"]
+      minimalist: ["thin lines", "simple dots", "negative space", "subtle borders", "clean edges"],
+      bohemian: ["organic shapes", "flowing curves", "hand-drawn elements", "botanical motifs", "textured patterns", "whimsical details"],
+      "modern-serif": ["clean lines", "geometric shapes", "elegant serifs", "structured borders", "classic frames"],
+      coastal: ["wave patterns", "light rays", "nautical elements", "sea foam textures", "horizon lines", "tidal curves"],
+      earthy: ["natural textures", "botanical elements", "wood grain", "stone patterns", "organic shapes", "earth tones"],
+      vibrant: ["bold shapes", "dynamic angles", "energetic bursts", "color blocks", "abstract forms", "striking contrasts"],
+      pastel: ["soft dots", "gentle curves", "delicate wisps", "dreamy halos", "light washes", "tender shapes"],
+      monochrome: ["stark lines", "high contrast shapes", "graphic elements", "bold silhouettes", "crisp borders", "dramatic shadows"],
+      sunset: ["radiating lines", "gradient transitions", "golden rays", "warm glows", "horizon blends", "amber streaks"],
+      forest: ["leaf motifs", "branch patterns", "moss textures", "tree silhouettes", "woodland details", "nature sprigs"]
     };
 
     // Layout only influences structure/placement now
@@ -265,7 +265,7 @@ const AffirmationBuilder = () => {
     const selectedTheme = themeData[theme] || themeData.confidence;
     const selectedMoodAccents = moodAccents[mood] || moodAccents.minimalist;
     
-    // Auto-select layout if not chosen
+    // Auto-select layout if not chosen - favor dynamic layouts
     let finalLayout = layoutStyle;
     if (!finalLayout) {
       const layoutMap: Record<string, string> = {
@@ -276,11 +276,11 @@ const AffirmationBuilder = () => {
         earthy: "asymmetric-balance",
         vibrant: "diagonal-dynamic",
         pastel: "circular-orbit",
-        monochrome: "centered-stack",
+        monochrome: "layered-depth",
         sunset: "diagonal-dynamic",
         forest: "layered-depth"
       };
-      finalLayout = layoutMap[mood] || "centered-stack";
+      finalLayout = layoutMap[mood] || "asymmetric-balance";
     }
     
     const layoutDescription = layoutDescriptions[finalLayout] || layoutDescriptions["centered-stack"];
@@ -325,8 +325,9 @@ const AffirmationBuilder = () => {
         await handleGenerate();
       }
       
-      // Map layout style to archetype
+      // Map layout style to archetype (supports both old and new names)
       const layoutMap: Record<string, LayoutArchetype> = {
+        // Old names for backward compatibility
         "vintage": "centered-stack",
         "clean-serif": "minimal-focus",
         "botanical": "flowing-curves",
@@ -336,10 +337,19 @@ const AffirmationBuilder = () => {
         "geometric": "angular-grid",
         "celestial": "circular-orbit",
         "minimal-zen": "minimal-focus",
-        "grit": "diagonal-dynamic"
+        "grit": "diagonal-dynamic",
+        // New archetype names (passthrough)
+        "centered-stack": "centered-stack",
+        "flowing-curves": "flowing-curves",
+        "angular-grid": "angular-grid",
+        "circular-orbit": "circular-orbit",
+        "diagonal-dynamic": "diagonal-dynamic",
+        "asymmetric-balance": "asymmetric-balance",
+        "layered-depth": "layered-depth",
+        "minimal-focus": "minimal-focus"
       };
       
-      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "centered-stack";
+      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || layoutMap[layoutStyle] || "asymmetric-balance";
       
       // Get active palette (custom or generated)
       const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
@@ -421,11 +431,12 @@ const AffirmationBuilder = () => {
   const handleRandomize = () => {
     const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
     const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
-    const layouts = ["centered-stack", "flowing-curves", "angular-grid", "circular-orbit", "diagonal-dynamic", "asymmetric-balance", "layered-depth", "minimal-focus"];
+    // Favor dynamic layouts - exclude boring centered ones
+    const dynamicLayouts = ["flowing-curves", "angular-grid", "circular-orbit", "diagonal-dynamic", "asymmetric-balance", "layered-depth"];
     
     setTheme(themes[Math.floor(Math.random() * themes.length)]);
     setMood(moods[Math.floor(Math.random() * moods.length)]);
-    setLayoutStyle(layouts[Math.floor(Math.random() * layouts.length)]);
+    setLayoutStyle(dynamicLayouts[Math.floor(Math.random() * dynamicLayouts.length)]);
     toast.success('Randomized! Click Preview to see it.');
   };
 
@@ -732,16 +743,14 @@ const AffirmationBuilder = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="auto">Auto</SelectItem>
-                          <SelectItem value="clean-serif">Clean Serif</SelectItem>
-                          <SelectItem value="botanical">Botanical</SelectItem>
-                          <SelectItem value="grit">Grit</SelectItem>
-                          <SelectItem value="halo">Halo</SelectItem>
-                          <SelectItem value="grid">Grid</SelectItem>
-                          <SelectItem value="organic">Organic</SelectItem>
-                          <SelectItem value="celestial">Celestial</SelectItem>
-                          <SelectItem value="geometric">Geometric</SelectItem>
-                          <SelectItem value="vintage">Vintage</SelectItem>
-                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                          <SelectItem value="flowing-curves">Flowing Curves</SelectItem>
+                          <SelectItem value="angular-grid">Angular Grid</SelectItem>
+                          <SelectItem value="circular-orbit">Circular Orbit</SelectItem>
+                          <SelectItem value="diagonal-dynamic">Diagonal Dynamic</SelectItem>
+                          <SelectItem value="asymmetric-balance">Asymmetric Balance</SelectItem>
+                          <SelectItem value="layered-depth">Layered Depth</SelectItem>
+                          <SelectItem value="minimal-focus">Minimal Focus</SelectItem>
+                          <SelectItem value="centered-stack">Centered Stack</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -1148,16 +1157,14 @@ const AffirmationBuilder = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="auto">Auto</SelectItem>
-                          <SelectItem value="clean-serif">Clean Serif</SelectItem>
-                          <SelectItem value="botanical">Botanical</SelectItem>
-                          <SelectItem value="grit">Grit</SelectItem>
-                          <SelectItem value="halo">Halo</SelectItem>
-                          <SelectItem value="grid">Grid</SelectItem>
-                          <SelectItem value="organic">Organic</SelectItem>
-                          <SelectItem value="celestial">Celestial</SelectItem>
-                          <SelectItem value="geometric">Geometric</SelectItem>
-                          <SelectItem value="vintage">Vintage</SelectItem>
-                          <SelectItem value="minimal-zen">Minimal Zen</SelectItem>
+                          <SelectItem value="flowing-curves">Flowing Curves</SelectItem>
+                          <SelectItem value="angular-grid">Angular Grid</SelectItem>
+                          <SelectItem value="circular-orbit">Circular Orbit</SelectItem>
+                          <SelectItem value="diagonal-dynamic">Diagonal Dynamic</SelectItem>
+                          <SelectItem value="asymmetric-balance">Asymmetric Balance</SelectItem>
+                          <SelectItem value="layered-depth">Layered Depth</SelectItem>
+                          <SelectItem value="minimal-focus">Minimal Focus</SelectItem>
+                          <SelectItem value="centered-stack">Centered Stack</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
