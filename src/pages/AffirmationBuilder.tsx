@@ -342,8 +342,9 @@ const AffirmationBuilder = () => {
           supportingLines: preview.supportingLines,
           theme,
           mood,
-          layout: layoutStyle || 'auto',
-          palette: preview.palette
+          layout: preview.layoutStyle,
+          palette: preview.palette,
+          accentElements: preview.accentElements
         }
       });
       
