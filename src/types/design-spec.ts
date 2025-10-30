@@ -20,7 +20,7 @@ export type LayoutArchetype =
 
 export type EnergyLevel = "soft" | "supportive" | "direct" | "intense";
 
-export type AccentType = "botanical" | "geometric" | "directional" | "halo-dots" | "sunray";
+export type AccentType = "minimal" | "organic" | "botanical" | "textured" | "gradient-heavy" | "playful";
 
 export type TypographyStyle = "serif" | "sans" | "display" | "script";
 
@@ -289,7 +289,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#111111", "#F6F2EC"],
       contrast: "high"
     },
-    accents: ["geometric"],
+    accents: ["minimal", "organic"],
     allowedLayouts: ["clean-serif"],
     weight: 0.45
   },
@@ -300,7 +300,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#2E2E2E", "#EBD6D0", "#FAF8F6"],
       contrast: "medium"
     },
-    accents: ["geometric"],
+    accents: ["minimal", "organic", "textured"],
     allowedLayouts: ["clean-serif"],
     weight: 0.35
   },
@@ -311,7 +311,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#B5654D", "##7B8F6D", "#F3EEE6"],
       contrast: "low"
     },
-    accents: ["botanical", "sunray"],
+    accents: ["botanical", "organic", "textured"],
     allowedLayouts: ["botanical", "halo-orbital"],
     weight: 0.30
   },
@@ -322,7 +322,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#BFDAD0", "#E6D8C4", "#9A9A93"],
       contrast: "low"
     },
-    accents: ["sunray", "geometric"],
+    accents: ["organic", "botanical", "minimal"],
     allowedLayouts: ["clean-serif", "botanical"],
     weight: 0.25
   },
@@ -333,7 +333,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#2D5A4A", "#B6896B", "#F3EEE6"],
       contrast: "medium"
     },
-    accents: ["botanical"],
+    accents: ["organic", "botanical", "textured"],
     allowedLayouts: ["botanical", "halo-orbital"],
     weight: 0.30
   },
@@ -344,7 +344,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#121212", "#0EA5E9", "#EF4444", "#F59E0B"],
       contrast: "high"
     },
-    accents: ["geometric", "directional"],
+    accents: ["organic", "botanical", "gradient-heavy"],
     allowedLayouts: ["grit-directional", "clean-serif"],
     weight: 0.15
   },
@@ -355,7 +355,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#F7E2DA", "#E6DDF7", "#D7F2EA"],
       contrast: "low"
     },
-    accents: ["halo-dots", "botanical"],
+    accents: ["organic", "minimal", "botanical"],
     allowedLayouts: ["halo-orbital", "botanical"],
     weight: 0.25
   },
@@ -366,7 +366,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#111111", "#F6F2EC", "#777777"],
       contrast: "high"
     },
-    accents: ["geometric"],
+    accents: ["minimal", "organic", "textured"],
     allowedLayouts: ["clean-serif"],
     weight: 0.40
   },
@@ -377,7 +377,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#F28C6B", "#FFC36A", "#F6B1B1"],
       contrast: "medium"
     },
-    accents: ["sunray", "botanical"],
+    accents: ["organic", "gradient-heavy", "botanical"],
     allowedLayouts: ["halo-orbital", "botanical"],
     weight: 0.20
   },
@@ -388,7 +388,7 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
       hex: ["#1F3D32", "#4B5E3C", "#7C8F5A", "#EDE9DF"],
       contrast: "medium"
     },
-    accents: ["botanical"],
+    accents: ["botanical", "organic", "textured"],
     allowedLayouts: ["botanical", "clean-serif"],
     weight: 0.30
   }
