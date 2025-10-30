@@ -422,16 +422,39 @@ const AffirmationBuilder = () => {
         const imageData = `data:image/png;base64,${data.imageB64}`;
         setGeneratedImageB64(imageData);
         
-        // Save to history
+        // Save to history with quota management
         const newHistoryItem: HistoryItem = {
           id: `history-${Date.now()}`,
           imageB64: imageData,
           generatedData,
           timestamp: Date.now()
         };
-        const updatedHistory = [newHistoryItem, ...history].slice(0, 20); // Keep last 20
-        setHistory(updatedHistory);
-        localStorage.setItem('affirmation-history', JSON.stringify(updatedHistory));
+        
+        // Try to save with progressively smaller history sizes
+        let savedSuccessfully = false;
+        let maxHistorySize = 5; // Reduced from 20 to avoid quota issues
+        
+        while (!savedSuccessfully && maxHistorySize > 0) {
+          try {
+            const updatedHistory = [newHistoryItem, ...history].slice(0, maxHistorySize);
+            localStorage.setItem('affirmation-history', JSON.stringify(updatedHistory));
+            setHistory(updatedHistory);
+            savedSuccessfully = true;
+          } catch (e) {
+            if (e instanceof Error && e.name === 'QuotaExceededError') {
+              console.warn(`LocalStorage quota exceeded with ${maxHistorySize} items, reducing...`);
+              maxHistorySize--;
+              if (maxHistorySize === 0) {
+                // If we can't save any history, just keep it in state
+                console.warn('Unable to save to localStorage, keeping in memory only');
+                setHistory([newHistoryItem]);
+                toast('History saved in memory only (storage full)', { duration: 3000 });
+              }
+            } else {
+              throw e; // Re-throw non-quota errors
+            }
+          }
+        }
         
         toast.success('Unique image generated successfully!');
       } else {
