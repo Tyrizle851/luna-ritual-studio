@@ -152,10 +152,91 @@ const AffirmationBuilder = () => {
     }
   }, []);
 
+  // Object keyword detection system
+  const detectObjectKeywords = (keywords: string): { objects: string[]; category: string } => {
+    const lower = keywords.toLowerCase();
+
+    // Tier 1: Exact object matches (50 common items)
+    const exactMatches: Record<string, { graphic: string; category: string }> = {
+      "wine glass": { graphic: "elegant wine glass illustration", category: "beverages" },
+      "coffee cup": { graphic: "coffee mug illustration", category: "beverages" },
+      "tea cup": { graphic: "delicate tea cup", category: "beverages" },
+      "champagne": { graphic: "champagne flute", category: "beverages" },
+      "rose": { graphic: "rose flower illustration", category: "nature" },
+      "flower": { graphic: "botanical flower", category: "nature" },
+      "tree": { graphic: "tree silhouette", category: "nature" },
+      "mountain": { graphic: "mountain peaks", category: "nature" },
+      "ocean": { graphic: "wave patterns", category: "nature" },
+      "leaf": { graphic: "botanical leaf", category: "nature" },
+      "star": { graphic: "star constellation", category: "cosmic" },
+      "moon": { graphic: "crescent moon", category: "cosmic" },
+      "sun": { graphic: "sun rays", category: "cosmic" },
+      "cloud": { graphic: "soft cloud shapes", category: "nature" },
+      "feather": { graphic: "delicate feather", category: "nature" },
+      "crystal": { graphic: "geometric crystal", category: "geometric" },
+      "diamond": { graphic: "diamond gem", category: "geometric" },
+      "heart": { graphic: "heart shape", category: "geometric" },
+      "circle": { graphic: "zen circle", category: "geometric" },
+      "triangle": { graphic: "triangle shape", category: "geometric" },
+      "book": { graphic: "open book", category: "vintage" },
+      "typewriter": { graphic: "vintage typewriter", category: "vintage" },
+      "camera": { graphic: "vintage camera", category: "vintage" },
+      "compass": { graphic: "navigation compass", category: "vintage" },
+      "bicycle": { graphic: "vintage bicycle", category: "vintage" },
+      "candle": { graphic: "candle flame", category: "cozy" },
+      "incense": { graphic: "incense smoke", category: "cozy" },
+      "lantern": { graphic: "hanging lantern", category: "cozy" },
+      "teapot": { graphic: "ceramic teapot", category: "beverages" }
+    };
+
+    // Tier 2: Category keywords (15 broad categories)
+    const categories: Record<string, string[]> = {
+      beverages: ["wine", "glass", "cup", "coffee", "tea", "drink", "champagne", "cocktail"],
+      nature: ["flower", "tree", "leaf", "plant", "ocean", "mountain", "forest", "garden", "bloom"],
+      cosmic: ["star", "moon", "sun", "planet", "constellation", "galaxy", "celestial"],
+      vintage: ["typewriter", "camera", "record", "bicycle", "compass", "antique"],
+      geometric: ["circle", "triangle", "square", "line", "dot", "hexagon", "diamond"],
+      cozy: ["candle", "incense", "lantern", "warm", "fireplace"],
+      food: ["fruit", "bread", "sushi", "pizza", "apple", "orange"],
+      animals: ["bird", "butterfly", "deer", "wolf", "owl", "cat"]
+    };
+
+    const detected: string[] = [];
+    let mainCategory = "";
+
+    // Check exact matches first
+    for (const [key, value] of Object.entries(exactMatches)) {
+      if (lower.includes(key)) {
+        detected.push(value.graphic);
+        if (!mainCategory) mainCategory = value.category;
+      }
+    }
+
+    // If no exact matches, check categories
+    if (detected.length === 0) {
+      for (const [category, keywords] of Object.entries(categories)) {
+        for (const keyword of keywords) {
+          if (lower.includes(keyword)) {
+            mainCategory = category;
+            detected.push(`${category} elements`);
+            break;
+          }
+        }
+        if (detected.length > 0) break;
+      }
+    }
+
+    // Limit to top 3 objects to avoid clutter
+    return {
+      objects: detected.slice(0, 3),
+      category: mainCategory
+    };
+  };
+
   const generatePreviewData = (): GeneratedData => {
     // Expanded theme definitions (15 themes)
-    const themeData: Record<string, { 
-      headline: string; 
+    const themeData: Record<string, {
+      headline: string;
       phrases: string[];
       colors: string[];
     }> = {
@@ -351,44 +432,108 @@ const AffirmationBuilder = () => {
 
     const selectedTheme = themeData[theme] || themeData.confidence;
     const selectedMoodPalette = moodPalettes[mood] || moodPalettes.minimalist;
-    
-    // Auto-select layout if not chosen
+
+    // Helper function for seeded randomization
+    const seededRandom = (seedValue: number) => {
+      const x = Math.sin(seedValue++) * 10000;
+      return x - Math.floor(x);
+    };
+
+    // Use seed for randomization if provided
+    const seedNum = seed ? parseInt(seed) : Date.now();
+
+    // Auto-select layout if not chosen, with seed-based variation
     let finalLayout = layoutStyle;
     if (!finalLayout) {
-      const layoutMap: Record<string, string> = {
-        minimalist: "clean-serif",
-        bohemian: "botanical",
-        "modern-serif": "grid",
-        coastal: "halo",
-        earthy: "organic",
-        vibrant: "geometric",
-        pastel: "celestial",
-        monochrome: "minimal-zen",
-        sunset: "grit",
-        forest: "vintage"
+      const layoutOptions: Record<string, string[]> = {
+        minimalist: ["clean-serif", "grid", "minimal-zen"],
+        bohemian: ["botanical", "organic"],
+        "modern-serif": ["grid", "clean-serif"],
+        coastal: ["halo", "organic"],
+        earthy: ["organic", "botanical"],
+        vibrant: ["geometric", "grit"],
+        pastel: ["celestial", "halo"],
+        monochrome: ["minimal-zen", "clean-serif"],
+        sunset: ["grit", "geometric"],
+        forest: ["vintage", "organic"]
       };
-      finalLayout = layoutMap[mood] || "clean-serif";
+      const options = layoutOptions[mood] || ["clean-serif"];
+      const randomIndex = Math.floor(seededRandom(seedNum) * options.length);
+      finalLayout = options[randomIndex];
     }
-    
+
     const selectedLayout = layoutArchetypes[finalLayout] || layoutArchetypes["clean-serif"];
-    
-    // Blend user keyword influences
+
+    // Get keyword influences (both color and object detection)
     const keywordEffects = keywordInfluence(userKeywords);
-    const finalPalette = keywordEffects.colors || selectedLayout.palette || selectedMoodPalette;
-    const finalAccents = keywordEffects.accents 
-      ? [...selectedLayout.accents, ...keywordEffects.accents]
-      : selectedLayout.accents;
-    
-    // Incorporate keywords into phrases if provided
+    const detectedObjects = detectObjectKeywords(userKeywords);
+
+    // COLOR BLENDING SYSTEM: Blend all inputs instead of replacement
+    // 40% theme + 30% mood + 20% layout + 10% keywords
+    const blendColors = (
+      themeColors: string[],
+      moodColors: string[],
+      layoutColors: string[],
+      keywordColors?: string[]
+    ): string[] => {
+      const result: string[] = [];
+
+      // Start with theme colors (40% weight - most important)
+      result.push(themeColors[0] || "#1a1a1a");
+
+      // Add mood color (30% weight)
+      result.push(moodColors[0] || "#f5f5f5");
+
+      // Add layout color (20% weight)
+      if (layoutColors.length > 0) {
+        result.push(layoutColors[layoutColors.length - 1] || "#d4af37");
+      }
+
+      // If keywords provide colors, blend them in (10% weight)
+      if (keywordColors && keywordColors.length > 0) {
+        // Replace or add keyword color influence
+        result[2] = keywordColors[0];
+      }
+
+      return result.slice(0, 3); // Keep 3 colors max
+    };
+
+    const finalPalette = blendColors(
+      selectedTheme.colors,
+      selectedMoodPalette,
+      selectedLayout.palette,
+      keywordEffects.colors
+    );
+
+    // ACCENT ELEMENTS: Build with weighted priorities
+    // 50% detected objects, 30% layout accents, 20% keyword accents
+    let finalAccents: string[] = [];
+
+    // Add detected objects first (highest priority - 50%)
+    if (detectedObjects.objects.length > 0) {
+      finalAccents.push(...detectedObjects.objects);
+    }
+
+    // Add layout accents (30%)
+    const layoutAccentCount = Math.ceil(selectedLayout.accents.length * 0.3);
+    finalAccents.push(...selectedLayout.accents.slice(0, layoutAccentCount));
+
+    // Add keyword accents if any (20%)
+    if (keywordEffects.accents) {
+      finalAccents.push(...keywordEffects.accents.slice(0, 2));
+    }
+
+    // PHRASE RANDOMIZATION: Use seed to shuffle and select phrases
     let finalPhrases = [...selectedTheme.phrases];
-    if (userKeywords.trim()) {
-      const keywordList = userKeywords.split(/[,\s]+/).filter(k => k.length > 2);
-      finalPhrases = finalPhrases.map((phrase, i) => {
-        if (keywordList[i]) {
-          return `${phrase.replace(/\.$/, "")} ${keywordList[i]}`;
-        }
-        return phrase;
-      });
+
+    // Shuffle phrases based on seed
+    if (seed) {
+      const shuffled = [...finalPhrases];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(seededRandom(seedNum + i) * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      finalPhrases = shuffled;
     }
 
     return {
@@ -423,7 +568,7 @@ const AffirmationBuilder = () => {
       if (!generatedData) {
         await handleGenerate();
       }
-      
+
       // Map layout style to archetype
       const layoutMap: Record<string, LayoutArchetype> = {
         "vintage": "clean-serif",
@@ -437,12 +582,12 @@ const AffirmationBuilder = () => {
         "minimal-zen": "clean-serif",
         "grit": "grit-directional"
       };
-      
+
       const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "clean-serif";
-      
+
       // Get active palette (custom or generated)
       const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
-      
+
       // Build proper DesignSpec using the new system with current preview data
       const designSpec = buildDesignSpec({
         theme: theme as ThemeSlug,
@@ -454,7 +599,7 @@ const AffirmationBuilder = () => {
         customHeadline: generatedData.headline,
         customSupportingPhrases: generatedData.supportingLines
       });
-      
+
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
         body: {
           designSpec
