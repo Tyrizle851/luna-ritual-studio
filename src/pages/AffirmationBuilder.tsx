@@ -426,19 +426,19 @@ const AffirmationBuilder = () => {
       
       // Map layout style to archetype
       const layoutMap: Record<string, LayoutArchetype> = {
-        "vintage": "clean-serif",
-        "clean-serif": "clean-serif",
-        "botanical": "botanical",
-        "grid": "clean-serif",
-        "halo": "halo-orbital",
-        "organic": "botanical",
-        "geometric": "grit-directional",
-        "celestial": "halo-orbital",
-        "minimal-zen": "clean-serif",
-        "grit": "grit-directional"
+        "vintage": "centered-stack",
+        "clean-serif": "minimal-focus",
+        "botanical": "flowing-curves",
+        "grid": "angular-grid",
+        "halo": "circular-orbit",
+        "organic": "flowing-curves",
+        "geometric": "angular-grid",
+        "celestial": "circular-orbit",
+        "minimal-zen": "minimal-focus",
+        "grit": "diagonal-dynamic"
       };
       
-      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "clean-serif";
+      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "centered-stack";
       
       // Get active palette (custom or generated)
       const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
