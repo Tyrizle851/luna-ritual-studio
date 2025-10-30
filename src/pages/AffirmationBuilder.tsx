@@ -17,6 +17,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { buildDesignSpec } from "@/lib/designSpecBuilder";
+import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
 
 interface GeneratedData {
   headline: string;
@@ -563,23 +565,44 @@ const AffirmationBuilder = () => {
     setGeneratedImageB64(null);
     try {
       // Ensure we have current preview data
-      const previewForAPI = generatedData.headline ? generatedData : generatePreviewData();
+      if (!generatedData) {
+        await handleGenerate();
+      }
 
-      // Apply custom palette if set
-      const activePalette = customPalette.length > 0 ? customPalette : previewForAPI.palette;
-      const finalPreview = {
-        ...previewForAPI,
-        palette: activePalette,
-        paletteNames: activePalette
+      // Map layout style to archetype
+      const layoutMap: Record<string, LayoutArchetype> = {
+        "vintage": "clean-serif",
+        "clean-serif": "clean-serif",
+        "botanical": "botanical",
+        "grid": "clean-serif",
+        "halo": "halo-orbital",
+        "organic": "botanical",
+        "geometric": "grit-directional",
+        "celestial": "halo-orbital",
+        "minimal-zen": "clean-serif",
+        "grit": "grit-directional"
       };
+
+      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "clean-serif";
+
+      // Get active palette (custom or generated)
+      const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
+
+      // Build proper DesignSpec using the new system with current preview data
+      const designSpec = buildDesignSpec({
+        theme: theme as ThemeSlug,
+        mood: mood as MoodSlug,
+        layoutOverride: layoutArchetype,
+        keywords: userKeywords,
+        seed: seed ? parseInt(seed) : undefined,
+        customPaletteHex: activePalette,
+        customHeadline: generatedData.headline,
+        customSupportingPhrases: generatedData.supportingLines
+      });
 
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
         body: {
-          theme,
-          mood,
-          text: userKeywords,
-          styleSeed: seed || Math.floor(Math.random() * 10000).toString(),
-          preview: finalPreview
+          designSpec
         }
       });
       

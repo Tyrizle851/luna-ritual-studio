@@ -1,23 +1,45 @@
 // Edge function for generating affirmation images using Lovable AI
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface GenerateRequest {
+// DesignSpec type (shared with frontend)
+interface DesignSpec {
   theme: string;
   mood: string;
-  text: string;
-  styleSeed?: string;
-  preview?: {
-    headline: string;
-    supportingLines: string[];
-    paletteNames: string[];
-    layoutStyle: string;
-    accentElements: string;
+  energyLevel: string;
+  layoutArchetype: string;
+  paletteToken: {
+    name: string;
+    description: string;
+    hex: string[];
+    contrast: string;
   };
+  accentSet: string[];
+  typography: {
+    headline: string;
+    support: string;
+  };
+  mainAffirmation: string;
+  supportingPhrases: string[];
+  styleVariant?: number;
+  accentVariant?: number;
+  paletteVariant?: number;
+  copyVariant?: number;
+  textureVariant?: number;
+  seed?: number | string;
+  specVersion: number;
+  constraints: {
+    ratio: string;
+    dpi: number;
+    ban: string[];
+  };
+}
+
+interface GenerateRequest {
+  designSpec: DesignSpec;
 }
 
 Deno.serve(async (req) => {
@@ -36,38 +58,13 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
     const body: GenerateRequest = await req.json();
-    const { theme, mood, text, styleSeed, preview } = body;
+    const { designSpec } = body;
 
-    const startTime = Date.now();
+    console.log('Generating affirmation image with designSpec:', JSON.stringify(designSpec, null, 2));
 
-    console.log('Generating affirmation image:', { theme, mood, textLength: text?.length || 0, styleSeed });
-
-    // Build the prompt for image generation
-    let prompt = buildAffirmationPrompt(theme, mood, text || '', styleSeed);
-    
-    // Enhance prompt with preview data if provided
-    if (preview) {
-      prompt += `\n\nDESIGN SPECIFICATION:\n`;
-      prompt += `Headline: "${preview.headline}"\n`;
-      prompt += `Supporting lines: ${preview.supportingLines.join(', ')}\n`;
-      prompt += `Color palette (use these exact colors): ${preview.paletteNames.join(', ')}\n`;
-      prompt += `Layout: ${preview.layoutStyle}\n`;
-      prompt += `Accent elements (MUST include these visible elements): ${preview.accentElements}\n`;
-      prompt += `\n\nCRITICAL REQUIREMENTS:\n`;
-      prompt += `- The generated image MUST visually incorporate ALL specified accent elements\n`;
-      prompt += `- If arrows are mentioned, include visible arrows in the design\n`;
-      prompt += `- If leaves are mentioned, include clear botanical leaf elements\n`;
-      prompt += `- If geometric shapes are mentioned, include those shapes prominently\n`;
-      prompt += `- Use the EXACT color palette provided - these colors must be visible in the design\n`;
-      prompt += `- Match the layout description precisely\n`;
-      prompt += `- All text must be readable and match the specified headline and supporting lines`;
-    }
+    // Build the master prompt using the complete design spec
+    const prompt = buildMasterPrompt(designSpec);
     
     console.log('Calling Lovable AI with prompt length:', prompt.length);
 
@@ -135,72 +132,10 @@ Deno.serve(async (req) => {
 
     console.log('Successfully generated image, size:', imageB64.length);
 
-    // Convert base64 to binary for storage
-    const binaryString = atob(imageB64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-
-    // Generate unique filename
-    const generationId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    const filename = `${generationId}.png`;
-    const filePath = `${theme}/${mood}/${filename}`;
-
-    // Upload to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('affirmation-images')
-      .upload(filePath, bytes, {
-        contentType: 'image/png',
-        cacheControl: '3600',
-        upsert: false
-      });
-
-    if (uploadError) {
-      console.error('Storage upload error:', uploadError);
-      return new Response(
-        JSON.stringify({ error: 'Failed to store image', detail: uploadError.message }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Get public URL
-    const { data: urlData } = supabase.storage
-      .from('affirmation-images')
-      .getPublicUrl(filePath);
-
-    const publicUrl = urlData.publicUrl;
-    const generationTime = Date.now() - startTime;
-
-    // Save metadata to database
-    const { error: dbError } = await supabase
-      .from('affirmation_generations')
-      .insert({
-        theme,
-        mood,
-        layout_style: preview?.layoutStyle || null,
-        keywords: text || null,
-        style_seed: styleSeed || null,
-        image_url: publicUrl,
-        image_path: filePath,
-        image_size_bytes: bytes.length,
-        generation_time_ms: generationTime
-      });
-
-    if (dbError) {
-      console.error('Database insert error:', dbError);
-      // Don't fail the request if DB insert fails - image is already stored
-    }
-
-    console.log('Image uploaded successfully:', publicUrl);
-
     return new Response(
-      JSON.stringify({
-        imageUrl: publicUrl,
-        imagePath: filePath,
-        generationId,
-        sizeBytes: bytes.length,
-        generationTimeMs: generationTime
+      JSON.stringify({ 
+        imageB64,
+        generationId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}` 
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -217,73 +152,126 @@ Deno.serve(async (req) => {
   }
 });
 
-function buildAffirmationPrompt(theme: string, mood: string, userText: string, styleSeed?: string): string {
-  const themeDescriptions: Record<string, string> = {
-    'calm-morning': 'Peaceful sunrise energy, gentle awakening, soft optimism, fresh starts',
-    'focus': 'Sharp, clear, purposeful energy, clarity, determination, mental strength',
-    'gratitude': 'Warm, abundant, heart-centered energy, thankfulness, appreciation, love',
-    'confidence': 'Bold, empowered, strong energy, self-belief, courage, capability',
-    'peace': 'Serene, calming, meditative energy, tranquility, balance, inner calm',
-    'custom': 'Personalized affirmation based on user intent',
+// Master prompt builder - leads with spec, no conflicts
+function buildMasterPrompt(spec: DesignSpec): string {
+  const themeFragment = getThemeFragment(spec.theme);
+  const moodFragment = getMoodFragment(spec.mood);
+  const layoutFragment = getLayoutFragment(spec.layoutArchetype);
+  const accentFragment = getAccentFragment(spec.accentSet);
+
+  return `You are generating a PRINT-READY affirmation poster. Follow ALL requirements exactly.
+
+### CRITICAL LAYOUT REQUIREMENT (NON-NEGOTIABLE)
+LAYOUT_ARCHETYPE: ${spec.layoutArchetype}
+${layoutFragment}
+THIS LAYOUT IS MANDATORY - DO NOT DEFAULT TO SIMPLE CENTERED TEXT.
+
+### CRITICAL ACCENT REQUIREMENT (MUST INCLUDE)
+${accentFragment}
+THESE VISUAL ELEMENTS ARE REQUIRED - NOT OPTIONAL.
+
+### DESIGN SPEC (authoritative; do not deviate)
+THEME: ${spec.theme} | MOOD: ${spec.mood} | ENERGY: ${spec.energyLevel}
+PALETTE_TOKEN: ${spec.paletteToken.name}
+PALETTE_HEX_ALLOWED: ${spec.paletteToken.hex.join(", ")} // Use ONLY these colors.
+TYPOGRAPHY: headline=${spec.typography.headline}, support=${spec.typography.support}
+MAIN_AFFIRMATION (exact text & casing): "${spec.mainAffirmation}"
+SUPPORTING_LINES (use all; keep one thought per line):
+${spec.supportingPhrases.map(line => `- ${line}`).join("\n")}
+
+### THEME TONE GUIDANCE
+${themeFragment}
+
+### MOOD VISUAL GUIDANCE
+${moodFragment}
+
+### TECHNICAL CONSTRAINTS
+- Aspect ratio: ${spec.constraints.ratio}. Resolution: ${spec.constraints.dpi} DPI. High legibility. Print-safe.
+- Banned: ${spec.constraints.ban.join(", ")}.
+- Maintain generous white space.
+- Keep MAIN_AFFIRMATION large and dominant (3-4× smallest text).
+- NO BORDERS OR MARGINS: Content must fill entire canvas edge-to-edge.
+- Background extends to all edges (no white space around poster).
+- Return a single finished poster image honoring ALL constraints above.`;
+}
+
+// Theme tone fragments
+function getThemeFragment(theme: string): string {
+  const fragments: Record<string, string> = {
+    confidence: "Assertive, forward, strong. No soft/soothing phrasing. Direct empowerment.",
+    peace: "Calm, gentle, restorative. Soft edges, tranquil energy. Soothing and safe.",
+    focus: "Disciplined, clear, centered. Sharp clarity, minimal distraction. Purposeful.",
+    gratitude: "Warm, appreciative, abundant. Celebratory energy, joyful tone.",
+    abundance: "Rich, flowing, prosperous. Open and expansive. Welcoming overflow.",
+    healing: "Restorative, gentle, nurturing. Patient energy. Soft recovery tone.",
+    strength: "Solid, resilient, enduring. Unshakeable foundation. Powerful stability.",
+    joy: "Bright, radiant, uplifting. Light-filled and celebratory. Pure delight.",
+    balance: "Steady, harmonious, aligned. Centered equilibrium. Calm stability.",
+    courage: "Brave, bold, fearless. Forward momentum despite fear. Daring action.",
+    clarity: "Clear, sharp, discerning. Cutting through fog. Truth-seeing.",
+    renewal: "Fresh, beginning, emerging. New life energy. Clean slate.",
+    freedom: "Open, liberated, unbound. Expansive and wild. Unrestricted.",
+    passion: "Fiery, intense, burning. Full-hearted commitment. Alive with purpose.",
+    wisdom: "Knowing, discerning, insightful. Deep trust. Inner guidance."
   };
+  return fragments[theme] || "Empowering and inspirational tone.";
+}
 
-  const moodStyles: Record<string, string> = {
-    'minimalist': 'Black and white with single accent color, clean, modern',
-    'bohemian': 'Terracotta, mustard, sage, warm cream, organic textures',
-    'modern-serif': 'Charcoal, blush, ivory, gold accents, elegant typography',
-    'coastal': 'Soft blue, sandy beige, sea foam, white, airy and fresh',
-    'earthy': 'Forest green, clay, cream, rust, botanical elements',
+// Mood visual fragments
+function getMoodFragment(mood: string): string {
+  const fragments: Record<string, string> = {
+    minimalist: "Black on warm cream. High contrast. Clean lines, ample negative space. Typography-focused.",
+    "modern-serif": "Charcoal, blush, ivory. Medium contrast. Elegant serifs, refined spacing.",
+    bohemian: "Terracotta, sage, cream. Low contrast. Organic textures, botanical elements.",
+    coastal: "Seafoam, sand, driftwood. Soft blues and sandy neutrals. Airy spacing, sunray or simple geometric accents.",
+    earthy: "Forest green, clay, cream. Medium contrast. Grounded natural textures, botanical motifs.",
+    vibrant: "Black with bright blue, red, orange accents. High contrast. Bold geometric or directional elements.",
+    pastel: "Soft peach, lavender, mint. Low contrast. Halo dots, delicate botanical accents.",
+    monochrome: "Black, cream, gray. High contrast. Geometric precision, minimalist aesthetic.",
+    sunset: "Coral, amber, blush. Medium contrast. Warm radiating energy, sunray or botanical accents.",
+    forest: "Deep green, olive, moss, cream. Medium contrast. Rich botanical elements, natural depth."
   };
+  return fragments[mood] || "Clean and modern aesthetic.";
+}
 
-  const themeDesc = themeDescriptions[theme] || themeDescriptions['peace'];
-  const moodStyle = moodStyles[mood] || moodStyles['minimalist'];
+// Layout archetype fragments - MANDATORY layouts that must be enforced
+function getLayoutFragment(layout: string): string {
+  const fragments: Record<string, string> = {
+    "clean-serif": `REQUIRED LAYOUT: Centered headline at top with horizontal rules/underlines beneath it. 
+Supporting phrases arranged in strict vertical grid below, aligned left or center. 
+Strong vertical rhythm with consistent spacing between lines.
+Example: Title centered, thin horizontal line below title, then 6 phrases in neat vertical stack.`,
+    
+    "botanical": `REQUIRED LAYOUT: Text flows in organic curved paths (not straight lines). 
+MUST include decorative botanical elements: leaves, branches, or floral motifs in corners or along edges.
+Supporting phrases should curve gently or be arranged in an oval/circular flow pattern.
+Example: Title arced at top, phrases flowing in gentle S-curve, botanical illustrations framing the composition.`,
+    
+    "grit-directional": `REQUIRED LAYOUT: Dynamic angular composition with directional energy.
+MUST include: arrows, diagonal lines, or compass-point indicators showing movement.
+Text elements placed at varied angles (not all horizontal), creating forward momentum.
+Example: Title at slight angle, phrases positioned diagonally with arrow graphics pointing toward goals/future.`,
+    
+    "halo-orbital": `REQUIRED LAYOUT: Circular or radial arrangement with central focal point.
+MUST include: dot clusters, radiating lines, or circular rings around the main affirmation.
+Supporting phrases orbit around the center in arc formations, not straight vertical lines.
+Example: Title in center circle, phrases arranged in ring around it, dotted accents creating halo effect.`
+  };
+  return fragments[layout] || "Clear hierarchy with the main affirmation as the dominant element.";
+}
 
-  return `Generate a high-quality, printable motivational affirmation poster design with these specifications:
-
-THEME & ENERGY: ${themeDesc}
-VISUAL STYLE: ${moodStyle}
-USER INTENT: ${userText || 'General positive affirmation'}
-${styleSeed ? `STYLE SEED: ${styleSeed} (use for consistent artistic direction)` : ''}
-
-CRITICAL CANVAS REQUIREMENTS:
-- EXACT ASPECT RATIO: 4:5 portrait orientation (e.g., 2000x2500 pixels, 8x10 inches)
-- NO BORDERS OR MARGINS: Content must fill the entire canvas edge-to-edge
-- NO WHITE SPACE AROUND EDGES: The background/design extends to all four edges
-- The poster itself IS the canvas - not a poster floating on a background
-- Every pixel from edge to edge is part of the designed poster
-
-DESIGN REQUIREMENTS:
-- Layout: Vertical composition perfectly filling 4:5 aspect ratio canvas
-- Typography: Mix 3-5 complementary fonts (serif, sans-serif, script/handwritten)
-- Font hierarchy: Vary sizes dramatically - largest 3-4x larger than smallest
-- Text arrangement: Organic, non-grid layout with phrases at gentle angles (0-15 degrees)
-- Internal white space: Generous breathing room within the design, professional spacing
-- Background: Solid color or subtle texture that extends edge-to-edge (white/cream/themed color)
-
-CONTENT:
-- 1 main affirmation (2-4 words, bold, uppercase, powerful) about ${themeDesc}
-- 8-12 supporting short affirmations mixing self-belief, grounding, calm assertions, forward motion
-- All text should be clearly readable and well-composed
-
-DECORATIVE ELEMENTS:
-- 4-8 delicate accent elements: botanical line art, geometric shapes, or organic flourishes
-- Hand-drawn, organic feel (not overly digital/perfect)
-- Elements enhance but don't overwhelm the text
-
-ARTISTIC STYLE:
-- Modern farmhouse meets minimalist aesthetic
-- Subtle paper texture or organic imperfection (part of the background, not outside it)
-- Hand-drawn appearance with slight irregularity
-- Asymmetrical but visually balanced
-- Professional yet approachable, suitable for wall art
-
-TECHNICAL:
-- High-quality print-ready appearance at 4:5 aspect ratio
-- Excellent readability and contrast
-- Background fills entire canvas (no transparent areas, no surrounding borders)
-- No complex gradients, print-safe colors
-- No neon, no inappropriate content
-- The final image should be ready to download and print without any cropping needed
-
-Create a beautiful, handcrafted-looking poster design that occupies the FULL canvas from edge to edge - perfect for immediate printing or digital display without any additional processing.`;
+// Accent fragments - REQUIRED visual elements
+function getAccentFragment(accents: string[]): string {
+  const accentDescriptions: Record<string, string> = {
+    "minimal": "subtle single-line decorative elements, small geometric markers (dots, dashes)",
+    "organic": "natural flowing shapes, soft curves, gentle wave patterns",
+    "botanical": "MUST include leaves, branches, flowers, or plant-inspired decorative elements",
+    "textured": "visible paper texture, subtle grain, layered transparency effects",
+    "gradient-heavy": "bold color gradients, smooth color transitions between palette colors",
+    "playful": "irregular dots, hand-drawn quality marks, asymmetric decorative touches"
+  };
+  
+  const requiredElements = accents.map(a => accentDescriptions[a] || a).join(", ");
+  return `REQUIRED ACCENTS: ${requiredElements}
+YOU MUST INCLUDE these visual elements in the design - they are not suggestions.`;
 }
