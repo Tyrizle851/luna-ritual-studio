@@ -217,45 +217,57 @@ function getThemeFragment(theme: string): string {
   return fragments[theme] || "Empowering and inspirational tone.";
 }
 
-// Mood visual fragments
+// Mood accent fragments - mood only influences decorative elements
 function getMoodFragment(mood: string): string {
   const fragments: Record<string, string> = {
-    minimalist: "Black on warm cream. High contrast. Clean lines, ample negative space. Typography-focused.",
-    "modern-serif": "Charcoal, blush, ivory. Medium contrast. Elegant serifs, refined spacing.",
-    bohemian: "Terracotta, sage, cream. Low contrast. Organic textures, botanical elements.",
-    coastal: "Seafoam, sand, driftwood. Soft blues and sandy neutrals. Airy spacing, sunray or simple geometric accents.",
-    earthy: "Forest green, clay, cream. Medium contrast. Grounded natural textures, botanical motifs.",
-    vibrant: "Black with bright blue, red, orange accents. High contrast. Bold geometric or directional elements.",
-    pastel: "Soft peach, lavender, mint. Low contrast. Halo dots, delicate botanical accents.",
-    monochrome: "Black, cream, gray. High contrast. Geometric precision, minimalist aesthetic.",
-    sunset: "Coral, amber, blush. Medium contrast. Warm radiating energy, sunray or botanical accents.",
-    forest: "Deep green, olive, moss, cream. Medium contrast. Rich botanical elements, natural depth."
+    minimalist: "ACCENT STYLE: Thin lines and simple dots. Minimal decorative elements. Clean and restrained.",
+    "modern-serif": "ACCENT STYLE: Clean lines and geometric shapes. Refined and elegant decorative touches.",
+    bohemian: "ACCENT STYLE: Organic shapes and flowing curves. Natural, hand-drawn quality elements.",
+    coastal: "ACCENT STYLE: Wave patterns and light rays. Airy, flowing decorative elements.",
+    earthy: "ACCENT STYLE: Natural textures and botanical elements. Grounded, organic decorative touches.",
+    vibrant: "ACCENT STYLE: Bold shapes and dynamic angles. Strong, energetic decorative elements.",
+    pastel: "ACCENT STYLE: Soft dots and gentle curves. Delicate, subtle decorative touches.",
+    monochrome: "ACCENT STYLE: Stark lines and high contrast shapes. Precise geometric decorative elements.",
+    sunset: "ACCENT STYLE: Radiating lines and gradient transitions. Warm, glowing decorative elements.",
+    forest: "ACCENT STYLE: Leaf motifs and branch patterns. Natural, woodland decorative touches."
   };
-  return fragments[mood] || "Clean and modern aesthetic.";
+  return fragments[mood] || "Clean decorative accents.";
 }
 
 // Layout archetype fragments - MANDATORY layouts that must be enforced
 function getLayoutFragment(layout: string): string {
   const fragments: Record<string, string> = {
-    "clean-serif": `REQUIRED LAYOUT: Centered headline at top with horizontal rules/underlines beneath it. 
-Supporting phrases arranged in strict vertical grid below, aligned left or center. 
-Strong vertical rhythm with consistent spacing between lines.
-Example: Title centered, thin horizontal line below title, then 6 phrases in neat vertical stack.`,
+    "centered-stack": `REQUIRED LAYOUT: Centered headline at top with supporting phrases in clean vertical stack below.
+Strong vertical rhythm with consistent spacing. Main text centered with clear hierarchy.
+Example: Title centered at top, phrases stacked vertically below with equal spacing.`,
     
-    "botanical": `REQUIRED LAYOUT: Text flows in organic curved paths (not straight lines). 
-MUST include decorative botanical elements: leaves, branches, or floral motifs in corners or along edges.
-Supporting phrases should curve gently or be arranged in an oval/circular flow pattern.
-Example: Title arced at top, phrases flowing in gentle S-curve, botanical illustrations framing the composition.`,
+    "flowing-curves": `REQUIRED LAYOUT: Text flows in organic curved paths (not straight lines). 
+Supporting phrases arranged in gentle curves or wave patterns, creating natural movement.
+Example: Title arced at top, phrases flowing in S-curve or circular flow.`,
     
-    "grit-directional": `REQUIRED LAYOUT: Dynamic angular composition with directional energy.
-MUST include: arrows, diagonal lines, or compass-point indicators showing movement.
-Text elements placed at varied angles (not all horizontal), creating forward momentum.
-Example: Title at slight angle, phrases positioned diagonally with arrow graphics pointing toward goals/future.`,
+    "angular-grid": `REQUIRED LAYOUT: Structured grid with phrases in aligned boxes or sections.
+Clean geometric organization with rectangular divisions and aligned text blocks.
+Example: Title in top grid cell, phrases distributed in organized grid cells below.`,
     
-    "halo-orbital": `REQUIRED LAYOUT: Circular or radial arrangement with central focal point.
-MUST include: dot clusters, radiating lines, or circular rings around the main affirmation.
-Supporting phrases orbit around the center in arc formations, not straight vertical lines.
-Example: Title in center circle, phrases arranged in ring around it, dotted accents creating halo effect.`
+    "circular-orbit": `REQUIRED LAYOUT: Circular or radial arrangement with central focal point.
+Supporting phrases orbit around center in arc formations, creating orbital pattern.
+Example: Title in center circle, phrases arranged in ring around it.`,
+    
+    "diagonal-dynamic": `REQUIRED LAYOUT: Dynamic angular composition with directional energy.
+Text elements placed at varied angles creating forward momentum and movement.
+Example: Title at angle, phrases positioned diagonally with dynamic energy.`,
+    
+    "asymmetric-balance": `REQUIRED LAYOUT: Asymmetric placement with intentional visual balance.
+Elements positioned off-center but creating harmonious composition through size and spacing.
+Example: Large title offset to one side, phrases balanced on opposite side.`,
+    
+    "layered-depth": `REQUIRED LAYOUT: Overlapping text layers creating visual depth.
+Multiple text elements at different scales and opacities creating dimensional effect.
+Example: Main title bold in front, supporting text layered behind at varying sizes.`,
+    
+    "minimal-focus": `REQUIRED LAYOUT: Maximum whitespace with single dominant focal point.
+Generous negative space surrounding minimal text elements for zen aesthetic.
+Example: Title isolated in center with vast whitespace, one or two subtle supporting phrases.`
   };
   return fragments[layout] || "Clear hierarchy with the main affirmation as the dominant element.";
 }

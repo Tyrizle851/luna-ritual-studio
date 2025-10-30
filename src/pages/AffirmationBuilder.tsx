@@ -236,167 +236,68 @@ const AffirmationBuilder = () => {
       }
     };
 
-    // Expanded mood definitions (10 moods)
-    const moodPalettes: Record<string, string[]> = {
-      minimalist: ["#ffffff", "#1a1a1a", "#f5f5f5"],
-      bohemian: ["#d4a574", "#8b6f47", "#f4e4d7"],
-      "modern-serif": ["#2c3e50", "#ecf0f1", "#95a5a6"],
-      coastal: ["#9ab8b8", "#e8d5c4", "#5a7d7c"],
-      earthy: ["#8b7355", "#a89078", "#d4c5b0"],
-      vibrant: ["#ff6b6b", "#4ecdc4", "#ffe66d"],
-      pastel: ["#ffc8dd", "#bde0fe", "#a2d2ff"],
-      monochrome: ["#000000", "#808080", "#ffffff"],
-      sunset: ["#ff6f61", "#ffb347", "#ffd700"],
-      forest: ["#2d5016", "#4a7c59", "#8fbc8f"]
+    // Mood only influences accents now
+    const moodAccents: Record<string, string[]> = {
+      minimalist: ["thin lines", "simple dots"],
+      bohemian: ["organic shapes", "flowing curves"],
+      "modern-serif": ["clean lines", "geometric shapes"],
+      coastal: ["wave patterns", "light rays"],
+      earthy: ["natural textures", "botanical elements"],
+      vibrant: ["bold shapes", "dynamic angles"],
+      pastel: ["soft dots", "gentle curves"],
+      monochrome: ["stark lines", "high contrast shapes"],
+      sunset: ["radiating lines", "gradient transitions"],
+      forest: ["leaf motifs", "branch patterns"]
     };
 
-    // Expanded layout definitions (10 layouts)
-    const layoutArchetypes: Record<string, {
-      description: string;
-      palette: string[];
-      accents: string[];
-    }> = {
-      "clean-serif": {
-        description: "Centered headline with elegant underline bar, alternating bold and italic supporting lines in a structured vertical flow.",
-        palette: ["#1a1a1a", "#f5f5f5", "#d4af37"],
-        accents: ["thin horizontal bars", "subtle drop shadows", "serif typography"]
-      },
-      botanical: {
-        description: "Warm creamy background with gentle curved phrases, adorned with delicate leaf sprigs and botanical line drawings.",
-        palette: ["#faf3e0", "#d4a574", "#8b6f47"],
-        accents: ["eucalyptus leaves", "vine tendrils", "watercolor washes", "floral corners"]
-      },
-      grit: {
-        description: "Central bold headline with angled text fragments radiating outward, featuring directional arrows and compass elements for a raw, adventurous feel.",
-        palette: ["#2f4f4f", "#ffa500", "#1c1c1c"],
-        accents: ["compass points", "diagonal arrows", "textured overlays", "geometric fragments"]
-      },
-      halo: {
-        description: "Headline centered with supporting phrases orbiting in a soft circular arrangement, gentle pastel accents creating a peaceful halo effect.",
-        palette: ["#e8d5c4", "#9ab8b8", "#f5f5f5"],
-        accents: ["orbital rings", "scattered stars", "soft glows", "circular frames"]
-      },
-      grid: {
-        description: "Structured grid layout with phrases in aligned boxes, clean lines and organized spacing for a modern architectural feel.",
-        palette: ["#ecf0f1", "#2c3e50", "#95a5a6"],
-        accents: ["rectangular borders", "grid lines", "minimal dividers"]
-      },
-      organic: {
-        description: "Flowing, hand-drawn style with irregular placement, natural curves and asymmetric balance mimicking nature's patterns.",
-        palette: ["#a8d5a3", "#77c593", "#4a7c59"],
-        accents: ["wavy lines", "organic shapes", "hand-drawn elements", "irregular borders"]
-      },
-      celestial: {
-        description: "Deep cosmic background with phrases floating like constellations, featuring stars, moons, and ethereal light.",
-        palette: ["#191970", "#ffd700", "#e0e0e0"],
-        accents: ["stars", "crescent moons", "cosmic dust", "light rays"]
-      },
-      geometric: {
-        description: "Bold geometric shapes framing text, featuring triangles, hexagons, and angular patterns for a modern abstract look.",
-        palette: ["#ff6b6b", "#4ecdc4", "#1a1a1a"],
-        accents: ["triangles", "hexagons", "angular lines", "intersecting shapes"]
-      },
-      vintage: {
-        description: "Aged aesthetic with ornate borders, classic typography, and decorative flourishes reminiscent of old posters.",
-        palette: ["#8b7355", "#daa520", "#f5deb3"],
-        accents: ["ornate corners", "filigree", "vintage frames", "distressed texture"]
-      },
-      "minimal-zen": {
-        description: "Maximum whitespace with single focal point, inspired by Japanese minimalism with subtle stone or water motifs.",
-        palette: ["#ffffff", "#d3d3d3", "#808080"],
-        accents: ["zen circles", "single brushstrokes", "negative space", "pebble shapes"]
-      }
-    };
-
-    // Incorporate user keywords into color and design
-    const keywordInfluence = (keywords: string) => {
-      const lower = keywords.toLowerCase();
-      const influences: { colors?: string[]; accents?: string[] } = {};
-      
-      if (lower.includes("cold") || lower.includes("ice") || lower.includes("winter")) {
-        influences.colors = ["#e0f7fa", "#b3e5fc", "#4fc3f7"];
-        influences.accents = ["snowflakes", "ice crystals", "frost patterns"];
-      }
-      if (lower.includes("fire") || lower.includes("heat") || lower.includes("flame")) {
-        influences.colors = ["#ff4500", "#ff6347", "#ffa500"];
-        influences.accents = ["flame shapes", "heat waves", "ember glows"];
-      }
-      if (lower.includes("earth") || lower.includes("soil") || lower.includes("ground")) {
-        influences.colors = ["#8b7355", "#a0522d", "#d2b48c"];
-        influences.accents = ["soil textures", "rocks", "terrain lines"];
-      }
-      if (lower.includes("rain") || lower.includes("water") || lower.includes("ocean")) {
-        influences.colors = ["#4682b4", "#5f9ea0", "#add8e6"];
-        influences.accents = ["water droplets", "wave patterns", "ripples"];
-      }
-      if (lower.includes("sun") || lower.includes("light") || lower.includes("bright")) {
-        influences.colors = ["#ffd700", "#ffeb3b", "#fff59d"];
-        influences.accents = ["sun rays", "light bursts", "radiant lines"];
-      }
-      if (lower.includes("forest") || lower.includes("tree") || lower.includes("leaf")) {
-        influences.colors = ["#2d5016", "#4a7c59", "#8fbc8f"];
-        influences.accents = ["tree branches", "leaves", "pine needles"];
-      }
-      if (lower.includes("night") || lower.includes("dark") || lower.includes("moon")) {
-        influences.colors = ["#191970", "#2f4f4f", "#1c1c1c"];
-        influences.accents = ["stars", "moon phases", "night sky"];
-      }
-      if (lower.includes("spring") || lower.includes("bloom") || lower.includes("flower")) {
-        influences.colors = ["#ffb6d9", "#ffd9e8", "#ffeaa7"];
-        influences.accents = ["blossoms", "flower petals", "spring vines"];
-      }
-      
-      return influences;
+    // Layout only influences structure/placement now
+    const layoutDescriptions: Record<string, string> = {
+      "centered-stack": "Centered headline with vertical stack of phrases",
+      "flowing-curves": "Curved text flow with organic arrangement",
+      "angular-grid": "Structured grid with aligned boxes",
+      "circular-orbit": "Circular arrangement with orbital phrases",
+      "diagonal-dynamic": "Dynamic angled composition with movement",
+      "asymmetric-balance": "Asymmetric placement with visual balance",
+      "layered-depth": "Overlapping layers creating depth",
+      "minimal-focus": "Maximum whitespace with single focal point"
     };
 
     const selectedTheme = themeData[theme] || themeData.confidence;
-    const selectedMoodPalette = moodPalettes[mood] || moodPalettes.minimalist;
+    const selectedMoodAccents = moodAccents[mood] || moodAccents.minimalist;
     
     // Auto-select layout if not chosen
     let finalLayout = layoutStyle;
     if (!finalLayout) {
       const layoutMap: Record<string, string> = {
-        minimalist: "clean-serif",
-        bohemian: "botanical",
-        "modern-serif": "grid",
-        coastal: "halo",
-        earthy: "organic",
-        vibrant: "geometric",
-        pastel: "celestial",
-        monochrome: "minimal-zen",
-        sunset: "grit",
-        forest: "vintage"
+        minimalist: "minimal-focus",
+        bohemian: "flowing-curves",
+        "modern-serif": "angular-grid",
+        coastal: "circular-orbit",
+        earthy: "asymmetric-balance",
+        vibrant: "diagonal-dynamic",
+        pastel: "circular-orbit",
+        monochrome: "centered-stack",
+        sunset: "diagonal-dynamic",
+        forest: "layered-depth"
       };
-      finalLayout = layoutMap[mood] || "clean-serif";
+      finalLayout = layoutMap[mood] || "centered-stack";
     }
     
-    const selectedLayout = layoutArchetypes[finalLayout] || layoutArchetypes["clean-serif"];
+    const layoutDescription = layoutDescriptions[finalLayout] || layoutDescriptions["centered-stack"];
     
-    // Blend user keyword influences
-    const keywordEffects = keywordInfluence(userKeywords);
-    const finalPalette = keywordEffects.colors || selectedLayout.palette || selectedMoodPalette;
-    const finalAccents = keywordEffects.accents 
-      ? [...selectedLayout.accents, ...keywordEffects.accents]
-      : selectedLayout.accents;
+    // Theme controls colors - use theme colors with slightly transparent backgrounds
+    const themeColors = selectedTheme.colors;
+    const finalPalette = themeColors;
     
-    // Incorporate keywords into phrases if provided
-    let finalPhrases = [...selectedTheme.phrases];
-    if (userKeywords.trim()) {
-      const keywordList = userKeywords.split(/[,\s]+/).filter(k => k.length > 2);
-      finalPhrases = finalPhrases.map((phrase, i) => {
-        if (keywordList[i]) {
-          return `${phrase.replace(/\.$/, "")} ${keywordList[i]}`;
-        }
-        return phrase;
-      });
-    }
+    // Mood controls accents only
+    const finalAccents = selectedMoodAccents;
 
     return {
       headline: selectedTheme.headline,
-      supportingLines: finalPhrases.slice(0, 10),
+      supportingLines: selectedTheme.phrases.slice(0, 6),
       palette: finalPalette,
       paletteNames: finalPalette.map(c => c),
-      layoutStyle: selectedLayout.description,
+      layoutStyle: layoutDescription,
       accentElements: finalAccents.join(", ")
     };
   };
@@ -520,12 +421,11 @@ const AffirmationBuilder = () => {
   const handleRandomize = () => {
     const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
     const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
-    const layouts = ["clean-serif", "botanical", "grit", "halo", "grid", "organic", "celestial", "geometric", "vintage", "minimal-zen"];
+    const layouts = ["centered-stack", "flowing-curves", "angular-grid", "circular-orbit", "diagonal-dynamic", "asymmetric-balance", "layered-depth", "minimal-focus"];
     
     setTheme(themes[Math.floor(Math.random() * themes.length)]);
     setMood(moods[Math.floor(Math.random() * moods.length)]);
     setLayoutStyle(layouts[Math.floor(Math.random() * layouts.length)]);
-    setSeed(Math.floor(Math.random() * 10000).toString());
     toast.success('Randomized! Click Preview to see it.');
   };
 
@@ -848,24 +748,13 @@ const AffirmationBuilder = () => {
 
                     {/* User Keywords */}
                     <div className="space-y-2">
-                      <Label htmlFor="keywords">Keywords</Label>
+                      <Label htmlFor="keywords">Keywords (adds objects to image)</Label>
                       <Textarea
                         id="keywords"
-                        placeholder="e.g., cold, fire, earth, rain..."
+                        placeholder="e.g., mountains, ocean, stars, flowers..."
                         value={userKeywords}
                         onChange={(e) => setUserKeywords(e.target.value)}
                         rows={2}
-                      />
-                    </div>
-
-                    {/* Style Seed */}
-                    <div className="space-y-2">
-                      <Label htmlFor="seed">Style Seed</Label>
-                      <Input
-                        id="seed"
-                        placeholder="1234"
-                        value={seed}
-                        onChange={(e) => setSeed(e.target.value)}
                       />
                     </div>
 
@@ -1275,24 +1164,13 @@ const AffirmationBuilder = () => {
 
                     {/* User Keywords */}
                     <div className="space-y-2">
-                      <Label htmlFor="keywords-desktop">Keywords</Label>
+                      <Label htmlFor="keywords-desktop">Keywords (adds objects to image)</Label>
                       <Textarea
                         id="keywords-desktop"
-                        placeholder="e.g., cold, fire, earth, rain..."
+                        placeholder="e.g., mountains, ocean, stars, flowers..."
                         value={userKeywords}
                         onChange={(e) => setUserKeywords(e.target.value)}
                         rows={2}
-                      />
-                    </div>
-
-                    {/* Style Seed */}
-                    <div className="space-y-2">
-                      <Label htmlFor="seed-desktop">Style Seed</Label>
-                      <Input
-                        id="seed-desktop"
-                        placeholder="1234"
-                        value={seed}
-                        onChange={(e) => setSeed(e.target.value)}
                       />
                     </div>
 
