@@ -553,21 +553,6 @@ const AffirmationBuilder = () => {
     toast.success(`Downloaded ${sizeMap[format]} format!`);
   };
 
-  const applyPreset = (preset: StaffPreset) => {
-    setTheme(preset.theme);
-    setMood(preset.mood);
-    setLayoutStyle(preset.layoutStyle);
-    setUserKeywords(preset.keywords);
-    toast.success(`Applied "${preset.name}" preset!`);
-    // Auto-generate when preset is selected
-    const preview = generatePreviewData();
-    if (customPalette.length > 0) {
-      preview.palette = customPalette;
-      preview.paletteNames = customPalette;
-    }
-    setGeneratedData(preview);
-  };
-
   const updatePaletteColor = (index: number, color: string) => {
     const newPalette = [...(customPalette.length > 0 ? customPalette : generatedData.palette)];
     newPalette[index] = color;
@@ -668,7 +653,7 @@ const AffirmationBuilder = () => {
                     </div>
                     <ChevronDown className={`h-5 w-5 transition-transform ${showPresets ? 'rotate-180' : ''}`} />
                   </div>
-                  <CardDescription>Curated preset combinations</CardDescription>
+                  <CardDescription>Curated designs ready to download</CardDescription>
                 </CardHeader>
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -677,10 +662,14 @@ const AffirmationBuilder = () => {
                     {staffPresets.map((preset) => (
                       <div
                         key={preset.name}
-                        className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+                        className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:border-primary transition-all group"
                         onClick={() => {
-                          applyPreset(preset);
-                          setActiveTab("preview");
+                          // Download the preset image directly
+                          const link = document.createElement('a');
+                          link.href = preset.previewImage;
+                          link.download = `${preset.name.toLowerCase().replace(/\s+/g, '-')}-affirmation.jpg`;
+                          link.click();
+                          toast.success(`Downloaded "${preset.name}"!`);
                         }}
                       >
                         <div className="aspect-square relative overflow-hidden">
@@ -689,6 +678,9 @@ const AffirmationBuilder = () => {
                             alt={preset.name}
                             className="w-full h-full object-cover"
                           />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <Download className="h-8 w-8 text-white" />
+                          </div>
                         </div>
                         <div className="p-2 bg-card">
                           <p className="font-semibold text-xs leading-tight mb-0.5">{preset.name}</p>
