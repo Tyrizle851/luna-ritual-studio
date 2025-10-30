@@ -10,7 +10,8 @@ export type ThemeSlug =
 
 export type MoodSlug =
   | "minimalist" | "bohemian" | "coastal" | "earthy"
-  | "vibrant" | "pastel" | "monochrome" | "geometric" | "organic" | "celestial";
+  | "vibrant" | "pastel" | "monochrome" | "geometric" | "organic" | "celestial"
+  | "modern-serif" | "sunset" | "forest";
 
 export type LayoutArchetype =
   | "scattered-organic"       // organic scattered placement like fallen leaves
@@ -808,6 +809,21 @@ export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
     accents: ["celestial", "minimal"],
     allowedLayouts: ["circular-orbit", "layered-depth"],
     weight: 0.20
+  },
+  "modern-serif": {
+    accents: ["minimal", "botanical"],
+    allowedLayouts: ["angular-grid", "vertical-cascade", "floating-cluster"],
+    weight: 0.35
+  },
+  sunset: {
+    accents: ["organic", "botanical"],
+    allowedLayouts: ["arch-composition", "horizontal-sweep", "wave-pattern"],
+    weight: 0.25
+  },
+  forest: {
+    accents: ["botanical", "organic", "textured"],
+    allowedLayouts: ["botanical-branch", "scattered-organic", "layered-depth"],
+    weight: 0.30
   }
 };
 
