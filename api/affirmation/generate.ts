@@ -33,7 +33,8 @@ export default async function handler(req: any, res: any) {
       normalizedText = normalizeText(text);
       const moderation = await moderateText(normalizedText);
       if (!moderation.allowed) return res.status(400).json({ error: "Input not allowed by policy.", code: "moderation_blocked" });
-      prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText);
+      const useGradient = Math.random() < 0.35; // 35% chance
+      prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText, useGradient);
     }
 
     const hardened = `${prompt}\n\nConstraints: Hand-drawn organic aesthetics, brand palettes only, print-safe, high legibility, no neon, no gore/sexual content.`;

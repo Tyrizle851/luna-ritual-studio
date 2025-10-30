@@ -103,9 +103,30 @@ function mapMood(moodRaw) {
   return "minimalist";
 }
 
-function buildBasePrompt(themeSlug, mood, userInput) {
+function buildBasePrompt(themeSlug, mood, userInput, useGradient = false) {
   const themeKey = themeSlug === "calm-morning" ? "calm_morning" : themeSlug;
   const modifier = THEME_MODIFIERS[themeKey] || {};
+  
+  const gradientInstructions = useGradient 
+    ? `
+
+GRADIENT TEXT EFFECT (CRITICAL):
+- Apply a smooth, elegant gradient to the MAIN HEADLINE text only
+- The gradient should flow across ALL WORDS in the headline consistently
+- Use 2-3 harmonious colors from the chosen palette
+- Gradient direction: typically left-to-right or top-to-bottom
+- Keep gradient subtle and sophisticated (avoid harsh transitions)
+- Ensure text remains highly readable
+- Example: If headline is "I choose joy today", the entire phrase flows through the gradient
+- Supporting phrases should remain solid color (no gradient)
+`
+    : `
+
+TEXT COLOR:
+- Use solid colors for all text
+- No gradients on text
+`;
+
   return `Create a high-quality, printable motivational affirmation design with the following specifications:
 
 THEME & CONCEPT:
@@ -139,7 +160,7 @@ DECORATIVE ELEMENTS:
 
 AFFIRMATION CONTENT:
 Generate 8-12 short, powerful affirmations related to the theme.
-
+${gradientInstructions}
 ARTISTIC STYLE:
 - Overall aesthetic: Modern farmhouse meets minimalist inspiration
 - Texture: Subtle, slight paper texture or organic imperfection
@@ -152,7 +173,6 @@ TECHNICAL SPECIFICATIONS:
 - Format: Print-ready quality
 - Background: Clean (white/cream) or subtle texture
 - Contrast: Ensure excellent readability
-- No gradients or complex effects that compromise printability
 
 UNIQUENESS FACTORS (apply 2-3):
 - Varied text baseline (wavy, curved, or stepped)
@@ -189,11 +209,15 @@ async function moderateText(text) {
 }
 
 function makePreviewSpec(theme, mood, userText) {
+  // 35% chance of using gradient on headline
+  const useGradient = Math.random() < 0.35;
+  
   // Simple curated outputs per theme for instant preview
   const base = {
     palette: "Warm Cream / Sage / Terracotta",
     layoutStyle: "Organic flowing arrangement with curved phrases",
     accentStyle: "Botanical line art with soft circular accents",
+    useGradient,
   };
   const byTheme = {
     "calm-morning": {
@@ -302,6 +326,7 @@ function makePreviewSpec(theme, mood, userText) {
   };
   const spec = { ...base, ...(byTheme[theme] || byTheme["peace"]) };
   spec.palette = moodPalettes[mood] || spec.palette;
+  spec.useGradient = useGradient;
   return spec;
 }
 
@@ -319,9 +344,10 @@ app.post("/api/affirmation/preview", async (req, res) => {
 
     const previewId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const designSpec = makePreviewSpec(mappedTheme, mappedMood, normalizedText);
-    const prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText);
+    const useGradient = designSpec.useGradient || false;
+    const prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText, useGradient);
 
-    previews.set(previewId, { theme: mappedTheme, mood: mappedMood, text: normalizedText, styleSeed: styleSeed || null, prompt, designSpec });
+    previews.set(previewId, { theme: mappedTheme, mood: mappedMood, text: normalizedText, styleSeed: styleSeed || null, prompt, designSpec, useGradient });
 
     return res.json({ previewId, themeMapped: mappedTheme, moodMapped: mappedMood, designSpec });
   } catch (e) {
@@ -351,7 +377,8 @@ app.post("/api/affirmation/generate", async (req, res) => {
       if (!moderation.allowed) {
         return res.status(400).json({ error: "Input not allowed by policy.", code: "moderation_blocked" });
       }
-      prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText);
+      const useGradient = Math.random() < 0.35; // 35% chance
+      prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText, useGradient);
     }
 
     // Harden prompt: reinforce brand constraints

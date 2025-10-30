@@ -28,8 +28,9 @@ export default async function handler(req: any, res: any) {
 
     const previewId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const designSpec = makePreviewSpec(mappedTheme, mappedMood, normalizedText);
-    const prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText);
-    previews.set(previewId, { theme: mappedTheme, mood: mappedMood, text: normalizedText, styleSeed: styleSeed || null, prompt, designSpec });
+    const useGradient = (designSpec as any).useGradient || false;
+    const prompt = buildBasePrompt(mappedTheme, mappedMood, normalizedText, useGradient);
+    previews.set(previewId, { theme: mappedTheme, mood: mappedMood, text: normalizedText, styleSeed: styleSeed || null, prompt, designSpec, useGradient });
 
     return res.status(200).json({ previewId, themeMapped: mappedTheme, moodMapped: mappedMood, designSpec });
   } catch (e) {

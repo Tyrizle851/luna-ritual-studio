@@ -79,13 +79,33 @@ const THEME_MODIFIERS: Record<string, any> = {
   },
 };
 
-export function buildBasePrompt(themeSlug: string, mood: string, userInput: string): string {
+export function buildBasePrompt(themeSlug: string, mood: string, userInput: string, useGradient: boolean = false): string {
   const themeKey = themeSlug === "calm-morning" ? "calm_morning" : themeSlug;
   const modifier = THEME_MODIFIERS[themeKey] || {};
-  return `Create a high-quality, printable motivational affirmation design with the following specifications:\n\nTHEME & CONCEPT:\n- Primary theme: ${themeSlug}\n- Mood/Style: ${mood}\n- User keywords: ${userInput}\n\nDESIGN REQUIREMENTS:\n- Layout: Vertical composition (portrait orientation, suitable for 8x10\" or similar)\n- Typography: Mix 3-5 complementary fonts (serif, sans-serif, script/handwritten styles)\n- Font hierarchy: Vary sizes dramatically - largest phrase should be 3-4x larger than smallest\n- Text arrangement: Organic, non-grid layout with phrases at varying angles (0-15 degrees)\n- White space: Generous breathing room, not overcrowded\n\nCOLOR PALETTE (choose ONE direction based on theme):\n- Earthy: Terracotta, sage green, cream, burnt sienna, warm taupe\n- Floral: Dusty rose, mauve, soft peach, muted lavender, cream\n- Coastal: Seafoam, sandy beige, driftwood gray, soft aqua, white\n- Minimalist: Black/charcoal on pure white, or sepia tones\n- Botanical: Deep forest green, olive, moss, natural beige, off-white\n- Sunset: Coral, amber, blush pink, golden yellow, cream\n\nDECORATIVE ELEMENTS:\n- Include 4-8 delicate accent elements strategically placed\n- Elements should enhance, not overwhelm\n- Style: Hand-drawn, organic feel (avoid overly perfect/digital look)\n\nAFFIRMATION CONTENT:\nGenerate 8-12 short, powerful affirmations related to the theme.\n\nARTISTIC STYLE:\n- Overall aesthetic: Modern farmhouse meets minimalist inspiration\n- Texture: Subtle, slight paper texture or organic imperfection\n- Line quality: Hand-drawn appearance, slight irregularity\n- Balance: Asymmetrical but visually balanced\n- Professional yet approachable, commercial-quality\n\nTECHNICAL SPECIFICATIONS:\n- Resolution: 300 DPI minimum\n- Format: Print-ready quality\n- Background: Clean (white/cream) or subtle texture\n- Contrast: Ensure excellent readability\n- No gradients or complex effects that compromise printability\n\nUNIQUENESS FACTORS (apply 2-3):\n- Varied text baseline (wavy, curved, or stepped)\n- Clustered phrase groupings with connecting elements\n- Negative space as a design element\n- Asymmetric weight distribution\n- Unexpected font pairings\n- Strategic use of bold vs. delicate elements\n\nTHEME CONTEXT:\n${modifier.additional_context || ""}\n`;
+  
+  const gradientInstructions = useGradient 
+    ? `\nGRADIENT TEXT EFFECT (CRITICAL):
+- Apply a smooth, elegant gradient to the MAIN HEADLINE text only
+- The gradient should flow across ALL WORDS in the headline consistently
+- Use 2-3 harmonious colors from the chosen palette
+- Gradient direction: typically left-to-right or top-to-bottom
+- Keep gradient subtle and sophisticated (avoid harsh transitions)
+- Ensure text remains highly readable
+- Example: If headline is "I choose joy today", the entire phrase flows through the gradient
+- Supporting phrases should remain solid color (no gradient)
+`
+    : `\nTEXT COLOR:
+- Use solid colors for all text
+- No gradients on text
+`;
+
+  return `Create a high-quality, printable motivational affirmation design with the following specifications:\n\nTHEME & CONCEPT:\n- Primary theme: ${themeSlug}\n- Mood/Style: ${mood}\n- User keywords: ${userInput}\n\nDESIGN REQUIREMENTS:\n- Layout: Vertical composition (portrait orientation, suitable for 8x10\" or similar)\n- Typography: Mix 3-5 complementary fonts (serif, sans-serif, script/handwritten styles)\n- Font hierarchy: Vary sizes dramatically - largest phrase should be 3-4x larger than smallest\n- Text arrangement: Organic, non-grid layout with phrases at varying angles (0-15 degrees)\n- White space: Generous breathing room, not overcrowded\n\nCOLOR PALETTE (choose ONE direction based on theme):\n- Earthy: Terracotta, sage green, cream, burnt sienna, warm taupe\n- Floral: Dusty rose, mauve, soft peach, muted lavender, cream\n- Coastal: Seafoam, sandy beige, driftwood gray, soft aqua, white\n- Minimalist: Black/charcoal on pure white, or sepia tones\n- Botanical: Deep forest green, olive, moss, natural beige, off-white\n- Sunset: Coral, amber, blush pink, golden yellow, cream\n\nDECORATIVE ELEMENTS:\n- Include 4-8 delicate accent elements strategically placed\n- Elements should enhance, not overwhelm\n- Style: Hand-drawn, organic feel (avoid overly perfect/digital look)\n\nAFFIRMATION CONTENT:\nGenerate 8-12 short, powerful affirmations related to the theme.\n${gradientInstructions}\nARTISTIC STYLE:\n- Overall aesthetic: Modern farmhouse meets minimalist inspiration\n- Texture: Subtle, slight paper texture or organic imperfection\n- Line quality: Hand-drawn appearance, slight irregularity\n- Balance: Asymmetrical but visually balanced\n- Professional yet approachable, commercial-quality\n\nTECHNICAL SPECIFICATIONS:\n- Resolution: 300 DPI minimum\n- Format: Print-ready quality\n- Background: Clean (white/cream) or subtle texture\n- Contrast: Ensure excellent readability\n\nUNIQUENESS FACTORS (apply 2-3):\n- Varied text baseline (wavy, curved, or stepped)\n- Clustered phrase groupings with connecting elements\n- Negative space as a design element\n- Asymmetric weight distribution\n- Unexpected font pairings\n- Strategic use of bold vs. delicate elements\n\nTHEME CONTEXT:\n${modifier.additional_context || ""}\n`;
 }
 
 export function makePreviewSpec(theme: string, mood: string, userText: string) {
+  // 35% chance of using gradient on headline
+  const useGradient = Math.random() < 0.35;
+  
   const byTheme: Record<string, any> = {
     "calm-morning": {
       mainAffirmation: "SOFT WITHIN",
@@ -195,9 +215,11 @@ export function makePreviewSpec(theme: string, mood: string, userText: string) {
     palette: "Warm Cream / Sage / Terracotta",
     layoutStyle: "Organic flowing arrangement with curved phrases",
     accentStyle: "Botanical line art with soft circular accents",
+    useGradient,
   };
   const spec = { ...base, ...(byTheme[theme] || byTheme["peace"]) };
   (spec as any).palette = moodPalettes[mood] || (spec as any).palette;
+  (spec as any).useGradient = useGradient;
   return spec;
 }
 
@@ -220,5 +242,3 @@ export async function moderateText(text: string): Promise<{ allowed: boolean }> 
     return { allowed: true };
   }
 }
-
-
