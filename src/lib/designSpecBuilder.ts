@@ -68,7 +68,7 @@ export function buildDesignSpec(options: BuildSpecOptions): DesignSpec {
 
   // Generate or use provided seed
   const finalSeed = seed ?? hashString(
-    `${theme}|${mood}|${layoutArchetype}|${moodData.palette.name}|${copyVariant}|${styleVariant}|${accentVariant}|${textureVariant}|${keywords}|v${SPEC_VERSION}`
+    `${theme}|${mood}|${layoutArchetype}|${themeData.palette.name}|${copyVariant}|${styleVariant}|${accentVariant}|${textureVariant}|${keywords}|v${SPEC_VERSION}`
   );
 
   // Use custom text if provided, otherwise select from registry
@@ -94,13 +94,13 @@ export function buildDesignSpec(options: BuildSpecOptions): DesignSpec {
     }
   }
 
-  // Use custom palette if provided, otherwise use mood's default
+  // Use custom palette if provided, otherwise use theme's palette
   const paletteToken = customPaletteHex ? {
     name: "custom_palette",
     description: "Custom user-selected colors",
     hex: customPaletteHex,
-    contrast: moodData.palette.contrast
-  } : moodData.palette;
+    contrast: themeData.palette.contrast
+  } : themeData.palette;
 
   return {
     theme,
