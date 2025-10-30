@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { buildDesignSpec } from "@/lib/designSpecBuilder";
-import type { ThemeSlug, MoodSlug } from "@/types/design-spec";
+import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
 
 interface GeneratedData {
   headline: string;
@@ -419,14 +419,40 @@ const AffirmationBuilder = () => {
     setLoading(true);
     setGeneratedImageB64(null);
     try {
-      const previewForAPI = generatePreviewData();
+      // Ensure we have current preview data
+      if (!generatedData) {
+        await handleGenerate();
+      }
       
-      // Build proper DesignSpec using the new system
+      // Map layout style to archetype
+      const layoutMap: Record<string, LayoutArchetype> = {
+        "vintage": "clean-serif",
+        "clean-serif": "clean-serif",
+        "botanical": "botanical",
+        "grid": "clean-serif",
+        "halo": "halo-orbital",
+        "organic": "botanical",
+        "geometric": "grit-directional",
+        "celestial": "halo-orbital",
+        "minimal-zen": "clean-serif",
+        "grit": "grit-directional"
+      };
+      
+      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || "clean-serif";
+      
+      // Get active palette (custom or generated)
+      const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
+      
+      // Build proper DesignSpec using the new system with current preview data
       const designSpec = buildDesignSpec({
         theme: theme as ThemeSlug,
         mood: mood as MoodSlug,
+        layoutOverride: layoutArchetype,
         keywords: userKeywords,
-        seed: seed ? parseInt(seed) : undefined
+        seed: seed ? parseInt(seed) : undefined,
+        customPaletteHex: activePalette,
+        customHeadline: generatedData.headline,
+        customSupportingPhrases: generatedData.supportingLines
       });
       
       const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {

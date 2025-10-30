@@ -30,6 +30,9 @@ export interface BuildSpecOptions {
   paletteVariant?: number;
   copyVariant?: number;
   textureVariant?: number;
+  customPaletteHex?: string[];
+  customHeadline?: string;
+  customSupportingPhrases?: string[];
 }
 
 export function buildDesignSpec(options: BuildSpecOptions): DesignSpec {
@@ -43,7 +46,10 @@ export function buildDesignSpec(options: BuildSpecOptions): DesignSpec {
     accentVariant = 0,
     paletteVariant = 0,
     copyVariant = 0,
-    textureVariant = 0
+    textureVariant = 0,
+    customPaletteHex,
+    customHeadline,
+    customSupportingPhrases
   } = options;
 
   const themeData = THEME_REGISTRY[theme];
@@ -65,26 +71,43 @@ export function buildDesignSpec(options: BuildSpecOptions): DesignSpec {
     `${theme}|${mood}|${layoutArchetype}|${moodData.palette.name}|${copyVariant}|${styleVariant}|${accentVariant}|${textureVariant}|${keywords}|v${SPEC_VERSION}`
   );
 
-  // Select main affirmation from lexicon
-  const headlineIndex = Math.abs(hashString(String(finalSeed) + 'headline')) % themeData.headlineLexicon.length;
-  const mainAffirmation = themeData.headlineLexicon[headlineIndex];
+  // Use custom text if provided, otherwise select from registry
+  let mainAffirmation: string;
+  let supportingPhrases: string[];
+  
+  if (customHeadline && customSupportingPhrases) {
+    mainAffirmation = customHeadline;
+    supportingPhrases = customSupportingPhrases;
+  } else {
+    // Select main affirmation from lexicon
+    const headlineIndex = Math.abs(hashString(String(finalSeed) + 'headline')) % themeData.headlineLexicon.length;
+    mainAffirmation = themeData.headlineLexicon[headlineIndex];
 
-  // Select supporting phrases from template
-  const templateIndex = copyVariant % themeData.phraseTemplates.length;
-  let supportingPhrases = [...themeData.phraseTemplates[templateIndex]];
+    // Select supporting phrases from template
+    const templateIndex = copyVariant % themeData.phraseTemplates.length;
+    supportingPhrases = [...themeData.phraseTemplates[templateIndex]];
 
-  // Optionally weave in keywords if provided
-  if (keywords.trim()) {
-    const keywordLine = `${keywords.trim().charAt(0).toUpperCase() + keywords.trim().slice(1)}`;
-    supportingPhrases = supportingPhrases.slice(0, 5).concat([keywordLine]);
+    // Optionally weave in keywords if provided
+    if (keywords.trim()) {
+      const keywordLine = `${keywords.trim().charAt(0).toUpperCase() + keywords.trim().slice(1)}`;
+      supportingPhrases = supportingPhrases.slice(0, 5).concat([keywordLine]);
+    }
   }
+
+  // Use custom palette if provided, otherwise use mood's default
+  const paletteToken = customPaletteHex ? {
+    name: "custom_palette",
+    description: "Custom user-selected colors",
+    hex: customPaletteHex,
+    contrast: moodData.palette.contrast
+  } : moodData.palette;
 
   return {
     theme,
     mood,
     energyLevel: themeData.energyLevel,
     layoutArchetype,
-    paletteToken: moodData.palette,
+    paletteToken,
     accentSet: moodData.accents,
     typography: themeData.typography,
     mainAffirmation,
