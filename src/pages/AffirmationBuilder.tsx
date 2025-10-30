@@ -78,6 +78,7 @@ const AffirmationBuilder = () => {
     accentElements: "thin horizontal bars, serif typography"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
+  const [previewImageB64, setPreviewImageB64] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedHeadline, setEditedHeadline] = useState("");
   const [editedLines, setEditedLines] = useState<string[]>([]);
@@ -322,15 +323,43 @@ const AffirmationBuilder = () => {
   const handleGenerate = async () => {
     setLoading(true);
     setGeneratedImageB64(null);
+    setPreviewImageB64(null);
     
-    const preview = generatePreviewData();
-    // Apply custom palette if set
-    if (customPalette.length > 0) {
-      preview.palette = customPalette;
-      preview.paletteNames = customPalette;
+    try {
+      const preview = generatePreviewData();
+      // Apply custom palette if set
+      if (customPalette.length > 0) {
+        preview.palette = customPalette;
+        preview.paletteNames = customPalette;
+      }
+      setGeneratedData(preview);
+      
+      // Generate AI preview image
+      toast.info("Generating preview image...");
+      const { data, error } = await supabase.functions.invoke('generate-preview-image', {
+        body: {
+          headline: preview.headline,
+          supportingLines: preview.supportingLines,
+          theme,
+          mood,
+          layout: layoutStyle || 'auto',
+          palette: preview.palette
+        }
+      });
+      
+      if (error) {
+        console.error('Preview generation error:', error);
+        toast.error("Failed to generate preview image");
+      } else if (data?.imageB64) {
+        setPreviewImageB64(data.imageB64);
+        toast.success("Preview generated!");
+      }
+    } catch (error) {
+      console.error('Preview error:', error);
+      toast.error("Failed to generate preview");
+    } finally {
+      setLoading(false);
     }
-    setGeneratedData(preview);
-    setLoading(false);
   };
 
   const handleGenerateUnique = async () => {
@@ -505,7 +534,9 @@ const AffirmationBuilder = () => {
     setTheme(themes[Math.floor(Math.random() * themes.length)]);
     setMood(moods[Math.floor(Math.random() * moods.length)]);
     setLayoutStyle(allLayouts[Math.floor(Math.random() * allLayouts.length)]);
-    toast.success('Randomized! Click Preview to see it.');
+    setPreviewImageB64(null);
+    setGeneratedImageB64(null);
+    toast.success('Randomized! Click AI Preview to see it.');
   };
 
   const startEditing = () => {
@@ -892,35 +923,38 @@ const AffirmationBuilder = () => {
 
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4">
-                  <Button 
-                    onClick={() => {
-                      handleGenerate();
-                      setActiveTab("preview");
-                    }}
-                    variant="outline"
-                    className="w-full h-11"
-                    disabled={loading}
-                  >
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    Preview
-                  </Button>
-                  
-                  <Button 
-                    onClick={handleRandomize}
-                    variant="secondary"
-                    className="w-full h-11"
-                    disabled={loading}
-                  >
-                    Randomize
-                  </Button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button 
+                      onClick={() => {
+                        handleGenerate();
+                        setActiveTab("preview");
+                      }}
+                      variant="outline"
+                      className="h-11"
+                      disabled={loading}
+                    >
+                      {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                      AI Preview
+                    </Button>
+                    
+                    <Button 
+                      onClick={handleRandomize}
+                      variant="secondary"
+                      className="h-11"
+                      disabled={loading}
+                    >
+                      <Palette className="mr-2 h-4 w-4" />
+                      Randomize
+                    </Button>
+                  </div>
                 
                   <Button 
                     onClick={handleGenerateUnique}
                     className="w-full h-12 bg-primary hover:bg-primary/90"
                     disabled={loading}
                   >
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Generate Unique Image
+                    {loading && generatedImageB64 === null && previewImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                    Generate Final Image
                   </Button>
                 </div>
               </CardContent>
@@ -1032,6 +1066,19 @@ const AffirmationBuilder = () => {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
+                  </div>
+                ) : previewImageB64 ? (
+                  <div className="space-y-4">
+                    <div className="rounded-lg overflow-hidden border">
+                      <img 
+                        src={previewImageB64} 
+                        alt="Preview Affirmation" 
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground text-center">
+                      This is a quick preview. Click "Generate Final Image" for high-quality version.
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -1318,32 +1365,35 @@ const AffirmationBuilder = () => {
 
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4">
-                  <Button 
-                    onClick={handleGenerate}
-                    variant="outline"
-                    className="w-full h-11"
-                    disabled={loading}
-                  >
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    Preview
-                  </Button>
-                  
-                  <Button 
-                    onClick={handleRandomize}
-                    variant="secondary"
-                    className="w-full h-11"
-                    disabled={loading}
-                  >
-                    Randomize
-                  </Button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button 
+                      onClick={handleGenerate}
+                      variant="outline"
+                      className="h-11"
+                      disabled={loading}
+                    >
+                      {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                      AI Preview
+                    </Button>
+                    
+                    <Button 
+                      onClick={handleRandomize}
+                      variant="secondary"
+                      className="h-11"
+                      disabled={loading}
+                    >
+                      <Palette className="mr-2 h-4 w-4" />
+                      Randomize
+                    </Button>
+                  </div>
                 
                   <Button 
                     onClick={handleGenerateUnique}
                     className="w-full h-12 bg-primary hover:bg-primary/90"
                     disabled={loading}
                   >
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Generate Unique Image
+                    {loading && generatedImageB64 === null && previewImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                    Generate Final Image
                   </Button>
                 </div>
               </CardContent>
@@ -1452,6 +1502,19 @@ const AffirmationBuilder = () => {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
+                  </div>
+                ) : previewImageB64 ? (
+                  <div className="space-y-4">
+                    <div className="rounded-lg overflow-hidden border">
+                      <img 
+                        src={previewImageB64} 
+                        alt="Preview Affirmation" 
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground text-center">
+                      This is a quick preview. Click "Generate Unique Image" for high-quality final version.
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-6">
