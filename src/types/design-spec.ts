@@ -96,7 +96,7 @@ export interface ThemeDefinition {
 export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   confidence: {
     emotionalTone: "empowered, bold, self-assured, fearless",
-    defaultLayouts: ["angular-grid", "diagonal-dynamic", "stepped-rhythm"],
+    defaultLayouts: ["editorial-grid-luxe", "asymmetric-balance", "gentle-column"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "direct",
     palette: {
@@ -140,7 +140,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   
   peace: {
     emotionalTone: "calm, serene, tranquil, centered",
-    defaultLayouts: ["flowing-curves", "floating-cluster", "circular-orbit"],
+    defaultLayouts: ["arc-flow", "floating-cluster", "circle-harmony"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
     palette: {
@@ -184,7 +184,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   focus: {
     emotionalTone: "disciplined, sharp, intentional, present",
-    defaultLayouts: ["angular-grid", "vertical-cascade", "split-panel"],
+    defaultLayouts: ["editorial-grid-luxe", "vertical-flow", "soft-anchor-left"],
     typography: { headline: "sans", support: "sans" },
     energyLevel: "direct",
     palette: {
@@ -228,7 +228,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   gratitude: {
     emotionalTone: "warm, appreciative, abundant, heartfelt",
-    defaultLayouts: ["circular-orbit", "flowing-curves", "layered-depth"],
+    defaultLayouts: ["circle-harmony", "arc-flow", "floating-cluster"],
     typography: { headline: "display", support: "serif" },
     energyLevel: "supportive",
     palette: {
@@ -272,7 +272,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   abundance: {
     emotionalTone: "prosperous, open, flowing, rich",
-    defaultLayouts: ["circular-orbit", "layered-depth", "flowing-curves"],
+    defaultLayouts: ["circle-harmony", "floating-cluster", "arc-flow"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "supportive",
     palette: {
@@ -316,7 +316,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   healing: {
     emotionalTone: "restorative, gentle, nurturing, tender",
-    defaultLayouts: ["flowing-curves", "scattered-organic", "circular-orbit"],
+    defaultLayouts: ["arc-flow", "pebble-scatter", "circle-harmony"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
     palette: {
@@ -360,7 +360,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   strength: {
     emotionalTone: "solid, resilient, enduring, powerful",
-    defaultLayouts: ["angular-grid", "diagonal-dynamic", "stepped-rhythm"],
+    defaultLayouts: ["editorial-grid-luxe", "asymmetric-balance", "gentle-column"],
     typography: { headline: "sans", support: "sans" },
     energyLevel: "intense",
     palette: {
@@ -404,7 +404,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   joy: {
     emotionalTone: "bright, playful, radiant, delightful",
-    defaultLayouts: ["circular-orbit", "layered-depth", "asymmetric-balance"],
+    defaultLayouts: ["circle-harmony", "floating-cluster", "asymmetric-balance"],
     typography: { headline: "display", support: "sans" },
     energyLevel: "supportive",
     palette: {
@@ -448,7 +448,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   balance: {
     emotionalTone: "steady, harmonious, centered, grounded",
-    defaultLayouts: ["asymmetric-balance", "arch-composition", "split-panel"],
+    defaultLayouts: ["asymmetric-balance", "arc-flow", "soft-anchor-left"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "supportive",
     palette: {
@@ -492,7 +492,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   courage: {
     emotionalTone: "brave, bold, daring, fearless",
-    defaultLayouts: ["diagonal-dynamic", "angular-grid", "corner-radial"],
+    defaultLayouts: ["asymmetric-balance", "editorial-grid-luxe", "radiant-center-burst"],
     typography: { headline: "sans", support: "sans" },
     energyLevel: "direct",
     palette: {
@@ -536,7 +536,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   clarity: {
     emotionalTone: "clear, lucid, sharp, insightful",
-    defaultLayouts: ["floating-cluster", "angular-grid", "vertical-cascade"],
+    defaultLayouts: ["floating-cluster", "editorial-grid-luxe", "vertical-flow"],
     typography: { headline: "sans", support: "sans" },
     energyLevel: "direct",
     palette: {
@@ -580,7 +580,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   renewal: {
     emotionalTone: "fresh, new, revitalized, reborn",
-    defaultLayouts: ["flowing-curves", "circular-orbit", "layered-depth"],
+    defaultLayouts: ["arc-flow", "circle-harmony", "floating-cluster"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
     palette: {
@@ -624,7 +624,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   freedom: {
     emotionalTone: "liberated, open, unbound, wild",
-    defaultLayouts: ["diagonal-dynamic", "asymmetric-balance", "layered-depth"],
+    defaultLayouts: ["asymmetric-balance", "ribbon-drift", "floating-cluster"],
     typography: { headline: "display", support: "sans" },
     energyLevel: "direct",
     palette: {
@@ -668,7 +668,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   passion: {
     emotionalTone: "fiery, intense, alive, burning",
-    defaultLayouts: ["diagonal-dynamic", "angular-grid", "layered-depth"],
+    defaultLayouts: ["asymmetric-balance", "editorial-grid-luxe", "floating-cluster"],
     typography: { headline: "display", support: "serif" },
     energyLevel: "intense",
     palette: {
@@ -712,7 +712,7 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
 
   wisdom: {
     emotionalTone: "knowing, insightful, sage, deep",
-    defaultLayouts: ["layered-depth", "spiral-flow", "arch-composition"],
+    defaultLayouts: ["floating-cluster", "golden-spiral", "arc-flow"],
     typography: { headline: "serif", support: "serif" },
     energyLevel: "supportive",
     palette: {
@@ -765,88 +765,91 @@ export interface MoodDefinition {
 export const MOOD_REGISTRY: Record<MoodSlug, MoodDefinition> = {
   minimalist: {
     accents: ["minimal"],
-    allowedLayouts: ["floating-cluster", "vertical-cascade"],
+    allowedLayouts: ["floating-cluster", "vertical-flow"],
     weight: 0.45
   },
   bohemian: {
     accents: ["organic", "botanical", "textured"],
-    allowedLayouts: ["flowing-curves", "circular-orbit", "asymmetric-balance"],
+    allowedLayouts: ["arc-flow", "circle-harmony", "asymmetric-balance"],
     weight: 0.30
   },
   coastal: {
     accents: ["organic", "minimal"],
-    allowedLayouts: ["flowing-curves", "wave-pattern"],
+    allowedLayouts: ["arc-flow", "ribbon-drift"],
     weight: 0.25
   },
   earthy: {
     accents: ["organic", "botanical", "textured"],
-    allowedLayouts: ["flowing-curves", "circular-orbit"],
+    allowedLayouts: ["arc-flow", "circle-harmony"],
     weight: 0.30
   },
   vibrant: {
     accents: ["playful", "geometric"],
-    allowedLayouts: ["diagonal-dynamic", "angular-grid", "layered-depth"],
+    allowedLayouts: ["asymmetric-balance", "editorial-grid-luxe", "floating-cluster"],
     weight: 0.15
   },
   pastel: {
     accents: ["organic", "minimal", "botanical"],
-    allowedLayouts: ["circular-orbit", "flowing-curves"],
+    allowedLayouts: ["circle-harmony", "arc-flow"],
     weight: 0.25
   },
   monochrome: {
     accents: ["minimal", "geometric"],
-    allowedLayouts: ["angular-grid", "split-panel", "stepped-rhythm"],
+    allowedLayouts: ["editorial-grid-luxe", "soft-anchor-left", "gentle-column"],
     weight: 0.40
   },
   geometric: {
     accents: ["geometric"],
-    allowedLayouts: ["angular-grid", "diagonal-dynamic", "layered-depth"],
+    allowedLayouts: ["editorial-grid-luxe", "asymmetric-balance", "floating-cluster"],
     weight: 0.20
   },
   organic: {
     accents: ["organic", "botanical"],
-    allowedLayouts: ["flowing-curves", "asymmetric-balance"],
+    allowedLayouts: ["arc-flow", "asymmetric-balance"],
     weight: 0.30
   },
   celestial: {
     accents: ["celestial", "minimal"],
-    allowedLayouts: ["circular-orbit", "layered-depth"],
+    allowedLayouts: ["circle-harmony", "floating-cluster"],
     weight: 0.20
   },
   "modern-serif": {
     accents: ["minimal", "botanical"],
-    allowedLayouts: ["angular-grid", "vertical-cascade", "floating-cluster"],
+    allowedLayouts: ["editorial-grid-luxe", "vertical-flow", "floating-cluster"],
     weight: 0.35
   },
   sunset: {
     accents: ["organic", "botanical"],
-    allowedLayouts: ["arch-composition", "horizontal-sweep", "wave-pattern"],
+    allowedLayouts: ["arc-flow", "soft-anchor-left", "ribbon-drift"],
     weight: 0.25
   },
   forest: {
     accents: ["botanical", "organic", "textured"],
-    allowedLayouts: ["botanical-branch", "scattered-organic", "layered-depth"],
+    allowedLayouts: ["botanical-frame", "pebble-scatter", "floating-cluster"],
     weight: 0.30
   }
 };
 
 // Layout archetype descriptions for prompt generation
 export const LAYOUT_DESCRIPTIONS: Record<LayoutArchetype, string> = {
-  "scattered-organic": "Organic scattered text placement like natural elements falling",
-  "flowing-curves": "Organic curved text paths, natural movement, soft edges, gentle flow",
-  "angular-grid": "Structured boxes and lines, geometric precision, grid-based alignment",
-  "circular-orbit": "Radial arrangement around central focal point, orbital text flow",
-  "diagonal-dynamic": "Angled, energetic placement, directional movement, dynamic composition",
-  "asymmetric-balance": "Intentionally off-center with visual harmony, creative tension",
-  "layered-depth": "Overlapping text planes, dimensional hierarchy, depth through layering",
-  "vertical-cascade": "Cascading vertical flow like waterfall, top-to-bottom movement",
-  "horizontal-sweep": "Horizontal sweeping movement across canvas, linear energy",
-  "corner-radial": "Radiating from corner outward, asymmetric burst pattern",
-  "spiral-flow": "Spiral arrangement from center, hypnotic circular motion",
-  "stepped-rhythm": "Stepped staggered placement, rhythmic visual beats",
-  "arch-composition": "Arched text forming curves, architectural grace",
-  "split-panel": "Divided composition with distinct sections, organized panels",
-  "floating-cluster": "Clustered text with breathing space, island-like groupings",
-  "wave-pattern": "Undulating wave-like arrangement, ocean-inspired rhythm",
-  "botanical-branch": "Branching structure mimicking plant growth, organic extension"
+  "centered-serenity": "Headline centered, balanced margins, soft breathing space",
+  "vertical-flow": "Text cascades downward in a gentle vertical rhythm",
+  "floating-cluster": "Affirmations grouped in a soft cluster near center",
+  "asymmetric-balance": "Intentionally off-center, modern editorial balance",
+  "arc-flow": "Text follows a subtle curved line — uplifting arc",
+  "golden-spiral": "Spiral flow anchored by a focal point — meditative",
+  "botanical-frame": "Text surrounded by delicate foliage accents",
+  "minimal-horizon": "Headline top third, space below feels open like sky",
+  "radiant-center-burst": "Words radiate from a quiet center, halo effect",
+  "soft-anchor-left": "Text anchored left, breathing room to right",
+  "soft-anchor-right": "Opposite direction version — elegant asymmetry",
+  "gentle-column": "Headlines + statements aligned like poetry lines",
+  "pebble-scatter": "Text arranged as soft clusters like river stones",
+  "circle-harmony": "Circular composition, wholeness feeling",
+  "prayer-stack": "Vertical mantra stacking — spiritual form",
+  "ribbon-drift": "Text moves like a soft ribbon — organic motion",
+  "editorial-grid-luxe": "Clean magazine/grid system refinement",
+  "calm-waterfall": "Words fall downward like flowing water",
+  "sacred-geometry": "Subtle geometric cues (flower of life, triangle, etc.)",
+  "breath-space-minimal": "Very little text — stillness dominates canvas"
 };
