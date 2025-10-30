@@ -157,17 +157,25 @@ function buildMasterPrompt(spec: DesignSpec): string {
   const themeFragment = getThemeFragment(spec.theme);
   const moodFragment = getMoodFragment(spec.mood);
   const layoutFragment = getLayoutFragment(spec.layoutArchetype);
+  const accentFragment = getAccentFragment(spec.accentSet);
 
-  return `You are generating a PRINT-READY affirmation poster that must EXACTLY match the provided spec.
+  return `You are generating a PRINT-READY affirmation poster. Follow ALL requirements exactly.
+
+### CRITICAL LAYOUT REQUIREMENT (NON-NEGOTIABLE)
+LAYOUT_ARCHETYPE: ${spec.layoutArchetype}
+${layoutFragment}
+THIS LAYOUT IS MANDATORY - DO NOT DEFAULT TO SIMPLE CENTERED TEXT.
+
+### CRITICAL ACCENT REQUIREMENT (MUST INCLUDE)
+${accentFragment}
+THESE VISUAL ELEMENTS ARE REQUIRED - NOT OPTIONAL.
 
 ### DESIGN SPEC (authoritative; do not deviate)
 THEME: ${spec.theme} | MOOD: ${spec.mood} | ENERGY: ${spec.energyLevel}
-LAYOUT_ARCHETYPE: ${spec.layoutArchetype}
 PALETTE_TOKEN: ${spec.paletteToken.name}
-PALETTE_HEX_ALLOWED: ${spec.paletteToken.hex.join(", ")} // Use only these colors.
+PALETTE_HEX_ALLOWED: ${spec.paletteToken.hex.join(", ")} // Use ONLY these colors.
 TYPOGRAPHY: headline=${spec.typography.headline}, support=${spec.typography.support}
-ACCENTS_ALLOWED: ${spec.accentSet.join(", ")}
-MAIN_AFFIRMATION (use exact text & casing): "${spec.mainAffirmation}"
+MAIN_AFFIRMATION (exact text & casing): "${spec.mainAffirmation}"
 SUPPORTING_LINES (use all; keep one thought per line):
 ${spec.supportingPhrases.map(line => `- ${line}`).join("\n")}
 
@@ -177,18 +185,14 @@ ${themeFragment}
 ### MOOD VISUAL GUIDANCE
 ${moodFragment}
 
-### LAYOUT RULES
-${layoutFragment}
-
 ### TECHNICAL CONSTRAINTS
 - Aspect ratio: ${spec.constraints.ratio}. Resolution: ${spec.constraints.dpi} DPI. High legibility. Print-safe.
 - Banned: ${spec.constraints.ban.join(", ")}.
 - Maintain generous white space.
-- Use only PALETTE_HEX_ALLOWED and ACCENTS_ALLOWED.
 - Keep MAIN_AFFIRMATION large and dominant (3-4× smallest text).
-- NO BORDERS OR MARGINS: Content must fill the entire canvas edge-to-edge.
+- NO BORDERS OR MARGINS: Content must fill entire canvas edge-to-edge.
 - Background extends to all edges (no white space around poster).
-- Return a single finished poster image honoring all constraints.`;
+- Return a single finished poster image honoring ALL constraints above.`;
 }
 
 // Theme tone fragments
@@ -230,13 +234,44 @@ function getMoodFragment(mood: string): string {
   return fragments[mood] || "Clean and modern aesthetic.";
 }
 
-// Layout archetype fragments
+// Layout archetype fragments - MANDATORY layouts that must be enforced
 function getLayoutFragment(layout: string): string {
   const fragments: Record<string, string> = {
-    "clean-serif": "Centered headline with horizontal rules or underlines. Clear grid rhythm. Strong vertical alignment. Typography-forward with minimal decoration.",
-    "botanical": "Curved, organic text flow with leaf and floral accents. Soft edges. Text may wrap gently or follow natural curves.",
-    "grit-directional": "Central bold type with angled fragments, arrows, or compass motifs. Directional energy, dynamic placement.",
-    "halo-orbital": "Circular or radial text arrangement with dot clusters or radiating lines. Central focal point with orbital supporting elements."
+    "clean-serif": `REQUIRED LAYOUT: Centered headline at top with horizontal rules/underlines beneath it. 
+Supporting phrases arranged in strict vertical grid below, aligned left or center. 
+Strong vertical rhythm with consistent spacing between lines.
+Example: Title centered, thin horizontal line below title, then 6 phrases in neat vertical stack.`,
+    
+    "botanical": `REQUIRED LAYOUT: Text flows in organic curved paths (not straight lines). 
+MUST include decorative botanical elements: leaves, branches, or floral motifs in corners or along edges.
+Supporting phrases should curve gently or be arranged in an oval/circular flow pattern.
+Example: Title arced at top, phrases flowing in gentle S-curve, botanical illustrations framing the composition.`,
+    
+    "grit-directional": `REQUIRED LAYOUT: Dynamic angular composition with directional energy.
+MUST include: arrows, diagonal lines, or compass-point indicators showing movement.
+Text elements placed at varied angles (not all horizontal), creating forward momentum.
+Example: Title at slight angle, phrases positioned diagonally with arrow graphics pointing toward goals/future.`,
+    
+    "halo-orbital": `REQUIRED LAYOUT: Circular or radial arrangement with central focal point.
+MUST include: dot clusters, radiating lines, or circular rings around the main affirmation.
+Supporting phrases orbit around the center in arc formations, not straight vertical lines.
+Example: Title in center circle, phrases arranged in ring around it, dotted accents creating halo effect.`
   };
   return fragments[layout] || "Clear hierarchy with the main affirmation as the dominant element.";
+}
+
+// Accent fragments - REQUIRED visual elements
+function getAccentFragment(accents: string[]): string {
+  const accentDescriptions: Record<string, string> = {
+    "minimal": "subtle single-line decorative elements, small geometric markers (dots, dashes)",
+    "organic": "natural flowing shapes, soft curves, gentle wave patterns",
+    "botanical": "MUST include leaves, branches, flowers, or plant-inspired decorative elements",
+    "textured": "visible paper texture, subtle grain, layered transparency effects",
+    "gradient-heavy": "bold color gradients, smooth color transitions between palette colors",
+    "playful": "irregular dots, hand-drawn quality marks, asymmetric decorative touches"
+  };
+  
+  const requiredElements = accents.map(a => accentDescriptions[a] || a).join(", ");
+  return `REQUIRED ACCENTS: ${requiredElements}
+YOU MUST INCLUDE these visual elements in the design - they are not suggestions.`;
 }

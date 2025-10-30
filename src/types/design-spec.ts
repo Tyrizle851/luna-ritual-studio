@@ -78,7 +78,12 @@ export interface ThemeDefinition {
 export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   confidence: {
     emotion: "assertive",
-    headlineLexicon: ["I AM CAPABLE", "I AM UNSTOPPABLE", "IN MY POWER", "I TRUST MYSELF", "MY VOICE MATTERS"],
+    headlineLexicon: [
+      "I AM CAPABLE", "I AM UNSTOPPABLE", "IN MY POWER", "I TRUST MYSELF", "MY VOICE MATTERS",
+      "FEARLESS FORWARD", "I STAND TALL", "BOLD & BRILLIANT", "I CLAIM MY SPACE", "WORTHY OF SUCCESS",
+      "UNSHAKEABLE FAITH", "I RISE STRONG", "OWNING MY STORY", "BUILT FOR THIS", "I LEAD WITH HEART",
+      "COURAGE FLOWS", "I CHOOSE ME", "SELF-ASSURED", "I AM THE ONE", "CONFIDENT & CLEAR"
+    ],
     defaultLayouts: ["clean-serif", "grit-directional"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "direct",
@@ -91,7 +96,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   peace: {
     emotion: "calm",
-    headlineLexicon: ["INNER CALM", "SOFT WITHIN", "QUIET IS POWER", "I AM AT PEACE", "STILLNESS FLOWS"],
+    headlineLexicon: [
+      "INNER CALM", "SOFT WITHIN", "QUIET IS POWER", "I AM AT PEACE", "STILLNESS FLOWS",
+      "GENTLE STRENGTH", "CALM WATERS", "SERENE SOUL", "QUIET WITHIN", "PEACEFUL HEART",
+      "REST & RELEASE", "TRANQUIL MIND", "I BREATHE EASY", "SOFTLY GROUNDED", "EASE & GRACE",
+      "STILL WATERS", "CALM EMBRACE", "SACRED PAUSE", "GENTLE BEING", "PEACE LIVES HERE"
+    ],
     defaultLayouts: ["botanical"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
@@ -104,7 +114,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   focus: {
     emotion: "disciplined",
-    headlineLexicon: ["CLEAR MIND", "LOCKED IN", "ONE TASK", "I AM FOCUSED", "PRESENT NOW"],
+    headlineLexicon: [
+      "CLEAR MIND", "LOCKED IN", "ONE TASK", "I AM FOCUSED", "PRESENT NOW",
+      "DEEP WORK", "LASER SHARP", "UNDISTRACTED", "ZERO NOISE", "FLOW STATE",
+      "PURE ATTENTION", "MIND LIKE WATER", "SINGLE POINT", "I CONCENTRATE", "CLARITY WINS",
+      "DISCIPLINED MIND", "ZONE ACTIVE", "SHARP & STEADY", "FULL PRESENCE", "INTENTIONAL FOCUS"
+    ],
     defaultLayouts: ["clean-serif"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "direct",
@@ -117,7 +132,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   gratitude: {
     emotion: "warm",
-    headlineLexicon: ["I AM GRATEFUL", "JOY IS HERE", "BLESSED BY THIS", "THANKFUL HEART", "ABUNDANCE SURROUNDS"],
+    headlineLexicon: [
+      "I AM GRATEFUL", "JOY IS HERE", "BLESSED BY THIS", "THANKFUL HEART", "ABUNDANCE SURROUNDS",
+      "GRATEFUL ALWAYS", "COUNTING BLESSINGS", "THANK YOU LIFE", "APPRECIATION FLOWS", "FULL HEART",
+      "BLESSED BEYOND", "GRATITUDE RISING", "I SEE THE GOOD", "THANKFUL TODAY", "JOY IN EVERYTHING",
+      "GRATEFUL FOR NOW", "BLESSINGS ABOUND", "THANKFUL SOUL", "APPRECIATION LIVES", "GRATITUDE IS GRACE"
+    ],
     defaultLayouts: ["halo-orbital"],
     typography: { headline: "display", support: "serif" },
     energyLevel: "supportive",
@@ -130,7 +150,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   abundance: {
     emotion: "rich",
-    headlineLexicon: ["OPEN TO MORE", "ABUNDANCE FLOWS", "I RECEIVE", "PROSPERITY IS MINE", "LIMITLESS LIFE"],
+    headlineLexicon: [
+      "OPEN TO MORE", "ABUNDANCE FLOWS", "I RECEIVE", "PROSPERITY IS MINE", "LIMITLESS LIFE",
+      "OVERFLOW MINDSET", "WEALTH FINDS ME", "RICHNESS SURROUNDS", "I ATTRACT MORE", "PLENTY FOR ALL",
+      "PROSPERITY FLOWS", "LIMITLESS ABUNDANCE", "INFINITE SUPPLY", "I AM A MAGNET", "OVERFLOW IS MINE",
+      "WEALTH CONSCIOUSNESS", "ABUNDANCE EVERYWHERE", "RECEIVING MODE", "PROSPERITY MINDSET", "RICH IN ALL WAYS"
+    ],
     defaultLayouts: ["halo-orbital"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "supportive",
@@ -143,7 +168,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   healing: {
     emotion: "restorative",
-    headlineLexicon: ["GENTLE HEALING", "I MEND", "RESTORATION FLOWS", "I AM HEALING", "SOFTLY WHOLE"],
+    headlineLexicon: [
+      "GENTLE HEALING", "I MEND", "RESTORATION FLOWS", "I AM HEALING", "SOFTLY WHOLE",
+      "TENDER RECOVERY", "GENTLE GROWTH", "HEALING WATERS", "I AM MENDING", "RESTORATION BEGINS",
+      "WHOLENESS RETURNS", "PATIENT HEALING", "I ALLOW TIME", "HEALING JOURNEY", "TENDER WITH SELF",
+      "RESTORE & RENEW", "HEALING HEART", "I TRUST PROCESS", "SOFTLY HEALING", "BECOMING WHOLE"
+    ],
     defaultLayouts: ["botanical"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
@@ -156,7 +186,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   strength: {
     emotion: "solid",
-    headlineLexicon: ["UNSHAKEABLE", "BUILT STRONG", "I AM RESILIENT", "SOLID GROUND", "INNER FORTRESS"],
+    headlineLexicon: [
+      "UNSHAKEABLE", "BUILT STRONG", "I AM RESILIENT", "SOLID GROUND", "INNER FORTRESS",
+      "IRON WILL", "ROCK SOLID", "WARRIOR SPIRIT", "UNWAVERING", "STEEL CORE",
+      "ENDURING POWER", "I STAND FIRM", "RESILIENT SOUL", "FOUNDATION STRONG", "UNBREAKABLE",
+      "FORTIFIED HEART", "SOLID AS STONE", "STRENGTH WITHIN", "I DO NOT BEND", "MIGHTY & STEADY"
+    ],
     defaultLayouts: ["grit-directional"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "intense",
@@ -169,7 +204,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   joy: {
     emotion: "bright",
-    headlineLexicon: ["JOY RISING", "LIGHT WITHIN", "I CHOOSE JOY", "RADIANT LIFE", "HAPPINESS FLOWS"],
+    headlineLexicon: [
+      "JOY RISING", "LIGHT WITHIN", "I CHOOSE JOY", "RADIANT LIFE", "HAPPINESS FLOWS",
+      "PURE DELIGHT", "JOY IS HERE", "SPARKLE & SHINE", "BRIGHT HEART", "JOY EVERYDAY",
+      "RADIANT JOY", "HAPPINESS BLOOMS", "LIGHT HEARTED", "JOY UNLIMITED", "I AM JOYFUL",
+      "GLEAMING LIFE", "JOY OVERFLOWS", "BRIGHT SOUL", "HAPPINESS IS MINE", "LUMINOUS JOY"
+    ],
     defaultLayouts: ["halo-orbital"],
     typography: { headline: "display", support: "sans" },
     energyLevel: "supportive",
@@ -182,7 +222,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   balance: {
     emotion: "steady",
-    headlineLexicon: ["IN BALANCE", "CENTER HELD", "I AM ALIGNED", "HARMONY WITHIN", "STEADY GROUND"],
+    headlineLexicon: [
+      "IN BALANCE", "CENTER HELD", "I AM ALIGNED", "HARMONY WITHIN", "STEADY GROUND",
+      "EQUILIBRIUM", "CENTERED LIFE", "BALANCED BEING", "HARMONY FLOWS", "EVEN KEEL",
+      "ALIGNED & WHOLE", "STEADY HEART", "FINDING CENTER", "BALANCED ENERGY", "I AM GROUNDED",
+      "HARMONY WITHIN", "CENTERED ALWAYS", "BALANCE IS MINE", "STABLE SOUL", "EQUILIBRIUM FOUND"
+    ],
     defaultLayouts: ["clean-serif"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "supportive",
@@ -195,7 +240,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   courage: {
     emotion: "brave",
-    headlineLexicon: ["BRAVE HEART", "I MOVE ANYWAY", "COURAGE LIVES", "I FACE FEAR", "BOLD STEPS"],
+    headlineLexicon: [
+      "BRAVE HEART", "I MOVE ANYWAY", "COURAGE LIVES", "I FACE FEAR", "BOLD STEPS",
+      "FEARLESS ACTION", "I DO IT SCARED", "BRAVE ENOUGH", "COURAGE FIRST", "BOLD & BRAVE",
+      "I TAKE THE LEAP", "FEAR FORWARD", "COURAGEOUS SOUL", "I ACT BOLDLY", "BRAVE ALWAYS",
+      "COURAGE FLOWS", "FEARLESS BEING", "I MOVE FORWARD", "BOLD HEART", "COURAGE IS MINE"
+    ],
     defaultLayouts: ["grit-directional"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "direct",
@@ -208,7 +258,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   clarity: {
     emotion: "clear",
-    headlineLexicon: ["CRYSTAL CLEAR", "SEE TRUE", "I KNOW", "VISION IS MINE", "CLEAR SIGHT"],
+    headlineLexicon: [
+      "CRYSTAL CLEAR", "SEE TRUE", "I KNOW", "VISION IS MINE", "CLEAR SIGHT",
+      "CRYSTAL VISION", "CLEAR KNOWING", "I SEE CLEARLY", "TRANSPARENT TRUTH", "LUCID MIND",
+      "SHARP VISION", "CLARITY COMES", "I UNDERSTAND", "CLEAR AS DAY", "VISION UNLOCKED",
+      "CLARITY FLOWS", "I SEE THROUGH", "CLEAR INSIGHT", "TRUTH REVEALED", "PERFECT CLARITY"
+    ],
     defaultLayouts: ["clean-serif"],
     typography: { headline: "serif", support: "sans" },
     energyLevel: "direct",
@@ -221,7 +276,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   renewal: {
     emotion: "fresh",
-    headlineLexicon: ["BEGIN AGAIN", "NEW LIGHT", "I RENEW", "FRESH START", "REBIRTH NOW"],
+    headlineLexicon: [
+      "BEGIN AGAIN", "NEW LIGHT", "I RENEW", "FRESH START", "REBIRTH NOW",
+      "FRESH BEGINNING", "I START OVER", "NEW CHAPTER", "RENEWAL FLOWS", "REBORN TODAY",
+      "FRESH ENERGY", "I AM RENEWED", "NEW DAY RISING", "REFRESH & RENEW", "START FRESH",
+      "REBIRTH BEGINS", "I BEGIN NEW", "RENEWAL IS MINE", "FRESH PERSPECTIVE", "NEW LIFE NOW"
+    ],
     defaultLayouts: ["botanical"],
     typography: { headline: "serif", support: "script" },
     energyLevel: "soft",
@@ -234,7 +294,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   freedom: {
     emotion: "open",
-    headlineLexicon: ["I AM FREE", "WIDE OPEN", "UNBOUND LIFE", "LIBERATION", "FREE TO BE"],
+    headlineLexicon: [
+      "I AM FREE", "WIDE OPEN", "UNBOUND LIFE", "LIBERATION", "FREE TO BE",
+      "UNCHAINED SPIRIT", "LIMITLESS LIFE", "I FLY FREE", "LIBERATED SOUL", "FREEDOM FLOWS",
+      "BREAKING FREE", "WILD & FREE", "I AM LIBERATED", "FREEDOM IS MINE", "UNTETHERED",
+      "FREE AT LAST", "OPEN SKIES", "LIBERTY LIVES", "I CHOOSE FREEDOM", "BOUNDLESS BEING"
+    ],
     defaultLayouts: ["grit-directional"],
     typography: { headline: "display", support: "sans" },
     energyLevel: "direct",
@@ -247,7 +312,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   passion: {
     emotion: "fiery",
-    headlineLexicon: ["BURN BRIGHT", "FULL FLAME", "I AM FIRE", "PASSION LIVES", "IGNITED HEART"],
+    headlineLexicon: [
+      "BURN BRIGHT", "FULL FLAME", "I AM FIRE", "PASSION LIVES", "IGNITED HEART",
+      "BLAZING SPIRIT", "FIRE WITHIN", "I AM ABLAZE", "PASSION FLOWS", "FIERCE & ALIVE",
+      "BURNING PURPOSE", "FLAME ON", "PASSIONATE SOUL", "I IGNITE", "FULL FIRE",
+      "FIERCE PASSION", "BURNING BRIGHT", "FIRE & SOUL", "PASSION UNLEASHED", "IGNITED LIFE"
+    ],
     defaultLayouts: ["grit-directional"],
     typography: { headline: "display", support: "serif" },
     energyLevel: "intense",
@@ -260,7 +330,12 @@ export const THEME_REGISTRY: Record<ThemeSlug, ThemeDefinition> = {
   },
   wisdom: {
     emotion: "knowing",
-    headlineLexicon: ["INNER WISDOM", "I KNOW", "WISE HEART", "TRUTH WITHIN", "I TRUST MY KNOWING"],
+    headlineLexicon: [
+      "INNER WISDOM", "I KNOW", "WISE HEART", "TRUTH WITHIN", "I TRUST MY KNOWING",
+      "DEEP KNOWING", "WISE SOUL", "INTUITION SPEAKS", "I TRUST WITHIN", "WISDOM FLOWS",
+      "INNER TRUTH", "WISE & AWARE", "I LISTEN DEEP", "KNOWING HEART", "WISDOM GUIDES",
+      "ANCIENT KNOWING", "WISE BEING", "TRUTH IS CLEAR", "I KNOW MY PATH", "WISDOM LIVES"
+    ],
     defaultLayouts: ["clean-serif"],
     typography: { headline: "serif", support: "serif" },
     energyLevel: "supportive",
