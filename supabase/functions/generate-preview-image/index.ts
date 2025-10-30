@@ -74,9 +74,9 @@ DESIGN REQUIREMENTS:
 
 COLOR PALETTE:
 Primary colors to use: ${palette.join(', ')}
-- Use these exact colors for text and accents
-- Background: Clean cream/white or subtle texture
-- Ensure excellent readability with high contrast
+- Background: Use the FIRST color from the palette (${palette[0]}) as the main background - this is the calmest, lightest tone
+- Text and accents: Use the remaining colors for typography and decorative elements
+- Ensure excellent readability with high contrast between background and text
 
 DECORATIVE ELEMENTS:
 Include 3-5 delicate accent elements: ${accentElements}

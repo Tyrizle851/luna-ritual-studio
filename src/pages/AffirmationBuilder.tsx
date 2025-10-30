@@ -153,7 +153,7 @@ const AffirmationBuilder = () => {
     }
   }, []);
 
-  const generatePreviewData = (): GeneratedData => {
+  const generatePreviewData = (overrideTheme?: string, overrideMood?: string, overrideLayout?: string): GeneratedData => {
     // Expanded theme definitions with 20 headlines and 20 phrases each
     const themeData: Record<string, { 
       headlines: string[]; 
@@ -275,11 +275,11 @@ const AffirmationBuilder = () => {
       "breath-space-minimal": "Very little text — stillness dominates canvas"
     };
 
-    const selectedTheme = themeData[theme] || themeData.confidence;
-    const selectedMoodAccents = moodAccents[mood] || moodAccents.minimalist;
+    const selectedTheme = themeData[overrideTheme || theme] || themeData.confidence;
+    const selectedMoodAccents = moodAccents[overrideMood || mood] || moodAccents.minimalist;
     
     // Auto-select layout if not chosen - favor organic and dynamic layouts
-    let finalLayout = layoutStyle;
+    let finalLayout = overrideLayout || layoutStyle;
     if (!finalLayout) {
       const layoutMap: Record<string, string> = {
         minimalist: "breath-space-minimal",
@@ -293,7 +293,7 @@ const AffirmationBuilder = () => {
         sunset: "arc-flow",
         forest: "botanical-frame"
       };
-      finalLayout = layoutMap[mood] || "asymmetric-balance";
+      finalLayout = layoutMap[overrideMood || mood] || "asymmetric-balance";
     }
     
     const layoutDescription = layoutDescriptions[finalLayout] || layoutDescriptions["centered-serenity"];
@@ -532,12 +532,21 @@ const AffirmationBuilder = () => {
     const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
     const allLayouts = ["centered-serenity", "vertical-flow", "floating-cluster", "asymmetric-balance", "arc-flow", "golden-spiral", "botanical-frame", "minimal-horizon", "radiant-center-burst", "soft-anchor-left", "soft-anchor-right", "gentle-column", "pebble-scatter", "circle-harmony", "prayer-stack", "ribbon-drift", "editorial-grid-luxe", "calm-waterfall", "sacred-geometry", "breath-space-minimal"];
     
-    setTheme(themes[Math.floor(Math.random() * themes.length)]);
-    setMood(moods[Math.floor(Math.random() * moods.length)]);
-    setLayoutStyle(allLayouts[Math.floor(Math.random() * allLayouts.length)]);
+    const newTheme = themes[Math.floor(Math.random() * themes.length)];
+    const newMood = moods[Math.floor(Math.random() * moods.length)];
+    const newLayout = allLayouts[Math.floor(Math.random() * allLayouts.length)];
+    
+    setTheme(newTheme);
+    setMood(newMood);
+    setLayoutStyle(newLayout);
     setPreviewImageB64(null);
     setGeneratedImageB64(null);
-    toast.success('Randomized! Click AI Preview to see it.');
+    
+    // Generate new preview data immediately with the new selections
+    const newData = generatePreviewData(newTheme, newMood, newLayout);
+    setGeneratedData(newData);
+    
+    toast.success('Randomized! Preview updated.');
   };
 
   const startEditing = () => {
@@ -1042,31 +1051,65 @@ const AffirmationBuilder = () => {
                         className="w-full h-auto"
                       />
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button className="w-full">
-                          <Download className="mr-2 h-4 w-4" />
-                          Download Image
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        <DropdownMenuItem onClick={() => downloadImage('original')}>
-                          Original Size
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
-                          Instagram Square (1080x1080)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
-                          Instagram Story (1080x1920)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
-                          Print 8x10
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
-                          Print 11x14
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    
+                    {/* Image Info */}
+                    <div className="bg-muted/30 p-3 rounded-lg">
+                      <div className="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Resolution</p>
+                          <p className="text-foreground text-sm font-medium">1024 x 1024px</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Aspect Ratio</p>
+                          <p className="text-foreground text-sm font-medium">1:1 (Square)</p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Format</p>
+                        <p className="text-foreground text-sm font-medium">High Quality PNG</p>
+                      </div>
+                    </div>
+
+                    {/* Download & Shop Actions */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button className="w-full">
+                            <Download className="mr-2 h-4 w-4" />
+                            Download
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56">
+                          <DropdownMenuItem onClick={() => downloadImage('original')}>
+                            Original Size
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
+                            Instagram Square (1080x1080)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
+                            Instagram Story (1080x1920)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
+                            Print 8x10
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
+                            Print 11x14
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      
+                      <Button 
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => {
+                          window.open('/shop', '_blank');
+                          toast.success('Opening shop...');
+                        }}
+                      >
+                        <span className="mr-2">🛒</span>
+                        Shop Prints
+                      </Button>
+                    </div>
                   </div>
                 ) : previewImageB64 ? (
                   <div className="space-y-4">
