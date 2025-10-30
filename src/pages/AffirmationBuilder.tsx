@@ -663,13 +663,29 @@ const AffirmationBuilder = () => {
                       <div
                         key={preset.name}
                         className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:border-primary transition-all group"
-                        onClick={() => {
-                          // Download the preset image directly
-                          const link = document.createElement('a');
-                          link.href = preset.previewImage;
-                          link.download = `${preset.name.toLowerCase().replace(/\s+/g, '-')}-affirmation.jpg`;
-                          link.click();
-                          toast.success(`Downloaded "${preset.name}"!`);
+                        onClick={async () => {
+                          try {
+                            // Fetch the image as a blob
+                            const response = await fetch(preset.previewImage);
+                            const blob = await response.blob();
+                            
+                            // Create object URL and download
+                            const url = URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = `${preset.name.toLowerCase().replace(/\s+/g, '-')}-affirmation.jpg`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            // Clean up object URL
+                            URL.revokeObjectURL(url);
+                            
+                            toast.success(`Downloaded "${preset.name}"!`);
+                          } catch (error) {
+                            console.error('Download error:', error);
+                            toast.error('Failed to download. Please try again.');
+                          }
                         }}
                       >
                         <div className="aspect-square relative overflow-hidden">
