@@ -49,11 +49,11 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('OPENAI_API_KEY');
+    const apiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!apiKey) {
-      console.error('OPENAI_API_KEY not configured');
+      console.error('LOVABLE_API_KEY not configured');
       return new Response(
-        JSON.stringify({ error: 'OpenAI API key not configured' }),
+        JSON.stringify({ error: 'Lovable AI key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -66,27 +66,30 @@ Deno.serve(async (req) => {
     // Build the master prompt using the complete design spec
     const prompt = buildMasterPrompt(designSpec);
     
-    console.log('Calling OpenAI GPT Image API with prompt length:', prompt.length);
+    console.log('Calling Lovable AI with prompt length:', prompt.length);
 
-    // Call OpenAI's GPT image generation API
-    const aiResponse = await fetch('https://api.openai.com/v1/images/generations', {
+    // Call Lovable AI's image generation API using Nano banana model
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-image-1',
-        prompt: prompt,
-        size: '1024x1024',
-        quality: 'high',
-        n: 1
+        model: 'google/gemini-2.5-flash-image-preview',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        modalities: ['image', 'text']
       }),
     });
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
-      console.error('OpenAI API error:', aiResponse.status, errorText);
+      console.error('Lovable AI error:', aiResponse.status, errorText);
       
       // Handle rate limiting and payment errors
       if (aiResponse.status === 429) {
@@ -97,7 +100,7 @@ Deno.serve(async (req) => {
       }
       if (aiResponse.status === 402 || aiResponse.status === 401) {
         return new Response(
-          JSON.stringify({ error: 'OpenAI API authentication failed or credits depleted.' }),
+          JSON.stringify({ error: 'Lovable AI authentication failed or credits depleted.' }),
           { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -105,7 +108,7 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           error: 'Image generation failed', 
-          detail: `OpenAI API returned ${aiResponse.status}`,
+          detail: `Lovable AI returned ${aiResponse.status}`,
           message: errorText 
         }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -113,16 +116,27 @@ Deno.serve(async (req) => {
     }
 
     const aiData = await aiResponse.json();
-    const imageB64 = aiData?.data?.[0]?.b64_json;
+    const imageUrl = aiData?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-    if (!imageB64) {
-      console.error('No image data in OpenAI response');
+    if (!imageUrl) {
+      console.error('No image data in Lovable AI response');
       return new Response(
-        JSON.stringify({ error: 'No image returned from OpenAI' }),
+        JSON.stringify({ error: 'No image returned from Lovable AI' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
+    // Extract base64 data from data URL
+    const base64Match = imageUrl.match(/^data:image\/[a-z]+;base64,(.+)$/);
+    if (!base64Match) {
+      console.error('Invalid image URL format');
+      return new Response(
+        JSON.stringify({ error: 'Invalid image format returned' }),
+        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const imageB64 = base64Match[1];
     console.log('Successfully generated image, size:', imageB64.length);
 
     return new Response(
