@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { articles } from "@/data/articles";
 import { Button } from "@/components/ui/button";
+import { BookOpen, Sparkles } from "lucide-react";
 
 export const FeaturedArticles = () => {
   const featured = articles.slice(0, 1);
@@ -9,7 +10,11 @@ export const FeaturedArticles = () => {
     <section className="section-padding">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="mb-4">The Journal</h2>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Sparkles className="h-6 w-6 text-clay" />
+            <h2 className="mb-0">The Journal</h2>
+            <Sparkles className="h-6 w-6 text-clay" />
+          </div>
           <p className="text-lg text-text-secondary">Stories on slow living and intentional design</p>
         </div>
 
@@ -39,8 +44,11 @@ export const FeaturedArticles = () => {
         </div>
 
         <div className="text-center">
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay/10">
-            <Link to="/journal">Read More Stories</Link>
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+            <Link to="/journal">
+              <BookOpen className="mr-2 h-4 w-4" />
+              Read More Stories
+            </Link>
           </Button>
         </div>
       </div>

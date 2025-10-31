@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import { articles } from "@/data/articles";
+import { BookOpen, Clock, User } from "lucide-react";
 
 const Journal = () => {
   return (
     <div className="min-h-screen section-padding">
       <div className="container-custom max-w-5xl">
-        <h1 className="mb-4 text-center">The Journal</h1>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <BookOpen className="h-8 w-8 text-clay" />
+          <h1 className="mb-0 text-center">The Journal</h1>
+        </div>
         <p className="text-center text-text-secondary mb-16 max-w-2xl mx-auto">
           Stories on slow living and intentional design
         </p>
@@ -28,8 +32,14 @@ const Journal = () => {
               </h2>
               <p className="text-text-secondary mb-4">{article.excerpt}</p>
               <div className="flex items-center justify-between text-sm text-text-muted">
-                <span>{article.author}</span>
-                <span>{article.readTime} read</span>
+                <span className="flex items-center gap-1.5">
+                  <User className="h-3.5 w-3.5" />
+                  {article.author}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5" />
+                  {article.readTime} read
+                </span>
               </div>
             </article>
           ))}

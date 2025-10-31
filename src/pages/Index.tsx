@@ -4,6 +4,7 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
+import { Sparkles, ShoppingBag, BookOpen, Heart } from "lucide-react";
 
 import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationJoy from "@/assets/affirmation-joy.jpg";
@@ -68,15 +69,22 @@ const Index = () => {
       <section className="section-padding">
         <div className="container-custom">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Featured Affirmations</h2>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Sparkles className="h-6 w-6 text-clay" />
+              <h2 className="mb-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Featured Affirmations</h2>
+              <Sparkles className="h-6 w-6 text-clay" />
+            </div>
             <p className="text-base sm:text-lg text-text-secondary">Words to carry with you</p>
           </div>
           
           <AffirmationCarousel affirmations={featuredAffirmations} />
 
           <div className="text-center mt-6 sm:mt-8">
-            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
-              <Link to="/shop?tab=affirmations">View All Affirmations</Link>
+            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+              <Link to="/shop?tab=affirmations">
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                View All Affirmations
+              </Link>
             </Button>
           </div>
         </div>
@@ -91,13 +99,19 @@ const Index = () => {
       {/* About Preview */}
       <section className="section-padding bg-secondary">
         <div className="container-custom max-w-3xl text-center">
-          <h2 className="mb-6">Every word a reflection, every product an intention</h2>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Heart className="h-6 w-6 text-clay" />
+            <h2 className="mb-0">Every word a reflection, every product an intention</h2>
+          </div>
           <p className="text-lg text-text-secondary mb-8 leading-relaxed">
             LunaRituals exists to help you create a life you love—one affirmation, 
             one beautiful object, one intentional choice at a time.
           </p>
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay/10">
-            <Link to="/about">Our Story</Link>
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+            <Link to="/about">
+              <BookOpen className="mr-2 h-4 w-4" />
+              Our Story
+            </Link>
           </Button>
         </div>
       </section>

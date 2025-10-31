@@ -1,4 +1,5 @@
 import aboutHero from "@/assets/about-hero.jpg";
+import { Heart, Target, Award, Users, Sparkles } from "lucide-react";
 
 const About = () => {
   return (
@@ -10,10 +11,10 @@ const About = () => {
           alt="About LunaRituals"
           className="absolute inset-0 w-full h-full object-cover animate-fade-in"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-text-primary/60 via-text-primary/70 to-background/95" />
         <div className="relative z-10 text-center max-w-3xl px-4">
-          <h1 className="text-white mb-4 drop-shadow-lg">About LunaRituals</h1>
-          <p className="text-xl md:text-2xl text-white/95 font-light drop-shadow-md">
+          <h1 className="text-background mb-4 drop-shadow-2xl">About LunaRituals</h1>
+          <p className="text-xl md:text-2xl text-background font-light drop-shadow-xl">
             Building lives of intention, one word at a time
           </p>
         </div>
@@ -53,31 +54,47 @@ const About = () => {
 
             {/* Values Grid */}
             <div className="mt-16">
-              <h2 className="text-text-primary text-center mb-12">Our Values</h2>
+              <div className="flex items-center justify-center gap-3 mb-12">
+                <Sparkles className="h-6 w-6 text-clay" />
+                <h2 className="text-text-primary text-center mb-0">Our Values</h2>
+                <Sparkles className="h-6 w-6 text-clay" />
+              </div>
               <div className="grid sm:grid-cols-2 gap-8">
                 <div className="bg-card border border-border rounded-lg p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <h3 className="font-display text-2xl text-clay mb-4">Intentionality</h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Target className="h-6 w-6 text-clay" />
+                    <h3 className="font-display text-2xl text-clay mb-0">Intentionality</h3>
+                  </div>
                   <p className="text-text-secondary leading-relaxed">
                     Every product, every word, chosen with care and purpose. We believe that what surrounds you shapes you.
                   </p>
                 </div>
 
                 <div className="bg-card border border-border rounded-lg p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <h3 className="font-display text-2xl text-clay mb-4">Quality</h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Award className="h-6 w-6 text-clay" />
+                    <h3 className="font-display text-2xl text-clay mb-0">Quality</h3>
+                  </div>
                   <p className="text-text-secondary leading-relaxed">
                     Beautiful designs and curated goods that last. We choose timeless over trendy, always.
                   </p>
                 </div>
 
                 <div className="bg-card border border-border rounded-lg p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <h3 className="font-display text-2xl text-clay mb-4">Authenticity</h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Heart className="h-6 w-6 text-clay" />
+                    <h3 className="font-display text-2xl text-clay mb-0">Authenticity</h3>
+                  </div>
                   <p className="text-text-secondary leading-relaxed">
                     No toxic positivity. Real talk for real women. Affirmations that honor where you are right now.
                   </p>
                 </div>
 
                 <div className="bg-card border border-border rounded-lg p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <h3 className="font-display text-2xl text-clay mb-4">Community</h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Users className="h-6 w-6 text-clay" />
+                    <h3 className="font-display text-2xl text-clay mb-0">Community</h3>
+                  </div>
                   <p className="text-text-secondary leading-relaxed">
                     Building a space where women support and uplift each other in the practice of intentional living.
                   </p>

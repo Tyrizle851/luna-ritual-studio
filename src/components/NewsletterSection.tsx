@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { Mail, Sparkles } from "lucide-react";
 
 export const NewsletterSection = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,10 @@ export const NewsletterSection = () => {
   return (
     <section className="section-padding bg-card">
       <div className="container-custom max-w-2xl text-center">
-        <h2 className="mb-4">Stay Connected</h2>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <Mail className="h-6 w-6 text-clay" />
+          <h2 className="mb-0">Stay Connected</h2>
+        </div>
         <p className="text-lg text-text-secondary mb-8">
           Weekly reflections, new affirmations, and curated finds delivered to your inbox
         </p>
