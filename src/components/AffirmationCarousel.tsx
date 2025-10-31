@@ -81,7 +81,29 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
           variant="outline"
           size="icon"
           onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-30"
+          className="absolute -left-6 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-14 w-14 shadow-xl disabled:opacity-20 disabled:cursor-not-allowed bg-background"
+          disabled={!canScrollLeft}
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("right")}
+          className="absolute -right-6 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-14 w-14 shadow-xl disabled:opacity-20 disabled:cursor-not-allowed bg-background"
+          disabled={!canScrollRight}
+        >
+          <ChevronRight className="h-6 w-6" />
+        </Button>
+      </div>
+
+      {/* Mobile Navigation Buttons */}
+      <div className="md:hidden">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("left")}
+          className="absolute left-2 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-20 disabled:cursor-not-allowed bg-background/90 backdrop-blur-sm"
           disabled={!canScrollLeft}
         >
           <ChevronLeft className="h-5 w-5" />
@@ -90,7 +112,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
           variant="outline"
           size="icon"
           onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-30"
+          className="absolute right-2 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-20 disabled:cursor-not-allowed bg-background/90 backdrop-blur-sm"
           disabled={!canScrollRight}
         >
           <ChevronRight className="h-5 w-5" />
@@ -100,13 +122,13 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
       {/* Scroll Container */}
       <div
         ref={containerRef}
-        className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-4 md:px-16 snap-x snap-mandatory"
+        className="flex gap-6 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-16 md:px-20 snap-x snap-mandatory"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {affirmations.map((affirmation, index) => (
           <div 
             key={affirmation.id} 
-            className="flex-none w-[280px] sm:w-[300px] group animate-fade-up snap-center"
+            className="flex-none w-[260px] sm:w-[280px] md:w-[320px] group animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary shadow-md transition-all duration-300 group-hover:shadow-2xl">
@@ -136,18 +158,18 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
       </div>
 
       {/* Mobile Navigation Dots */}
-      <div className="flex md:hidden justify-center gap-2 mt-6">
+      <div className="flex md:hidden justify-center gap-3 mt-8">
         {affirmations.map((_, index) => (
           <button
             key={index}
             onClick={() => {
               const container = containerRef.current;
               if (!container) return;
-              const cardWidth = 300;
-              const gap = 32;
+              const cardWidth = 280;
+              const gap = 24;
               container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
             }}
-            className="w-2 h-2 rounded-full bg-clay/30 hover:bg-clay transition-colors duration-300"
+            className="w-2.5 h-2.5 rounded-full bg-clay/30 hover:bg-clay active:bg-clay transition-colors duration-300"
             aria-label={`Go to affirmation ${index + 1}`}
           />
         ))}
