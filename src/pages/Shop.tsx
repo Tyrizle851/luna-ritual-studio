@@ -142,22 +142,22 @@ const Shop = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                 <div key={product.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
+                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <p className="text-xs text-text-muted mb-1">{product.brand}</p>
-                  <h3 className="font-medium mb-2">{product.name}</h3>
-                  <p className="text-sm text-text-secondary italic mb-3">{product.description}</p>
+                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
+                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold">${product.price}</span>
+                    <span className="text-base font-semibold text-text-primary">${product.price}</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={() => handleAddToCart(product, "fashion")}
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
@@ -174,23 +174,23 @@ const Shop = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(candles, candlesPage).map((candle) => (
                 <div key={candle.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
+                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={candle.image}
                       alt={candle.name}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <p className="text-xs text-text-muted mb-1">{candle.brand}</p>
-                  <h3 className="font-medium mb-2">{candle.name}</h3>
-                  <p className="text-xs text-text-muted mb-1">{candle.scent} • {candle.burnTime}</p>
-                  <p className="text-sm text-text-secondary italic mb-3">{candle.description}</p>
+                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
+                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
+                  <p className="text-xs text-text-muted mb-2">{candle.scent} • {candle.burnTime}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{candle.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold">${candle.price}</span>
+                    <span className="text-base font-semibold text-text-primary">${candle.price}</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={() => handleAddToCart(candle, "candle")}
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
@@ -207,23 +207,23 @@ const Shop = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                 <div key={supplement.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
+                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={supplement.image}
                       alt={supplement.name}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <p className="text-xs text-text-muted mb-1">{supplement.category}</p>
-                  <h3 className="font-medium mb-2">{supplement.name}</h3>
-                  <p className="text-sm text-text-secondary italic mb-2">{supplement.description}</p>
-                  <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
+                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
+                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-2">{supplement.description}</p>
+                  <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold">${supplement.price}</span>
+                    <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={() => handleAddToCart(supplement, "supplement")}
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
@@ -241,7 +241,7 @@ const Shop = () => {
               {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
                 <div key={affirmation.id} className="group cursor-pointer">
                   <div 
-                    className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary"
+                    className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl"
                     onClick={() => {
                       setSelectedProduct(affirmation);
                       setIsModalOpen(true);
@@ -250,18 +250,18 @@ const Shop = () => {
                     <img
                       src={affirmation.image}
                       alt={affirmation.title}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <p className="text-xs text-text-muted mb-1">{affirmation.category}</p>
-                  <h3 className="font-medium mb-2">{affirmation.title}</h3>
-                  <p className="text-sm text-text-secondary italic mb-3">{affirmation.description}</p>
+                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
+                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{affirmation.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold">${affirmation.price}</span>
+                    <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleAddToCart(affirmation, "affirmation");
