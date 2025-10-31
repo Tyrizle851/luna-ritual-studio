@@ -1,9 +1,11 @@
 import aboutHero from "@/assets/about-hero.jpg";
 import { Heart, Target, Award, Users, Sparkles } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
 
 const About = () => {
   return (
-    <div className="min-h-screen">
+    <PageTransition>
+      <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <img
@@ -104,7 +106,8 @@ const About = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

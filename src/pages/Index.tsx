@@ -5,6 +5,7 @@ import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
 import { Sparkles, ShoppingBag, BookOpen, Heart } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
 
 import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationJoy from "@/assets/affirmation-joy.jpg";
@@ -24,8 +25,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
+    <PageTransition>
+      <div className="min-h-screen">
+        {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden">
         <video
           autoPlay
@@ -80,7 +82,7 @@ const Index = () => {
           <AffirmationCarousel affirmations={featuredAffirmations} />
 
           <div className="text-center mt-6 sm:mt-8">
-            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
               <Link to="/shop?tab=affirmations">
                 <ShoppingBag className="mr-2 h-4 w-4" />
                 View All Affirmations
@@ -107,7 +109,7 @@ const Index = () => {
             LunaRituals exists to help you create a life you love—one affirmation, 
             one beautiful object, one intentional choice at a time.
           </p>
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
             <Link to="/about">
               <BookOpen className="mr-2 h-4 w-4" />
               Our Story
@@ -116,9 +118,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <NewsletterSection />
-    </div>
+        {/* Newsletter */}
+        <NewsletterSection />
+      </div>
+    </PageTransition>
   );
 };
 

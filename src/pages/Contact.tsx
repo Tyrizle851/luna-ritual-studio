@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -37,8 +38,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
+    <PageTransition>
+      <div className="min-h-screen">
+        {/* Hero Section */}
       <section className="section-padding bg-secondary">
         <div className="container-custom max-w-3xl text-center">
           <h1 className="mb-6">Let's Connect</h1>
@@ -143,7 +145,8 @@ const Contact = () => {
         </div>
       </div>
       </section>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

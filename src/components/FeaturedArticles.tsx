@@ -44,7 +44,7 @@ export const FeaturedArticles = () => {
         </div>
 
         <div className="text-center">
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
             <Link to="/journal">
               <BookOpen className="mr-2 h-4 w-4" />
               Read More Stories

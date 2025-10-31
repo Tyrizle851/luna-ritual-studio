@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { articles } from "@/data/articles";
 import { BookOpen, Clock, User } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
 
 const Journal = () => {
   return (
-    <div className="min-h-screen section-padding">
+    <PageTransition>
+      <div className="min-h-screen section-padding">
       <div className="container-custom max-w-5xl">
         <div className="flex items-center justify-center gap-3 mb-4">
           <BookOpen className="h-8 w-8 text-clay" />
@@ -45,7 +47,8 @@ const Journal = () => {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

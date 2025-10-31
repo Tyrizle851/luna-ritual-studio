@@ -67,6 +67,10 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground font-body antialiased;
   }
@@ -141,5 +145,39 @@ All colors MUST be HSL.
   .logo-3d:hover {
     transform: perspective(1000px) rotateX(-5deg) rotateY(5deg) scale(1.05);
     filter: drop-shadow(0 8px 16px hsl(27 36% 68% / 0.3));
+  }
+
+  /* Premium button interactions */
+  .btn-premium {
+    @apply relative overflow-hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-premium::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-clay/0 via-clay/20 to-clay/0;
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-premium:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Tab transitions */
+  .tab-transition {
+    @apply relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tab-transition::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-clay;
+    transform: scaleX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tab-transition[data-state="active"]::after {
+    transform: scaleX(1);
   }
 }

@@ -45,7 +45,7 @@ export const FeaturedProducts = () => {
         </div>
 
         <div className="text-center mt-8">
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300">
+          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
             <a href="/shop/lifestyle">
               <ShoppingBag className="mr-2 h-4 w-4" />
               View All Products
