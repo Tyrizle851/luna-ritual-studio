@@ -78,7 +78,9 @@ const AffirmationBuilder = () => {
     accentElements: "thin horizontal bars, serif typography"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
-  const [previewImageB64, setPreviewImageB64] = useState<string | null>(null);
+  const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([]);
+  const [finalImagesB64, setFinalImagesB64] = useState<string[]>([]);
+  const [expandedImage, setExpandedImage] = useState<{ url: string; type: 'preview' | 'final' } | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedHeadline, setEditedHeadline] = useState("");
   const [editedLines, setEditedLines] = useState<string[]>([]);
@@ -322,8 +324,7 @@ const AffirmationBuilder = () => {
 
   const handleGenerate = async () => {
     setLoading(true);
-    setGeneratedImageB64(null);
-    setPreviewImageB64(null);
+    setPreviewImagesB64([]);
     
     try {
       // Use existing preview data from state (set by Randomize button)
@@ -338,30 +339,37 @@ const AffirmationBuilder = () => {
         setGeneratedData(preview);
       }
       
-      // Generate AI preview image
-      toast.info("Generating preview image...");
-      const { data, error } = await supabase.functions.invoke('generate-preview-image', {
-        body: {
-          headline: preview.headline,
-          supportingLines: preview.supportingLines,
-          theme,
-          mood,
-          layout: preview.layoutStyle,
-          palette: preview.palette,
-          accentElements: preview.accentElements
-        }
-      });
+      // Generate 4 preview images in parallel
+      toast.info("Generating 4 preview variations...");
       
-      if (error) {
-        console.error('Preview generation error:', error);
-        toast.error("Failed to generate preview image");
-      } else if (data?.imageB64) {
-        setPreviewImageB64(data.imageB64);
-        toast.success("Preview generated!");
+      const requests = Array(4).fill(null).map(() =>
+        supabase.functions.invoke('generate-preview-image', {
+          body: {
+            headline: preview.headline,
+            supportingLines: preview.supportingLines,
+            theme,
+            mood,
+            layout: preview.layoutStyle,
+            palette: preview.palette,
+            accentElements: preview.accentElements
+          }
+        })
+      );
+      
+      const results = await Promise.all(requests);
+      const successfulImages = results
+        .filter(result => !result.error && result.data?.imageB64)
+        .map(result => result.data.imageB64);
+      
+      if (successfulImages.length > 0) {
+        setPreviewImagesB64(successfulImages);
+        toast.success(`${successfulImages.length} preview${successfulImages.length > 1 ? 's' : ''} generated!`);
+      } else {
+        toast.error("Failed to generate preview images");
       }
     } catch (error) {
       console.error('Preview error:', error);
-      toast.error("Failed to generate preview");
+      toast.error("Failed to generate previews");
     } finally {
       setLoading(false);
     }
@@ -369,7 +377,7 @@ const AffirmationBuilder = () => {
 
   const handleGenerateUnique = async () => {
     setLoading(true);
-    setGeneratedImageB64(null);
+    setFinalImagesB64([]);
     try {
       // Ensure we have current preview data
       if (!generatedData) {
@@ -446,55 +454,67 @@ const AffirmationBuilder = () => {
         customSupportingPhrases: generatedData.supportingLines
       });
       
-      const { data, error } = await supabase.functions.invoke('generate-affirmation-image', {
-        body: {
-          designSpec
+      // Generate 4 final images in parallel
+      toast.info("Generating 4 high-quality final images...");
+      
+      const requests = Array(4).fill(null).map(() =>
+        supabase.functions.invoke('generate-affirmation-image', {
+          body: { designSpec }
+        })
+      );
+      
+      const results = await Promise.all(requests);
+      
+      // Check for errors
+      const hasErrors = results.some(result => {
+        if (result.error) {
+          console.error('Edge function error:', result.error);
+          const errorMessage = result.error.message || JSON.stringify(result.error);
+          if (errorMessage.includes('402') || errorMessage.includes('credits depleted') || errorMessage.includes('payment')) {
+            toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+            return true;
+          } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
+            toast.error('Rate limit exceeded. Please wait a moment and try again.');
+            return true;
+          }
+          return true;
         }
+        if (result.data?.error) {
+          console.error('API error:', result.data.error);
+          if (result.data.error.includes('credits depleted') || result.data.error.includes('payment')) {
+            toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+            return true;
+          } else if (result.data.error.includes('rate limit')) {
+            toast.error('Rate limit exceeded. Please wait a moment and try again.');
+            return true;
+          }
+          return true;
+        }
+        return false;
       });
       
-      if (error) {
-        console.error('Edge function error:', error);
-        
-        // Check for specific error types
-        const errorMessage = error.message || JSON.stringify(error);
-        if (errorMessage.includes('402') || errorMessage.includes('credits depleted') || errorMessage.includes('payment')) {
-          toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
-        } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
-          toast.error('Rate limit exceeded. Please wait a moment and try again.');
-        } else {
-          toast.error('Failed to generate image. Please try again.');
-        }
+      if (hasErrors) {
         return;
       }
       
-      if (data?.error) {
-        // Handle error returned in data object
-        console.error('API error:', data.error);
-        if (data.error.includes('credits depleted') || data.error.includes('payment')) {
-          toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
-        } else if (data.error.includes('rate limit')) {
-          toast.error('Rate limit exceeded. Please wait a moment and try again.');
-        } else {
-          toast.error(data.error);
-        }
-        return;
-      }
+      const successfulImages = results
+        .filter(result => result.data?.imageB64)
+        .map(result => `data:image/png;base64,${result.data.imageB64}`);
       
-      if (data?.imageB64) {
-        const imageData = `data:image/png;base64,${data.imageB64}`;
-        setGeneratedImageB64(imageData);
+      if (successfulImages.length > 0) {
+        setFinalImagesB64(successfulImages);
         
-        // Save to history with quota management
+        // Save first final image to history with quota management
         const newHistoryItem: HistoryItem = {
           id: `history-${Date.now()}`,
-          imageB64: imageData,
+          imageB64: successfulImages[0],
           generatedData,
           timestamp: Date.now()
         };
         
         // Try to save with progressively smaller history sizes
         let savedSuccessfully = false;
-        let maxHistorySize = 5; // Reduced from 20 to avoid quota issues
+        let maxHistorySize = 5;
         
         while (!savedSuccessfully && maxHistorySize > 0) {
           try {
@@ -507,21 +527,20 @@ const AffirmationBuilder = () => {
               console.warn(`LocalStorage quota exceeded with ${maxHistorySize} items, reducing...`);
               maxHistorySize--;
               if (maxHistorySize === 0) {
-                // If we can't save any history, just keep it in state
                 console.warn('Unable to save to localStorage, keeping in memory only');
                 setHistory([newHistoryItem]);
                 toast('History saved in memory only (storage full)', { duration: 3000 });
               }
             } else {
-              throw e; // Re-throw non-quota errors
+              throw e;
             }
           }
         }
         
-        toast.success('Unique image generated successfully!');
+        toast.success(`${successfulImages.length} final image${successfulImages.length > 1 ? 's' : ''} generated successfully!`);
       } else {
-        console.error('No image data in response:', data);
-        toast.error('No image was returned. Please try again.');
+        console.error('No image data in responses');
+        toast.error('No images were returned. Please try again.');
       }
     } catch (e) {
       console.error('Image generation error:', e);
@@ -543,7 +562,8 @@ const AffirmationBuilder = () => {
     setTheme(newTheme);
     setMood(newMood);
     setLayoutStyle(newLayout);
-    setPreviewImageB64(null);
+    setPreviewImagesB64([]);
+    setFinalImagesB64([]);
     setGeneratedImageB64(null);
     
     // Generate new preview data immediately with the new selections
@@ -606,11 +626,9 @@ const AffirmationBuilder = () => {
     localStorage.setItem('affirmation-favorites', JSON.stringify(updatedFavorites));
   };
 
-  const downloadImage = (format: string) => {
-    if (!generatedImageB64) return;
-
+  const downloadImage = (imageUrl: string, format: string, type: 'preview' | 'final') => {
     const link = document.createElement('a');
-    link.href = generatedImageB64;
+    link.href = imageUrl;
     
     const sizeMap: Record<string, string> = {
       'original': 'original',
@@ -620,9 +638,9 @@ const AffirmationBuilder = () => {
       'print-11x14': '11x14'
     };
 
-    link.download = `affirmation-${sizeMap[format]}-${Date.now()}.png`;
+    link.download = `affirmation-${type}-${sizeMap[format]}-${Date.now()}.png`;
     link.click();
-    toast.success(`Downloaded ${sizeMap[format]} format!`);
+    toast.success(`Downloaded ${type} ${sizeMap[format]} format!`);
   };
 
   const updatePaletteColor = (index: number, color: string) => {
@@ -967,8 +985,8 @@ const AffirmationBuilder = () => {
                     className="w-full h-12 bg-primary hover:bg-primary/90"
                     disabled={loading}
                   >
-                    {loading && generatedImageB64 === null && previewImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Generate Final Image
+                    {loading && generatedImageB64 === null && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                    Generate Final Images
                   </Button>
                 </div>
               </CardContent>
@@ -1084,19 +1102,19 @@ const AffirmationBuilder = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
-                          <DropdownMenuItem onClick={() => downloadImage('original')}>
+                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'original', 'final')}>
                             Original Size
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
+                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'instagram-square', 'final')}>
                             Instagram Square (1080x1080)
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
+                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'instagram-story', 'final')}>
                             Instagram Story (1080x1920)
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
+                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'print-8x10', 'final')}>
                             Print 8x10
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
+                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'print-11x14', 'final')}>
                             Print 11x14
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -1115,17 +1133,28 @@ const AffirmationBuilder = () => {
                       </Button>
                     </div>
                   </div>
-                ) : previewImageB64 ? (
+                ) : previewImagesB64.length > 0 ? (
                   <div className="space-y-4">
-                    <div className="rounded-lg overflow-hidden border">
-                      <img 
-                        src={previewImageB64} 
-                        alt="Preview Affirmation" 
-                        className="w-full h-auto"
-                      />
+                    <div className="grid grid-cols-2 gap-2">
+                      {previewImagesB64.map((imageUrl, index) => (
+                        <div 
+                          key={index} 
+                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817]"
+                          onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
+                        >
+                          <img 
+                            src={imageUrl} 
+                            alt={`Preview ${index + 1}`} 
+                            className="w-full h-auto"
+                          />
+                          <div className="absolute top-1 right-1 bg-muted text-muted-foreground px-1.5 py-0.5 rounded text-xs font-semibold">
+                            Preview
+                          </div>
+                        </div>
+                      ))}
                     </div>
                     <p className="text-sm text-muted-foreground text-center">
-                      This is a quick preview. Click "Generate Final Image" for high-quality version.
+                      Preview quality. Click "Generate Final Images" for high-quality versions.
                     </p>
                   </div>
                 ) : (
@@ -1440,8 +1469,8 @@ const AffirmationBuilder = () => {
                     className="w-full h-12 bg-primary hover:bg-primary/90"
                     disabled={loading}
                   >
-                    {loading && generatedImageB64 === null && previewImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Generate Final Image
+                    {loading && finalImagesB64.length === 0 && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                    Generate Final Images
                   </Button>
                 </div>
               </CardContent>
@@ -1516,55 +1545,83 @@ const AffirmationBuilder = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {generatedImageB64 ? (
-                  <div className="space-y-4">
-                    <div className="rounded-lg overflow-hidden border">
-                      <img 
-                        src={generatedImageB64} 
-                        alt="Generated Affirmation" 
-                        className="w-full h-auto"
-                      />
+                {/* Final Images Section */}
+                {finalImagesB64.length > 0 && (
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold">Final Images (High Quality)</h3>
+                      <div className="flex gap-2 text-xs text-muted-foreground">
+                        <span>1024x1024px</span>
+                        <span>•</span>
+                        <span>4:5 Ratio</span>
+                      </div>
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button className="w-full">
-                          <Download className="mr-2 h-4 w-4" />
-                          Download Image
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        <DropdownMenuItem onClick={() => downloadImage('original')}>
-                          Original Size
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('instagram-square')}>
-                          Instagram Square (1080x1080)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('instagram-story')}>
-                          Instagram Story (1080x1920)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('print-8x10')}>
-                          Print 8x10
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadImage('print-11x14')}>
-                          Print 11x14
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="grid grid-cols-2 gap-3">
+                      {finalImagesB64.map((imageUrl, index) => (
+                        <div 
+                          key={index} 
+                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-[#5a3817] transition-all hover:scale-105"
+                          onClick={() => setExpandedImage({ url: imageUrl, type: 'final' })}
+                        >
+                          <img 
+                            src={imageUrl} 
+                            alt={`Final Affirmation ${index + 1}`} 
+                            className="w-full h-auto"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
+                            <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">View Full Size</span>
+                          </div>
+                          <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-semibold">
+                            Final
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button className="flex-1" variant="outline">
+                        <Download className="mr-2 h-4 w-4" />
+                        Shop Prints
+                      </Button>
+                    </div>
                   </div>
-                ) : previewImageB64 ? (
-                  <div className="space-y-4">
-                    <div className="rounded-lg overflow-hidden border">
-                      <img 
-                        src={previewImageB64} 
-                        alt="Preview Affirmation" 
-                        className="w-full h-auto"
-                      />
+                )}
+
+                {/* Preview Images Section */}
+                {previewImagesB64.length > 0 && (
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold">Preview Images</h3>
+                      <span className="text-xs text-muted-foreground">Medium Quality</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {previewImagesB64.map((imageUrl, index) => (
+                        <div 
+                          key={index} 
+                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-[#5a3817] transition-all hover:scale-105"
+                          onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
+                        >
+                          <img 
+                            src={imageUrl} 
+                            alt={`Preview Affirmation ${index + 1}`} 
+                            className="w-full h-auto"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
+                            <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">View Full Size</span>
+                          </div>
+                          <div className="absolute top-2 right-2 bg-muted text-muted-foreground px-2 py-1 rounded text-xs font-semibold">
+                            Preview
+                          </div>
+                        </div>
+                      ))}
                     </div>
                     <p className="text-sm text-muted-foreground text-center">
-                      This is a quick preview. Click "Generate Unique Image" for high-quality final version.
+                      Preview quality. Click "Generate Final Images" for high-quality versions.
                     </p>
                   </div>
-                ) : (
+                )}
+
+                {/* Static Preview when no images */}
+                {previewImagesB64.length === 0 && finalImagesB64.length === 0 && (
                   <div className="space-y-6">
                     <div className="bg-gradient-to-br from-background to-muted/20 p-12 rounded-lg border-2 border-muted min-h-[600px] flex flex-col justify-between relative overflow-hidden">
                       {/* Decorative corner elements */}
@@ -1689,6 +1746,64 @@ const AffirmationBuilder = () => {
           </div>
         </div>
       </div>
+
+      {/* Image Expansion Dialog */}
+      <Dialog open={expandedImage !== null} onOpenChange={() => setExpandedImage(null)}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>
+              {expandedImage?.type === 'final' ? 'High Quality Final' : 'Preview'} Image
+            </DialogTitle>
+            <DialogDescription>
+              {expandedImage?.type === 'final' 
+                ? '1024x1024px • High Quality PNG • Perfect for printing'
+                : 'Medium quality preview • Generate final for print-ready version'
+              }
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="rounded-lg overflow-hidden">
+              <img 
+                src={expandedImage?.url || ''} 
+                alt="Expanded Affirmation" 
+                className="w-full h-auto"
+              />
+            </div>
+            <div className="flex gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="flex-1">
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Image
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuItem onClick={() => expandedImage && downloadImage(expandedImage.url, 'original', expandedImage.type)}>
+                    Original Size
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => expandedImage && downloadImage(expandedImage.url, 'instagram-square', expandedImage.type)}>
+                    Instagram Square (1080x1080)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => expandedImage && downloadImage(expandedImage.url, 'instagram-story', expandedImage.type)}>
+                    Instagram Story (1080x1920)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => expandedImage && downloadImage(expandedImage.url, 'print-8x10', expandedImage.type)}>
+                    Print 8x10
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => expandedImage && downloadImage(expandedImage.url, 'print-11x14', expandedImage.type)}>
+                    Print 11x14
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {expandedImage?.type === 'final' && (
+                <Button variant="outline" className="flex-1">
+                  Shop Prints
+                </Button>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
