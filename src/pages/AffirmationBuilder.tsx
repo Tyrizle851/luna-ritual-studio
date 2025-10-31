@@ -80,6 +80,7 @@ const AffirmationBuilder = () => {
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
   const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([]);
   const [finalImagesB64, setFinalImagesB64] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<'preview' | 'final'>('preview');
   const [expandedImage, setExpandedImage] = useState<{ url: string; type: 'preview' | 'final' } | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedHeadline, setEditedHeadline] = useState("");
@@ -503,6 +504,7 @@ const AffirmationBuilder = () => {
       
       if (successfulImages.length > 0) {
         setFinalImagesB64(successfulImages);
+        setViewMode('final'); // Switch to final view
         
         // Save first final image to history with quota management
         const newHistoryItem: HistoryItem = {
@@ -1545,8 +1547,28 @@ const AffirmationBuilder = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {/* Final Images Section */}
-                {finalImagesB64.length > 0 && (
+                {/* View Toggle Buttons - Show when both preview and final exist */}
+                {previewImagesB64.length > 0 && finalImagesB64.length > 0 && (
+                  <div className="flex gap-2 mb-6">
+                    <Button
+                      variant={viewMode === 'preview' ? 'default' : 'outline'}
+                      className="flex-1"
+                      onClick={() => setViewMode('preview')}
+                    >
+                      Preview Images
+                    </Button>
+                    <Button
+                      variant={viewMode === 'final' ? 'default' : 'outline'}
+                      className="flex-1"
+                      onClick={() => setViewMode('final')}
+                    >
+                      Final Images
+                    </Button>
+                  </div>
+                )}
+
+                {/* Final Images Section - Only show when in final view mode */}
+                {finalImagesB64.length > 0 && viewMode === 'final' && (
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg font-semibold">Final Images (High Quality)</h3>
@@ -1586,8 +1608,8 @@ const AffirmationBuilder = () => {
                   </div>
                 )}
 
-                {/* Preview Images Section */}
-                {previewImagesB64.length > 0 && (
+                {/* Preview Images Section - Only show when in preview view mode */}
+                {previewImagesB64.length > 0 && viewMode === 'preview' && (
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg font-semibold">Preview Images</h3>
@@ -1614,9 +1636,11 @@ const AffirmationBuilder = () => {
                         </div>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground text-center">
-                      Preview quality. Click "Generate Final Images" for high-quality versions.
-                    </p>
+                    {finalImagesB64.length === 0 && (
+                      <p className="text-sm text-muted-foreground text-center">
+                        Preview quality. Click "Generate Final Images" for high-quality versions.
+                      </p>
+                    )}
                   </div>
                 )}
 
