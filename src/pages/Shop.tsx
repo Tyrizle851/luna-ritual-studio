@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SearchBar } from "@/components/SearchBar";
+import { SortFilter, SortOption } from "@/components/SortFilter";
+import { WishlistButton } from "@/components/WishlistButton";
+import { MobileFilterDrawer } from "@/components/MobileFilterDrawer";
+import { ProductGridSkeleton } from "@/components/ProductSkeleton";
 import {
   Pagination,
   PaginationContent,
@@ -27,6 +33,9 @@ const Shop = () => {
   const [searchParams] = useSearchParams();
   const [selectedTab, setSelectedTab] = useState("fashion");
   const [fashionPage, setFashionPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState<SortOption>("featured");
+  const [isLoading, setIsLoading] = useState(false);
   
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -42,10 +51,44 @@ const Shop = () => {
   
   const { addItem } = useCartStore();
 
+  const filterAndSortItems = (items: any[]) => {
+    let filtered = items;
+    
+    // Search filter
+    if (searchQuery) {
+      filtered = filtered.filter(item => 
+        (item.name?.toLowerCase() || item.title?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+        (item.description?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    // Sort
+    switch (sortOption) {
+      case "price-low":
+        filtered = [...filtered].sort((a, b) => a.price - b.price);
+        break;
+      case "price-high":
+        filtered = [...filtered].sort((a, b) => b.price - a.price);
+        break;
+      case "newest":
+        filtered = [...filtered].reverse();
+        break;
+      default:
+        break;
+    }
+    
+    return filtered;
+  };
+
   const getPaginatedItems = (items: any[], page: number) => {
+    const filtered = filterAndSortItems(items);
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return items.slice(startIndex, endIndex);
+    return filtered.slice(startIndex, endIndex);
+  };
+  
+  const getFilteredCount = (items: any[]) => {
+    return filterAndSortItems(items).length;
   };
 
   const getTotalPages = (itemsLength: number) => {
@@ -123,14 +166,45 @@ const Shop = () => {
     addItem(cartItem);
   };
 
+  const tabLabels: Record<string, string> = {
+    fashion: "Fashion",
+    candles: "Candles", 
+    supplements: "Supplements",
+    affirmations: "Affirmations"
+  };
+
   return (
     <PageTransition>
       <div className="min-h-screen section-padding">
         <div className="container-custom">
-        <h1 className="mb-3 sm:mb-4 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Shop Collection</h1>
-        <p className="text-center text-text-secondary mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-          Curated essentials for intentional living
-        </p>
+          <Breadcrumbs items={[
+            { label: "Shop", href: "/shop" },
+            { label: tabLabels[selectedTab] || "Collection" }
+          ]} />
+          
+          <h1 className="mb-3 sm:mb-4 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Shop Collection</h1>
+          <p className="text-center text-text-secondary mb-8 max-w-2xl mx-auto text-sm sm:text-base">
+            Curated essentials for intentional living
+          </p>
+
+          {/* Search and Sort Controls */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-8">
+            <div className="w-full sm:w-auto flex gap-2">
+              <div className="md:hidden">
+                <MobileFilterDrawer
+                  sortValue={sortOption}
+                  onSortChange={setSortOption}
+                  categories={[]}
+                  selectedCategory=""
+                  onCategoryChange={() => {}}
+                />
+              </div>
+            </div>
+            <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
+            <div className="hidden md:block">
+              <SortFilter value={sortOption} onChange={setSortOption} />
+            </div>
+          </div>
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
           <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8 sm:mb-12 h-auto">
@@ -149,10 +223,18 @@ const Shop = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
-                <div key={product.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                <p className="text-sm text-text-muted mb-4">
+                  Showing {getPaginatedItems(fashionProducts, fashionPage).length} of {getFilteredCount(fashionProducts)} items
+                </p>
+                
+                {isLoading ? (
+                  <ProductGridSkeleton />
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
+                      <div key={product.id} className="group relative">
+                        <WishlistButton productId={product.id} />
+                        <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -172,13 +254,14 @@ const Shop = () => {
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
                     </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
-            {renderPagination(fashionPage, getTotalPages(fashionProducts.length), setFashionPage)}
+                )}
+                {renderPagination(fashionPage, getTotalPages(getFilteredCount(fashionProducts)), setFashionPage)}
               </motion.div>
-          </TabsContent>
+            </TabsContent>
 
           {/* Candles Tab */}
           <TabsContent value="candles" key="candles">
@@ -188,10 +271,18 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getPaginatedItems(candles, candlesPage).map((candle) => (
-                <div key={candle.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+              <p className="text-sm text-text-muted mb-4">
+                Showing {getPaginatedItems(candles, candlesPage).length} of {getFilteredCount(candles)} items
+              </p>
+              
+              {isLoading ? (
+                <ProductGridSkeleton />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {getPaginatedItems(candles, candlesPage).map((candle) => (
+                    <div key={candle.id} className="group relative">
+                      <WishlistButton productId={candle.id} />
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={candle.image}
                       alt={candle.name}
@@ -212,12 +303,13 @@ const Shop = () => {
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
                     </Button>
-                  </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {renderPagination(candlesPage, getTotalPages(candles.length), setCandlesPage)}
-              </motion.div>
+              )}
+              {renderPagination(candlesPage, getTotalPages(getFilteredCount(candles)), setCandlesPage)}
+            </motion.div>
           </TabsContent>
 
           {/* Supplements Tab */}
@@ -228,10 +320,18 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
-                <div key={supplement.id} className="group">
-                  <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+              <p className="text-sm text-text-muted mb-4">
+                Showing {getPaginatedItems(supplements, supplementsPage).length} of {getFilteredCount(supplements)} items
+              </p>
+              
+              {isLoading ? (
+                <ProductGridSkeleton />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
+                    <div key={supplement.id} className="group relative">
+                      <WishlistButton productId={supplement.id} />
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={supplement.image}
                       alt={supplement.name}
@@ -252,12 +352,13 @@ const Shop = () => {
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
                     </Button>
-                  </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {renderPagination(supplementsPage, getTotalPages(supplements.length), setSupplementsPage)}
-              </motion.div>
+              )}
+              {renderPagination(supplementsPage, getTotalPages(getFilteredCount(supplements)), setSupplementsPage)}
+            </motion.div>
           </TabsContent>
 
           {/* Affirmations Tab */}
@@ -268,10 +369,18 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
-                <div key={affirmation.id} className="group cursor-pointer">
-                  <div 
+              <p className="text-sm text-text-muted mb-4">
+                Showing {getPaginatedItems(affirmations, affirmationsPage).length} of {getFilteredCount(affirmations)} items
+              </p>
+              
+              {isLoading ? (
+                <ProductGridSkeleton />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
+                    <div key={affirmation.id} className="group cursor-pointer relative">
+                      <WishlistButton productId={affirmation.id} />
+                      <div
                     className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl"
                     onClick={() => {
                       setSelectedProduct(affirmation);
@@ -300,12 +409,13 @@ const Shop = () => {
                     >
                       Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
                     </Button>
-                  </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {renderPagination(affirmationsPage, getTotalPages(affirmations.length), setAffirmationsPage)}
-              </motion.div>
+              )}
+              {renderPagination(affirmationsPage, getTotalPages(getFilteredCount(affirmations)), setAffirmationsPage)}
+            </motion.div>
           </TabsContent>
           </AnimatePresence>
         </Tabs>

@@ -73,6 +73,27 @@ export const Cart = () => {
             </div>
 
             <div className="border-t pt-6 space-y-4">
+              {/* Free Shipping Progress */}
+              {getTotal() < 50 && (
+                <div className="bg-secondary/50 rounded-lg p-4">
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-text-secondary">Free shipping at $50</span>
+                    <span className="font-medium">${(50 - getTotal()).toFixed(2)} away</span>
+                  </div>
+                  <div className="h-2 bg-background rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-clay to-gold transition-all duration-300"
+                      style={{ width: `${(getTotal() / 50) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+              {getTotal() >= 50 && (
+                <div className="bg-gradient-to-r from-clay/10 to-gold/10 rounded-lg p-4 text-center">
+                  <p className="text-sm font-medium text-clay">🎉 You've qualified for free shipping!</p>
+                </div>
+              )}
+              
               <div className="flex justify-between text-lg font-semibold">
                 <span>Subtotal</span>
                 <span>${getTotal().toFixed(2)}</span>

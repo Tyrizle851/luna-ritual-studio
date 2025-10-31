@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, ShoppingCart, ChevronDown } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, ShoppingCart, ChevronDown, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -9,9 +9,11 @@ import logo from "@/assets/logo.png";
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { getItemCount, toggleCart } = useCartStore();
   const itemCount = getItemCount();
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
 
   useEffect(() => {
@@ -153,8 +155,16 @@ export const Header = () => {
           </Link>
         </nav>
 
-        {/* Cart & Mobile Menu */}
-        <div className="flex items-center gap-4">
+        {/* Search & Cart & Mobile Menu */}
+        <div className="flex items-center gap-2 md:gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/shop')}
+            className="text-foreground hover:text-clay"
+          >
+            <Search className="h-5 w-5" />
+          </Button>
           <Button
             variant="ghost"
             size="icon"

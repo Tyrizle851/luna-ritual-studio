@@ -8,6 +8,8 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Cart } from "./components/Cart";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { BackToTop } from "./components/BackToTop";
+import { PromotionalBanner } from "./components/PromotionalBanner";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import Journal from "./pages/Journal";
@@ -51,10 +53,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <PromotionalBanner />
         <Header />
         <AnimatedRoutes />
         <Footer />
         <Cart />
+        <BackToTop />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

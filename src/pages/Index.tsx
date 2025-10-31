@@ -4,6 +4,7 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
+import { Testimonials } from "@/components/Testimonials";
 import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2 } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 
@@ -104,6 +105,9 @@ const Index = () => {
 
       {/* Featured Journal Articles */}
       <FeaturedArticles />
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* About Preview */}
       <section className="section-padding bg-secondary">
