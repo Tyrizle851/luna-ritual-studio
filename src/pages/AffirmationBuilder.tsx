@@ -326,13 +326,17 @@ const AffirmationBuilder = () => {
     setPreviewImageB64(null);
     
     try {
-      const preview = generatePreviewData();
-      // Apply custom palette if set
-      if (customPalette.length > 0) {
-        preview.palette = customPalette;
-        preview.paletteNames = customPalette;
+      // Use existing preview data from state (set by Randomize button)
+      // Only generate new if none exists
+      const preview = generatedData || generatePreviewData();
+      if (!generatedData) {
+        // Apply custom palette if set and we're generating new data
+        if (customPalette.length > 0) {
+          preview.palette = customPalette;
+          preview.paletteNames = customPalette;
+        }
+        setGeneratedData(preview);
       }
-      setGeneratedData(preview);
       
       // Generate AI preview image
       toast.info("Generating preview image...");
