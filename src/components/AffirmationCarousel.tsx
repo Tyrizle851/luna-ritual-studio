@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
@@ -18,13 +18,42 @@ interface AffirmationCarouselProps {
 
 export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { addItem } = useCartStore();
   
-  const scroll = (direction: "left" | "right") => {
-    const container = document.getElementById("affirmation-scroll");
+  const updateScrollButtons = () => {
+    const container = containerRef.current;
     if (!container) return;
     
-    const scrollAmount = 400;
+    setCanScrollLeft(container.scrollLeft > 10);
+    setCanScrollRight(
+      container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+    );
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    updateScrollButtons();
+    container.addEventListener("scroll", updateScrollButtons);
+    window.addEventListener("resize", updateScrollButtons);
+
+    return () => {
+      container.removeEventListener("scroll", updateScrollButtons);
+      window.removeEventListener("resize", updateScrollButtons);
+    };
+  }, []);
+  
+  const scroll = (direction: "left" | "right") => {
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const cardWidth = 300;
+    const gap = 32;
+    const scrollAmount = cardWidth + gap;
     const newPosition = direction === "left" 
       ? Math.max(0, scrollPosition - scrollAmount)
       : Math.min(container.scrollWidth - container.clientWidth, scrollPosition + scrollAmount);
@@ -45,32 +74,58 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
   };
 
   return (
-    <div className="relative px-4 sm:px-0">
+    <div className="relative">
+      {/* Desktop Navigation Buttons */}
+      <div className="hidden md:block">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("left")}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-30"
+          disabled={!canScrollLeft}
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("right")}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-30"
+          disabled={!canScrollRight}
+        >
+          <ChevronRight className="h-5 w-5" />
+        </Button>
+      </div>
+
       {/* Scroll Container */}
       <div
-        id="affirmation-scroll"
-        className="flex gap-4 sm:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+        ref={containerRef}
+        className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-4 md:px-16 snap-x snap-mandatory"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {affirmations.map((affirmation) => (
-          <div key={affirmation.id} className="flex-none w-[280px] sm:w-[300px] group animate-fade-up">
-            <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary">
+        {affirmations.map((affirmation, index) => (
+          <div 
+            key={affirmation.id} 
+            className="flex-none w-[280px] sm:w-[300px] group animate-fade-up snap-center"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary shadow-md transition-all duration-300 group-hover:shadow-2xl">
               <img
                 src={affirmation.image}
                 alt={affirmation.title}
-                className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <h3 className="font-display text-lg sm:text-xl mb-2">{affirmation.title}</h3>
+            <h3 className="font-display text-lg sm:text-xl mb-2 leading-tight">{affirmation.title}</h3>
             {affirmation.description && (
               <p className="text-sm text-text-secondary italic mb-3">{affirmation.description}</p>
             )}
             <div className="flex items-center justify-between">
-              <span className="font-semibold">${affirmation.price}</span>
+              <span className="font-semibold text-lg">${affirmation.price}</span>
               <Button
                 size="sm"
                 variant="outline"
-                className="border-clay text-clay hover:bg-clay/10"
+                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                 onClick={() => handleAddToCart(affirmation)}
               >
                 Add <ShoppingCart className="ml-1 h-3 w-3" />
@@ -80,24 +135,43 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
         ))}
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-center gap-3 sm:gap-4 mt-6">
+      {/* Mobile Navigation Dots */}
+      <div className="flex md:hidden justify-center gap-2 mt-6">
+        {affirmations.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              const container = containerRef.current;
+              if (!container) return;
+              const cardWidth = 300;
+              const gap = 32;
+              container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
+            }}
+            className="w-2 h-2 rounded-full bg-clay/30 hover:bg-clay transition-colors duration-300"
+            aria-label={`Go to affirmation ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Desktop Navigation Buttons (Bottom) */}
+      <div className="hidden md:flex justify-center gap-4 mt-8">
         <Button
           variant="outline"
           size="icon"
           onClick={() => scroll("left")}
-          className="rounded-full border-clay text-clay hover:bg-clay/10 h-10 w-10 sm:h-11 sm:w-11"
-          disabled={scrollPosition === 0}
+          className="rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-11 w-11 disabled:opacity-30"
+          disabled={!canScrollLeft}
         >
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronLeft className="h-5 w-5" />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={() => scroll("right")}
-          className="rounded-full border-clay text-clay hover:bg-clay/10 h-10 w-10 sm:h-11 sm:w-11"
+          className="rounded-full border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-11 w-11 disabled:opacity-30"
+          disabled={!canScrollRight}
         >
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronRight className="h-5 w-5" />
         </Button>
       </div>
     </div>

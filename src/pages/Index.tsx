@@ -4,24 +4,20 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
-import { Sparkles, ShoppingBag, BookOpen, Heart } from "lucide-react";
+import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2 } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 
 import affirmationRest from "@/assets/affirmation-rest.jpg";
-import affirmationJoy from "@/assets/affirmation-joy.jpg";
-import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
-import affirmationEnough from "@/assets/affirmation-enough.jpg";
-import affirmationCalm from "@/assets/affirmation-calm.jpg";
-import affirmationTrust from "@/assets/affirmation-trust.jpg";
+import affirmationIntuition from "@/assets/affirmation-intuition.jpg";
+import affirmationDreams from "@/assets/affirmation-dreams.jpg";
+import affirmationRelease from "@/assets/affirmation-release.jpg";
 
 const Index = () => {
   const featuredAffirmations = [
-    { id: "aff-001", title: "I am worthy of rest", price: 12, image: affirmationRest, description: "Permission to pause" },
-    { id: "aff-002", title: "I choose joy today", price: 12, image: affirmationJoy, description: "Small moments, big magic" },
-    { id: "aff-003", title: "Abundance flows to me", price: 15, image: affirmationAbundance, description: "Open to receive" },
-    { id: "aff-005", title: "I am enough, always", price: 12, image: affirmationEnough, description: "You are complete" },
-    { id: "aff-006", title: "My calm is my power", price: 12, image: affirmationCalm, description: "Peace over pressure" },
-    { id: "aff-004", title: "I trust my journey", price: 12, image: affirmationTrust, description: "Every step is sacred" },
+    { id: "aff-001", title: "I honor my need for rest", price: 12, image: affirmationRest, description: "Permission to pause" },
+    { id: "aff-002", title: "I trust my intuition and inner wisdom", price: 12, image: affirmationIntuition, description: "Listen within" },
+    { id: "aff-003", title: "I am creating the life of my dreams", price: 15, image: affirmationDreams, description: "Manifest with intention" },
+    { id: "aff-004", title: "I release what no longer serves me", price: 12, image: affirmationRelease, description: "Let go with grace" },
   ];
 
   return (
@@ -56,13 +52,24 @@ const Index = () => {
           </div>
           
           {/* Affirmation Builder Link */}
-          <div className="mt-8 text-center">
-            <Link 
-              to="/affirmation-builder" 
-              className="text-sm md:text-base text-white hover:text-clay-light transition-colors underline underline-offset-4"
-            >
-              View Affirmation Builder
-            </Link>
+          <div className="mt-12 text-center">
+            <div className="inline-flex flex-col items-center gap-3 p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div className="flex items-center gap-2">
+                <Sprout className="h-5 w-5 text-clay-light" />
+                <span className="text-sm text-white/70 uppercase tracking-wider">Create Your Own</span>
+                <Wand2 className="h-5 w-5 text-clay-light" />
+              </div>
+              <Link 
+                to="/affirmation-builder" 
+                className="text-lg font-display text-white hover:text-clay-light transition-colors group"
+              >
+                <span className="relative">
+                  Custom Affirmation Builder
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-clay-light transition-all duration-300 group-hover:w-full"></span>
+                </span>
+              </Link>
+              <p className="text-xs text-white/60 max-w-xs">Design personalized affirmations tailored to your journey</p>
+            </div>
           </div>
         </div>
       </section>
