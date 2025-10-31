@@ -97,28 +97,6 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
         </Button>
       </div>
 
-      {/* Mobile Navigation Buttons */}
-      <div className="md:hidden">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => scroll("left")}
-          className="absolute left-2 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-20 disabled:cursor-not-allowed bg-background/90 backdrop-blur-sm"
-          disabled={!canScrollLeft}
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => scroll("right")}
-          className="absolute right-2 top-[40%] -translate-y-1/2 z-10 rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-12 w-12 shadow-lg disabled:opacity-20 disabled:cursor-not-allowed bg-background/90 backdrop-blur-sm"
-          disabled={!canScrollRight}
-        >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
-      </div>
-
       {/* Scroll Container */}
       <div
         ref={containerRef}
@@ -157,22 +135,44 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
         ))}
       </div>
 
-      {/* Mobile Navigation Dots */}
-      <div className="flex md:hidden justify-center gap-3 mt-8">
-        {affirmations.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              const container = containerRef.current;
-              if (!container) return;
-              const cardWidth = 280;
-              const gap = 24;
-              container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
-            }}
-            className="w-2.5 h-2.5 rounded-full bg-clay/30 hover:bg-clay active:bg-clay transition-colors duration-300"
-            aria-label={`Go to affirmation ${index + 1}`}
-          />
-        ))}
+      {/* Mobile Navigation: Dots with Arrows */}
+      <div className="flex md:hidden justify-center items-center gap-4 mt-8">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("left")}
+          className="rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-10 w-10 disabled:opacity-20 disabled:cursor-not-allowed"
+          disabled={!canScrollLeft}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        
+        <div className="flex gap-2.5">
+          {affirmations.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                const container = containerRef.current;
+                if (!container) return;
+                const cardWidth = 280;
+                const gap = 24;
+                container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
+              }}
+              className="w-2.5 h-2.5 rounded-full bg-clay/30 hover:bg-clay active:bg-clay transition-colors duration-300"
+              aria-label={`Go to affirmation ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => scroll("right")}
+          className="rounded-full border-2 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 h-10 w-10 disabled:opacity-20 disabled:cursor-not-allowed"
+          disabled={!canScrollRight}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Desktop Navigation Buttons (Bottom) */}
