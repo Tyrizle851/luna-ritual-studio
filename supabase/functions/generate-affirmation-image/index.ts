@@ -58,8 +58,31 @@ Deno.serve(async (req) => {
       );
     }
 
-    const body: GenerateRequest = await req.json();
+    // Read request body with better error handling
+    let body: GenerateRequest;
+    try {
+      const textBody = await req.text();
+      if (!textBody) {
+        throw new Error('Empty request body');
+      }
+      body = JSON.parse(textBody);
+    } catch (parseError) {
+      console.error('Failed to parse request body:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request body', detail: parseError instanceof Error ? parseError.message : String(parseError) }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { designSpec } = body;
+    
+    if (!designSpec) {
+      console.error('Missing designSpec in request');
+      return new Response(
+        JSON.stringify({ error: 'Missing designSpec in request body' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     console.log('Generating final affirmation image with designSpec:', JSON.stringify(designSpec, null, 2));
 
