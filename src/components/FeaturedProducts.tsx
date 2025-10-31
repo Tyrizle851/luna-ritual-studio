@@ -1,6 +1,7 @@
 import { affiliateProducts } from "@/data/affiliateProducts";
 import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export const FeaturedProducts = () => {
   const featured = affiliateProducts.slice(0, 3);
@@ -46,10 +47,10 @@ export const FeaturedProducts = () => {
 
         <div className="text-center mt-8">
           <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
-            <a href="/shop/lifestyle">
+            <Link to="/shop">
               <ShoppingBag className="mr-2 h-4 w-4" />
               View All Products
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

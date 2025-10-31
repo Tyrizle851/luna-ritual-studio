@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { PageTransition } from "@/components/PageTransition";
 import {
   Pagination,
   PaginationContent,
@@ -122,8 +124,9 @@ const Shop = () => {
   };
 
   return (
-    <div className="min-h-screen section-padding">
-      <div className="container-custom">
+    <PageTransition>
+      <div className="min-h-screen section-padding">
+        <div className="container-custom">
         <h1 className="mb-3 sm:mb-4 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Shop Collection</h1>
         <p className="text-center text-text-secondary mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
           Curated essentials for intentional living
@@ -131,15 +134,22 @@ const Shop = () => {
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
           <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8 sm:mb-12 h-auto">
-            <TabsTrigger value="fashion" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Fashion</TabsTrigger>
-            <TabsTrigger value="candles" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Candles</TabsTrigger>
-            <TabsTrigger value="supplements" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Supplements</TabsTrigger>
-            <TabsTrigger value="affirmations" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">Affirmations</TabsTrigger>
+            <TabsTrigger value="fashion" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Fashion</TabsTrigger>
+            <TabsTrigger value="candles" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Candles</TabsTrigger>
+            <TabsTrigger value="supplements" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Supplements</TabsTrigger>
+            <TabsTrigger value="affirmations" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Affirmations</TabsTrigger>
           </TabsList>
 
-          {/* Fashion Tab */}
-          <TabsContent value="fashion">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="wait">
+            {/* Fashion Tab */}
+            <TabsContent value="fashion" key="fashion">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                 <div key={product.id} className="group">
                   <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
@@ -167,11 +177,18 @@ const Shop = () => {
               ))}
             </div>
             {renderPagination(fashionPage, getTotalPages(fashionProducts.length), setFashionPage)}
+              </motion.div>
           </TabsContent>
 
           {/* Candles Tab */}
-          <TabsContent value="candles">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <TabsContent value="candles" key="candles">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(candles, candlesPage).map((candle) => (
                 <div key={candle.id} className="group">
                   <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
@@ -200,11 +217,18 @@ const Shop = () => {
               ))}
             </div>
             {renderPagination(candlesPage, getTotalPages(candles.length), setCandlesPage)}
+              </motion.div>
           </TabsContent>
 
           {/* Supplements Tab */}
-          <TabsContent value="supplements">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <TabsContent value="supplements" key="supplements">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                 <div key={supplement.id} className="group">
                   <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
@@ -233,11 +257,18 @@ const Shop = () => {
               ))}
             </div>
             {renderPagination(supplementsPage, getTotalPages(supplements.length), setSupplementsPage)}
+              </motion.div>
           </TabsContent>
 
           {/* Affirmations Tab */}
-          <TabsContent value="affirmations">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <TabsContent value="affirmations" key="affirmations">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
                 <div key={affirmation.id} className="group cursor-pointer">
                   <div 
@@ -274,7 +305,9 @@ const Shop = () => {
               ))}
             </div>
             {renderPagination(affirmationsPage, getTotalPages(affirmations.length), setAffirmationsPage)}
+              </motion.div>
           </TabsContent>
+          </AnimatePresence>
         </Tabs>
       </div>
 
@@ -286,7 +319,8 @@ const Shop = () => {
           if (!open) setSelectedProduct(null);
         }}
       />
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 
