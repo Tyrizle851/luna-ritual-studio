@@ -359,7 +359,7 @@ const AffirmationBuilder = () => {
       const results = await Promise.all(requests);
       const successfulImages = results
         .filter(result => !result.error && result.data?.imageB64)
-        .map(result => result.data.imageB64);
+        .map(result => `data:image/png;base64,${result.data.imageB64}`);
       
       if (successfulImages.length > 0) {
         setPreviewImagesB64(successfulImages);

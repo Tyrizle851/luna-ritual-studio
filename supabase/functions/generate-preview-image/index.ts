@@ -135,9 +135,9 @@ Focus on creating a balanced, elegant design that feels authentic and ready to p
     const imageB64 = data?.data?.[0]?.b64_json;
 
     if (!imageB64) {
-      console.error('No image data in response');
+      console.error('No image data in response:', data);
       return new Response(
-        JSON.stringify({ error: 'No image generated' }),
+        JSON.stringify({ error: 'No image generated', details: data }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -145,7 +145,7 @@ Focus on creating a balanced, elegant design that feels authentic and ready to p
     console.log('Preview image generated successfully');
     return new Response(
       JSON.stringify({ 
-        imageB64: `data:image/png;base64,${imageB64}`,
+        imageB64,
         message: 'Preview generated successfully'
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
