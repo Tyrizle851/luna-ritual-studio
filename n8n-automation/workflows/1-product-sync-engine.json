@@ -1,0 +1,104 @@
+{
+  "name": "1. Product Data Sync Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /tmp && rm -rf luna-ritual-studio && git clone https://github.com/Tyrizle851/luna-ritual-studio.git",
+        "options": {}
+      },
+      "id": "git-clone",
+      "name": "Clone Git Repository",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract product data from TypeScript files\nconst fs = require('fs');\nconst path = '/tmp/luna-ritual-studio/src/data';\n\nconst fileConfigs = [\n  { file: 'affirmations.ts', category: 'affirmations', arrayName: 'affirmations' },\n  { file: 'candles.ts', category: 'candles', arrayName: 'candles' },\n  { file: 'fashion.ts', category: 'fashion', arrayName: 'fashionProducts' },\n  { file: 'supplements.ts', category: 'supplements', arrayName: 'supplements' }\n];\n\nconst allProducts = [];\n\nfor (const config of fileConfigs) {\n  try {\n    const content = fs.readFileSync(`${path}/${config.file}`, 'utf-8');\n    \n    // Extract the array data - handle both \"export const X =\" and other formats\n    const exportMatch = content.match(/export\\s+const\\s+\\w+\\s*=\\s*(\\[[\\s\\S]*?\\]);/m);\n    \n    if (exportMatch) {\n      let arrayContent = exportMatch[1];\n      \n      // Clean up TypeScript to make it JSON-parseable\n      arrayContent = arrayContent\n        // Quote unquoted keys\n        .replace(/([{,]\\s*)([a-zA-Z_][a-zA-Z0-9_]*):/g, '$1\"$2\":')\n        // Convert single quotes to double quotes\n        .replace(/'/g, '\"')\n        // Remove trailing commas\n        .replace(/,\\s*}/g, '}')\n        .replace(/,\\s*]/g, ']')\n        // Handle import statements in image values\n        .replace(/\"image\":\\s*[a-zA-Z_][a-zA-Z0-9_]*/g, '\"image\": \"placeholder\"');\n      \n      try {\n        const products = JSON.parse(arrayContent);\n        \n        products.forEach(product => {\n          allProducts.push({\n            ...product,\n            category: config.category,\n            synced_at: new Date().toISOString(),\n            in_stock: product.inStock !== undefined ? product.inStock : true,\n            // Normalize field names\n            image_url: product.image || 'https://via.placeholder.com/400',\n            benefits: product.benefits || [],\n            tags: product.tags || [],\n            brand: product.brand || 'Luna Rituals',\n            featured: product.featured || false\n          });\n        });\n        \n        console.log(`✅ Parsed ${products.length} products from ${config.file}`);\n      } catch (parseError) {\n        console.error(`❌ Failed to parse JSON from ${config.file}:`, parseError.message);\n      }\n    } else {\n      console.warn(`⚠️  No export found in ${config.file}`);\n    }\n  } catch (fileError) {\n    console.error(`❌ Failed to read ${config.file}:`, fileError.message);\n  }\n}\n\nconsole.log(`\\n📦 Total products extracted: ${allProducts.length}`);\n\nreturn allProducts.map(product => ({ json: product }));"
+      },
+      "id": "extract-products",
+      "name": "Extract Products from TypeScript",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "tableId": "products",
+        "options": {
+          "onConflict": "id"
+        }
+      },
+      "id": "upsert-supabase",
+      "name": "Upsert to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [850, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase Luna Rituals"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log sync results\nconst totalProducts = $input.all().length;\nconst timestamp = new Date().toISOString();\n\nconsole.log(`✅ Product sync completed at ${timestamp}`);\nconsole.log(`📊 Total products synced: ${totalProducts}`);\n\nreturn [\n  {\n    json: {\n      success: true,\n      timestamp: timestamp,\n      products_synced: totalProducts,\n      message: `Successfully synced ${totalProducts} products to Supabase`\n    }\n  }\n];"
+      },
+      "id": "log-results",
+      "name": "Log Sync Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Every 6 Hours": {
+      "main": [[{ "node": "Clone Git Repository", "type": "main", "index": 0 }]]
+    },
+    "Clone Git Repository": {
+      "main": [[{ "node": "Extract Products from TypeScript", "type": "main", "index": 0 }]]
+    },
+    "Extract Products from TypeScript": {
+      "main": [[{ "node": "Upsert to Supabase", "type": "main", "index": 0 }]]
+    },
+    "Upsert to Supabase": {
+      "main": [[{ "node": "Log Sync Results", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "luna-rituals",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "id": "1"
+    }
+  ],
+  "meta": {
+    "instanceId": "your-n8n-instance-id"
+  },
+  "id": "1",
+  "versionId": "1"
+}
