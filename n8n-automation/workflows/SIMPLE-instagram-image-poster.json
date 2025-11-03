@@ -1,0 +1,391 @@
+{
+  "name": "SIMPLE: Instagram Image Poster (3x Daily)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 8 Hours (3x Daily)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM get_random_products_for_ads(1) LIMIT 1"
+      },
+      "id": "get-random-product",
+      "name": "Get Random Product",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase Luna Rituals"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4-turbo-preview",
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 500
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an expert Instagram content creator for wellness and lifestyle brands. Create engaging, authentic posts that drive engagement."
+            },
+            {
+              "role": "user",
+              "content": "=Create an Instagram post for this product:\n\nProduct: {{ $json.name }}\nCategory: {{ $json.category }}\nDescription: {{ $json.description }}\nPrice: ${{ $json.price }}\n{{ $json.benefits ? 'Benefits: ' + $json.benefits.join(', ') : '' }}\n\nCreate a post that:\n1. Has an attention-grabbing hook\n2. Highlights key benefits naturally\n3. Creates emotional connection\n4. Includes subtle call-to-action\n5. Uses relevant emojis (but not too many)\n6. Is authentic, not salesy\n\nReturn ONLY JSON (no markdown):\n{\n  \"caption\": \"your engaging caption here\",\n  \"hashtags\": [\"tag1\", \"tag2\", \"tag3\", ...],\n  \"image_prompt\": \"detailed DALL-E prompt for product image\"\n}"
+            }
+          ]
+        }
+      },
+      "id": "generate-ad-copy",
+      "name": "Generate Ad Copy (GPT-4)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.3,
+      "position": [650, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI - Luna Rituals"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the GPT-4 response\nconst response = $input.item.json.message.content;\n\n// Remove markdown code blocks if present\nlet cleaned = response.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n\ntry {\n  const parsed = JSON.parse(cleaned);\n  \n  return {\n    json: {\n      product: $node['Get Random Product'].json,\n      ad: parsed,\n      timestamp: new Date().toISOString()\n    }\n  };\n} catch (e) {\n  // Fallback if JSON parsing fails\n  return {\n    json: {\n      product: $node['Get Random Product'].json,\n      ad: {\n        caption: response.substring(0, 200),\n        hashtags: ['lunarituals', 'wellness', 'selfcare'],\n        image_prompt: `Product photography of ${$node['Get Random Product'].json.name}`\n      },\n      timestamp: new Date().toISOString()\n    }\n  };\n}"
+      },
+      "id": "parse-json",
+      "name": "Parse GPT Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "generate",
+        "model": "dall-e-3",
+        "prompt": "={{ $json.ad.image_prompt }}. Professional product photography, aesthetic, wellness brand, soft natural lighting, Instagram-worthy, minimalist background, high quality, 1:1 square format",
+        "size": "1024x1024",
+        "quality": "hd",
+        "style": "natural"
+      },
+      "id": "generate-image",
+      "name": "Generate Image (DALL-E 3)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.3,
+      "position": [1050, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI - Luna Rituals"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "image_data"
+            }
+          }
+        }
+      },
+      "id": "download-image",
+      "name": "Download Generated Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "options": {
+          "folder": "luna-ritual-ads/instagram",
+          "public_id": "={{ $now.toFormat('yyyyMMdd-HHmmss') }}-{{ $node['Get Random Product'].json.id }}"
+        }
+      },
+      "id": "upload-cloudinary",
+      "name": "Upload to Cloudinary",
+      "type": "n8n-nodes-base.cloudinary",
+      "typeVersion": 1,
+      "position": [1450, 300],
+      "credentials": {
+        "cloudinaryApi": {
+          "id": "YOUR_CLOUDINARY_CREDENTIAL_ID",
+          "name": "Cloudinary - Luna Rituals"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_BUSINESS_ACCOUNT_ID }}/media",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.secure_url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $node['Parse GPT Response'].json.ad.caption }}\\n\\n{{ $node['Parse GPT Response'].json.ad.hashtags.map(t => '#' + t).join(' ') }}\\n\\n🔗 Shop now: luna-ritual-studio.com"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $credentials.metaAccessToken }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "create-instagram-container",
+      "name": "Create Instagram Media Container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1650, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YOUR_META_CREDENTIAL_ID",
+          "name": "Meta Graph API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_BUSINESS_ACCOUNT_ID }}/media_publish",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $credentials.metaAccessToken }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "publish-instagram",
+      "name": "Publish to Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1850, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YOUR_META_CREDENTIAL_ID",
+          "name": "Meta Graph API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "ad_posts",
+        "options": {}
+      },
+      "id": "save-to-database",
+      "name": "Save Post Record",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2050, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase Luna Rituals"
+        }
+      },
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "continueOnFail": true,
+      "notesInFlow": false,
+      "color": "#1A82e2",
+      "notes": "",
+      "parameters": {
+        "operation": "insert",
+        "tableId": "ad_posts",
+        "options": {},
+        "columnsUi": {
+          "columnValues": [
+            {
+              "column": "product_id",
+              "value": "={{ $node['Get Random Product'].json.id }}"
+            },
+            {
+              "column": "platform",
+              "value": "instagram"
+            },
+            {
+              "column": "post_type",
+              "value": "image"
+            },
+            {
+              "column": "caption",
+              "value": "={{ $node['Parse GPT Response'].json.ad.caption }}"
+            },
+            {
+              "column": "media_urls",
+              "value": "={{ [$node['Upload to Cloudinary'].json.secure_url] }}"
+            },
+            {
+              "column": "hashtags",
+              "value": "={{ $node['Parse GPT Response'].json.ad.hashtags }}"
+            },
+            {
+              "column": "ai_prompt",
+              "value": "={{ $node['Parse GPT Response'].json.ad.image_prompt }}"
+            },
+            {
+              "column": "ai_model_used",
+              "value": "gpt-4-turbo + dall-e-3"
+            },
+            {
+              "column": "scheduled_for",
+              "value": "={{ $now.toISO() }}"
+            },
+            {
+              "column": "published_at",
+              "value": "={{ $now.toISO() }}"
+            },
+            {
+              "column": "platform_post_id",
+              "value": "={{ $node['Publish to Instagram'].json.id }}"
+            },
+            {
+              "column": "publish_status",
+              "value": "published"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log success\nconst product = $node['Get Random Product'].json;\nconst post = $node['Publish to Instagram'].json;\n\nconsole.log('✅ Instagram post published successfully!');\nconsole.log(`📦 Product: ${product.name}`);\nconsole.log(`🔗 Post ID: ${post.id}`);\nconsole.log(`⏰ Published at: ${new Date().toISOString()}`);\n\nreturn {\n  json: {\n    success: true,\n    product_name: product.name,\n    product_id: product.id,\n    instagram_post_id: post.id,\n    published_at: new Date().toISOString(),\n    message: `Successfully posted ${product.name} to Instagram!`\n  }\n};"
+      },
+      "id": "log-success",
+      "name": "Log Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node['Publish to Instagram'].json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "check-if-published",
+      "name": "Check If Published",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [2050, 200],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Error handler\nconst error = $input.item.json.error || 'Unknown error';\n\nconsole.error('❌ Failed to publish Instagram post');\nconsole.error(`Error: ${error}`);\n\nreturn {\n  json: {\n    success: false,\n    error: error,\n    timestamp: new Date().toISOString(),\n    message: 'Failed to publish post - check workflow execution for details'\n  }\n};"
+      },
+      "id": "log-error",
+      "name": "Log Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2250, 100]
+    }
+  ],
+  "connections": {
+    "Every 8 Hours (3x Daily)": {
+      "main": [[{"node": "Get Random Product", "type": "main", "index": 0}]]
+    },
+    "Get Random Product": {
+      "main": [[{"node": "Generate Ad Copy (GPT-4)", "type": "main", "index": 0}]]
+    },
+    "Generate Ad Copy (GPT-4)": {
+      "main": [[{"node": "Parse GPT Response", "type": "main", "index": 0}]]
+    },
+    "Parse GPT Response": {
+      "main": [[{"node": "Generate Image (DALL-E 3)", "type": "main", "index": 0}]]
+    },
+    "Generate Image (DALL-E 3)": {
+      "main": [[{"node": "Download Generated Image", "type": "main", "index": 0}]]
+    },
+    "Download Generated Image": {
+      "main": [[{"node": "Upload to Cloudinary", "type": "main", "index": 0}]]
+    },
+    "Upload to Cloudinary": {
+      "main": [[{"node": "Create Instagram Media Container", "type": "main", "index": 0}]]
+    },
+    "Create Instagram Media Container": {
+      "main": [[{"node": "Publish to Instagram", "type": "main", "index": 0}]]
+    },
+    "Publish to Instagram": {
+      "main": [[{"node": "Save Post Record", "type": "main", "index": 0}]]
+    },
+    "Save Post Record": {
+      "main": [[{"node": "Check If Published", "type": "main", "index": 0}]]
+    },
+    "Check If Published": {
+      "main": [
+        [{"node": "Log Success", "type": "main", "index": 0}],
+        [{"node": "Log Error", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "tags": [
+    {
+      "name": "luna-rituals",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "id": "1"
+    },
+    {
+      "name": "instagram",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "id": "2"
+    }
+  ],
+  "meta": {
+    "instanceId": "your-n8n-instance-id"
+  },
+  "id": "2",
+  "versionId": "1"
+}

@@ -1,0 +1,211 @@
+{
+  "name": "Instagram Auto-Poster (3x Daily)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Read products from local JSON file\nconst fs = require('fs');\nconst path = require('path');\n\nconst productsPath = '/home/user/luna-ritual-studio/automation/data/products.json';\nconst products = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));\n\n// Filter products that haven't been posted recently\nconst now = new Date();\nconst availableProducts = products.filter(p => {\n  if (!p.last_posted) return true;\n  const daysSince = (now - new Date(p.last_posted)) / (1000 * 60 * 60 * 24);\n  return daysSince > 3;\n});\n\nconst pool = availableProducts.length > 0 ? availableProducts : products;\nconst selected = pool[Math.floor(Math.random() * pool.length)];\n\nreturn { json: selected };"
+      },
+      "id": "select-product",
+      "name": "Select Random Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "chat",
+        "operation": "message",
+        "modelId": "gpt-4-turbo-preview",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an expert Instagram content creator for wellness and lifestyle brands. Create engaging, authentic posts that drive engagement and sales."
+            },
+            {
+              "role": "user",
+              "content": "=Create an Instagram post for this product:\n\nProduct: {{ $json.name }}\nCategory: {{ $json.category }}\nDescription: {{ $json.description }}\nPrice: ${{ $json.price }}\n{{ $json.benefits ? 'Benefits: ' + $json.benefits.join(', ') : '' }}\n\nCreate a post that:\n1. Has an attention-grabbing hook in the first line\n2. Highlights key benefits naturally (not a list)\n3. Creates emotional connection with the reader\n4. Includes a subtle call-to-action\n5. Uses relevant emojis (2-4 max, not excessive)\n6. Is authentic and conversational, not salesy\n7. Makes people want to click\n\nReturn ONLY valid JSON with no markdown:\n{\n  \"caption\": \"your engaging caption here (2-3 sentences)\",\n  \"hashtags\": [\"wellness\", \"selfcare\", \"mindfulness\", \"lunarituals\", \"shopsmall\"],\n  \"image_prompt\": \"detailed DALL-E prompt for an aesthetic product photo\"\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 500
+        }
+      },
+      "id": "generate-copy",
+      "name": "Generate Ad Copy (GPT-4)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse GPT-4 response\nlet content = $input.item.json.message.content;\n\n// Remove markdown code blocks if present\ncontent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n\ntry {\n  const parsed = JSON.parse(content);\n  return {\n    json: {\n      product: $node['Select Random Product'].json,\n      ad: parsed,\n      timestamp: new Date().toISOString()\n    }\n  };\n} catch (e) {\n  // Fallback if parsing fails\n  return {\n    json: {\n      product: $node['Select Random Product'].json,\n      ad: {\n        caption: content.substring(0, 200),\n        hashtags: ['wellness', 'selfcare', 'mindfulness', 'lunarituals', 'shopsmall'],\n        image_prompt: `Professional product photography of ${$node['Select Random Product'].json.name}, aesthetic wellness brand, soft lighting`\n      },\n      timestamp: new Date().toISOString()\n    }\n  };\n}"
+      },
+      "id": "parse-response",
+      "name": "Parse JSON Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "image",
+        "operation": "generate",
+        "model": "dall-e-3",
+        "prompt": "={{ $json.ad.image_prompt }}. Professional product photography, aesthetic wellness brand, soft natural lighting, Instagram-worthy, minimalist background, high quality, 1:1 square format, commercial photography style",
+        "options": {
+          "size": "1024x1024",
+          "quality": "hd",
+          "style": "natural"
+        }
+      },
+      "id": "generate-image",
+      "name": "Generate Image (DALL-E 3)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [1040, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "file",
+              "outputPropertyName": "image_data"
+            }
+          }
+        }
+      },
+      "id": "download-image",
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1240, 300]
+    },
+    {
+      "parameters": {
+        "fileName": "={{ $now.toFormat('yyyyMMdd-HHmmss') }}_{{ $node['Select Random Product'].json.id }}.png",
+        "filePath": "/home/user/luna-ritual-studio/automation/media/",
+        "binaryPropertyName": "image_data"
+      },
+      "id": "save-image",
+      "name": "Save Image to Disk",
+      "type": "n8n-nodes-base.writeFile",
+      "typeVersion": 1,
+      "position": [1440, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_ACCOUNT_ID }}/media",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "metaApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"image_url\": \"file://{{ $json.path }}\",\n  \"caption\": \"{{ $node['Parse JSON Response'].json.ad.caption }}\\n\\n{{ $node['Parse JSON Response'].json.ad.hashtags.map(t => '#' + t).join(' ') }}\\n\\n🔗 Shop: luna-ritual-studio.com\",\n  \"access_token\": \"{{ $credentials.oAuth2Api.accessToken }}\"\n}",
+        "options": {}
+      },
+      "id": "create-container",
+      "name": "Create Instagram Container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1640, 300],
+      "disabled": true,
+      "notes": "Enable this when Instagram auth is set up"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_ACCOUNT_ID }}/media_publish",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "metaApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"creation_id\": \"{{ $node['Create Instagram Container'].json.id }}\",\n  \"access_token\": \"{{ $credentials.oAuth2Api.accessToken }}\"\n}",
+        "options": {}
+      },
+      "id": "publish-post",
+      "name": "Publish to Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1840, 300],
+      "disabled": true,
+      "notes": "Enable this when Instagram auth is set up"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Update product stats\nconst fs = require('fs');\nconst productsPath = '/home/user/luna-ritual-studio/automation/data/products.json';\nconst statsPath = '/home/user/luna-ritual-studio/automation/data/post-stats.json';\n\n// Update products.json\nconst products = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));\nconst product = $node['Select Random Product'].json;\nconst productIndex = products.findIndex(p => p.id === product.id);\n\nif (productIndex !== -1) {\n  products[productIndex].last_posted = new Date().toISOString();\n  products[productIndex].total_posts = (products[productIndex].total_posts || 0) + 1;\n  fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));\n}\n\n// Update post-stats.json\nconst stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));\nconst adContent = $node['Parse JSON Response'].json.ad;\nconst imagePath = $node['Save Image to Disk'].json.path;\n\nstats.posts.push({\n  id: 'local_' + Date.now(),\n  product_id: product.id,\n  product_name: product.name,\n  platform: 'instagram',\n  caption: adContent.caption,\n  hashtags: adContent.hashtags,\n  image_path: imagePath,\n  posted_at: new Date().toISOString(),\n  status: 'generated',\n  engagement: 0\n});\n\nstats.last_updated = new Date().toISOString();\nfs.writeFileSync(statsPath, JSON.stringify(stats, null, 2));\n\nconsole.log('✅ Post generated successfully!');\nconsole.log('Product:', product.name);\nconsole.log('Image:', imagePath);\nconsole.log('Caption:', adContent.caption.substring(0, 100) + '...');\n\nreturn {\n  json: {\n    success: true,\n    product_name: product.name,\n    image_path: imagePath,\n    caption: adContent.caption,\n    hashtags: adContent.hashtags\n  }\n};"
+      },
+      "id": "update-stats",
+      "name": "Update Stats & Save",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1640, 480]
+    }
+  ],
+  "connections": {
+    "Every 8 Hours": {
+      "main": [[{"node": "Select Random Product", "type": "main", "index": 0}]]
+    },
+    "Select Random Product": {
+      "main": [[{"node": "Generate Ad Copy (GPT-4)", "type": "main", "index": 0}]]
+    },
+    "Generate Ad Copy (GPT-4)": {
+      "main": [[{"node": "Parse JSON Response", "type": "main", "index": 0}]]
+    },
+    "Parse JSON Response": {
+      "main": [[{"node": "Generate Image (DALL-E 3)", "type": "main", "index": 0}]]
+    },
+    "Generate Image (DALL-E 3)": {
+      "main": [[{"node": "Download Image", "type": "main", "index": 0}]]
+    },
+    "Download Image": {
+      "main": [[{"node": "Save Image to Disk", "type": "main", "index": 0}]]
+    },
+    "Save Image to Disk": {
+      "main": [
+        [
+          {"node": "Create Instagram Container", "type": "main", "index": 0},
+          {"node": "Update Stats & Save", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Create Instagram Container": {
+      "main": [[{"node": "Publish to Instagram", "type": "main", "index": 0}]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-01T00:00:00.000Z",
+  "versionId": "1"
+}
