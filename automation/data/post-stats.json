@@ -1,0 +1,21 @@
+{
+  "posts": [],
+  "learnings": {
+    "instagram": {
+      "best_hashtags": [],
+      "best_times": [],
+      "avg_engagement": 0
+    },
+    "tiktok": {
+      "best_hashtags": [],
+      "best_times": [],
+      "avg_engagement": 0
+    },
+    "pinterest": {
+      "best_hashtags": [],
+      "best_times": [],
+      "avg_engagement": 0
+    }
+  },
+  "last_updated": "2025-11-03T20:24:50.955Z"
+}
