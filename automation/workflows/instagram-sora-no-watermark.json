@@ -8,7 +8,8 @@
       "name": "Every 8 Hours",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [240, 400],
-      "typeVersion": 1.2
+      "typeVersion": 1.2,
+      "id": "node-001"
     },
     {
       "parameters": {
@@ -18,25 +19,28 @@
       "name": "Fetch Products",
       "type": "n8n-nodes-base.httpRequest",
       "position": [440, 400],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "id": "node-002"
     },
     {
       "parameters": {
-        "jsCode": "let products=$input.all()[0].json;if(!Array.isArray(products)){if(products.products)products=products.products;else products=[products]}const now=new Date();const available=products.filter(p=>{if(!p.last_posted)return true;const days=(now-new Date(p.last_posted))/(1000*60*60*24);return days>3});const pool=available.length>0?available:products;return[{json:pool[Math.floor(Math.random()*pool.length)]}];"
+        "jsCode": "let products = $input.all()[0].json;\nif (!Array.isArray(products)) {\n  if (products.products) products = products.products;\n  else products = [products];\n}\n\nconst now = new Date();\nconst available = products.filter(p => {\n  if (!p.last_posted) return true;\n  const daysSince = (now - new Date(p.last_posted)) / (1000 * 60 * 60 * 24);\n  return daysSince > 3;\n});\n\nconst pool = available.length > 0 ? available : products;\nconst selected = pool[Math.floor(Math.random() * pool.length)];\n\nreturn [{ json: selected }];"
       },
       "name": "Select Product",
       "type": "n8n-nodes-base.code",
       "position": [640, 400],
-      "typeVersion": 2
+      "typeVersion": 2,
+      "id": "node-003"
     },
     {
       "parameters": {
-        "jsCode": "const map={'aff-001':'affirmation-rest.jpg','aff-002':'affirmation-joy.jpg','aff-003':'affirmation-abundance.jpg','aff-004':'affirmation-trust.jpg','aff-005':'affirmation-enough.jpg','aff-006':'affirmation-calm.jpg','aff-007':'affirmation-receive.jpg','aff-008':'affirmation-honor.jpg','aff-009':'affirmation-release.jpg','aff-010':'affirmation-natural-joy.jpg','aff-011':'affirmation-safe.jpg','aff-012':'affirmation-voice.jpg','aff-013':'affirmation-dreams.jpg','aff-014':'affirmation-peace.jpg','aff-015':'affirmation-progress.jpg','aff-016':'affirmation-intuition.jpg','aff-017':'affirmation-miracles.jpg','aff-018':'affirmation-feel.jpg','aff-019':'affirmation-creating.jpg','aff-020':'affirmation-possibility.jpg','aff-021':'affirmation-change.jpg','aff-022':'affirmation-productive-rest.jpg','aff-023':'affirmation-attract.jpg','aff-024':'affirmation-duality.jpg','cnd-001':'product-candle-1.jpg','cnd-002':'product-candle-2.jpg','cnd-003':'product-candle-1.jpg','cnd-004':'product-candle-2.jpg','cnd-005':'product-candle-1.jpg','cnd-006':'product-candle-2.jpg','cnd-007':'product-candle-1.jpg','cnd-008':'product-candle-2.jpg','cnd-009':'product-candle-1.jpg','cnd-010':'product-candle-2.jpg','cnd-011':'product-candle-1.jpg','cnd-012':'product-candle-2.jpg','cnd-013':'product-candle-1.jpg','cnd-014':'product-candle-2.jpg','cnd-015':'product-candle-1.jpg','fsh-001':'product-linen-robe.jpg','fsh-002':'product-hoops.jpg','fsh-003':'product-market-tote.jpg','fsh-004':'product-silk-sleep-set.jpg','fsh-005':'product-gold-necklace.jpg','fsh-006':'product-cotton-tee.jpg','fsh-007':'product-linen-pants.jpg','fsh-008':'product-cashmere-cardigan.jpg','fsh-009':'product-leather-bag.jpg','fsh-010':'product-scrunchies.jpg','fsh-011':'product-fedora.jpg','fsh-012':'product-sunglasses.jpg','fsh-013':'product-linen-shirt.jpg','fsh-014':'product-beanie.jpg','fsh-015':'product-slip-dress.jpg'};const p=$input.item.json;const img=map[p.id]||'product-candle-1.jpg';const url=`https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/claude/analyze-ecommerce-repo-011CUmX7vgr4TvhMyFqheZMx/src/assets/${img}`;return[{json:{...p,original_image_url:url,image_filename:img}}];"
+        "jsCode": "const imageMap = {\n  'aff-001': 'affirmation-rest.jpg',\n  'aff-002': 'affirmation-joy.jpg',\n  'aff-003': 'affirmation-abundance.jpg',\n  'aff-004': 'affirmation-trust.jpg',\n  'aff-005': 'affirmation-enough.jpg',\n  'aff-006': 'affirmation-calm.jpg',\n  'aff-007': 'affirmation-receive.jpg',\n  'aff-008': 'affirmation-honor.jpg',\n  'aff-009': 'affirmation-release.jpg',\n  'aff-010': 'affirmation-natural-joy.jpg',\n  'aff-011': 'affirmation-safe.jpg',\n  'aff-012': 'affirmation-voice.jpg',\n  'aff-013': 'affirmation-dreams.jpg',\n  'aff-014': 'affirmation-peace.jpg',\n  'aff-015': 'affirmation-progress.jpg',\n  'aff-016': 'affirmation-intuition.jpg',\n  'aff-017': 'affirmation-miracles.jpg',\n  'aff-018': 'affirmation-feel.jpg',\n  'aff-019': 'affirmation-creating.jpg',\n  'aff-020': 'affirmation-possibility.jpg',\n  'aff-021': 'affirmation-change.jpg',\n  'aff-022': 'affirmation-productive-rest.jpg',\n  'aff-023': 'affirmation-attract.jpg',\n  'aff-024': 'affirmation-duality.jpg',\n  'cnd-001': 'product-candle-1.jpg',\n  'cnd-002': 'product-candle-2.jpg',\n  'cnd-003': 'product-candle-1.jpg',\n  'cnd-004': 'product-candle-2.jpg',\n  'cnd-005': 'product-candle-1.jpg',\n  'cnd-006': 'product-candle-2.jpg',\n  'cnd-007': 'product-candle-1.jpg',\n  'cnd-008': 'product-candle-2.jpg',\n  'cnd-009': 'product-candle-1.jpg',\n  'cnd-010': 'product-candle-2.jpg',\n  'cnd-011': 'product-candle-1.jpg',\n  'cnd-012': 'product-candle-2.jpg',\n  'cnd-013': 'product-candle-1.jpg',\n  'cnd-014': 'product-candle-2.jpg',\n  'cnd-015': 'product-candle-1.jpg',\n  'fsh-001': 'product-linen-robe.jpg',\n  'fsh-002': 'product-hoops.jpg',\n  'fsh-003': 'product-market-tote.jpg',\n  'fsh-004': 'product-silk-sleep-set.jpg',\n  'fsh-005': 'product-gold-necklace.jpg',\n  'fsh-006': 'product-cotton-tee.jpg',\n  'fsh-007': 'product-linen-pants.jpg',\n  'fsh-008': 'product-cashmere-cardigan.jpg',\n  'fsh-009': 'product-leather-bag.jpg',\n  'fsh-010': 'product-scrunchies.jpg',\n  'fsh-011': 'product-fedora.jpg',\n  'fsh-012': 'product-sunglasses.jpg',\n  'fsh-013': 'product-linen-shirt.jpg',\n  'fsh-014': 'product-beanie.jpg',\n  'fsh-015': 'product-slip-dress.jpg'\n};\n\nconst product = $input.item.json;\nconst imageFilename = imageMap[product.id] || 'product-candle-1.jpg';\nconst imageUrl = `https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/claude/analyze-ecommerce-repo-011CUmX7vgr4TvhMyFqheZMx/src/assets/${imageFilename}`;\n\nreturn [{\n  json: {\n    ...product,\n    original_image_url: imageUrl,\n    image_filename: imageFilename\n  }\n}];"
       },
       "name": "Map to Image",
       "type": "n8n-nodes-base.code",
       "position": [840, 400],
-      "typeVersion": 2
+      "typeVersion": 2,
+      "id": "node-004"
     },
     {
       "parameters": {
@@ -52,49 +56,53 @@
       "name": "Fetch Original Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [1040, 400],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "id": "node-005"
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
-        "resource": "text",
-        "operation": "message",
-        "modelId": "gpt-4-turbo",
-        "text": "=Create Instagram ad for {{$node['Map to Image'].json.name}} (${{$node['Map to Image'].json.price}}). Description: {{$node['Map to Image'].json.description}}. Return ONLY this JSON format with no markdown or extra text: {\"caption\":\"engaging 2-3 sentences with emoji\",\"hashtags\":[\"wellness\",\"selfcare\",\"lunarituals\"],\"image_prompt\":\"Professional Instagram product photo of {{$node['Map to Image'].json.name}} - elevated aesthetic soft lighting minimalist\"}",
-        "options": {
-          "temperature": 0.8
-        }
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"model\":\"gpt-4-turbo\",\"messages\":[{\"role\":\"system\",\"content\":\"You are a social media expert. Return only valid JSON, no markdown.\"},{\"role\":\"user\",\"content\":\"Create Instagram ad for {{$node['Map to Image'].json.name}} (${{$node['Map to Image'].json.price}}). Description: {{$node['Map to Image'].json.description}}. Return ONLY this JSON format: {\\\"caption\\\":\\\"engaging 2-3 sentences with emoji\\\",\\\"hashtags\\\":[\\\"wellness\\\",\\\"selfcare\\\",\\\"lunarituals\\\"],\\\"image_prompt\\\":\\\"Professional Instagram product photo of {{$node['Map to Image'].json.name}} - elevated aesthetic soft lighting minimalist\\\"}\"}],\"temperature\":0.8}",
+        "options": {}
       },
       "name": "Generate Copy (GPT-4)",
-      "type": "n8n-nodes-base.openAi",
+      "type": "n8n-nodes-base.httpRequest",
       "position": [1240, 400],
-      "typeVersion": 1.4
+      "typeVersion": 4.2,
+      "id": "node-006"
     },
     {
       "parameters": {
-        "jsCode": "let c;try{if($input.item.json.choices&&$input.item.json.choices[0]){c=$input.item.json.choices[0].message.content}else if($input.item.json.message){c=$input.item.json.message.content||$input.item.json.message}else{c=JSON.stringify($input.item.json)}c=c.replace(/```json\\n?/g,'').replace(/```/g,'').trim();const parsed=JSON.parse(c);return{json:{product:$node['Map to Image'].json,caption:parsed.caption,hashtags:parsed.hashtags,image_prompt:parsed.image_prompt}}}catch(e){return{json:{product:$node['Map to Image'].json,caption:$node['Map to Image'].json.description,hashtags:['wellness','selfcare','lunarituals'],image_prompt:`Professional product photo of ${$node['Map to Image'].json.name}`}}}"
+        "jsCode": "let content;\ntry {\n  if ($input.item.json.choices && $input.item.json.choices[0]) {\n    content = $input.item.json.choices[0].message.content;\n  } else if ($input.item.json.message) {\n    content = $input.item.json.message.content || $input.item.json.message;\n  } else {\n    content = JSON.stringify($input.item.json);\n  }\n  \n  content = content.replace(/```json\\n?/g, '').replace(/```/g, '').trim();\n  const parsed = JSON.parse(content);\n  \n  return {\n    json: {\n      product: $node['Map to Image'].json,\n      caption: parsed.caption,\n      hashtags: parsed.hashtags,\n      image_prompt: parsed.image_prompt\n    }\n  };\n} catch (e) {\n  return {\n    json: {\n      product: $node['Map to Image'].json,\n      caption: $node['Map to Image'].json.description,\n      hashtags: ['wellness', 'selfcare', 'lunarituals'],\n      image_prompt: `Professional product photo of ${$node['Map to Image'].json.name}`\n    }\n  };\n}"
       },
       "name": "Parse Response",
       "type": "n8n-nodes-base.code",
       "position": [1440, 400],
-      "typeVersion": 2
+      "typeVersion": 2,
+      "id": "node-007"
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
-        "resource": "image",
-        "operation": "generate",
-        "prompt": "={{$json.image_prompt}}. Professional Instagram product photography aesthetic wellness brand soft natural lighting minimalist background high quality 1:1 square",
-        "options": {
-          "size": "1024x1024",
-          "quality": "hd"
-        }
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"model\":\"dall-e-3\",\"prompt\":\"{{$json.image_prompt}}. Professional Instagram product photography aesthetic wellness brand soft natural lighting minimalist background high quality 1:1 square\",\"size\":\"1024x1024\",\"quality\":\"hd\",\"n\":1}",
+        "options": {}
       },
       "name": "Try DALL-E",
-      "type": "n8n-nodes-base.openAi",
+      "type": "n8n-nodes-base.httpRequest",
       "position": [1640, 300],
-      "typeVersion": 1.4,
-      "continueOnFail": true
+      "typeVersion": 4.2,
+      "continueOnFail": true,
+      "id": "node-008"
     },
     {
       "parameters": {
@@ -106,6 +114,7 @@
           },
           "conditions": [
             {
+              "id": "condition-1",
               "leftValue": "={{$json.data}}",
               "rightValue": "",
               "operator": {
@@ -121,7 +130,8 @@
       "name": "DALL-E Failed?",
       "type": "n8n-nodes-base.if",
       "position": [1840, 400],
-      "typeVersion": 2
+      "typeVersion": 2,
+      "id": "node-009"
     },
     {
       "parameters": {
@@ -138,7 +148,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "position": [2040, 500],
       "typeVersion": 4.2,
-      "notes": "Generates video with Sora watermark. Note: Video will contain Sora branding."
+      "notes": "Generates video with Sora watermark. Video will contain Sora branding.",
+      "id": "node-010"
     },
     {
       "parameters": {
@@ -149,16 +160,17 @@
       "name": "Merge Results",
       "type": "n8n-nodes-base.merge",
       "position": [2240, 350],
-      "typeVersion": 3
+      "typeVersion": 3,
+      "id": "node-011"
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "summary",
+              "id": "summary-id",
               "name": "summary",
-              "value": "=✅ POST READY!\\n\\nProduct: {{$node['Parse Response'].json.product.name}}\\nPrice: ${{$node['Parse Response'].json.product.price}}\\n\\nCaption:\\n{{$node['Parse Response'].json.caption}}\\n\\nHashtags:\\n{{$node['Parse Response'].json.hashtags.join(' #')}}\\n\\n{{$node['Try DALL-E'].json.data ? 'Image URL: ' + $node['Try DALL-E'].json.data[0].url : 'Video URL: ' + $json.video_url}}\\n\\nSource: {{$node['Try DALL-E'].json.data ? 'DALL-E' : 'Sora 2 (with watermark)'}}\\n\\nOriginal Image: {{$node['Parse Response'].json.product.original_image_url}}",
+              "value": "=✅ POST READY!\\n\\nProduct: {{$node['Parse Response'].json.product.name}}\\nPrice: ${{$node['Parse Response'].json.product.price}}\\n\\nCaption:\\n{{$node['Parse Response'].json.caption}}\\n\\nHashtags:\\n#{{$node['Parse Response'].json.hashtags.join(' #')}}\\n\\n{{$node['Try DALL-E'].json.data ? 'Image URL: ' + $node['Try DALL-E'].json.data[0].url : 'Video URL: ' + $json.video_url}}\\n\\nSource: {{$node['Try DALL-E'].json.data ? 'DALL-E' : 'Sora 2 (with watermark)'}}\\n\\nOriginal Image: {{$node['Parse Response'].json.product.original_image_url}}",
               "type": "string"
             }
           ]
@@ -168,26 +180,27 @@
       "name": "Success",
       "type": "n8n-nodes-base.set",
       "position": [2440, 350],
-      "typeVersion": 3.3
+      "typeVersion": 3.3,
+      "id": "node-012"
     }
   ],
   "connections": {
-    "Every 8 Hours": {"main": [[{"node": "Fetch Products"}]]},
-    "Fetch Products": {"main": [[{"node": "Select Product"}]]},
-    "Select Product": {"main": [[{"node": "Map to Image"}]]},
-    "Map to Image": {"main": [[{"node": "Fetch Original Image"}]]},
-    "Fetch Original Image": {"main": [[{"node": "Generate Copy (GPT-4)"}]]},
-    "Generate Copy (GPT-4)": {"main": [[{"node": "Parse Response"}]]},
-    "Parse Response": {"main": [[{"node": "Try DALL-E"}]]},
-    "Try DALL-E": {"main": [[{"node": "DALL-E Failed?"}]]},
+    "Every 8 Hours": {"main": [[{"node": "Fetch Products", "type": "main", "index": 0}]]},
+    "Fetch Products": {"main": [[{"node": "Select Product", "type": "main", "index": 0}]]},
+    "Select Product": {"main": [[{"node": "Map to Image", "type": "main", "index": 0}]]},
+    "Map to Image": {"main": [[{"node": "Fetch Original Image", "type": "main", "index": 0}]]},
+    "Fetch Original Image": {"main": [[{"node": "Generate Copy (GPT-4)", "type": "main", "index": 0}]]},
+    "Generate Copy (GPT-4)": {"main": [[{"node": "Parse Response", "type": "main", "index": 0}]]},
+    "Parse Response": {"main": [[{"node": "Try DALL-E", "type": "main", "index": 0}]]},
+    "Try DALL-E": {"main": [[{"node": "DALL-E Failed?", "type": "main", "index": 0}]]},
     "DALL-E Failed?": {
       "main": [
-        [{"node": "Merge Results"}],
-        [{"node": "Sora 2 Video (Has Watermark)"}]
+        [{"node": "Merge Results", "type": "main", "index": 0}],
+        [{"node": "Sora 2 Video (Has Watermark)", "type": "main", "index": 0}]
       ]
     },
-    "Sora 2 Video (Has Watermark)": {"main": [[{"node": "Merge Results"}]]},
-    "Merge Results": {"main": [[{"node": "Success"}]]}
+    "Sora 2 Video (Has Watermark)": {"main": [[{"node": "Merge Results", "type": "main", "index": 1}]]},
+    "Merge Results": {"main": [[{"node": "Success", "type": "main", "index": 0}]]}
   },
   "settings": {
     "executionOrder": "v1"
