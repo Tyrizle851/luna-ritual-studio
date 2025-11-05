@@ -1,0 +1,206 @@
+{
+  "name": "Instagram Auto-Poster - COMPLETE",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "hours", "hoursInterval": 8}]
+        }
+      },
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 400],
+      "id": "node-1"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/claude/analyze-ecommerce-repo-011CUmX7vgr4TvhMyFqheZMx/automation/data/products.json",
+        "options": {}
+      },
+      "name": "Fetch Products from GitHub",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 400],
+      "id": "node-2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Select random product that hasn't been posted recently\nconst products = $input.item.json;\nconst now = new Date();\n\nconst availableProducts = products.filter(p => {\n  if (!p.last_posted) return true;\n  const daysSince = (now - new Date(p.last_posted)) / (1000 * 60 * 60 * 24);\n  return daysSince > 3;\n});\n\nconst pool = availableProducts.length > 0 ? availableProducts : products;\nconst selected = pool[Math.floor(Math.random() * pool.length)];\n\nreturn { json: selected };"
+      },
+      "name": "Select Random Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 400],
+      "id": "node-3"
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": "gpt-4-turbo",
+        "prompt": "=Create an Instagram post for this product:\n\nProduct: {{ $json.name }}\nCategory: {{ $json.category }}\nDescription: {{ $json.description }}\nPrice: ${{ $json.price }}\n{{ $json.benefits ? 'Benefits: ' + $json.benefits.join(', ') : '' }}\n\nCreate a post that:\n1. Has an attention-grabbing hook\n2. Highlights benefits naturally\n3. Creates emotional connection\n4. Includes call-to-action\n5. Uses 2-4 emojis max\n6. Is authentic, not salesy\n\nReturn ONLY valid JSON (no markdown):\n{\n  \"caption\": \"engaging 2-3 sentence caption\",\n  \"hashtags\": [\"wellness\", \"selfcare\", \"mindfulness\", \"lunarituals\", \"shopsmall\"],\n  \"image_prompt\": \"detailed DALL-E prompt for aesthetic product photo\"\n}",
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 500
+        }
+      },
+      "name": "Generate Ad Copy",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [840, 400],
+      "id": "node-4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse GPT-4 response\nlet content;\n\nif ($input.item.json.choices && $input.item.json.choices[0]) {\n  content = $input.item.json.choices[0].message.content;\n} else if ($input.item.json.message && $input.item.json.message.content) {\n  content = $input.item.json.message.content;\n} else if ($input.item.json.content) {\n  content = $input.item.json.content;\n} else if (typeof $input.item.json === 'string') {\n  content = $input.item.json;\n} else {\n  content = JSON.stringify($input.item.json);\n}\n\ncontent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n\ntry {\n  const parsed = JSON.parse(content);\n  return {\n    json: {\n      product: $node['Select Random Product'].json,\n      caption: parsed.caption,\n      hashtags: parsed.hashtags,\n      image_prompt: parsed.image_prompt\n    }\n  };\n} catch (e) {\n  return {\n    json: {\n      product: $node['Select Random Product'].json,\n      caption: content.substring(0, 200),\n      hashtags: ['wellness', 'selfcare', 'lunarituals'],\n      image_prompt: `Professional product photography of ${$node['Select Random Product'].json.name}, aesthetic, soft lighting`\n    }\n  };\n}"
+      },
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1040, 400],
+      "id": "node-5"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "generate",
+        "model": "dall-e-3",
+        "prompt": "={{ $json.image_prompt }}. Professional product photography, aesthetic wellness brand, soft natural lighting, Instagram-worthy, minimalist clean background, high quality commercial photo, 1:1 square format",
+        "options": {
+          "size": "1024x1024",
+          "quality": "hd",
+          "style": "natural"
+        }
+      },
+      "name": "Generate Image",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [1240, 400],
+      "id": "node-6"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "image_file"
+            }
+          }
+        }
+      },
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1440, 400],
+      "id": "node-7"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_ACCOUNT_ID }}/media",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"image_url\": \"{{ $json.data[0].url }}\",\n  \"caption\": \"{{ $node['Parse Response'].json.caption }}\\n\\n{{ $node['Parse Response'].json.hashtags.map(t => '#' + t).join(' ') }}\\n\\n🔗 Shop: luna-ritual-studio.com\",\n  \"access_token\": \"{{ $credentials.metaApi.accessToken }}\"\n}",
+        "options": {}
+      },
+      "name": "Create Instagram Container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1640, 400],
+      "disabled": true,
+      "id": "node-8",
+      "notes": "ENABLE THIS AFTER INSTAGRAM AUTH"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.INSTAGRAM_ACCOUNT_ID }}/media_publish",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"creation_id\": \"{{ $node['Create Instagram Container'].json.id }}\",\n  \"access_token\": \"{{ $credentials.metaApi.accessToken }}\"\n}",
+        "options": {}
+      },
+      "name": "Publish to Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1840, 400],
+      "disabled": true,
+      "id": "node-9",
+      "notes": "ENABLE THIS AFTER INSTAGRAM AUTH"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node['Download Image'].json.image_file }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "name": "Check If Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1640, 600],
+      "id": "node-10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "success",
+              "name": "success",
+              "value": "=✅ POST READY!\n\nProduct: {{ $node['Parse Response'].json.product.name }}\n\nCaption:\n{{ $node['Parse Response'].json.caption }}\n\nHashtags:\n{{ $node['Parse Response'].json.hashtags.map(t => '#' + t).join(' ') }}\n\nImage URL:\n{{ $node['Generate Image'].json.data[0].url }}\n\n💰 Cost: ~$0.05\n📸 Image saved and ready to post\n🔗 Shop: luna-ritual-studio.com",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "name": "Success Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1840, 550],
+      "id": "node-11"
+    }
+  ],
+  "connections": {
+    "Every 8 Hours": {
+      "main": [[{"node": "Fetch Products from GitHub", "type": "main", "index": 0}]]
+    },
+    "Fetch Products from GitHub": {
+      "main": [[{"node": "Select Random Product", "type": "main", "index": 0}]]
+    },
+    "Select Random Product": {
+      "main": [[{"node": "Generate Ad Copy", "type": "main", "index": 0}]]
+    },
+    "Generate Ad Copy": {
+      "main": [[{"node": "Parse Response", "type": "main", "index": 0}]]
+    },
+    "Parse Response": {
+      "main": [[{"node": "Generate Image", "type": "main", "index": 0}]]
+    },
+    "Generate Image": {
+      "main": [[{"node": "Download Image", "type": "main", "index": 0}]]
+    },
+    "Download Image": {
+      "main": [[
+        {"node": "Check If Success", "type": "main", "index": 0},
+        {"node": "Create Instagram Container", "type": "main", "index": 0}
+      ]]
+    },
+    "Create Instagram Container": {
+      "main": [[{"node": "Publish to Instagram", "type": "main", "index": 0}]]
+    },
+    "Check If Success": {
+      "main": [[{"node": "Success Summary", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

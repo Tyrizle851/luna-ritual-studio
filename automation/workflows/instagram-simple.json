@@ -1,0 +1,137 @@
+{
+  "name": "Instagram Auto-Poster (SIMPLE)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "product_name",
+              "name": "product_name",
+              "value": "Luna Candle",
+              "type": "string"
+            },
+            {
+              "id": "product_description",
+              "name": "product_description",
+              "value": "Soothing lavender scented candle for relaxation",
+              "type": "string"
+            },
+            {
+              "id": "product_price",
+              "name": "product_price",
+              "value": "38",
+              "type": "number"
+            },
+            {
+              "id": "product_category",
+              "name": "product_category",
+              "value": "candles",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Product Data (Manual)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "chat",
+        "operation": "message",
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4-turbo-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an expert Instagram content creator for wellness brands. Create engaging, authentic posts."
+            },
+            {
+              "role": "user",
+              "content": "=Create an Instagram post for this product:\n\nProduct: {{ $json.product_name }}\nDescription: {{ $json.product_description }}\nPrice: ${{ $json.product_price }}\n\nReturn ONLY valid JSON:\n{\n  \"caption\": \"engaging caption here\",\n  \"hashtags\": [\"wellness\", \"selfcare\", \"lunarituals\"],\n  \"image_prompt\": \"product photography prompt\"\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 500
+        }
+      },
+      "name": "Generate Copy (GPT-4)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "let content = $input.item.json.message.content;\ncontent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\nconst parsed = JSON.parse(content);\nreturn { json: parsed };"
+      },
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "image",
+        "operation": "generate",
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "dall-e-3"
+        },
+        "prompt": "={{ $json.image_prompt }}. Professional product photography, aesthetic, soft lighting, 1:1 square",
+        "options": {
+          "size": "1024x1024",
+          "quality": "hd"
+        }
+      },
+      "name": "Generate Image (DALL-E)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.4,
+      "position": [1040, 300]
+    }
+  ],
+  "connections": {
+    "Every 8 Hours": {
+      "main": [[{"node": "Product Data (Manual)", "type": "main", "index": 0}]]
+    },
+    "Product Data (Manual)": {
+      "main": [[{"node": "Generate Copy (GPT-4)", "type": "main", "index": 0}]]
+    },
+    "Generate Copy (GPT-4)": {
+      "main": [[{"node": "Parse Response", "type": "main", "index": 0}]]
+    },
+    "Parse Response": {
+      "main": [[{"node": "Generate Image (DALL-E)", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
