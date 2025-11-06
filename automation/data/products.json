@@ -1,1103 +1,198 @@
-[
-  {
-    "id": "aff-001",
-    "title": "I am worthy of rest",
-    "category": "affirmations",
-    "description": "A gentle reminder that rest is not earned—it is your right. Soft earth tones with delicate script.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "featured": true,
-    "tags": [
-      "rest",
-      "self-care",
-      "boundaries"
-    ],
-    "synced_at": "2025-11-03T20:25:16.998Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-002",
-    "title": "I choose joy today",
-    "category": "affirmations",
-    "description": "Every morning brings a choice. Choose joy, choose lightness, choose yourself.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "featured": true,
-    "tags": [
-      "joy",
-      "intention",
-      "morning"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-003",
-    "title": "Abundance flows to me",
-    "category": "affirmations",
-    "description": "Open your hands and heart. Abundance is your natural state.",
-    "price": 15,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "featured": true,
-    "tags": [
-      "abundance",
-      "wealth",
-      "receiving"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-004",
-    "title": "I trust my journey",
-    "category": "affirmations",
-    "description": "Every step is exactly where you need to be. Trust the unfolding.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "trust",
-      "journey",
-      "faith"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-005",
-    "title": "I am enough, always",
-    "category": "affirmations",
-    "description": "Not when you achieve more, not when you do more. Right now, as you are.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "featured": true,
-    "tags": [
-      "self-love",
-      "worthiness",
-      "acceptance"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-006",
-    "title": "My calm is my power",
-    "category": "affirmations",
-    "description": "In a world of chaos, your peace is revolutionary.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "featured": true,
-    "tags": [
-      "calm",
-      "power",
-      "peace"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-007",
-    "title": "I receive what I desire",
-    "category": "affirmations",
-    "description": "Your desires are not selfish—they are signposts to your purpose.",
-    "price": 15,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "receiving",
-      "desire",
-      "manifestation"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-008",
-    "title": "Today, I honor myself",
-    "category": "affirmations",
-    "description": "Small acts of self-honor create a life you do not need to escape from.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "honor",
-      "self-care",
-      "daily"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-009",
-    "title": "I release what no longer serves",
-    "category": "affirmations",
-    "description": "Letting go is not giving up. It is making room for what is meant for you.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "release",
-      "letting-go",
-      "growth"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-010",
-    "title": "Joy is my natural state",
-    "category": "affirmations",
-    "description": "You do not have to earn joy. It is already yours.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "joy",
-      "natural",
-      "happiness"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-011",
-    "title": "I am safe in my body",
-    "category": "affirmations",
-    "description": "Your body is not your enemy. It is your home.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "body",
-      "safety",
-      "acceptance"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-012",
-    "title": "My voice matters",
-    "category": "affirmations",
-    "description": "Speak your truth, even when your voice shakes.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "voice",
-      "truth",
-      "courage"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-013",
-    "title": "I am worthy of my dreams",
-    "category": "affirmations",
-    "description": "Your dreams chose you for a reason. Honor them.",
-    "price": 15,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "dreams",
-      "worthiness",
-      "purpose"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-014",
-    "title": "I choose peace over perfection",
-    "category": "affirmations",
-    "description": "Perfection is exhausting. Peace is possible.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "peace",
-      "perfection",
-      "rest"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-015",
-    "title": "I celebrate my progress",
-    "category": "affirmations",
-    "description": "Every step forward deserves recognition, no matter how small.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "progress",
-      "celebration",
-      "growth"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-016",
-    "title": "My intuition guides me",
-    "category": "affirmations",
-    "description": "That whisper inside? It knows the way.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "intuition",
-      "guidance",
-      "inner-wisdom"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-017",
-    "title": "I am open to miracles",
-    "category": "affirmations",
-    "description": "Magic happens when you believe it can.",
-    "price": 15,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "miracles",
-      "magic",
-      "possibility"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-018",
-    "title": "I give myself permission to feel",
-    "category": "affirmations",
-    "description": "All feelings are welcome here. You do not have to be strong all the time.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "feelings",
-      "permission",
-      "vulnerability"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-019",
-    "title": "I am creating the life I desire",
-    "category": "affirmations",
-    "description": "Every choice is a brushstroke. You are the artist.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "creation",
-      "life",
-      "intention"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-020",
-    "title": "Today is full of possibility",
-    "category": "affirmations",
-    "description": "Each sunrise brings infinite potential. What will you choose?",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "possibility",
-      "potential",
-      "today"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-021",
-    "title": "I am allowed to change my mind",
-    "category": "affirmations",
-    "description": "Growth means evolution. You are not stuck with old decisions.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "change",
-      "growth",
-      "permission"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-022",
-    "title": "My rest is productive",
-    "category": "affirmations",
-    "description": "Rest is not laziness. It is how you recharge your magic.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10"
-    ],
-    "image": "product-image",
-    "tags": [
-      "rest",
-      "productivity",
-      "recharge"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-023",
-    "title": "I attract what I embody",
-    "category": "affirmations",
-    "description": "Become the energy you wish to attract.",
-    "price": 15,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "attraction",
-      "embodiment",
-      "energy"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "aff-024",
-    "title": "I am both the storm and the calm",
-    "category": "affirmations",
-    "description": "You contain multitudes. All of you is welcome.",
-    "price": 12,
-    "formats": [
-      "Phone Wallpaper",
-      "Desktop Wallpaper",
-      "Print 8x10",
-      "Print 11x14"
-    ],
-    "image": "product-image",
-    "tags": [
-      "duality",
-      "wholeness",
-      "acceptance"
-    ],
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-001",
-    "name": "Fig & Cashmere",
-    "brand": "LunaRituals",
-    "scent": "Warm, Woody",
-    "description": "Light this when you need to come home to yourself",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-002",
-    "name": "Lavender Moon",
-    "brand": "LunaRituals",
-    "scent": "Floral, Calming",
-    "description": "Your evening ritual begins here",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-003",
-    "name": "Cedar & Sage",
-    "brand": "LunaRituals",
-    "scent": "Earthy, Grounding",
-    "description": "Cleanse your space, clear your mind",
-    "price": 42,
-    "burnTime": "60 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-004",
-    "name": "Vanilla Amber",
-    "brand": "LunaRituals",
-    "scent": "Sweet, Warm",
-    "description": "Cozy comfort in a jar",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-005",
-    "name": "Rose Garden",
-    "brand": "LunaRituals",
-    "scent": "Floral, Romantic",
-    "description": "Bloom where you are planted",
-    "price": 40,
-    "burnTime": "55 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-006",
-    "name": "Ocean Mist",
-    "brand": "LunaRituals",
-    "scent": "Fresh, Aquatic",
-    "description": "Bring the sea to your sanctuary",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-007",
-    "name": "Sandalwood Dreams",
-    "brand": "LunaRituals",
-    "scent": "Woody, Meditative",
-    "description": "Find your center in the chaos",
-    "price": 42,
-    "burnTime": "60 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-008",
-    "name": "Citrus Sunrise",
-    "brand": "LunaRituals",
-    "scent": "Bright, Energizing",
-    "description": "Start your day with intention",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-009",
-    "name": "White Tea & Ginger",
-    "brand": "LunaRituals",
-    "scent": "Clean, Spicy",
-    "description": "Clarity and warmth combined",
-    "price": 40,
-    "burnTime": "55 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-010",
-    "name": "Eucalyptus Mint",
-    "brand": "LunaRituals",
-    "scent": "Fresh, Herbal",
-    "description": "Breathe deeply, let go completely",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-011",
-    "name": "Black Currant & Jasmine",
-    "brand": "LunaRituals",
-    "scent": "Fruity, Floral",
-    "description": "Indulgence meets elegance",
-    "price": 42,
-    "burnTime": "60 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-012",
-    "name": "Tobacco & Oud",
-    "brand": "LunaRituals",
-    "scent": "Rich, Luxurious",
-    "description": "Sophistication in every flame",
-    "price": 45,
-    "burnTime": "65 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-013",
-    "name": "Palo Santo",
-    "brand": "LunaRituals",
-    "scent": "Sacred, Woody",
-    "description": "Ancient ritual for modern souls",
-    "price": 40,
-    "burnTime": "55 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-014",
-    "name": "Peony & Blush",
-    "brand": "LunaRituals",
-    "scent": "Soft, Romantic",
-    "description": "Gentle beauty for gentle souls",
-    "price": 38,
-    "burnTime": "50 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "cnd-015",
-    "name": "Bergamot & Moss",
-    "brand": "LunaRituals",
-    "scent": "Citrus, Earthy",
-    "description": "Where forest meets sunlight",
-    "price": 42,
-    "burnTime": "60 hours",
-    "image": "product-image",
-    "inStock": true,
-    "category": "candles",
-    "synced_at": "2025-11-03T20:25:16.999Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-001",
-    "name": "Linen Robe in Natural",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Sunday mornings deserve softness",
-    "price": 98,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "Natural",
-      "Clay",
-      "Sage"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-002",
-    "name": "Minimal Gold Hoops",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Everyday elegance",
-    "price": 98,
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-003",
-    "name": "Woven Market Tote",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "For farmers market mornings and spontaneous adventures",
-    "price": 125,
-    "colors": [
-      "Natural",
-      "Black",
-      "Tan"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-004",
-    "name": "Silk Sleep Set",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Luxurious comfort for restful nights",
-    "price": 165,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "Ivory",
-      "Blush",
-      "Charcoal"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-005",
-    "name": "Minimalist Gold Necklace",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Delicate and timeless",
-    "price": 68,
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-006",
-    "name": "Organic Cotton Crew Tee",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "The perfect tee exists",
-    "price": 38,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "colors": [
-      "White",
-      "Black",
-      "Clay",
-      "Sage"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-007",
-    "name": "Wide-Leg Linen Pants",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Comfortable elegance",
-    "price": 148,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "Natural",
-      "Black",
-      "Navy"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-008",
-    "name": "Cashmere Wrap Cardigan",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Softness you can wrap yourself in",
-    "price": 198,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "Cream",
-      "Camel",
-      "Grey"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-009",
-    "name": "Leather Crossbody Bag",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Timeless and versatile",
-    "price": 185,
-    "colors": [
-      "Tan",
-      "Black",
-      "Cognac"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-010",
-    "name": "Silk Hair Scrunchies Set",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Gentle on your hair, kind to your style",
-    "price": 32,
-    "colors": [
-      "Mixed Neutrals",
-      "Mixed Pastels"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-011",
-    "name": "Wool Fedora Hat",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Effortless style for every season",
-    "price": 78,
-    "colors": [
-      "Camel",
-      "Black",
-      "Olive"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-012",
-    "name": "Bamboo Sunglasses",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Sustainable style meets sun protection",
-    "price": 95,
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-013",
-    "name": "Linen Button-Down Shirt",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Breezy elegance for any occasion",
-    "price": 88,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "White",
-      "Natural",
-      "Chambray"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-014",
-    "name": "Cashmere Beanie",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Cozy luxury for chilly days",
-    "price": 58,
-    "colors": [
-      "Charcoal",
-      "Cream",
-      "Navy"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  },
-  {
-    "id": "fsh-015",
-    "name": "Silk Slip Dress",
-    "brand": "LunaRituals",
-    "category": "fashion",
-    "description": "Effortless elegance that flows",
-    "price": 178,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "Black",
-      "Champagne",
-      "Sage"
-    ],
-    "image": "product-image",
-    "inStock": true,
-    "synced_at": "2025-11-03T20:25:17.000Z",
-    "last_posted": null,
-    "total_posts": 0,
-    "avg_engagement": 0
-  }
-]
+{
+  "products": [
+    {
+      "id": "aff-001",
+      "name": "I am worthy of rest",
+      "title": "I am worthy of rest",
+      "category": "Affirmations",
+      "subcategory": "Self-Love",
+      "description": "A gentle reminder that rest is not earned—it is your right. Soft earth tones with delicate script.",
+      "price": 12,
+      "image": "affirmation-rest.jpg",
+      "tags": ["rest", "self-care", "boundaries"],
+      "priority": 10
+    },
+    {
+      "id": "aff-002",
+      "name": "I choose joy today",
+      "title": "I choose joy today",
+      "category": "Affirmations",
+      "subcategory": "Joy",
+      "description": "Every morning brings a choice. Choose joy, choose lightness, choose yourself.",
+      "price": 12,
+      "image": "affirmation-joy.jpg",
+      "tags": ["joy", "intention", "morning"],
+      "priority": 10
+    },
+    {
+      "id": "aff-003",
+      "name": "Abundance flows to me",
+      "title": "Abundance flows to me",
+      "category": "Affirmations",
+      "subcategory": "Abundance",
+      "description": "Open your hands and heart. Abundance is your natural state.",
+      "price": 15,
+      "image": "affirmation-abundance.jpg",
+      "tags": ["abundance", "wealth", "receiving"],
+      "priority": 10
+    },
+    {
+      "id": "aff-004",
+      "name": "I trust my journey",
+      "title": "I trust my journey",
+      "category": "Affirmations",
+      "subcategory": "Strength",
+      "description": "Every step is exactly where you need to be. Trust the unfolding.",
+      "price": 12,
+      "image": "affirmation-trust.jpg",
+      "tags": ["trust", "journey", "faith"],
+      "priority": 8
+    },
+    {
+      "id": "aff-005",
+      "name": "I am enough, always",
+      "title": "I am enough, always",
+      "category": "Affirmations",
+      "subcategory": "Self-Love",
+      "description": "Not when you achieve more, not when you do more. Right now, as you are.",
+      "price": 12,
+      "image": "affirmation-enough.jpg",
+      "tags": ["self-love", "worthiness", "acceptance"],
+      "priority": 10
+    },
+    {
+      "id": "aff-006",
+      "name": "My calm is my power",
+      "title": "My calm is my power",
+      "category": "Affirmations",
+      "subcategory": "Strength",
+      "description": "In a world of chaos, your peace is revolutionary.",
+      "price": 12,
+      "image": "affirmation-calm.jpg",
+      "tags": ["calm", "power", "peace"],
+      "priority": 10
+    },
+    {
+      "id": "cnd-001",
+      "name": "Fig & Cashmere Candle",
+      "title": "Fig & Cashmere",
+      "category": "Candles",
+      "subcategory": "Warm, Woody",
+      "description": "Light this when you need to come home to yourself",
+      "price": 38,
+      "image": "product-candle-1.jpg",
+      "tags": ["candle", "home", "ritual"],
+      "priority": 9
+    },
+    {
+      "id": "cnd-002",
+      "name": "Lavender Moon Candle",
+      "title": "Lavender Moon",
+      "category": "Candles",
+      "subcategory": "Floral, Calming",
+      "description": "Your evening ritual begins here",
+      "price": 38,
+      "image": "product-candle-2.jpg",
+      "tags": ["candle", "evening", "calm"],
+      "priority": 9
+    },
+    {
+      "id": "fsh-001",
+      "name": "Linen Robe in Natural",
+      "title": "Linen Robe in Natural",
+      "category": "Fashion",
+      "subcategory": "Loungewear",
+      "description": "Sunday mornings deserve softness",
+      "price": 98,
+      "image": "product-linen-robe.jpg",
+      "tags": ["fashion", "comfort", "loungewear"],
+      "priority": 7
+    },
+    {
+      "id": "fsh-002",
+      "name": "Minimal Gold Hoops",
+      "title": "Minimal Gold Hoops",
+      "category": "Fashion",
+      "subcategory": "Jewelry",
+      "description": "Everyday elegance",
+      "price": 98,
+      "image": "product-hoops.jpg",
+      "tags": ["jewelry", "elegant", "minimal"],
+      "priority": 7
+    },
+    {
+      "id": "fsh-003",
+      "name": "Woven Market Tote",
+      "title": "Woven Market Tote",
+      "category": "Fashion",
+      "subcategory": "Accessories",
+      "description": "For farmers market mornings and spontaneous adventures",
+      "price": 125,
+      "image": "product-tote.jpg",
+      "tags": ["accessories", "tote", "sustainable"],
+      "priority": 6
+    },
+    {
+      "id": "fsh-015",
+      "name": "Silk Slip Dress",
+      "title": "Silk Slip Dress",
+      "category": "Fashion",
+      "subcategory": "Dresses",
+      "description": "Effortless elegance that flows",
+      "price": 178,
+      "image": "product-slip-dress.jpg",
+      "tags": ["dress", "silk", "elegant"],
+      "priority": 8
+    },
+    {
+      "id": "sup-001",
+      "name": "Moon Cycle Support",
+      "title": "Moon Cycle Support",
+      "category": "Supplements",
+      "subcategory": "Hormonal Balance",
+      "description": "Natural support for your monthly rhythm",
+      "price": 48,
+      "image": "product-supplement-1.jpg",
+      "tags": ["wellness", "hormones", "balance"],
+      "priority": 6
+    },
+    {
+      "id": "sup-002",
+      "name": "Calm & Clarity",
+      "title": "Calm & Clarity",
+      "category": "Supplements",
+      "subcategory": "Mental Wellness",
+      "description": "Adaptogenic blend for stress and focus",
+      "price": 42,
+      "image": "product-supplement-2.jpg",
+      "tags": ["wellness", "stress", "focus"],
+      "priority": 7
+    },
+    {
+      "id": "afl-001",
+      "name": "Linen Robe in Natural",
+      "title": "Linen Robe in Natural",
+      "category": "Affiliate Products",
+      "subcategory": "Fashion",
+      "description": "Sunday mornings deserve softness",
+      "price": 88,
+      "affiliate_link": "https://example.com/linen-robe",
+      "image": "product-linen-robe.jpg",
+      "tags": ["affiliate", "loungewear", "comfort"],
+      "priority": 5
+    },
+    {
+      "id": "afl-002",
+      "name": "Fig & Cashmere Ceramic Candle",
+      "title": "Fig & Cashmere Ceramic Candle",
+      "category": "Affiliate Products",
+      "subcategory": "Home",
+      "description": "Light this when you need to come home to yourself",
+      "price": 38,
+      "affiliate_link": "https://example.com/candle",
+      "image": "product-candle.jpg",
+      "tags": ["affiliate", "candle", "home"],
+      "priority": 5
+    }
+  ]
+}
