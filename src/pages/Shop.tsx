@@ -209,12 +209,12 @@ const Shop = () => {
           </div>
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8 sm:mb-12 h-auto">
-            <TabsTrigger value="fashion" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Fashion</TabsTrigger>
-            <TabsTrigger value="candles" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Candles</TabsTrigger>
-            <TabsTrigger value="supplements" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Supplements</TabsTrigger>
-            <TabsTrigger value="books" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Books</TabsTrigger>
-            <TabsTrigger value="affirmations" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Affirmations</TabsTrigger>
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8 sm:mb-12 h-auto gap-1">
+            <TabsTrigger value="fashion" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Fashion</TabsTrigger>
+            <TabsTrigger value="candles" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Candles</TabsTrigger>
+            <TabsTrigger value="supplements" className="text-[11px] sm:text-sm px-1 sm:px-3 py-2.5 tab-transition font-medium">Supplements</TabsTrigger>
+            <TabsTrigger value="books" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Books</TabsTrigger>
+            <TabsTrigger value="affirmations" className="text-[11px] sm:text-sm px-1 sm:px-3 py-2.5 tab-transition font-medium">Affirmations</TabsTrigger>
           </TabsList>
 
           <AnimatePresence mode="wait">
