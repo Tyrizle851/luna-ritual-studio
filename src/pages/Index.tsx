@@ -31,23 +31,23 @@ const Index = () => {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards]"
+          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards] brightness-[0.85]"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/60 to-background/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/70 to-background/80" />
         <div className="relative z-10 container-custom max-w-4xl">
-          <h1 className="mb-6 text-balance">
+          <h1 className="mb-6 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
             Affirmations for women building calm, beautiful lives
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-balance text-text-secondary">
+          <p className="text-xl md:text-2xl mb-8 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
             Digital art and curated goods for intentional living
           </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-clay hover:bg-clay-dark text-white">
+            <Button asChild size="lg" className="bg-clay-dark hover:bg-[hsl(27,28%,54%)] text-white shadow-lg">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-clay text-clay hover:bg-clay/10">
+            <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
               <Link to="/journal">Explore The Journal</Link>
             </Button>
           </div>

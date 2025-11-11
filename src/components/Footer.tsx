@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Instagram, Send } from "lucide-react";
+import { Instagram, Send, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -59,6 +59,11 @@ export const Footer = () => {
               <li>
                 <Link to="/shop?tab=affirmations" className="text-text-secondary hover:text-clay transition-colors">
                   Affirmations
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop?tab=books" className="text-text-secondary hover:text-clay transition-colors">
+                  Books
                 </Link>
               </li>
             </ul>
@@ -129,6 +134,15 @@ export const Footer = () => {
               aria-label="Instagram"
             >
               <Instagram className="h-5 w-5" />
+            </a>
+            <a
+              href="https://tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-secondary hover:text-clay transition-colors"
+              aria-label="TikTok"
+            >
+              <Video className="h-5 w-5" />
             </a>
             <a
               href="https://pinterest.com"

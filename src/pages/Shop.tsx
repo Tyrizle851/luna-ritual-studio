@@ -24,6 +24,7 @@ import { fashionProducts } from "@/data/fashion";
 import { candles } from "@/data/candles";
 import { supplements } from "@/data/supplements";
 import { affirmations } from "@/data/affirmations";
+import { books } from "@/data/books";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 
@@ -39,13 +40,14 @@ const Shop = () => {
   
   useEffect(() => {
     const tab = searchParams.get("tab");
-    if (tab && ["fashion", "candles", "supplements", "affirmations"].includes(tab)) {
+    if (tab && ["fashion", "candles", "supplements", "affirmations", "books"].includes(tab)) {
       setSelectedTab(tab);
     }
   }, [searchParams]);
   const [candlesPage, setCandlesPage] = useState(1);
   const [supplementsPage, setSupplementsPage] = useState(1);
   const [affirmationsPage, setAffirmationsPage] = useState(1);
+  const [booksPage, setBooksPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -207,10 +209,11 @@ const Shop = () => {
           </div>
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8 sm:mb-12 h-auto">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8 sm:mb-12 h-auto">
             <TabsTrigger value="fashion" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Fashion</TabsTrigger>
             <TabsTrigger value="candles" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Candles</TabsTrigger>
             <TabsTrigger value="supplements" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Supplements</TabsTrigger>
+            <TabsTrigger value="books" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Books</TabsTrigger>
             <TabsTrigger value="affirmations" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 tab-transition">Affirmations</TabsTrigger>
           </TabsList>
 
@@ -415,6 +418,57 @@ const Shop = () => {
                 </div>
               )}
               {renderPagination(affirmationsPage, getTotalPages(getFilteredCount(affirmations)), setAffirmationsPage)}
+            </motion.div>
+          </TabsContent>
+
+          {/* Books Tab */}
+          <TabsContent value="books" key="books">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <p className="text-sm text-text-muted mb-4">
+                Showing {getPaginatedItems(books, booksPage).length} of {getFilteredCount(books)} items
+              </p>
+              
+              {isLoading ? (
+                <ProductGridSkeleton />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {getPaginatedItems(books, booksPage).map((book) => (
+                    <div key={book.id} className="group relative">
+                      <WishlistButton productId={book.id} />
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[3/4] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                        <img
+                          src={book.image}
+                          alt={book.title}
+                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
+                      <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
+                      <p className="text-xs text-text-muted mb-2">by {book.author}</p>
+                      <p className="text-sm text-text-secondary leading-relaxed mb-4">{book.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-base font-semibold text-text-primary">${book.price}</span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          asChild
+                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                        >
+                          <a href={book.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                            View Book <ExternalLink className="ml-1 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {renderPagination(booksPage, getTotalPages(getFilteredCount(books)), setBooksPage)}
             </motion.div>
           </TabsContent>
           </AnimatePresence>
