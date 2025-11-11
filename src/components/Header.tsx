@@ -70,28 +70,34 @@ export const Header = () => {
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
               )}
             </button>
-            <div className="absolute top-full left-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            <div className="absolute top-full left-0 mt-2 w-44 bg-background border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <Link 
                 to="/shop?tab=fashion" 
-                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+                className="block px-4 py-2 text-sm hover:bg-secondary transition-colors"
               >
                 Fashion
               </Link>
               <Link 
                 to="/shop?tab=candles" 
-                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+                className="block px-4 py-2 text-sm hover:bg-secondary transition-colors"
               >
                 Candles
               </Link>
               <Link 
                 to="/shop?tab=supplements" 
-                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+                className="block px-4 py-2 text-sm hover:bg-secondary transition-colors"
               >
                 Supplements
               </Link>
               <Link 
+                to="/shop?tab=books" 
+                className="block px-4 py-2 text-sm hover:bg-secondary transition-colors"
+              >
+                Books
+              </Link>
+              <Link 
                 to="/shop?tab=affirmations" 
-                className="block px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
+                className="block px-4 py-2 text-sm hover:bg-secondary transition-colors"
               >
                 Affirmations
               </Link>
@@ -229,6 +235,13 @@ export const Header = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Supplements
+                  </Link>
+                  <Link
+                    to="/shop?tab=books"
+                    className="text-base hover:text-clay transition-colors pl-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Books
                   </Link>
                   <Link
                     to="/shop?tab=affirmations"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Instagram, Send, Video } from "lucide-react";
+import { Instagram, Send, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -142,7 +142,7 @@ export const Footer = () => {
               className="text-text-secondary hover:text-clay transition-colors"
               aria-label="TikTok"
             >
-              <Video className="h-5 w-5" />
+              <Music className="h-5 w-5" />
             </a>
             <a
               href="https://pinterest.com"
