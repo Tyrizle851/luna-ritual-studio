@@ -56,20 +56,20 @@ const Index = () => {
           <div className="mt-12 text-center">
             <div className="inline-flex flex-col items-center gap-3 p-6 rounded-lg bg-white/15 backdrop-blur-md border border-white/30 hover:bg-white/25 hover:border-white/40 transition-all duration-300 shadow-lg">
               <div className="flex items-center gap-2">
-                <Sprout className="h-5 w-5 text-clay-dark" />
-                <span className="text-sm text-clay-dark font-semibold uppercase tracking-wider drop-shadow-sm">Create Your Own</span>
-                <Wand2 className="h-5 w-5 text-clay-dark" />
+                <Sprout className="h-5 w-5 text-[#2a1810]" />
+                <span className="text-sm text-[#2a1810] font-semibold uppercase tracking-wider drop-shadow-sm">Create Your Own</span>
+                <Wand2 className="h-5 w-5 text-[#2a1810]" />
               </div>
               <Link 
                 to="/affirmation-builder" 
-                className="text-xl font-display text-clay-dark font-semibold hover:text-text-primary transition-colors group drop-shadow-md"
+                className="text-xl font-display text-[#2a1810] font-semibold hover:text-text-primary transition-colors group drop-shadow-md"
               >
                 <span className="relative">
                   Custom Affirmation Builder
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-clay-dark transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2a1810] transition-all duration-300 group-hover:w-full"></span>
                 </span>
               </Link>
-              <p className="text-sm text-clay-dark/90 max-w-xs font-medium drop-shadow-sm">Design personalized affirmations tailored to your journey</p>
+              <p className="text-sm text-[#2a1810]/90 max-w-xs font-medium drop-shadow-sm">Design personalized affirmations tailored to your journey</p>
             </div>
           </div>
         </div>
