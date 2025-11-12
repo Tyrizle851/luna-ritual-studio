@@ -11,7 +11,7 @@ export const PromotionalBanner = () => {
     <div className="bg-gradient-to-r from-clay to-gold text-white py-3 px-4 relative">
       <div className="container-custom flex items-center justify-center gap-4 text-center">
         <p className="text-sm font-medium">
-          ✨ New Customer Special: Use code <span className="font-bold">WELCOME15</span> for 15% off your first order
+          ✨ Subscription Special: Unlock unlimited affirmation generations with Premium
         </p>
         <Button
           variant="ghost"

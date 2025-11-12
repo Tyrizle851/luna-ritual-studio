@@ -25,7 +25,7 @@ export const books: Book[] = [
     id: "book-000",
     title: "Throne of Glass",
     author: "Sarah J. Maas",
-    price: 18,
+    price: 16.88,
     image: throneOfGlassImage,
     description: "A captivating fantasy epic about Celaena Sardothien, a legendary assassin who must compete for her freedom in a deadly tournament. Perfect for those who crave adventure, romance, and a fierce heroine who will stop at nothing to reclaim her destiny.",
     category: "Fantasy",
