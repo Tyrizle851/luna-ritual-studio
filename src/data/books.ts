@@ -1,3 +1,4 @@
+import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
 import bookImage from "@/assets/product-book.jpg";
 import candleImage1 from "@/assets/product-candle-1.jpg";
 import candleImage2 from "@/assets/product-candle-2.jpg";
@@ -20,6 +21,17 @@ export interface Book {
 }
 
 export const books: Book[] = [
+  {
+    id: "book-000",
+    title: "Throne of Glass",
+    author: "Sarah J. Maas",
+    price: 18,
+    image: throneOfGlassImage,
+    description: "A captivating fantasy epic about Celaena Sardothien, a legendary assassin who must compete for her freedom in a deadly tournament. Perfect for those who crave adventure, romance, and a fierce heroine who will stop at nothing to reclaim her destiny.",
+    category: "Fantasy",
+    affiliateUrl: "https://amzn.to/4hTBnBz",
+    rating: 4.9
+  },
   {
     id: "book-001",
     title: "The Art of Slow Living",
