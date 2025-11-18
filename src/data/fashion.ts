@@ -14,6 +14,11 @@ import productSunglasses from "@/assets/product-sunglasses.jpg";
 import productLinenShirt from "@/assets/product-linen-shirt.jpg";
 import productBeanie from "@/assets/product-beanie.jpg";
 import productSlipDress from "@/assets/product-slip-dress.jpg";
+import productBlackJeans from "@/assets/product-black-jeans.jpg";
+import productBlueJeggings from "@/assets/product-blue-jeggings.jpg";
+import productYogaPants from "@/assets/product-yoga-pants.jpg";
+import productPlaidShacket from "@/assets/product-plaid-shacket.jpg";
+import productBrownSweater from "@/assets/product-brown-sweater.jpg";
 
 export interface FashionProduct {
   id: string;
@@ -206,5 +211,70 @@ export const fashionProducts: FashionProduct[] = [
     colors: ["Black", "Champagne", "Sage"],
     image: productSlipDress,
     inStock: true,
+  },
+  {
+    id: "fsh-016",
+    name: "High Waisted Skinny Jeans",
+    brand: "LunaRituals",
+    category: "Bottoms",
+    description: "Classic black high-waisted skinny jeans with stretch comfort. Perfect for everyday wear with a flattering fit that hugs your curves. Features a button closure and timeless design that pairs with everything in your wardrobe.",
+    price: 24.99,
+    sizes: ["S", "M", "L", "XL", "1X", "2X", "3X"],
+    colors: ["Black"],
+    image: productBlackJeans,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/4nY2ZXH",
+  },
+  {
+    id: "fsh-017",
+    name: "High Waist Stretchy Jeggings",
+    brand: "LunaRituals",
+    category: "Bottoms",
+    description: "Ultra-comfortable stretchy jeggings with tummy control and a flattering high waist design. The perfect blend of style and comfort with functional pockets. Casual yet polished enough for any occasion.",
+    price: 24.99,
+    sizes: ["S", "M", "L", "XL", "1X", "2X"],
+    colors: ["Dark Denim"],
+    image: productBlueJeggings,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/4p5ZYGp",
+  },
+  {
+    id: "fsh-018",
+    name: "High Waist Yoga Pants",
+    brand: "LunaRituals",
+    category: "Activewear",
+    description: "Soft stretch casual straight leg bottoms designed for all-day comfort. Features a high waist for support and flattering fit. Perfect for yoga, lounging, or casual outings with their versatile straight leg design.",
+    price: 32.99,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Black"],
+    image: productYogaPants,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/3X6sOKe",
+  },
+  {
+    id: "fsh-019",
+    name: "Plaid Shacket Jacket",
+    brand: "LunaRituals",
+    category: "Outerwear",
+    description: "Cozy fall fashion meets classic style with this plaid flannel shacket. Features a button-down front and relaxed fit perfect for layering. The timeless camel and cream plaid pattern adds sophistication to any casual outfit.",
+    price: 29.89,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Camel Plaid", "Grey Plaid"],
+    image: productPlaidShacket,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/4oRYm2I",
+  },
+  {
+    id: "fsh-020",
+    name: "Oversized Batwing Sweater",
+    brand: "LunaRituals",
+    category: "Knitwear",
+    description: "Trendy oversized crewneck knit pullover with distinctive side slit design and batwing sleeves. This fashion-forward sweater offers cozy comfort with an elevated asymmetric hemline. Perfect for creating effortless 2025 fall outfits.",
+    price: 36.99,
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Brown", "Black", "Grey"],
+    image: productBrownSweater,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/4r7zl52",
   },
 ];
