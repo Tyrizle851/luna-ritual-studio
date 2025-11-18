@@ -26,6 +26,7 @@ export interface Supplement {
   servings: string;
   image: string;
   inStock: boolean;
+  affiliateUrl?: string;
 }
 
 export const supplements: Supplement[] = [

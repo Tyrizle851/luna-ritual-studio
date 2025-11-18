@@ -365,14 +365,23 @@ const Shop = () => {
                   <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={() => handleAddToCart(supplement, "supplement")}
-                    >
-                      Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      {supplement.affiliateUrl && (
+                        <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                        onClick={() => supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement")}
+                      >
+                        {supplement.affiliateUrl ? (
+                          <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
+                        ) : (
+                          <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
+                        )}
+                      </Button>
+                    </div>
                       </div>
                     </div>
                   ))}
