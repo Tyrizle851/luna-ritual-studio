@@ -1,3 +1,4 @@
+import productLaceBlouse from "@/assets/product-lace-blouse.jpg";
 import productLinenRobe from "@/assets/product-linen-robe.jpg";
 import productHoops from "@/assets/product-hoops.jpg";
 import productTote from "@/assets/product-tote.jpg";
@@ -25,20 +26,22 @@ export interface FashionProduct {
   colors?: string[];
   image: string;
   inStock: boolean;
+  affiliateUrl?: string;
 }
 
 export const fashionProducts: FashionProduct[] = [
   {
     id: "fsh-001",
-    name: "Linen Robe in Natural",
+    name: "Elegant Lace Sleeve Blouse",
     brand: "LunaRituals",
-    category: "Loungewear",
-    description: "Sunday mornings deserve softness",
-    price: 98,
+    category: "Tops",
+    description: "Sophisticated pleated detail meets delicate lace sleeves in this versatile top. Perfect for elevating your everyday wardrobe with a touch of feminine elegance. Pair with jeans for casual chic or dress pants for the office.",
+    price: 14.99,
     sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Natural", "Clay", "Sage"],
-    image: productLinenRobe,
+    colors: ["Taupe", "Cream", "Sage"],
+    image: productLaceBlouse,
     inStock: true,
+    affiliateUrl: "https://amzn.to/49Z30au",
   },
   {
     id: "fsh-002",
