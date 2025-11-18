@@ -1,7 +1,7 @@
 import productLaceBlouse from "@/assets/product-lace-blouse.jpg";
 import productLinenRobe from "@/assets/product-linen-robe.jpg";
 import productChunkyCardigan from "@/assets/product-chunky-cardigan.jpg";
-import productTote from "@/assets/product-tote.jpg";
+import productQuiltedShoulderBag from "@/assets/product-quilted-shoulder-bag.jpg";
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
 import productGoldNecklace from "@/assets/product-gold-necklace.jpg";
 import productCottonTee from "@/assets/product-cotton-tee.jpg";
@@ -58,14 +58,15 @@ export const fashionProducts: FashionProduct[] = [
   },
   {
     id: "fsh-003",
-    name: "Woven Market Tote",
+    name: "Quilted Hobo Shoulder Bag",
     brand: "LunaRituals",
     category: "Accessories",
-    description: "For farmers market mornings and spontaneous adventures",
-    price: 125,
-    colors: ["Natural", "Black", "Tan"],
-    image: productTote,
+    description: "Timeless elegance meets everyday functionality in this retro-inspired quilted hobo bag. The soft clutch underarm design with gold hardware accents makes it perfect for both casual outings and refined occasions. A versatile piece that elevates any outfit.",
+    price: 22.99,
+    colors: ["Cream", "Black", "Taupe"],
+    image: productQuiltedShoulderBag,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4r7s5Gs",
   },
   {
     id: "fsh-004",
