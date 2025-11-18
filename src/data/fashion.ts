@@ -58,10 +58,10 @@ export const fashionProducts: FashionProduct[] = [
   },
   {
     id: "fsh-003",
-    name: "Quilted Hobo Shoulder Bag",
+    name: "Quilted Shoulder Bag",
     brand: "LunaRituals",
     category: "Accessories",
-    description: "Timeless elegance meets everyday functionality in this retro-inspired quilted hobo bag. The soft clutch underarm design with gold hardware accents makes it perfect for both casual outings and refined occasions. A versatile piece that elevates any outfit.",
+    description: "Timeless elegance meets everyday functionality in this retro-inspired quilted bag. The soft clutch underarm design with gold hardware accents makes it perfect for both casual outings and refined occasions. A versatile piece that elevates any outfit.",
     price: 22.99,
     colors: ["Cream", "Black", "Taupe"],
     image: productQuiltedShoulderBag,
