@@ -19,6 +19,10 @@ import productBlueJeggings from "@/assets/product-blue-jeggings.jpg";
 import productYogaPants from "@/assets/product-yoga-pants.jpg";
 import productPlaidShacket from "@/assets/product-plaid-shacket.jpg";
 import productBrownSweater from "@/assets/product-brown-sweater.jpg";
+import productPomBeanie from "@/assets/product-pom-beanie.jpg";
+import productWinterSet from "@/assets/product-winter-set.jpg";
+import productPufferCoat from "@/assets/product-puffer-coat.jpg";
+import productHoopEarrings from "@/assets/product-hoop-earrings.jpg";
 
 export interface FashionProduct {
   id: string;
@@ -276,5 +280,53 @@ export const fashionProducts: FashionProduct[] = [
     image: productBrownSweater,
     inStock: true,
     affiliateUrl: "https://amzn.to/4r7zl52",
+  },
+  {
+    id: "fsh-021",
+    name: "Faux Fur Pom Beanie Hat",
+    brand: "LunaRituals",
+    category: "Accessories",
+    description: "Cozy winter warmth meets timeless style with this knitted beanie featuring a luxurious faux fur pom. The warm knit skull cap design provides comfortable coverage while the statement fur pom adds a playful touch. Perfect for cold weather fashion.",
+    price: 12.99,
+    colors: ["Cream", "Black", "Grey", "Camel"],
+    image: productPomBeanie,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/48j4qeG",
+  },
+  {
+    id: "fsh-022",
+    name: "Winter Accessories Gift Set",
+    brand: "LunaRituals",
+    category: "Accessories",
+    description: "Complete winter essentials in one beautiful set: fleece-lined beanie, cozy long scarf, touchscreen-compatible gloves, and plush earmuffs. All crafted in soft knit fabric with warm fleece lining. The perfect 4-in-1 gift set for staying warm and stylish all winter.",
+    price: 29.99,
+    colors: ["Cream", "Black", "Grey"],
+    image: productWinterSet,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/3X5G3Ld",
+  },
+  {
+    id: "fsh-023",
+    name: "Hooded Puffer Parka Coat",
+    brand: "LunaRituals",
+    category: "Outerwear",
+    description: "Stay warm and chic with this thickened fleece-lined down jacket featuring a detachable faux fur hood. The waterproof parka design offers premium winter protection with a flattering silhouette. Practical pockets and adjustable drawstrings complete this essential cold-weather coat.",
+    price: 69.99,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Black", "Navy", "Army Green"],
+    image: productPufferCoat,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/4r5zRk9",
+  },
+  {
+    id: "fsh-024",
+    name: "14K Gold Plated Chunky Hoops",
+    brand: "LunaRituals",
+    category: "Jewelry",
+    description: "Elevate your everyday look with these hypoallergenic 14K gold plated chunky hoop earrings. Lightweight design perfect for sensitive ears, these non-tarnish huggie hoops are versatile enough for stacking or wearing alone. The set includes 3 pairs for endless styling options.",
+    price: 8.99,
+    image: productHoopEarrings,
+    inStock: true,
+    affiliateUrl: "https://amzn.to/43DMw3I",
   },
 ];
