@@ -4,6 +4,8 @@ import productCandleBalsamCedar from "@/assets/product-candle-balsam-cedar.jpg";
 import productCandleVanillaBean from "@/assets/product-candle-vanilla-bean.jpg";
 import productCandleVanillaPumpkin from "@/assets/product-candle-vanilla-pumpkin.jpg";
 import productCandleChristmasSet from "@/assets/product-candle-christmas-set.jpg";
+import productCandleSpicedPumpkin from "@/assets/product-candle-yankee-spiced-pumpkin-1763492171.jpg";
+import productCandleBalsamCedarNew from "@/assets/product-candle-yankee-balsam-cedar-1763492326.jpg";
 
 export interface Candle {
   id: string;
@@ -69,25 +71,27 @@ export const candles: Candle[] = [
   },
   {
     id: "cnd-005",
-    name: "Rose Garden",
-    brand: "LunaRituals",
-    scent: "Floral, Romantic",
-    description: "Bloom where you are planted",
-    price: 40,
-    burnTime: "55 hours",
-    image: productCandle1,
+    name: "Yankee Candle Spiced Pumpkin, Fall Scented Candle, 22oz Large Jar with up to 150 Hour Burn Time",
+    brand: "Yankee Candle",
+    scent: "Warm, Spiced",
+    description: "Spiced Pumpkin is the essence of autumn. A smooth, comforting fragrance blends pumpkin with notes of cinnamon, nutmeg, and clove. A dash of mellow vanilla and baked aromas round out the base to create a warm, satisfying gourmand scent. 10K+ bought in past month.",
+    price: 14.99,
+    burnTime: "150 hours",
+    image: productCandleSpicedPumpkin,
     inStock: true,
+    affiliateUrl: "https://www.amazon.com/dp/B0F3DRTCB2?tag=lunarituals10-20",
   },
   {
     id: "cnd-006",
-    name: "Ocean Mist",
-    brand: "LunaRituals",
-    scent: "Fresh, Aquatic",
-    description: "Bring the sea to your sanctuary",
-    price: 38,
-    burnTime: "50 hours",
-    image: productCandle2,
+    name: "Yankee Candle, Balsam & Cedar Fall Scented Candle, 22oz Large Jar with up to 150 Hour Burn Time",
+    brand: "Yankee Candle",
+    scent: "Fresh, Woody",
+    description: "Balsam & Cedar is a timeless classic for a reason. Pine balsam scents mingle with brisk cedarwood, evoking a stroll through the forest, while nuanced base notes of warm amber offer a sense of comfort and calm. #1 Best Seller in Jar Candles. 30K+ bought in past month.",
+    price: 14.99,
+    burnTime: "150 hours",
+    image: productCandleBalsamCedarNew,
     inStock: true,
+    affiliateUrl: "https://www.amazon.com/dp/B0F3DPXQP1?tag=lunarituals10-20",
   },
   {
     id: "cnd-007",
