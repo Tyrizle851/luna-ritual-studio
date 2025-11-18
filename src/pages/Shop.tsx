@@ -249,14 +249,23 @@ const Shop = () => {
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-base font-semibold text-text-primary">${product.price}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={() => handleAddToCart(product, "fashion")}
-                    >
-                      Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      {product.affiliateUrl && (
+                        <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                        onClick={() => product.affiliateUrl ? window.open(product.affiliateUrl, '_blank') : handleAddToCart(product, "fashion")}
+                      >
+                        {product.affiliateUrl ? (
+                          <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
+                        ) : (
+                          <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
+                        )}
+                      </Button>
+                    </div>
                         </div>
                       </div>
                     ))}
