@@ -1,6 +1,6 @@
 import productLaceBlouse from "@/assets/product-lace-blouse.jpg";
 import productLinenRobe from "@/assets/product-linen-robe.jpg";
-import productHoops from "@/assets/product-hoops.jpg";
+import productChunkyCardigan from "@/assets/product-chunky-cardigan.jpg";
 import productTote from "@/assets/product-tote.jpg";
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
 import productGoldNecklace from "@/assets/product-gold-necklace.jpg";
@@ -45,13 +45,16 @@ export const fashionProducts: FashionProduct[] = [
   },
   {
     id: "fsh-002",
-    name: "Minimal Gold Hoops",
+    name: "Cozy Cable Knit Cardigan",
     brand: "LunaRituals",
-    category: "Jewelry",
-    description: "Everyday elegance",
-    price: 98,
-    image: productHoops,
+    category: "Knitwear",
+    description: "Embrace effortless comfort with this chunky cable knit cardigan. Featuring oversized sleeves and classic button closure, it's the perfect layering piece for crisp autumn days. Pair with your favorite jeans for relaxed weekend style.",
+    price: 32.98,
+    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: ["Cream", "Camel", "Grey"],
+    image: productChunkyCardigan,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4phC9ej",
   },
   {
     id: "fsh-003",
