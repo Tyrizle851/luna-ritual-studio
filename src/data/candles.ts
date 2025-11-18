@@ -1,5 +1,9 @@
 import productCandle1 from "@/assets/product-candle-1.jpg";
 import productCandle2 from "@/assets/product-candle-2.jpg";
+import productCandleBalsamCedar from "@/assets/product-candle-balsam-cedar.jpg";
+import productCandleVanillaBean from "@/assets/product-candle-vanilla-bean.jpg";
+import productCandleVanillaPumpkin from "@/assets/product-candle-vanilla-pumpkin.jpg";
+import productCandleChristmasSet from "@/assets/product-candle-christmas-set.jpg";
 
 export interface Candle {
   id: string;
@@ -11,52 +15,57 @@ export interface Candle {
   burnTime: string;
   image: string;
   inStock: boolean;
+  affiliateUrl?: string;
 }
 
 export const candles: Candle[] = [
   {
     id: "cnd-001",
-    name: "Fig & Cashmere",
-    brand: "LunaRituals",
-    scent: "Warm, Woody",
-    description: "Light this when you need to come home to yourself",
-    price: 38,
-    burnTime: "50 hours",
-    image: productCandle1,
+    name: "Yankee Candle Balsam & Cedar",
+    brand: "Yankee Candle",
+    scent: "Fresh, Woody",
+    description: "Fall scented candle, 22oz large jar with up to 150 hour burn time. Room-filling fragrance that brings the outdoors in with notes of balsam and cedar. #1 Best Seller in Jar Candles.",
+    price: 14.99,
+    burnTime: "150 hours",
+    image: productCandleBalsamCedar,
     inStock: true,
+    affiliateUrl: "https://amzn.to/43yPmai",
   },
   {
     id: "cnd-002",
-    name: "Lavender Moon",
-    brand: "LunaRituals",
-    scent: "Floral, Calming",
-    description: "Your evening ritual begins here",
-    price: 38,
-    burnTime: "50 hours",
-    image: productCandle2,
+    name: "WoodWick Vanilla Bean Candle",
+    brand: "WoodWick",
+    scent: "Sweet, Warm",
+    description: "Holiday candle gifts for women and men, 9.7 oz medium hourglass candle with crackling wick. Creates a soothing ambiance with its distinctive crackling sound and rich vanilla fragrance.",
+    price: 17.99,
+    burnTime: "60 hours",
+    image: productCandleVanillaBean,
     inStock: true,
+    affiliateUrl: "https://amzn.to/43EdcRX",
   },
   {
     id: "cnd-003",
-    name: "Cedar & Sage",
-    brand: "LunaRituals",
-    scent: "Earthy, Grounding",
-    description: "Cleanse your space, clear your mind",
-    price: 42,
-    burnTime: "60 hours",
-    image: productCandle1,
+    name: "Vanilla Pumpkin Fall Candle",
+    brand: "Auelife",
+    scent: "Sweet, Spiced",
+    description: "Scented candles for autumn, fall aromatherapy gifts - 7 oz. Amazon's Choice with sweet vanilla and warming pumpkin spice notes perfect for creating a cozy fall atmosphere.",
+    price: 16.99,
+    burnTime: "50 hours",
+    image: productCandleVanillaPumpkin,
     inStock: true,
+    affiliateUrl: "https://amzn.to/3X6xpfs",
   },
   {
     id: "cnd-004",
-    name: "Vanilla Amber",
-    brand: "LunaRituals",
-    scent: "Sweet, Warm",
-    description: "Cozy comfort in a jar",
-    price: 38,
-    burnTime: "50 hours",
-    image: productCandle2,
+    name: "Christmas Candles Gift Set",
+    brand: "Yinuo Candle",
+    scent: "Holiday, Varied",
+    description: "4 pack scented soy candles with Cashmere Cedar, Fireside Glow, Cinnamon Apple & Vanilla Balsam. Long lasting holiday winter gifts for home. Amazon's Choice for festive seasonal fragrance collection.",
+    price: 23.99,
+    burnTime: "45 hours per candle",
+    image: productCandleChristmasSet,
     inStock: true,
+    affiliateUrl: "https://amzn.to/47NTMwr",
   },
   {
     id: "cnd-005",
