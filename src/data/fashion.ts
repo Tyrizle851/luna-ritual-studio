@@ -83,13 +83,14 @@ export const fashionProducts: FashionProduct[] = [
   },
   {
     id: "fsh-005",
-    name: "Minimalist Gold Necklace",
+    name: "Dainty Layered Gold Necklace",
     brand: "LunaRituals",
     category: "Jewelry",
-    description: "Delicate and timeless",
-    price: 68,
+    description: "Elevate your everyday style with this delicate layered gold necklace. Featuring dainty chains and subtle pendants, it adds a touch of refined elegance to any outfit. Perfect for layering or wearing alone, this versatile piece transitions seamlessly from day to night.",
+    price: 16.99,
     image: productGoldNecklace,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4o2CksP",
   },
   {
     id: "fsh-006",
