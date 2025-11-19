@@ -11,9 +11,9 @@ import productLeatherBag from "@/assets/product-leather-bag.jpg";
 import productScrunchies from "@/assets/product-scrunchies.jpg";
 import productFedora from "@/assets/product-fedora.jpg";
 import productSunglasses from "@/assets/product-sunglasses.jpg";
-import productLinenShirt from "@/assets/product-linen-shirt.jpg";
-import productBeanie from "@/assets/product-beanie.jpg";
-import productSlipDress from "@/assets/product-slip-dress.jpg";
+import productKneeHighBoots from "@/assets/product-fashion-boots-knee-high.jpg";
+import productOverKneeBoots from "@/assets/product-fashion-boots-over-knee.jpg";
+import productBelts3Pack from "@/assets/product-fashion-belts-3pack.jpg";
 import productBlackJeans from "@/assets/product-black-jeans.jpg";
 import productBlueJeggings from "@/assets/product-blue-jeggings.jpg";
 import productYogaPants from "@/assets/product-yoga-pants.jpg";
@@ -196,38 +196,41 @@ export const fashionProducts: FashionProduct[] = [
   },
   {
     id: "fsh-013",
-    name: "Linen Button-Down Shirt",
-    brand: "LunaRituals",
-    category: "Tops",
-    description: "Breezy elegance for any occasion",
-    price: 88,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["White", "Natural", "Chambray"],
-    image: productLinenShirt,
+    name: "DREAM PAIRS Women's Knee High Boots",
+    brand: "DREAM PAIRS",
+    category: "Shoes",
+    description: "Classic knee-high pull-on boots perfect for fall and winter. Features a comfortable fit, versatile design, and quality construction. Ideal for pairing with jeans, dresses, or skirts for effortless seasonal style.",
+    price: 48.99,
+    sizes: ["6", "7", "8", "9", "10", "11"],
+    colors: ["Black", "Brown", "Taupe"],
+    image: productKneeHighBoots,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4i9RQ4U",
   },
   {
     id: "fsh-014",
-    name: "Cashmere Beanie",
-    brand: "LunaRituals",
-    category: "Accessories",
-    description: "Cozy luxury for chilly days",
-    price: 58,
-    colors: ["Charcoal", "Cream", "Navy"],
-    image: productBeanie,
+    name: "DREAM PAIRS Over The Knee Thigh High Boots",
+    brand: "DREAM PAIRS",
+    category: "Shoes",
+    description: "Sleek over-the-knee boots with chunky heel for all-day comfort. Stretchy design creates a flattering silhouette while the block heel provides stability. Perfect statement piece for fall and winter outfits.",
+    price: 42.99,
+    sizes: ["6", "7", "8", "9", "10", "11"],
+    colors: ["Black", "Grey", "Brown"],
+    image: productOverKneeBoots,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4r6M8Vq",
   },
   {
     id: "fsh-015",
-    name: "Silk Slip Dress",
-    brand: "LunaRituals",
-    category: "Dresses",
-    description: "Effortless elegance that flows",
-    price: 178,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Black", "Champagne", "Sage"],
-    image: productSlipDress,
+    name: "XZQTIVE 3 Pack Women Belts for Jeans",
+    brand: "XZQTIVE",
+    category: "Accessories",
+    description: "Versatile 3-pack leather waist belts with elegant gold buckles. Perfect for jeans, dresses, and pants. Classic design works for casual or professional settings. Essential wardrobe staple in three coordinating colors.",
+    price: 24.89,
+    colors: ["Black", "Brown", "Cream"],
+    image: productBelts3Pack,
     inStock: true,
+    affiliateUrl: "https://amzn.to/4r3cqb3",
   },
   {
     id: "fsh-016",
