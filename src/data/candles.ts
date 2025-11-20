@@ -28,6 +28,8 @@ export interface Candle {
   scent: string;
   description: string;
   price: number;
+  originalPrice?: number;
+  badge?: string;
   burnTime: string;
   image: string;
   inStock: boolean;
@@ -42,6 +44,8 @@ export const candles: Candle[] = [
     scent: "Fresh, Woody",
     description: "Timeless classic fall scented candle. Pine balsam mingles with brisk cedarwood, evoking a forest stroll. Warm amber base notes offer comfort and calm. 22oz large jar with 150 hour burn time. #1 Best Seller in Jar Candles. 30K+ bought in past month.",
     price: 14.99,
+    originalPrice: 27.99,
+    badge: "Best Seller",
     burnTime: "150 hours",
     image: productCandleBalsamCedar,
     inStock: true,
@@ -78,6 +82,8 @@ export const candles: Candle[] = [
     scent: "Holiday, Varied",
     description: "Long lasting scented soy candles for home relaxation. 10 pack aromatherapy candle collection perfect for holiday and Christmas gifts. Features lavender, vanilla, lemongrass, eucalyptus, and seasonal scents. Amber glass jars with botanical labels. 500+ bought in past month.",
     price: 35.99,
+    originalPrice: 49.99,
+    badge: "Best Value",
     burnTime: "60 hours per candle",
     image: productCandleChristmasGiftSet,
     inStock: true,

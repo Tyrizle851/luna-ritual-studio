@@ -38,6 +38,8 @@ export interface FashionProduct {
   category: string;
   description: string;
   price: number;
+  originalPrice?: number;
+  badge?: string;
   sizes?: string[];
   colors?: string[];
   image: string;
@@ -66,6 +68,8 @@ export const fashionProducts: FashionProduct[] = [
     category: "Knitwear",
     description: "Embrace effortless comfort with this chunky cable knit cardigan. Featuring oversized sleeves and classic button closure, it's the perfect layering piece for crisp autumn days. Pair with your favorite jeans for relaxed weekend style.",
     price: 32.98,
+    originalPrice: 42.99,
+    badge: "Best Seller",
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Cream", "Camel", "Grey"],
     image: productChunkyCardigan,
@@ -91,6 +95,8 @@ export const fashionProducts: FashionProduct[] = [
     category: "Loungewear",
     description: "Indulge in luxurious comfort with this classic button-down silk pajama set. The smooth satin finish feels incredible against your skin while the timeless design with contrast piping adds sophisticated style to your evening routine. Perfect for unwinding by the fire or enjoying a peaceful night's rest.",
     price: 31.44,
+    originalPrice: 39.99,
+    badge: "Top Pick",
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Caramel", "Black", "Champagne", "Navy"],
     image: productSilkSleepSet,
