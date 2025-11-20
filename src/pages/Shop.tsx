@@ -402,7 +402,7 @@ const Shop = () => {
                     <img
                       src={supplement.image}
                       alt={supplement.name}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                     />
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
