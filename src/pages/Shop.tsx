@@ -21,13 +21,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { fashionProducts } from "@/data/fashion";
+import { fashionProducts, FashionProduct } from "@/data/fashion";
 import { candles } from "@/data/candles";
 import { supplements } from "@/data/supplements";
 import { affirmations } from "@/data/affirmations";
 import { books } from "@/data/books";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
+import { FashionProductModal } from "@/components/FashionProductModal";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -51,6 +52,8 @@ const Shop = () => {
   const [booksPage, setBooksPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFashionProduct, setSelectedFashionProduct] = useState<FashionProduct | null>(null);
+  const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
   
   const { addItem } = useCartStore();
 
@@ -281,12 +284,19 @@ const Shop = () => {
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
-                      <div key={product.id} className="group relative">
+                      <div 
+                        key={product.id} 
+                        className="group relative cursor-pointer"
+                        onClick={() => {
+                          setSelectedFashionProduct(product);
+                          setIsFashionModalOpen(true);
+                        }}
+                      >
                         <WishlistButton productId={product.id} />
                         {product.badge && (
                           <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
                             product.badge === 'Sale' ? 'bg-destructive text-white' :
-                            product.badge === 'Best Value' ? 'bg-primary text-white' :
+                            product.badge === 'Best Seller' ? 'bg-primary text-white' :
                             product.badge === 'Top Pick' ? 'bg-accent text-white' :
                             'bg-secondary text-foreground'
                           }`}>
@@ -302,7 +312,19 @@ const Shop = () => {
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.description}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{product.description}</p>
+                  
+                  {/* Rating if available */}
+                  {product.rating && (
+                    <div className="flex items-center gap-1 mb-3 text-xs">
+                      <span className="text-primary">★</span>
+                      <span className="font-semibold">{product.rating}</span>
+                      {product.reviewCount && (
+                        <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
+                      )}
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {product.originalPrice && (
@@ -310,23 +332,18 @@ const Shop = () => {
                       )}
                       <span className="text-base font-semibold text-text-primary">${product.price}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {product.affiliateUrl && (
-                        <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
-                      )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                        onClick={() => product.affiliateUrl ? window.open(product.affiliateUrl, '_blank') : handleAddToCart(product, "fashion")}
-                      >
-                        {product.affiliateUrl ? (
-                          <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
-                        ) : (
-                          <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
-                        )}
-                      </Button>
-                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedFashionProduct(product);
+                        setIsFashionModalOpen(true);
+                      }}
+                    >
+                      View Details
+                    </Button>
                         </div>
                       </div>
                     ))}
@@ -593,6 +610,17 @@ const Shop = () => {
         </Tabs>
       </div>
 
+      {/* Fashion Product Modal */}
+      <FashionProductModal
+        product={selectedFashionProduct}
+        open={isFashionModalOpen}
+        onOpenChange={(open) => {
+          setIsFashionModalOpen(open);
+          if (!open) setSelectedFashionProduct(null);
+        }}
+      />
+
+      {/* Affirmation Product Modal */}
       <ProductModal
         product={selectedProduct}
         open={isModalOpen}
