@@ -22,10 +22,10 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
-        <div className="relative">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+        <div className="relative pb-20 md:pb-0">
           {/* Hero Image Section */}
-          <div className="relative aspect-[4/5] md:aspect-video bg-white overflow-hidden">
+          <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -33,11 +33,11 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
             />
             {product.badge && (
               <Badge 
-                className={`absolute top-4 left-4 ${
-                  product.badge === 'Sale' ? 'bg-destructive' :
-                  product.badge === 'Best Seller' ? 'bg-primary' :
-                  'bg-accent'
-                } text-white`}
+                className={`absolute top-3 left-3 ${
+                  product.badge === 'Sale' ? 'bg-foreground text-background' :
+                  product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                  'bg-accent text-accent-foreground'
+                } font-semibold`}
               >
                 {product.badge}
               </Badge>
@@ -45,39 +45,39 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
           </div>
 
           {/* Content Section */}
-          <div className="p-6 space-y-6">
+          <div className="p-4 md:p-6 space-y-4 md:space-y-6">
             {/* Header */}
             <div>
-              <h2 className="font-display text-2xl md:text-3xl mb-2">{product.name}</h2>
-              <p className="text-sm text-muted-foreground">{product.brand}</p>
+              <h2 className="font-display text-xl md:text-2xl lg:text-3xl mb-1">{product.name}</h2>
+              <p className="text-xs md:text-sm text-muted-foreground">{product.brand}</p>
             </div>
 
             {/* Rating & Social Proof */}
             {product.rating && (
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm">
                 <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-primary text-primary" />
+                  <Star className="h-3.5 w-3.5 md:h-4 md:w-4 fill-primary text-primary" />
                   <span className="font-semibold">{product.rating}</span>
                   {product.reviewCount && (
-                    <span className="text-muted-foreground">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
                   )}
                 </div>
                 {product.socialProof && (
-                  <span className="text-muted-foreground">{product.socialProof}</span>
+                  <span className="text-muted-foreground text-xs">{product.socialProof}</span>
                 )}
               </div>
             )}
 
             {/* Price */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               {product.originalPrice && (
-                <span className="text-lg text-muted-foreground line-through">
+                <span className="text-base md:text-lg text-muted-foreground line-through">
                   ${product.originalPrice.toFixed(2)}
                 </span>
               )}
-              <span className="text-3xl font-bold">${product.price.toFixed(2)}</span>
+              <span className="text-2xl md:text-3xl font-bold">${product.price.toFixed(2)}</span>
               {product.originalPrice && (
-                <Badge variant="destructive">
+                <Badge variant="destructive" className="text-xs">
                   -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                 </Badge>
               )}
@@ -85,20 +85,20 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
 
             {/* Prime Badge */}
             {product.isPrime && (
-              <div className="flex items-center gap-2 text-sm bg-primary/10 text-primary px-3 py-2 rounded-md w-fit">
-                <Truck className="h-4 w-4" />
-                <span className="font-medium">Prime Eligible - Free Shipping</span>
+              <div className="flex items-center gap-2 text-xs md:text-sm bg-primary/10 text-primary px-3 py-2 rounded-md w-fit">
+                <Truck className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                <span className="font-medium">Prime - Free Shipping</span>
               </div>
             )}
 
             {/* Description */}
-            <p className="text-text-secondary leading-relaxed">{product.description}</p>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed">{product.description}</p>
 
             {/* Style Notes */}
             {product.styleNotes && (
-              <div className="bg-secondary/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-sm uppercase tracking-wide">Style Notes</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{product.styleNotes}</p>
+              <div className="bg-secondary/30 p-3 md:p-4 rounded-lg">
+                <h3 className="font-semibold mb-2 text-xs md:text-sm uppercase tracking-wide">Style Notes</h3>
+                <p className="text-xs md:text-sm text-text-secondary leading-relaxed">{product.styleNotes}</p>
               </div>
             )}
 
@@ -106,7 +106,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
             {product.features && product.features.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {product.features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-2 text-sm">
+                  <div key={index} className="flex items-start gap-2 text-xs md:text-sm">
                     <span className="text-primary mt-0.5">•</span>
                     <span className="text-text-secondary">{feature}</span>
                   </div>
@@ -119,35 +119,35 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               {/* Product Details */}
               {product.productDetails && (
                 <AccordionItem value="details">
-                  <AccordionTrigger className="text-left">
+                  <AccordionTrigger className="text-left py-3 text-sm md:text-base">
                     <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4" />
+                      <Package className="h-3.5 w-3.5 md:h-4 md:w-4" />
                       <span>Product Details</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="space-y-2 text-sm">
+                  <AccordionContent className="space-y-2 text-xs md:text-sm">
                     {product.productDetails.fabric && (
-                      <div className="flex justify-between py-1 border-b border-border/50">
-                        <span className="text-muted-foreground">Fabric:</span>
-                        <span className="font-medium">{product.productDetails.fabric}</span>
+                      <div className="flex justify-between py-1.5 border-b border-border/50 gap-4">
+                        <span className="text-muted-foreground flex-shrink-0">Fabric:</span>
+                        <span className="font-medium text-right">{product.productDetails.fabric}</span>
                       </div>
                     )}
                     {product.productDetails.care && (
-                      <div className="flex justify-between py-1 border-b border-border/50">
-                        <span className="text-muted-foreground">Care:</span>
-                        <span className="font-medium">{product.productDetails.care}</span>
+                      <div className="flex justify-between py-1.5 border-b border-border/50 gap-4">
+                        <span className="text-muted-foreground flex-shrink-0">Care:</span>
+                        <span className="font-medium text-right">{product.productDetails.care}</span>
                       </div>
                     )}
                     {product.productDetails.fit && (
-                      <div className="flex justify-between py-1 border-b border-border/50">
-                        <span className="text-muted-foreground">Fit:</span>
-                        <span className="font-medium">{product.productDetails.fit}</span>
+                      <div className="flex justify-between py-1.5 border-b border-border/50 gap-4">
+                        <span className="text-muted-foreground flex-shrink-0">Fit:</span>
+                        <span className="font-medium text-right">{product.productDetails.fit}</span>
                       </div>
                     )}
                     {product.productDetails.origin && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-muted-foreground">Origin:</span>
-                        <span className="font-medium">{product.productDetails.origin}</span>
+                      <div className="flex justify-between py-1.5 gap-4">
+                        <span className="text-muted-foreground flex-shrink-0">Origin:</span>
+                        <span className="font-medium text-right">{product.productDetails.origin}</span>
                       </div>
                     )}
                   </AccordionContent>
@@ -157,13 +157,13 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               {/* How to Style It */}
               {product.stylingIdeas && product.stylingIdeas.length > 0 && (
                 <AccordionItem value="styling">
-                  <AccordionTrigger className="text-left">How to Style It</AccordionTrigger>
+                  <AccordionTrigger className="text-left py-3 text-sm md:text-base">How to Style It</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="space-y-3 text-sm">
+                    <ul className="space-y-2.5 text-xs md:text-sm">
                       {product.stylingIdeas.map((idea, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <span className="font-semibold text-primary min-w-fit">{idea.occasion}:</span>
-                          <span className="text-text-secondary">{idea.suggestion}</span>
+                        <li key={index} className="flex flex-col gap-1">
+                          <span className="font-semibold text-primary">{idea.occasion}:</span>
+                          <span className="text-text-secondary pl-4">{idea.suggestion}</span>
                         </li>
                       ))}
                     </ul>
@@ -174,8 +174,8 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               {/* Size & Fit */}
               {(product.sizes || product.colors) && (
                 <AccordionItem value="size">
-                  <AccordionTrigger className="text-left">Size & Fit</AccordionTrigger>
-                  <AccordionContent className="space-y-3 text-sm">
+                  <AccordionTrigger className="text-left py-3 text-sm md:text-base">Size & Fit</AccordionTrigger>
+                  <AccordionContent className="space-y-2.5 text-xs md:text-sm">
                     {product.sizes && (
                       <div>
                         <span className="text-muted-foreground">Available Sizes: </span>
@@ -189,7 +189,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                       </div>
                     )}
                     {product.productDetails?.fit && (
-                      <p className="text-text-secondary mt-2">
+                      <p className="text-text-secondary mt-2 leading-relaxed">
                         <span className="font-semibold">Fit Notes:</span> {product.productDetails.fit}
                       </p>
                     )}
@@ -199,42 +199,42 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
 
               {/* Shipping & Returns */}
               <AccordionItem value="shipping">
-                <AccordionTrigger className="text-left">
+                <AccordionTrigger className="text-left py-3 text-sm md:text-base">
                   <div className="flex items-center gap-2">
-                    <RefreshCw className="h-4 w-4" />
+                    <RefreshCw className="h-3.5 w-3.5 md:h-4 md:w-4" />
                     <span>Shipping & Returns</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-sm text-text-secondary">
+                <AccordionContent className="space-y-2.5 text-xs md:text-sm text-text-secondary leading-relaxed">
                   {product.isPrime && (
                     <div>
                       <p className="font-semibold text-primary mb-1">Prime Eligible</p>
-                      <p>Free 2-day shipping for Prime members. Orders over $35 ship free for all customers.</p>
+                      <p>Free 2-day shipping for Prime members. Free shipping on $35+ orders.</p>
                     </div>
                   )}
                   <div>
                     <p className="font-semibold text-foreground mb-1">Easy Returns</p>
-                    <p>Free returns within 30 days of purchase. Items must be unworn with tags attached.</p>
+                    <p>Free returns within 30 days. Items must be unworn with tags attached.</p>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground mb-1">Purchase Through Amazon</p>
-                    <p>This product is fulfilled by Amazon. All transactions, customer service, and returns are handled directly through Amazon's secure platform.</p>
+                    <p className="font-semibold text-foreground mb-1">Amazon Fulfillment</p>
+                    <p>Fulfilled by Amazon. All transactions and customer service handled through Amazon.</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
 
-            {/* Sticky CTA - Hidden on desktop, visible on mobile */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 shadow-lg z-50">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <p className="text-sm text-muted-foreground">Price</p>
-                  <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
+            {/* Sticky CTA - Mobile Only */}
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-3 shadow-lg z-50">
+              <div className="flex items-center justify-between gap-3 max-w-3xl mx-auto">
+                <div className="flex-shrink-0">
+                  <p className="text-xs text-muted-foreground">Price</p>
+                  <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
                 </div>
                 <Button
                   onClick={handleShopNow}
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="flex-1 bg-foreground hover:bg-foreground/90 text-background h-11"
                 >
                   Shop Now <ExternalLink className="ml-2 h-4 w-4" />
                 </Button>
@@ -246,7 +246,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               <Button
                 onClick={handleShopNow}
                 size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-foreground hover:bg-foreground/90 text-background"
               >
                 Shop Now on Amazon <ExternalLink className="ml-2 h-5 w-5" />
               </Button>
