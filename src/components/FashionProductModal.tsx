@@ -22,8 +22,8 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] p-0 gap-0 flex flex-col">
-        <div className="relative flex-1 overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+        <div className="relative">
           {/* Hero Image Section */}
           <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
             <img
@@ -83,13 +83,22 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               )}
             </div>
 
-            {/* Prime Badge */}
-            {product.isPrime && (
-              <div className="flex items-center gap-2 text-xs md:text-sm bg-primary/10 text-primary px-3 py-2 rounded-md w-fit">
-                <Truck className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                <span className="font-medium">Prime - Free Shipping</span>
-              </div>
-            )}
+            {/* Prime Badge & Shop Now */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              {product.isPrime && (
+                <div className="flex items-center gap-2 text-xs md:text-sm bg-primary/10 text-primary px-3 py-2 rounded-md">
+                  <Truck className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="font-medium">Prime - Free Shipping</span>
+                </div>
+              )}
+              <Button
+                onClick={handleShopNow}
+                size="lg"
+                className="w-full sm:w-auto bg-foreground hover:bg-foreground/90 text-background"
+              >
+                Shop Now <ExternalLink className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
 
             {/* Description */}
             <p className="text-sm md:text-base text-text-secondary leading-relaxed">{product.description}</p>
@@ -224,39 +233,8 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               </AccordionItem>
             </Accordion>
 
-            {/* Desktop CTA */}
-            <div className="hidden md:block pt-4 border-t border-border">
-              <Button
-                onClick={handleShopNow}
-                size="lg"
-                className="w-full bg-foreground hover:bg-foreground/90 text-background"
-              >
-                Shop Now on Amazon <ExternalLink className="ml-2 h-5 w-5" />
-              </Button>
-              <p className="text-xs text-center text-muted-foreground mt-2">
-                Redirects to Amazon • Secure checkout • Easy returns
-              </p>
-            </div>
           </div>
         </div>
-
-        {/* Sticky CTA - Mobile Only - Outside scrollable content */}
-        <div className="md:hidden sticky bottom-0 left-0 right-0 bg-background border-t border-border p-3 shadow-lg z-50">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex-shrink-0">
-              <p className="text-xs text-muted-foreground">Price</p>
-              <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
-            </div>
-            <Button
-              onClick={handleShopNow}
-              size="lg"
-              className="flex-1 bg-foreground hover:bg-foreground/90 text-background h-11"
-            >
-              Shop Now <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
       </DialogContent>
     </Dialog>
   );
