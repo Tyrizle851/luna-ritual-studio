@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart } from "lucide-react";
@@ -175,8 +176,53 @@ const Shop = () => {
     affirmations: "Affirmations"
   };
 
+  const getMetaData = () => {
+    const metas: Record<string, { title: string; description: string; keywords: string }> = {
+      fashion: {
+        title: "Shop Fashion — Curated Clothing & Accessories | LunaRituals",
+        description: "Discover our curated collection of intentional fashion pieces. From cozy cardigans to knee-high boots, find elevated basics and timeless styles for mindful living.",
+        keywords: "fashion finds, intentional clothing, minimalist wardrobe, curated fashion, women's clothing, knee high boots, cardigans, sustainable fashion"
+      },
+      candles: {
+        title: "Shop Candles — Premium Scented Candles for Home | LunaRituals",
+        description: "Create a calming atmosphere with our hand-picked selection of premium candles. Featuring Yankee Candle, woodwick, and artisanal brands for cozy, intentional living.",
+        keywords: "scented candles, home fragrance, yankee candle, autumn candles, cozy home, aromatherapy candles, premium candles"
+      },
+      supplements: {
+        title: "Shop Wellness Supplements — Vitamins & Natural Health | LunaRituals",
+        description: "Support your wellness journey with curated supplements and vitamins. From collagen to magnesium, ashwagandha to probiotics—quality products for intentional self-care.",
+        keywords: "wellness supplements, vitamins, collagen supplements, magnesium, ashwagandha, probiotics, natural health, self-care supplements"
+      },
+      affirmations: {
+        title: "Shop Affirmations — Digital Wallpapers & Affirmation Prints | LunaRituals",
+        description: "Downloadable affirmation art for your phone, desktop, and walls. Beautiful designs with powerful messages for self-love, abundance, rest, and intentional living.",
+        keywords: "affirmation wallpaper, digital affirmations, affirmation prints, phone wallpaper, self-love wallpaper, manifestation art, downloadable affirmations"
+      },
+      books: {
+        title: "Shop Books — Fantasy & Fiction Book Recommendations | LunaRituals",
+        description: "Curated book recommendations for cozy reading moments. Featuring beloved fantasy series, romantic fiction, and stories to transport and inspire you.",
+        keywords: "book recommendations, fantasy books, fiction books, reading list, cozy reading, book lovers, fourth wing, acotar"
+      }
+    };
+    return metas[selectedTab] || metas.fashion;
+  };
+
+  const currentMeta = getMetaData();
+
   return (
     <PageTransition>
+      <Helmet>
+        <title>{currentMeta.title}</title>
+        <meta name="description" content={currentMeta.description} />
+        <link rel="canonical" href={`https://lunarituals.com/shop?tab=${selectedTab}`} />
+        
+        <meta property="og:title" content={currentMeta.title} />
+        <meta property="og:description" content={currentMeta.description} />
+        <meta property="og:url" content={`https://lunarituals.com/shop?tab=${selectedTab}`} />
+        <meta property="og:type" content="website" />
+        
+        <meta name="keywords" content={currentMeta.keywords} />
+      </Helmet>
       <div className="min-h-screen section-padding">
         <div className="container-custom">
           <Breadcrumbs items={[
@@ -237,6 +283,16 @@ const Shop = () => {
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <div key={product.id} className="group relative">
                         <WishlistButton productId={product.id} />
+                        {product.badge && (
+                          <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                            product.badge === 'Sale' ? 'bg-destructive text-white' :
+                            product.badge === 'Best Value' ? 'bg-primary text-white' :
+                            product.badge === 'Top Pick' ? 'bg-accent text-white' :
+                            'bg-secondary text-foreground'
+                          }`}>
+                            {product.badge}
+                          </div>
+                        )}
                         <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={product.image}
@@ -248,7 +304,12 @@ const Shop = () => {
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                    <div className="flex items-center gap-2">
+                      {product.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {product.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
@@ -294,6 +355,16 @@ const Shop = () => {
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
                     <div key={candle.id} className="group relative">
                       <WishlistButton productId={candle.id} />
+                      {candle.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          candle.badge === 'Sale' ? 'bg-destructive text-white' :
+                          candle.badge === 'Best Value' ? 'bg-primary text-white' :
+                          candle.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {candle.badge}
+                        </div>
+                      )}
                       <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={candle.image}
@@ -306,7 +377,12 @@ const Shop = () => {
                   <p className="text-xs text-text-muted mb-2">{candle.scent} • {candle.burnTime}</p>
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">{candle.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                    <div className="flex items-center gap-2">
+                      {candle.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {candle.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
@@ -352,11 +428,21 @@ const Shop = () => {
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                     <div key={supplement.id} className="group relative">
                       <WishlistButton productId={supplement.id} />
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                      {supplement.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          supplement.badge === 'Sale' ? 'bg-destructive text-white' :
+                          supplement.badge === 'Best Value' ? 'bg-primary text-white' :
+                          supplement.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {supplement.badge}
+                        </div>
+                      )}
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-white transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={supplement.image}
                       alt={supplement.name}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                     />
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
@@ -364,7 +450,12 @@ const Shop = () => {
                   <p className="text-sm text-text-secondary leading-relaxed mb-2">{supplement.description}</p>
                   <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                    <div className="flex items-center gap-2">
+                      {supplement.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {supplement.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>

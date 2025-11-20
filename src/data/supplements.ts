@@ -1,20 +1,23 @@
 import productSupplement1 from "@/assets/product-supplement-1.jpg";
 import productSupplement2 from "@/assets/product-supplement-2.jpg";
 import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
+import productCoffeeLavazza from "@/assets/product-coffee-lavazza-super-crema.jpg";
 import productSupplementMatcha from "@/assets/product-supplement-domatcha-organic-1763495293.jpg";
-import productSupplementMagnesium from "@/assets/product-supplement-magnesium-glycinate-1763495348.jpg";
+import productSupplementMatchaLatte from "@/assets/product-supplement-matcha-latte-jade-leaf-1763495350.jpg";
+import productSupplementHibiscusTea from "@/assets/product-supplement-hibiscus-tea-fgo-1763495410.jpg";
+import productSupplementSleepTea from "@/assets/product-supplement-sleep-tea-traditional-1763495470.jpg";
 import productSupplementWomensMulti from "@/assets/product-supplement-megafood-womens-multi-1763495431.jpg";
 import productSupplementStress from "@/assets/product-supplement-olly-stress-gummies-1763495510.jpg";
-import productSupplementOmega3 from "@/assets/product-supplement-nature-made-omega3-1763495589.jpg";
+import productCoffeeNespressoVariety from "@/assets/product-coffee-nespresso-variety.jpg";
 import productSupplementHairSkinNails from "@/assets/product-supplement-hair-skin-nails-1763495678.jpg";
 import productSupplementProbiotic from "@/assets/product-supplement-garden-probiotic-1763495710.jpg";
 import productSupplementVitaminD from "@/assets/product-supplement-vitamin-d3-1763495743.jpg";
 import productSupplementBComplex from "@/assets/product-supplement-solgar-b-complex-1763495878.jpg";
 import productSupplementPrenatal from "@/assets/product-supplement-nature-made-prenatal-1763495925.jpg";
-import productSupplementLionsMane from "@/assets/product-supplement-four-sigmatic-lions-mane-1763495976.jpg";
+import productCoffeeRyzeMushroom from "@/assets/product-coffee-ryze-mushroom.jpg";
 import productSupplementElderberry from "@/assets/product-supplement-elderberry-gummies-1763496014.jpg";
 import productSupplementBiotin from "@/assets/product-supplement-biotin-softgels-1763496073.jpg";
-import productSupplementTurmeric from "@/assets/product-supplement-turmeric-curcumin-1763496116.jpg";
+import productCoffeeNespressoBarista from "@/assets/product-coffee-nespresso-barista.jpg";
 
 export interface Supplement {
   id: string;
@@ -23,6 +26,8 @@ export interface Supplement {
   description: string;
   benefits: string[];
   price: number;
+  originalPrice?: number;
+  badge?: string;
   servings: string;
   image: string;
   inStock: boolean;
@@ -37,6 +42,8 @@ export const supplements: Supplement[] = [
     description: "Supports hair, nail, skin, bone & joint health. Unflavored collagen protein powder.",
     benefits: ["Glowing skin", "Healthy hair", "Strong nails", "Joint support"],
     price: 20.52,
+    originalPrice: 28.99,
+    badge: "Best Seller",
     servings: "20 servings",
     image: productSupplementCollagen,
     inStock: true,
@@ -44,27 +51,29 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-002",
-    name: "DoMatcha Organic Matcha Powder",
+    name: "Lavazza Super Crema Whole Bean Coffee",
     category: "Energy & Focus",
-    description: "Authentic Japanese green tea, latte grade. Organic summer harvest matcha powder.",
-    benefits: ["Natural energy", "Mental clarity", "Antioxidants"],
-    price: 49.95,
-    servings: "2.82 oz",
-    image: productSupplementMatcha,
+    description: "Medium espresso roast coffee, Arabica and Robusta blend. #1 Best Seller in Roasted Coffee Beans. 80K+ bought in past month.",
+    benefits: ["Rich espresso flavor", "Premium Italian blend", "Perfect for morning rituals"],
+    price: 21.41,
+    servings: "2.2 lb bag",
+    image: productCoffeeLavazza,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B003O7T87C?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/49NCDo7",
   },
   {
     id: "sup-003",
-    name: "Doctor's Best Magnesium Glycinate",
-    category: "Sleep Support",
-    description: "High absorption magnesium for sleep and muscle relaxation. 100% chelated.",
-    benefits: ["Better sleep", "Muscle relaxation", "Stress relief"],
-    price: 19.79,
-    servings: "240 tablets",
-    image: productSupplementMagnesium,
+    name: "Naoki Matcha Superior Ceremonial Blend",
+    category: "Energy & Focus",
+    description: "Authentic Japanese First Harvest Ceremonial Grade Matcha Green Tea Powder from Uji, Kyoto. Amazon's Choice. 10K+ bought in past month.",
+    benefits: ["Natural energy boost", "Mental clarity", "Antioxidant rich"],
+    price: 24.99,
+    originalPrice: 32.99,
+    badge: "Top Pick",
+    servings: "1.4 oz (40g)",
+    image: productSupplementMatcha,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B000BD0RT0?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/486p3JF",
   },
   {
     id: "sup-004",
@@ -80,27 +89,29 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-005",
-    name: "OLLY Goodbye Stress Gummy",
-    category: "Mental Wellness",
-    description: "Stress relief supplement with GABA, L-Theanine and lemon balm. Berry flavor.",
-    benefits: ["Stress relief", "Calm mind", "Relaxation"],
-    price: 11.47,
-    servings: "42 count",
-    image: productSupplementStress,
+    name: "Jade Leaf Matcha Organic Premium Ceremonial Grade",
+    category: "Energy & Focus",
+    description: "Matcha Green Tea Powder - Japanese - Culinary, Ingredient, Ceremonial Barista Teahouse, Latte, Collagen. Amazon's Choice. 10K+ bought in past month. Black Friday Deal -20%.",
+    benefits: ["Sustained energy", "Focus enhancement", "USDA Organic"],
+    price: 7.99,
+    originalPrice: 9.99,
+    badge: "Sale",
+    servings: "5.3 oz (150g)",
+    image: productSupplementMatchaLatte,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B01M1HYRNJ?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4pp4SOh",
   },
   {
     id: "sup-006",
-    name: "Nature Made Fish Oil Omega 3",
-    category: "Heart Health",
-    description: "1200mg Omega 3 fish oil softgels for healthy heart support.",
-    benefits: ["Heart health", "Brain function", "Joint support"],
-    price: 12.69,
-    servings: "100 softgels",
-    image: productSupplementOmega3,
+    name: "Nespresso Capsules Vertuo, Variety Pack",
+    category: "Energy & Focus",
+    description: "Medium and dark roast coffee pods for Vertuo machines. Amazon's Choice. 100K+ bought in past month.",
+    benefits: ["Convenient coffee pods", "Variety of roasts", "Premium coffee experience"],
+    price: 45.70,
+    servings: "30 count",
+    image: productCoffeeNespressoVariety,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B0000DJAQU?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4rbBeOe",
   },
   {
     id: "sup-007",
@@ -121,6 +132,8 @@ export const supplements: Supplement[] = [
     description: "Probiotics for digestive health balance. 15 billion CFU and 13 strains.",
     benefits: ["Digestive balance", "Immune support", "Gut health"],
     price: 40.94,
+    originalPrice: 49.99,
+    badge: "Best Value",
     servings: "90 capsules",
     image: productSupplementProbiotic,
     inStock: true,
@@ -140,15 +153,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-010",
-    name: "Solgar B-Complex 100",
-    category: "Energy & Vitality",
-    description: "B-Complex vitamins for nervous system support and energy metabolism. Vegan and kosher.",
-    benefits: ["Energy boost", "Mental clarity", "Nervous system support"],
-    price: 38.94,
-    servings: "250 capsules",
-    image: productSupplementBComplex,
+    name: "FGO Organic Hibiscus Tea",
+    category: "Wellness",
+    description: "100 Count, Eco-Conscious Tea Bags, Caffeine Free. Amazon's Choice. 7K+ bought in past month. Black Friday Deal -15%.",
+    benefits: ["Heart health support", "Vitamin C rich", "Caffeine free"],
+    price: 17.84,
+    servings: "100 tea bags",
+    image: productSupplementHibiscusTea,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00014D33Q?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4rsQB5d",
   },
   {
     id: "sup-011",
@@ -164,27 +177,29 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-012",
-    name: "Four Sigmatic Lion's Mane Focus Elixir",
+    name: "RYZE Mushroom Coffee",
     category: "Mental Wellness",
-    description: "Organic lion's mane mushroom powder with rhodiola. Immune and memory support.",
-    benefits: ["Mental focus", "Memory support", "Immune health"],
-    price: 30.39,
-    servings: "20 packets",
-    image: productSupplementLionsMane,
+    description: "#1 Mushroom Coffee with 6 adaptogenic mushrooms and MCT oil. USDA Organic instant coffee for better energy, focus, digestion and immunity with Lion's Mane & Turkey Tail. 60K+ bought in past month.",
+    benefits: ["Mental clarity", "Sustained energy", "Digestive support", "Immunity boost"],
+    price: 44.99,
+    originalPrice: 54.99,
+    badge: "Sale",
+    servings: "30 servings",
+    image: productCoffeeRyzeMushroom,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00LA6MIIK?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/3XF2gjn",
   },
   {
     id: "sup-013",
-    name: "Nature's Way Sambucus Elderberry Gummies",
-    category: "Immunity",
-    description: "Immune support gummies with black elderberry extract, Vitamin C, D3 and zinc.",
-    benefits: ["Immune support", "Antioxidants", "Vitamin boost"],
-    price: 12.38,
-    servings: "60 gummies",
-    image: productSupplementElderberry,
+    name: "Traditional Medicinals Organic Nighty Night Extra Tea",
+    category: "Sleep Support",
+    description: "Deeply Relaxing Sleep Support with Valerian Root for Relaxation. Amazon's Choice. 10K+ bought in past month.",
+    benefits: ["Sleep support", "Relaxation", "Caffeine free"],
+    price: 5.03,
+    servings: "16 tea bags",
+    image: productSupplementSleepTea,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00MJ7VL1O?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/3XrxhYh",
   },
   {
     id: "sup-014",
@@ -200,14 +215,14 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-015",
-    name: "NatureWise Curcumin Turmeric 2250mg",
-    category: "Wellness",
-    description: "95% curcuminoids with BioPerine black pepper extract for advanced absorption. Joint and immune support.",
-    benefits: ["Joint health", "Immune support", "Anti-inflammatory"],
-    price: 14.99,
-    servings: "90 capsules",
-    image: productSupplementTurmeric,
+    name: "Nespresso Capsules Vertuo, Barista Flavored Pack",
+    category: "Energy & Focus",
+    description: "Medium roast coffee pods with barista flavors. Amazon's Choice. 60K+ bought in past month.",
+    benefits: ["Flavored coffee varieties", "Barista-quality", "Easy brewing"],
+    price: 42.00,
+    servings: "30 count",
+    image: productCoffeeNespressoBarista,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B01BMDAVB6?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/483mCYn",
   },
 ];

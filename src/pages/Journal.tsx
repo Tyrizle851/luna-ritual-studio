@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { articles } from "@/data/articles";
 import { BookOpen, Clock, User } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
@@ -6,6 +7,18 @@ import { PageTransition } from "@/components/PageTransition";
 const Journal = () => {
   return (
     <PageTransition>
+      <Helmet>
+        <title>The Journal — Intentional Living & Slow Living Stories | LunaRituals</title>
+        <meta name="description" content="Stories on slow living, intentional design, mindfulness practices, and building a calm, beautiful life. Discover morning rituals, minimalist beauty, capsule wardrobes, and more." />
+        <link rel="canonical" content="https://lunarituals.com/journal" />
+        
+        <meta property="og:title" content="The Journal — Intentional Living Stories | LunaRituals" />
+        <meta property="og:description" content="Stories on slow living and intentional design for women building calm, beautiful lives." />
+        <meta property="og:url" content="https://lunarituals.com/journal" />
+        <meta property="og:type" content="website" />
+        
+        <meta name="keywords" content="slow living blog, intentional living, mindfulness blog, morning rituals, minimalist lifestyle, wellness journal, self-care articles" />
+      </Helmet>
       <div className="min-h-screen section-padding">
       <div className="container-custom max-w-5xl">
         <div className="flex items-center justify-center gap-3 mb-4">

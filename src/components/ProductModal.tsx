@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Affirmation } from "@/data/affirmations";
 import { useCartStore } from "@/store/cartStore";
+import { generateAffirmationSchema } from "@/lib/seoUtils";
 
 interface ProductModalProps {
   product: Affirmation | null;
@@ -35,8 +37,16 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+    <>
+      {product && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(generateAffirmationSchema(product, `https://lunarituals.com/shop?tab=affirmations`))}
+          </script>
+        </Helmet>
+      )}
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">{product.title}</DialogTitle>
         </DialogHeader>
@@ -84,5 +94,6 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
         </div>
       </DialogContent>
     </Dialog>
+    </>
   );
 };
