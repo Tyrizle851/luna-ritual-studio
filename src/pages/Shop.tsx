@@ -295,9 +295,9 @@ const Shop = () => {
                         <WishlistButton productId={product.id} />
                         {product.badge && (
                           <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                            product.badge === 'Sale' ? 'bg-destructive text-white' :
-                            product.badge === 'Best Seller' ? 'bg-primary text-white' :
-                            product.badge === 'Top Pick' ? 'bg-accent text-white' :
+                            product.badge === 'Sale' ? 'bg-foreground text-background' :
+                            product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                            product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
                             'bg-secondary text-foreground'
                           }`}>
                             {product.badge}
@@ -374,9 +374,9 @@ const Shop = () => {
                       <WishlistButton productId={candle.id} />
                       {candle.badge && (
                         <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                          candle.badge === 'Sale' ? 'bg-destructive text-white' :
-                          candle.badge === 'Best Value' ? 'bg-primary text-white' :
-                          candle.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          candle.badge === 'Sale' ? 'bg-foreground text-background' :
+                          candle.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
+                          candle.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
                           'bg-secondary text-foreground'
                         }`}>
                           {candle.badge}
@@ -447,9 +447,9 @@ const Shop = () => {
                       <WishlistButton productId={supplement.id} />
                       {supplement.badge && (
                         <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                          supplement.badge === 'Sale' ? 'bg-destructive text-white' :
-                          supplement.badge === 'Best Value' ? 'bg-primary text-white' :
-                          supplement.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          supplement.badge === 'Sale' ? 'bg-foreground text-background' :
+                          supplement.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
+                          supplement.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
                           'bg-secondary text-foreground'
                         }`}>
                           {supplement.badge}
