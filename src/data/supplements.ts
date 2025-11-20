@@ -1,20 +1,20 @@
 import productSupplement1 from "@/assets/product-supplement-1.jpg";
 import productSupplement2 from "@/assets/product-supplement-2.jpg";
 import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
-import productSupplementMatcha from "@/assets/product-supplement-domatcha-organic-1763495293.jpg";
+import productCoffeeLavazza from "@/assets/product-coffee-lavazza-super-crema.jpg";
 import productSupplementMagnesium from "@/assets/product-supplement-magnesium-glycinate-1763495348.jpg";
 import productSupplementWomensMulti from "@/assets/product-supplement-megafood-womens-multi-1763495431.jpg";
 import productSupplementStress from "@/assets/product-supplement-olly-stress-gummies-1763495510.jpg";
-import productSupplementOmega3 from "@/assets/product-supplement-nature-made-omega3-1763495589.jpg";
+import productCoffeeNespressoVariety from "@/assets/product-coffee-nespresso-variety.jpg";
 import productSupplementHairSkinNails from "@/assets/product-supplement-hair-skin-nails-1763495678.jpg";
 import productSupplementProbiotic from "@/assets/product-supplement-garden-probiotic-1763495710.jpg";
 import productSupplementVitaminD from "@/assets/product-supplement-vitamin-d3-1763495743.jpg";
 import productSupplementBComplex from "@/assets/product-supplement-solgar-b-complex-1763495878.jpg";
 import productSupplementPrenatal from "@/assets/product-supplement-nature-made-prenatal-1763495925.jpg";
-import productSupplementLionsMane from "@/assets/product-supplement-four-sigmatic-lions-mane-1763495976.jpg";
+import productCoffeeRyzeMushroom from "@/assets/product-coffee-ryze-mushroom.jpg";
 import productSupplementElderberry from "@/assets/product-supplement-elderberry-gummies-1763496014.jpg";
 import productSupplementBiotin from "@/assets/product-supplement-biotin-softgels-1763496073.jpg";
-import productSupplementTurmeric from "@/assets/product-supplement-turmeric-curcumin-1763496116.jpg";
+import productCoffeeNespressoBarista from "@/assets/product-coffee-nespresso-barista.jpg";
 
 export interface Supplement {
   id: string;
@@ -44,15 +44,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-002",
-    name: "DoMatcha Organic Matcha Powder",
+    name: "Lavazza Super Crema Whole Bean Coffee",
     category: "Energy & Focus",
-    description: "Authentic Japanese green tea, latte grade. Organic summer harvest matcha powder.",
-    benefits: ["Natural energy", "Mental clarity", "Antioxidants"],
-    price: 49.95,
-    servings: "2.82 oz",
-    image: productSupplementMatcha,
+    description: "Medium espresso roast coffee, Arabica and Robusta blend. #1 Best Seller in Roasted Coffee Beans. 80K+ bought in past month.",
+    benefits: ["Rich espresso flavor", "Premium Italian blend", "Perfect for morning rituals"],
+    price: 21.41,
+    servings: "2.2 lb bag",
+    image: productCoffeeLavazza,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B003O7T87C?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/49NCDo7",
   },
   {
     id: "sup-003",
@@ -92,15 +92,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-006",
-    name: "Nature Made Fish Oil Omega 3",
-    category: "Heart Health",
-    description: "1200mg Omega 3 fish oil softgels for healthy heart support.",
-    benefits: ["Heart health", "Brain function", "Joint support"],
-    price: 12.69,
-    servings: "100 softgels",
-    image: productSupplementOmega3,
+    name: "Nespresso Capsules Vertuo, Variety Pack",
+    category: "Energy & Focus",
+    description: "Medium and dark roast coffee pods for Vertuo machines. Amazon's Choice. 100K+ bought in past month.",
+    benefits: ["Convenient coffee pods", "Variety of roasts", "Premium coffee experience"],
+    price: 45.70,
+    servings: "30 count",
+    image: productCoffeeNespressoVariety,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B0000DJAQU?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4rbBeOe",
   },
   {
     id: "sup-007",
@@ -164,15 +164,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-012",
-    name: "Four Sigmatic Lion's Mane Focus Elixir",
+    name: "RYZE Mushroom Coffee",
     category: "Mental Wellness",
-    description: "Organic lion's mane mushroom powder with rhodiola. Immune and memory support.",
-    benefits: ["Mental focus", "Memory support", "Immune health"],
-    price: 30.39,
-    servings: "20 packets",
-    image: productSupplementLionsMane,
+    description: "#1 Mushroom Coffee with 6 adaptogenic mushrooms and MCT oil. USDA Organic instant coffee for better energy, focus, digestion and immunity with Lion's Mane & Turkey Tail. 60K+ bought in past month.",
+    benefits: ["Mental clarity", "Sustained energy", "Digestive support", "Immunity boost"],
+    price: 44.99,
+    servings: "30 servings",
+    image: productCoffeeRyzeMushroom,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00LA6MIIK?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/3XF2gjn",
   },
   {
     id: "sup-013",
@@ -200,14 +200,14 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-015",
-    name: "NatureWise Curcumin Turmeric 2250mg",
-    category: "Wellness",
-    description: "95% curcuminoids with BioPerine black pepper extract for advanced absorption. Joint and immune support.",
-    benefits: ["Joint health", "Immune support", "Anti-inflammatory"],
-    price: 14.99,
-    servings: "90 capsules",
-    image: productSupplementTurmeric,
+    name: "Nespresso Capsules Vertuo, Barista Flavored Pack",
+    category: "Energy & Focus",
+    description: "Medium roast coffee pods with barista flavors. Amazon's Choice. 60K+ bought in past month.",
+    benefits: ["Flavored coffee varieties", "Barista-quality", "Easy brewing"],
+    price: 42.00,
+    servings: "30 count",
+    image: productCoffeeNespressoBarista,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B01BMDAVB6?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/483mCYn",
   },
 ];
