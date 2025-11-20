@@ -22,8 +22,8 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
-        <div className="relative pb-20 md:pb-0">
+      <DialogContent className="max-w-3xl max-h-[90vh] p-0 gap-0 flex flex-col">
+        <div className="relative flex-1 overflow-y-auto">
           {/* Hero Image Section */}
           <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
             <img
@@ -77,7 +77,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               )}
               <span className="text-2xl md:text-3xl font-bold">${product.price.toFixed(2)}</span>
               {product.originalPrice && (
-                <Badge variant="destructive" className="text-xs">
+                <Badge className="text-xs bg-foreground text-background">
                   -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                 </Badge>
               )}
@@ -224,23 +224,6 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               </AccordionItem>
             </Accordion>
 
-            {/* Sticky CTA - Mobile Only */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-3 shadow-lg z-50">
-              <div className="flex items-center justify-between gap-3 max-w-3xl mx-auto">
-                <div className="flex-shrink-0">
-                  <p className="text-xs text-muted-foreground">Price</p>
-                  <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
-                </div>
-                <Button
-                  onClick={handleShopNow}
-                  size="lg"
-                  className="flex-1 bg-foreground hover:bg-foreground/90 text-background h-11"
-                >
-                  Shop Now <ExternalLink className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
             {/* Desktop CTA */}
             <div className="hidden md:block pt-4 border-t border-border">
               <Button
@@ -256,6 +239,24 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
             </div>
           </div>
         </div>
+
+        {/* Sticky CTA - Mobile Only - Outside scrollable content */}
+        <div className="md:hidden sticky bottom-0 left-0 right-0 bg-background border-t border-border p-3 shadow-lg z-50">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-shrink-0">
+              <p className="text-xs text-muted-foreground">Price</p>
+              <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
+            </div>
+            <Button
+              onClick={handleShopNow}
+              size="lg"
+              className="flex-1 bg-foreground hover:bg-foreground/90 text-background h-11"
+            >
+              Shop Now <ExternalLink className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
       </DialogContent>
     </Dialog>
   );
