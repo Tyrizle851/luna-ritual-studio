@@ -1,4 +1,7 @@
 import express from "express";
+import { createCheckoutSession, getCheckoutSession } from './stripe.js';
+import { handleStripeWebhook } from './webhooks.js';
+import { sendLeadMagnetEmail } from './email.js';
 
 // Note: Node 18+ has global fetch
 
@@ -421,6 +424,106 @@ app.post("/api/affirmation/generate", async (req, res) => {
 
 // Health
 app.get("/api/health", (req, res) => res.json({ ok: true }));
+
+// ============================================
+// STRIPE CHECKOUT & WEBHOOKS
+// ============================================
+
+// Create Stripe checkout session
+app.post("/api/checkout/create-session", async (req, res) => {
+  try {
+    const { cartItems } = req.body;
+
+    if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
+      return res.status(400).json({ error: "Cart items are required" });
+    }
+
+    // Build success and cancel URLs
+    const baseUrl = process.env.APP_URL || `http://localhost:${process.env.PORT || 5173}`;
+    const successUrl = `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${baseUrl}/checkout/cancel`;
+
+    const result = await createCheckoutSession(cartItems, successUrl, cancelUrl);
+
+    if (!result.success) {
+      return res.status(500).json({ error: result.error });
+    }
+
+    return res.json({
+      sessionId: result.sessionId,
+      url: result.url,
+    });
+  } catch (error) {
+    console.error("Checkout session creation error:", error);
+    return res.status(500).json({ error: "Failed to create checkout session" });
+  }
+});
+
+// Retrieve checkout session (for success page)
+app.get("/api/checkout/session/:sessionId", async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const result = await getCheckoutSession(sessionId);
+
+    if (!result.success) {
+      return res.status(404).json({ error: result.error });
+    }
+
+    return res.json({ session: result.session });
+  } catch (error) {
+    console.error("Session retrieval error:", error);
+    return res.status(500).json({ error: "Failed to retrieve session" });
+  }
+});
+
+// Stripe webhook endpoint (raw body needed for signature verification)
+app.post("/api/webhooks/stripe", express.raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    const signature = req.headers['stripe-signature'];
+    const rawBody = req.body.toString();
+
+    const result = await handleStripeWebhook(rawBody, signature);
+
+    if (!result.success) {
+      return res.status(result.status || 400).json({ error: result.error });
+    }
+
+    return res.json({ received: true });
+  } catch (error) {
+    console.error("Webhook error:", error);
+    return res.status(500).json({ error: "Webhook handler failed" });
+  }
+});
+
+// Lead magnet endpoint (free affirmation download)
+app.post("/api/lead-magnet/send", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Generate download URL for the free affirmation
+    const baseUrl = process.env.APP_URL || `http://localhost:${process.env.PORT || 5173}`;
+    const downloadUrl = `${baseUrl}/src/assets/affirmation-rest.jpg`;
+
+    const result = await sendLeadMagnetEmail(email, downloadUrl);
+
+    if (!result.success) {
+      return res.status(500).json({ error: result.error });
+    }
+
+    return res.json({
+      success: true,
+      message: "Lead magnet email sent",
+      messageId: result.messageId,
+    });
+  } catch (error) {
+    console.error("Lead magnet error:", error);
+    return res.status(500).json({ error: "Failed to send lead magnet" });
+  }
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

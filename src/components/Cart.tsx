@@ -2,6 +2,7 @@ import { X, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCartStore } from "@/store/cartStore";
+import { CheckoutButton } from "@/components/checkout/CheckoutButton";
 
 export const Cart = () => {
   const { items, isOpen, closeCart, removeItem, updateQuantity, getTotal } = useCartStore();
@@ -98,9 +99,7 @@ export const Cart = () => {
                 <span>Subtotal</span>
                 <span>${getTotal().toFixed(2)}</span>
               </div>
-              <Button className="w-full bg-clay hover:bg-clay-dark text-white">
-                Checkout
-              </Button>
+              <CheckoutButton className="w-full bg-clay hover:bg-clay-dark text-white" />
               <Button variant="outline" className="w-full" onClick={closeCart}>
                 Continue Shopping
               </Button>
