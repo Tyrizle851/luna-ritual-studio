@@ -2,7 +2,10 @@ import productSupplement1 from "@/assets/product-supplement-1.jpg";
 import productSupplement2 from "@/assets/product-supplement-2.jpg";
 import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
 import productCoffeeLavazza from "@/assets/product-coffee-lavazza-super-crema.jpg";
-import productSupplementMagnesium from "@/assets/product-supplement-magnesium-glycinate-1763495348.jpg";
+import productSupplementMatcha from "@/assets/product-supplement-domatcha-organic-1763495293.jpg";
+import productSupplementMatchaLatte from "@/assets/product-supplement-matcha-latte-jade-leaf-1763495350.jpg";
+import productSupplementHibiscusTea from "@/assets/product-supplement-hibiscus-tea-fgo-1763495410.jpg";
+import productSupplementSleepTea from "@/assets/product-supplement-sleep-tea-traditional-1763495470.jpg";
 import productSupplementWomensMulti from "@/assets/product-supplement-megafood-womens-multi-1763495431.jpg";
 import productSupplementStress from "@/assets/product-supplement-olly-stress-gummies-1763495510.jpg";
 import productCoffeeNespressoVariety from "@/assets/product-coffee-nespresso-variety.jpg";
@@ -56,15 +59,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-003",
-    name: "Doctor's Best Magnesium Glycinate",
-    category: "Sleep Support",
-    description: "High absorption magnesium for sleep and muscle relaxation. 100% chelated.",
-    benefits: ["Better sleep", "Muscle relaxation", "Stress relief"],
-    price: 19.79,
-    servings: "240 tablets",
-    image: productSupplementMagnesium,
+    name: "Naoki Matcha Superior Ceremonial Blend",
+    category: "Energy & Focus",
+    description: "Authentic Japanese First Harvest Ceremonial Grade Matcha Green Tea Powder from Uji, Kyoto. Amazon's Choice. 10K+ bought in past month.",
+    benefits: ["Natural energy boost", "Mental clarity", "Antioxidant rich"],
+    price: 24.99,
+    servings: "1.4 oz (40g)",
+    image: productSupplementMatcha,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B000BD0RT0?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/486p3JF",
   },
   {
     id: "sup-004",
@@ -80,15 +83,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-005",
-    name: "OLLY Goodbye Stress Gummy",
-    category: "Mental Wellness",
-    description: "Stress relief supplement with GABA, L-Theanine and lemon balm. Berry flavor.",
-    benefits: ["Stress relief", "Calm mind", "Relaxation"],
-    price: 11.47,
-    servings: "42 count",
-    image: productSupplementStress,
+    name: "Jade Leaf Matcha Organic Premium Ceremonial Grade",
+    category: "Energy & Focus",
+    description: "Matcha Green Tea Powder - Japanese - Culinary, Ingredient, Ceremonial Barista Teahouse, Latte, Collagen. Amazon's Choice. 10K+ bought in past month. Black Friday Deal -20%.",
+    benefits: ["Sustained energy", "Focus enhancement", "USDA Organic"],
+    price: 7.99,
+    servings: "5.3 oz (150g)",
+    image: productSupplementMatchaLatte,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B01M1HYRNJ?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4pp4SOh",
   },
   {
     id: "sup-006",
@@ -140,15 +143,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-010",
-    name: "Solgar B-Complex 100",
-    category: "Energy & Vitality",
-    description: "B-Complex vitamins for nervous system support and energy metabolism. Vegan and kosher.",
-    benefits: ["Energy boost", "Mental clarity", "Nervous system support"],
-    price: 38.94,
-    servings: "250 capsules",
-    image: productSupplementBComplex,
+    name: "FGO Organic Hibiscus Tea",
+    category: "Wellness",
+    description: "100 Count, Eco-Conscious Tea Bags, Caffeine Free. Amazon's Choice. 7K+ bought in past month. Black Friday Deal -15%.",
+    benefits: ["Heart health support", "Vitamin C rich", "Caffeine free"],
+    price: 17.84,
+    servings: "100 tea bags",
+    image: productSupplementHibiscusTea,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00014D33Q?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/4rsQB5d",
   },
   {
     id: "sup-011",
@@ -176,15 +179,15 @@ export const supplements: Supplement[] = [
   },
   {
     id: "sup-013",
-    name: "Nature's Way Sambucus Elderberry Gummies",
-    category: "Immunity",
-    description: "Immune support gummies with black elderberry extract, Vitamin C, D3 and zinc.",
-    benefits: ["Immune support", "Antioxidants", "Vitamin boost"],
-    price: 12.38,
-    servings: "60 gummies",
-    image: productSupplementElderberry,
+    name: "Traditional Medicinals Organic Nighty Night Extra Tea",
+    category: "Sleep Support",
+    description: "Deeply Relaxing Sleep Support with Valerian Root for Relaxation. Amazon's Choice. 10K+ bought in past month.",
+    benefits: ["Sleep support", "Relaxation", "Caffeine free"],
+    price: 5.03,
+    servings: "16 tea bags",
+    image: productSupplementSleepTea,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B00MJ7VL1O?tag=lunarituals10-20",
+    affiliateUrl: "https://amzn.to/3XrxhYh",
   },
   {
     id: "sup-014",
