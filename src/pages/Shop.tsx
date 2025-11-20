@@ -283,6 +283,16 @@ const Shop = () => {
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <div key={product.id} className="group relative">
                         <WishlistButton productId={product.id} />
+                        {product.badge && (
+                          <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                            product.badge === 'Sale' ? 'bg-destructive text-white' :
+                            product.badge === 'Best Value' ? 'bg-primary text-white' :
+                            product.badge === 'Top Pick' ? 'bg-accent text-white' :
+                            'bg-secondary text-foreground'
+                          }`}>
+                            {product.badge}
+                          </div>
+                        )}
                         <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={product.image}
@@ -294,7 +304,12 @@ const Shop = () => {
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                    <div className="flex items-center gap-2">
+                      {product.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {product.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
@@ -340,6 +355,16 @@ const Shop = () => {
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
                     <div key={candle.id} className="group relative">
                       <WishlistButton productId={candle.id} />
+                      {candle.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          candle.badge === 'Sale' ? 'bg-destructive text-white' :
+                          candle.badge === 'Best Value' ? 'bg-primary text-white' :
+                          candle.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {candle.badge}
+                        </div>
+                      )}
                       <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={candle.image}
@@ -352,7 +377,12 @@ const Shop = () => {
                   <p className="text-xs text-text-muted mb-2">{candle.scent} • {candle.burnTime}</p>
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">{candle.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                    <div className="flex items-center gap-2">
+                      {candle.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {candle.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
@@ -398,6 +428,16 @@ const Shop = () => {
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                     <div key={supplement.id} className="group relative">
                       <WishlistButton productId={supplement.id} />
+                      {supplement.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          supplement.badge === 'Sale' ? 'bg-destructive text-white' :
+                          supplement.badge === 'Best Value' ? 'bg-primary text-white' :
+                          supplement.badge === 'Top Pick' ? 'bg-accent text-white' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {supplement.badge}
+                        </div>
+                      )}
                       <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-white transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={supplement.image}
@@ -410,7 +450,12 @@ const Shop = () => {
                   <p className="text-sm text-text-secondary leading-relaxed mb-2">{supplement.description}</p>
                   <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                    <div className="flex items-center gap-2">
+                      {supplement.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                      )}
+                      <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       {supplement.affiliateUrl && (
                         <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>

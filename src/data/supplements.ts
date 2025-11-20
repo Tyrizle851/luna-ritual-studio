@@ -26,6 +26,8 @@ export interface Supplement {
   description: string;
   benefits: string[];
   price: number;
+  originalPrice?: number;
+  badge?: string;
   servings: string;
   image: string;
   inStock: boolean;
@@ -40,6 +42,8 @@ export const supplements: Supplement[] = [
     description: "Supports hair, nail, skin, bone & joint health. Unflavored collagen protein powder.",
     benefits: ["Glowing skin", "Healthy hair", "Strong nails", "Joint support"],
     price: 20.52,
+    originalPrice: 28.99,
+    badge: "Best Seller",
     servings: "20 servings",
     image: productSupplementCollagen,
     inStock: true,
@@ -64,6 +68,8 @@ export const supplements: Supplement[] = [
     description: "Authentic Japanese First Harvest Ceremonial Grade Matcha Green Tea Powder from Uji, Kyoto. Amazon's Choice. 10K+ bought in past month.",
     benefits: ["Natural energy boost", "Mental clarity", "Antioxidant rich"],
     price: 24.99,
+    originalPrice: 32.99,
+    badge: "Top Pick",
     servings: "1.4 oz (40g)",
     image: productSupplementMatcha,
     inStock: true,
@@ -88,6 +94,8 @@ export const supplements: Supplement[] = [
     description: "Matcha Green Tea Powder - Japanese - Culinary, Ingredient, Ceremonial Barista Teahouse, Latte, Collagen. Amazon's Choice. 10K+ bought in past month. Black Friday Deal -20%.",
     benefits: ["Sustained energy", "Focus enhancement", "USDA Organic"],
     price: 7.99,
+    originalPrice: 9.99,
+    badge: "Sale",
     servings: "5.3 oz (150g)",
     image: productSupplementMatchaLatte,
     inStock: true,
@@ -124,6 +132,8 @@ export const supplements: Supplement[] = [
     description: "Probiotics for digestive health balance. 15 billion CFU and 13 strains.",
     benefits: ["Digestive balance", "Immune support", "Gut health"],
     price: 40.94,
+    originalPrice: 49.99,
+    badge: "Best Value",
     servings: "90 capsules",
     image: productSupplementProbiotic,
     inStock: true,
@@ -172,6 +182,8 @@ export const supplements: Supplement[] = [
     description: "#1 Mushroom Coffee with 6 adaptogenic mushrooms and MCT oil. USDA Organic instant coffee for better energy, focus, digestion and immunity with Lion's Mane & Turkey Tail. 60K+ bought in past month.",
     benefits: ["Mental clarity", "Sustained energy", "Digestive support", "Immunity boost"],
     price: 44.99,
+    originalPrice: 54.99,
+    badge: "Sale",
     servings: "30 servings",
     image: productCoffeeRyzeMushroom,
     inStock: true,
