@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { articles } from "@/data/articles";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -25,6 +26,54 @@ const ArticleDetail = () => {
 
   return (
     <article className="min-h-screen">
+      <Helmet>
+        <title>{article.title} | The Journal | LunaRituals</title>
+        <meta name="description" content={article.excerpt} />
+        <link rel="canonical" href={`https://lunarituals.com/journal/${article.slug}`} />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.excerpt} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://lunarituals.com/journal/${article.slug}`} />
+        <meta property="og:image" content={article.image} />
+        <meta property="article:published_time" content={article.date} />
+        <meta property="article:author" content={article.author} />
+        <meta property="article:section" content={article.category} />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={article.excerpt} />
+        <meta name="twitter:image" content={article.image} />
+        
+        {/* JSON-LD Article Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": article.title,
+            "description": article.excerpt,
+            "image": article.image,
+            "datePublished": article.date,
+            "dateModified": article.date,
+            "author": {
+              "@type": "Person",
+              "name": article.author
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "LunaRituals",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://lunarituals.com/logo.png"
+              }
+            },
+            "articleSection": article.category,
+            "wordCount": 1200
+          })}
+        </script>
+      </Helmet>
       {/* Hero Image */}
       <div className="aspect-[21/9] bg-secondary">
         <img

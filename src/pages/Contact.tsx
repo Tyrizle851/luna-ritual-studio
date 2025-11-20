@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -39,6 +40,15 @@ const Contact = () => {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>Contact Us — Get in Touch with LunaRituals</title>
+        <meta name="description" content="Have questions about our affirmations, products, or collaborations? Reach out to LunaRituals. We typically respond within 24-48 hours." />
+        <link rel="canonical" href="https://lunarituals.com/contact" />
+        
+        <meta property="og:title" content="Contact LunaRituals" />
+        <meta property="og:description" content="Get in touch with us about affirmations, collaborations, or inquiries." />
+        <meta property="og:url" content="https://lunarituals.com/contact" />
+      </Helmet>
       <div className="min-h-screen">
         {/* Hero Section */}
       <section className="section-padding bg-secondary">
