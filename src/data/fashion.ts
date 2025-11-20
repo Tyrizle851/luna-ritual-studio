@@ -45,21 +45,78 @@ export interface FashionProduct {
   image: string;
   inStock: boolean;
   affiliateUrl?: string;
+  // Enhanced fields for detailed product pages
+  rating?: number;
+  reviewCount?: number;
+  socialProof?: string; // e.g., "360+ bought in past month"
+  isPrime?: boolean;
+  styleNotes?: string; // Editorial content about the style
+  features?: string[]; // Quick bullet points
+  productDetails?: {
+    fabric?: string;
+    care?: string;
+    fit?: string;
+    origin?: string;
+  };
+  stylingIdeas?: Array<{
+    occasion: string;
+    suggestion: string;
+  }>;
 }
 
 export const fashionProducts: FashionProduct[] = [
   {
     id: "fsh-001",
     name: "Elegant Lace Sleeve Blouse",
-    brand: "LunaRituals",
+    brand: "AUTOMET",
     category: "Tops",
-    description: "Sophisticated pleated detail meets delicate lace sleeves in this versatile top. Perfect for elevating your everyday wardrobe with a touch of feminine elegance. Pair with jeans for casual chic or dress pants for the office.",
-    price: 14.99,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Taupe", "Cream", "Sage"],
+    description: "Sophisticated pleated detail meets delicate lace sleeves in this versatile top. Perfect for elevating your everyday wardrobe with a touch of feminine elegance.",
+    price: 9.99,
+    originalPrice: 14.99,
+    badge: "Sale",
+    sizes: ["Small", "Medium", "Large", "X-Large", "XX-Large", "3X-Large"],
+    colors: ["Khaki", "Black", "Leopard", "Navy", "Cream", "Camel", "White", "Wine Red", "Blue", "Floral", "Burgundy", "Brown", "Pink", "Mint Green", "Yellow"],
     image: productLaceBlouse,
     inStock: true,
-    affiliateUrl: "https://amzn.to/49Z30au",
+    affiliateUrl: "https://www.amazon.com/AUTOMET-Business-Fashion-Outfits-Clothes/dp/B0D4ZDZL1P?crid=121K3C56SJU6H&dib=eyJ2IjoiMSJ9.ISVSYm4XBBBIQbD6H-LRPUk0jkQgc6xar8_761hOilhqoOKxWH4LN041XB4KL0jcDYS2ks-mfTx7-aW1ROv6PqO88tHTWIIbH4QSdwWGSynZah7GJ6H8-KXfLamh1AhqHo0Z6kSyjelL1Q5t_ZCNoxko8iLEj5RjHYLdQORC1dPJ566s8cel_JHop28cVlsFKRofWfRJ0WuFIpCjEpOi0GtXHHLb7qJJu5RgYIX-7pIMCl4IG6h3xP25YhZiNPgA3F4o_1-VBntEnOHEpgBodpLCanXHh_LuKrkEnmVSx-0.aAmqdn5Wbw5BRTHSHVMeTOhqIqXcHybDnrcHdtPD--w&dib_tag=se&keywords=womens%2Bfashion%2Bfall&qid=1763477433&sprefix=womens%2Bfashion%2Bfall%2Caps%2C130&sr=8-9&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=0d98f240e02cd39dbb52788c2db9d46d&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 4588,
+    socialProof: "360+ bought in past month",
+    isPrime: true,
+    styleNotes: "This pleated lace blouse effortlessly transitions from office meetings to weekend brunches. The delicate lace sleeves add feminine detail while the pleated front creates a flattering silhouette. Pair with dark jeans for casual elegance or tuck into high-waisted trousers for polished sophistication.",
+    features: [
+      "Premium lace detail sleeves",
+      "Pleated front for flattering fit",
+      "Versatile for work or casual wear",
+      "Available in 15+ colors",
+      "Lightweight and breathable",
+      "Easy care - machine washable"
+    ],
+    productDetails: {
+      fabric: "60% Polyester, 35% Rayon, 5% Spandex",
+      care: "Machine wash cold, tumble dry low",
+      fit: "True to size, relaxed fit through body with feminine pleating",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Office Chic",
+        suggestion: "Pair with tailored black pants and pointed flats for a polished professional look"
+      },
+      {
+        occasion: "Weekend Brunch",
+        suggestion: "Tuck into high-waist jeans with ankle boots and a crossbody bag"
+      },
+      {
+        occasion: "Date Night",
+        suggestion: "Style with a leather skirt, heels, and statement earrings for effortless elegance"
+      },
+      {
+        occasion: "Casual Friday",
+        suggestion: "Wear with dark denim and loafers, add a blazer for extra polish"
+      }
+    ]
   },
   {
     id: "fsh-002",
