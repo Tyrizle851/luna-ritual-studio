@@ -398,7 +398,7 @@ const Shop = () => {
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                     <div key={supplement.id} className="group relative">
                       <WishlistButton productId={supplement.id} />
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-white transition-all duration-300 group-hover:shadow-xl">
                     <img
                       src={supplement.image}
                       alt={supplement.name}
