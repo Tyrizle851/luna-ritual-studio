@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart } from "lucide-react";
@@ -175,8 +176,53 @@ const Shop = () => {
     affirmations: "Affirmations"
   };
 
+  const getMetaData = () => {
+    const metas: Record<string, { title: string; description: string; keywords: string }> = {
+      fashion: {
+        title: "Shop Fashion — Curated Clothing & Accessories | LunaRituals",
+        description: "Discover our curated collection of intentional fashion pieces. From cozy cardigans to knee-high boots, find elevated basics and timeless styles for mindful living.",
+        keywords: "fashion finds, intentional clothing, minimalist wardrobe, curated fashion, women's clothing, knee high boots, cardigans, sustainable fashion"
+      },
+      candles: {
+        title: "Shop Candles — Premium Scented Candles for Home | LunaRituals",
+        description: "Create a calming atmosphere with our hand-picked selection of premium candles. Featuring Yankee Candle, woodwick, and artisanal brands for cozy, intentional living.",
+        keywords: "scented candles, home fragrance, yankee candle, autumn candles, cozy home, aromatherapy candles, premium candles"
+      },
+      supplements: {
+        title: "Shop Wellness Supplements — Vitamins & Natural Health | LunaRituals",
+        description: "Support your wellness journey with curated supplements and vitamins. From collagen to magnesium, ashwagandha to probiotics—quality products for intentional self-care.",
+        keywords: "wellness supplements, vitamins, collagen supplements, magnesium, ashwagandha, probiotics, natural health, self-care supplements"
+      },
+      affirmations: {
+        title: "Shop Affirmations — Digital Wallpapers & Affirmation Prints | LunaRituals",
+        description: "Downloadable affirmation art for your phone, desktop, and walls. Beautiful designs with powerful messages for self-love, abundance, rest, and intentional living.",
+        keywords: "affirmation wallpaper, digital affirmations, affirmation prints, phone wallpaper, self-love wallpaper, manifestation art, downloadable affirmations"
+      },
+      books: {
+        title: "Shop Books — Fantasy & Fiction Book Recommendations | LunaRituals",
+        description: "Curated book recommendations for cozy reading moments. Featuring beloved fantasy series, romantic fiction, and stories to transport and inspire you.",
+        keywords: "book recommendations, fantasy books, fiction books, reading list, cozy reading, book lovers, fourth wing, acotar"
+      }
+    };
+    return metas[selectedTab] || metas.fashion;
+  };
+
+  const currentMeta = getMetaData();
+
   return (
     <PageTransition>
+      <Helmet>
+        <title>{currentMeta.title}</title>
+        <meta name="description" content={currentMeta.description} />
+        <link rel="canonical" href={`https://lunarituals.com/shop?tab=${selectedTab}`} />
+        
+        <meta property="og:title" content={currentMeta.title} />
+        <meta property="og:description" content={currentMeta.description} />
+        <meta property="og:url" content={`https://lunarituals.com/shop?tab=${selectedTab}`} />
+        <meta property="og:type" content="website" />
+        
+        <meta name="keywords" content={currentMeta.keywords} />
+      </Helmet>
       <div className="min-h-screen section-padding">
         <div className="container-custom">
           <Breadcrumbs items={[

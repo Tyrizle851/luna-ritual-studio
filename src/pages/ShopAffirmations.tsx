@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { affirmations } from "@/data/affirmations";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
+import { generateAffirmationSchema } from "@/lib/seoUtils";
 import { ProductModal } from "@/components/ProductModal";
 import { Affirmation } from "@/data/affirmations";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -58,6 +60,18 @@ const ShopAffirmations = () => {
 
   return (
     <div className="min-h-screen section-padding">
+      <Helmet>
+        <title>Shop Affirmations — Digital Wallpaper Downloads & Prints | LunaRituals</title>
+        <meta name="description" content="Downloadable affirmation art and prints for phone wallpaper, desktop backgrounds, and wall decor. Self-love, abundance, rest, and empowerment affirmations designed with intention." />
+        <link rel="canonical" href="https://lunarituals.com/shop?tab=affirmations" />
+        
+        <meta property="og:title" content="Shop Affirmations — Digital Wallpapers & Prints" />
+        <meta property="og:description" content="Beautiful affirmation designs to remind you of your worth, power, and magic." />
+        <meta property="og:url" content="https://lunarituals.com/shop?tab=affirmations" />
+        <meta property="og:type" content="website" />
+        
+        <meta name="keywords" content="affirmation phone wallpaper, self love wallpaper, affirmation printable, manifestation wallpaper, i am worthy wallpaper, digital affirmations, downloadable affirmations, phone wallpaper quotes" />
+      </Helmet>
       <div className="container-custom">
         <Breadcrumbs items={[
           { label: "Shop", href: "/shop" },

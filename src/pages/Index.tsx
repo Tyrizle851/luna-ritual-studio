@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
@@ -23,6 +24,26 @@ const Index = () => {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>LunaRituals — Digital Affirmations & Curated Lifestyle for Intentional Living</title>
+        <meta name="description" content="Downloadable affirmation art, wellness finds, and inspiration for women building calm, beautiful lives. Digital wallpapers, prints, and curated goods for intentional living." />
+        <link rel="canonical" href="https://lunarituals.com/" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="LunaRituals — Affirmations for Intentional Living" />
+        <meta property="og:description" content="Digital art and curated goods for women building calm, beautiful lives." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lunarituals.com/" />
+        <meta property="og:image" content="https://lunarituals.com/hero-video.mp4" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="LunaRituals — Affirmations for Intentional Living" />
+        <meta name="twitter:description" content="Digital art and curated goods for women building calm, beautiful lives." />
+        
+        {/* Keywords */}
+        <meta name="keywords" content="affirmations, digital affirmations, affirmation wallpaper, self-love affirmations, manifestation wallpaper, intentional living, mindfulness, wellness, self-care" />
+      </Helmet>
       <div className="min-h-screen">
         {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden">

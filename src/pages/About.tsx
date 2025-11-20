@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import aboutHero from "@/assets/about-hero.jpg";
 import { Heart, Target, Award, Users, Sparkles } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
@@ -5,6 +6,18 @@ import { PageTransition } from "@/components/PageTransition";
 const About = () => {
   return (
     <PageTransition>
+      <Helmet>
+        <title>About LunaRituals — Our Story & Values | Affirmations for Intentional Living</title>
+        <meta name="description" content="LunaRituals creates digital affirmation art and curates wellness products for women building lives of intention. Learn about our mission, values, and commitment to intentional living." />
+        <link rel="canonical" href="https://lunarituals.com/about" />
+        
+        <meta property="og:title" content="About LunaRituals — Our Story & Values" />
+        <meta property="og:description" content="Creating digital affirmations and curating lifestyle goods for women building calm, beautiful lives." />
+        <meta property="og:url" content="https://lunarituals.com/about" />
+        <meta property="og:type" content="website" />
+        
+        <meta name="keywords" content="about lunarituals, intentional living brand, affirmation art creator, wellness lifestyle, mindful living mission" />
+      </Helmet>
       <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
