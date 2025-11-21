@@ -381,11 +381,49 @@ export const fashionProducts: FashionProduct[] = [
     category: "Bottoms",
     description: "Summer high waisted cotton linen palazzo pants. Wide leg lounge trousers with convenient pockets. Breathable fabric perfect for warm weather comfort and effortless boho style.",
     price: 19.99,
+    originalPrice: 29.99,
     sizes: ["S", "M", "L", "XL", "2XL"],
-    colors: ["Beige", "White", "Black"],
+    colors: ["White", "Beige", "Camel", "Dark Gray", "Khaki", "Orange"],
     image: productLinenPantsNew,
     inStock: true,
-    affiliateUrl: "https://www.amazon.com/dp/B09YVFLNVP?tag=lunarituals10-20",
+    affiliateUrl: "https://www.amazon.com/dp/B09YVFLNVP?tag=lunarituals10-20&th=1&psc=1",
+    // Enhanced details
+    rating: 3.7,
+    reviewCount: 5358,
+    isPrime: true,
+    styleNotes: "These high-waisted linen palazzo pants embody effortless summer bohemian style. The wide leg silhouette creates a breezy, relaxed fit while the natural linen-cotton blend keeps you cool all day. Perfect for beach vacations, summer festivals, or simply lounging in style with their comfortable elastic waist and functional pockets.",
+    features: [
+      "High waisted design",
+      "Wide leg palazzo style",
+      "Cotton linen blend fabric",
+      "Functional side pockets",
+      "Elastic waistband for comfort",
+      "Breathable and lightweight"
+    ],
+    productDetails: {
+      fabric: "Cotton and linen blend",
+      care: "Machine wash cold, tumble dry low or line dry",
+      fit: "High waisted with wide leg, relaxed palazzo fit",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Beach Vacation",
+        suggestion: "Pair with a cropped tank top and sandals for effortless beach-to-dinner style"
+      },
+      {
+        occasion: "Summer Brunch",
+        suggestion: "Style with a fitted tee and espadrilles for a chic casual look"
+      },
+      {
+        occasion: "Yoga & Wellness",
+        suggestion: "Wear with a sports bra or fitted top for comfortable yoga or meditation"
+      },
+      {
+        occasion: "Relaxed Weekend",
+        suggestion: "Match with an oversized linen shirt for maximum comfort and boho vibes"
+      }
+    ]
   },
   {
     id: "fsh-008",
@@ -393,12 +431,51 @@ export const fashionProducts: FashionProduct[] = [
     brand: "PRETTYGARDEN",
     category: "Knitwear",
     description: "Open front cardigan sweater with button down detail. Chunky cable knit design for cozy fall fashion. Oversized fit perfect for layering over your favorite outfits.",
-    price: 36.99,
+    price: 32.29,
+    originalPrice: 33.99,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Apricot", "Black", "Grey"],
+    colors: ["Black", "Army Green", "Beige", "Blue", "Blue Grey", "Grey"],
     image: productCardiganNew,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B08DTDPVBL?tag=lunarituals10-20",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 13079,
+    socialProof: "200+ bought in past month",
+    isPrime: true,
+    styleNotes: "This OEKO-TEX certified chunky cardigan combines cozy comfort with conscious fashion. The cable knit texture adds visual interest while the open front with button details offers versatile styling. Perfect for creating effortless layered looks throughout fall and winter while knowing it's made with safer chemicals for you and the environment.",
+    features: [
+      "Chunky cable knit texture",
+      "Open front with button details",
+      "OEKO-TEX STANDARD 100 certified",
+      "Oversized relaxed fit",
+      "Long sleeves with ribbed cuffs",
+      "Perfect for layering"
+    ],
+    productDetails: {
+      fabric: "Soft knit blend - OEKO-TEX certified safe",
+      care: "Hand wash cold or gentle machine wash, lay flat to dry",
+      fit: "Oversized, relaxed fit - consider sizing down for closer fit",
+      origin: "Imported, Certification #25.HCN.16282"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Cozy Fall Day",
+        suggestion: "Layer over a turtleneck with jeans and ankle boots"
+      },
+      {
+        occasion: "Weekend Errands",
+        suggestion: "Wear open over a graphic tee with leggings and sneakers"
+      },
+      {
+        occasion: "Work from Home",
+        suggestion: "Style with a fitted tank and joggers for comfort meets polish"
+      },
+      {
+        occasion: "Coffee Date",
+        suggestion: "Button up and pair with high-waist trousers for a put-together look"
+      }
+    ]
   },
   {
     id: "fsh-009",
@@ -406,11 +483,51 @@ export const fashionProducts: FashionProduct[] = [
     brand: "AFKOMST",
     category: "Accessories",
     description: "Small saddle purse with boho charm. Made from high-quality vegan leather. Features a classic flap design and adjustable strap. Perfect for everyday essentials.",
-    price: 23.99,
-    colors: ["Brown", "Black", "Coffee"],
+    price: 18.99,
+    originalPrice: 23.99,
+    badge: "Best Seller",
+    colors: ["Brown", "Beige", "Black"],
     image: productSaddleBag,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B07BHC4Q2S?tag=lunarituals10-20",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 10337,
+    socialProof: "900+ bought in past month",
+    isPrime: true,
+    styleNotes: "This classic saddle crossbody bag captures timeless western-boho charm in a compact, wearable design. The structured flap closure and adjustable strap make it both practical and stylish, while the vegan leather construction means you can feel good about your purchase. Perfect for carrying your essentials hands-free with vintage-inspired flair.",
+    features: [
+      "Classic saddle bag design",
+      "High-quality vegan leather",
+      "Adjustable crossbody strap",
+      "Flap closure with magnetic snap",
+      "Compact size for essentials",
+      "Western-boho inspired style"
+    ],
+    productDetails: {
+      fabric: "Premium vegan leather (PU)",
+      care: "Wipe clean with damp cloth, avoid harsh chemicals",
+      fit: "Compact crossbody - holds phone, wallet, keys, small cosmetics",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Festival Season",
+        suggestion: "Pair with denim shorts and a flowy top for perfect music festival style"
+      },
+      {
+        occasion: "Casual Date",
+        suggestion: "Wear with a sundress and sandals for effortless feminine charm"
+      },
+      {
+        occasion: "Weekend Adventure",
+        suggestion: "Style with jeans and a leather jacket for western-inspired edge"
+      },
+      {
+        occasion: "Coffee Run",
+        suggestion: "Match with athleisure or casual basics for hands-free convenience"
+      }
+    ]
   },
   {
     id: "fsh-010",
@@ -419,10 +536,48 @@ export const fashionProducts: FashionProduct[] = [
     category: "Accessories",
     description: "Premium satin scrunchies softer than silk. Gentle on hair to prevent breakage and frizz. 12-pack of neutral colors perfect for any outfit or sleepwear.",
     price: 6.99,
-    colors: ["Neutrals", "Multicolor"],
+    colors: ["Neutral", "Black", "Dark"],
     image: productScrunchiesNew,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0CHV6QSDQ?tag=lunarituals10-20",
+    // Enhanced details
+    rating: 4.7,
+    reviewCount: 799,
+    socialProof: "100+ bought in past month",
+    isPrime: true,
+    styleNotes: "These premium satin scrunchies are a hair care game-changer. The smooth satin surface is gentler on hair than traditional elastics, reducing breakage, creases, and frizz - especially important for overnight wear. The 12-pack value means you'll always have one handy, and the neutral colors complement any outfit or sleep set beautifully.",
+    features: [
+      "Premium satin - softer than silk",
+      "12-pack value set",
+      "Prevents hair breakage and frizz",
+      "No creases or kinks in hair",
+      "Perfect for sleep or style",
+      "Neutral colors match everything"
+    ],
+    productDetails: {
+      fabric: "High-quality satin polyester",
+      care: "Hand wash cold, air dry flat",
+      fit: "Standard elastic size fits most hair types - thin, thick, curly",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Nighttime Routine",
+        suggestion: "Use to protect hair while sleeping - wake up with smoother, healthier hair"
+      },
+      {
+        occasion: "Workout Style",
+        suggestion: "Secure hair during yoga or gym sessions without damaging strands"
+      },
+      {
+        occasion: "Messy Bun Days",
+        suggestion: "Create effortless buns and ponytails that won't crease your hair"
+      },
+      {
+        occasion: "Gift Giving",
+        suggestion: "Perfect stocking stuffer or addition to self-care gift baskets"
+      }
+    ]
   },
   {
     id: "fsh-011",
@@ -430,11 +585,50 @@ export const fashionProducts: FashionProduct[] = [
     brand: "Gossifan",
     category: "Accessories",
     description: "Classic wide brim felt panama hat with belt buckle accent. Gradient color design adds a modern touch to a timeless style. Adjustable fit for all-day comfort.",
-    price: 30.99,
-    colors: ["Camel", "Black", "Gradient"],
+    price: 24.79,
+    originalPrice: 30.99,
+    colors: ["Camel/Black", "Burgundy/Black", "Grey/Black"],
     image: productFedoraNew,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B09QRWVFZ3?tag=lunarituals10-20",
+    // Enhanced details
+    rating: 4.3,
+    reviewCount: 2847,
+    socialProof: "50+ bought in past month",
+    isPrime: true,
+    styleNotes: "This wide brim fedora combines classic panama hat styling with modern gradient coloring for a fresh take on timeless headwear. The felt construction provides structure while the belt buckle detail adds visual interest. Perfect for adding sophisticated finishing touches to both casual and dressed-up looks while providing sun protection.",
+    features: [
+      "Wide brim for sun protection",
+      "Gradient color design",
+      "Belt buckle accent detail",
+      "Adjustable inner band",
+      "Structured felt construction",
+      "Unisex styling"
+    ],
+    productDetails: {
+      fabric: "Wool felt blend",
+      care: "Spot clean only, reshape while damp if needed",
+      fit: "Adjustable fit with inner sweatband - fits most head sizes",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Fall Fashion",
+        suggestion: "Pair with an oversized blazer and jeans for polished autumn style"
+      },
+      {
+        occasion: "Beach Day",
+        suggestion: "Wear with a linen dress and sandals for chic sun protection"
+      },
+      {
+        occasion: "Festival Look",
+        suggestion: "Style with boho separates and ankle boots for music festival vibes"
+      },
+      {
+        occasion: "City Exploring",
+        suggestion: "Match with a trench coat and boots for sophisticated urban style"
+      }
+    ]
   },
   {
     id: "fsh-012",
@@ -442,10 +636,49 @@ export const fashionProducts: FashionProduct[] = [
     brand: "SOJOS",
     category: "Accessories",
     description: "Chic 90s retro oval sunglasses with gold metal frame. Polarized lenses provide UV400 protection. Lightweight and durable for everyday style.",
-    price: 14.99,
+    price: 8.99,
+    originalPrice: 15.99,
+    badge: "Hot Deal",
     image: productSunglassesNew,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0FBWGSQMM?tag=lunarituals10-20",
+    // Enhanced details
+    rating: 3.8,
+    reviewCount: 29,
+    isPrime: true,
+    styleNotes: "These retro oval sunglasses capture the iconic 90s aesthetic with modern UV protection technology. The small oval lens shape and metal frame create a vintage-inspired look that's both trendy and timeless. Polarized lenses reduce glare while the lightweight construction ensures all-day comfort - perfect for adding Y2K flair to any outfit.",
+    features: [
+      "90s retro oval design",
+      "Polarized UV400 protection",
+      "Metal frame construction",
+      "Lightweight and comfortable",
+      "Available in multiple colors",
+      "Unisex styling"
+    ],
+    productDetails: {
+      fabric: "Metal frame with polarized polycarbonate lenses",
+      care: "Clean with microfiber cloth, store in protective case",
+      fit: "Small to medium face size - compact oval lens shape",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "90s Throwback",
+        suggestion: "Pair with baggy jeans and a crop top for authentic Y2K vibes"
+      },
+      {
+        occasion: "Beach Day",
+        suggestion: "Wear with a bikini and sarong for retro beach babe style"
+      },
+      {
+        occasion: "Festival Fashion",
+        suggestion: "Style with a slip dress and combat boots for edgy festival looks"
+      },
+      {
+        occasion: "City Streets",
+        suggestion: "Match with an oversized blazer and sneakers for urban cool"
+      }
+    ]
   },
   {
     id: "fsh-013",
