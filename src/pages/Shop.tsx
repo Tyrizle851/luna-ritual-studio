@@ -286,7 +286,11 @@ const Shop = () => {
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <div 
                         key={product.id} 
-                        className="group relative"
+                        className="group relative cursor-pointer"
+                        onClick={() => {
+                          setSelectedFashionProduct(product);
+                          setIsFashionModalOpen(true);
+                        }}
                       >
                         <WishlistButton productId={product.id} />
                         {product.badge && (
@@ -332,9 +336,13 @@ const Shop = () => {
                       size="sm"
                       variant="outline"
                       className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={() => product.affiliateUrl && window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedFashionProduct(product);
+                        setIsFashionModalOpen(true);
+                      }}
                     >
-                      Shop Now
+                      View Details
                     </Button>
                         </div>
                       </div>
