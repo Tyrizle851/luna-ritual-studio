@@ -661,19 +661,46 @@ const Shop = () => {
                           )}
                         </div>
                       )}
-                      <p className="text-sm text-text-secondary leading-relaxed mb-4">{book.description}</p>
+                      
+                      <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
+                      
+                      {book.awards && book.awards.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          {book.awards.slice(0, 2).map((award, index) => (
+                            <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                              {award}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
                       <div className="flex items-center justify-between">
-                        <span className="text-base font-semibold text-text-primary">${book.price}</span>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          asChild
-                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                        >
-                          <a href={book.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                            Shop Now <ExternalLink className="ml-1 h-3 w-3" />
-                          </a>
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          {book.originalPrice && (
+                            <>
+                              <span className="text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
+                              </span>
+                            </>
+                          )}
+                          <span className="text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] text-text-muted">via Amazon</span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(book.affiliateUrl, '_blank');
+                            }}
+                          >
+                            Shop Now
+                            <ExternalLink className="w-3 h-3 ml-1" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}
