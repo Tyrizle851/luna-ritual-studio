@@ -21,6 +21,7 @@ export const SupplementModal = ({ product, open, onOpenChange }: SupplementModal
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        {!product ? null : (
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-4">
             <img
@@ -191,6 +192,7 @@ export const SupplementModal = ({ product, open, onOpenChange }: SupplementModal
             </Accordion>
           </div>
         </div>
+        )}
       </DialogContent>
     </Dialog>
   );
