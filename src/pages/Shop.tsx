@@ -30,6 +30,7 @@ import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
 import { CandleModal } from "@/components/CandleModal";
+import { SupplementModal } from "@/components/SupplementModal";
 import { Candle } from "@/data/candles";
 
 const ITEMS_PER_PAGE = 6;
@@ -57,6 +58,7 @@ const Shop = () => {
   const [selectedFashionProduct, setSelectedFashionProduct] = useState<FashionProduct | null>(null);
   const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
   const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
+  const [selectedSupplement, setSelectedSupplement] = useState<Supplement | null>(null);
   const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
   
   const { addItem } = useCartStore();
