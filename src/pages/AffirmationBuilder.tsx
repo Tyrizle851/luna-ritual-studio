@@ -704,31 +704,23 @@ const AffirmationBuilder = () => {
               Create meaningful affirmation art that reflects your unique journey
             </p>
 
-            {/* Consolidated Trust Banner */}
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Shield className="h-4 w-4 text-clay" />
-                <span>Professional Quality</span>
+            {/* Consolidated Trust Badges - Square Button Style */}
+            <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
+              <div className="group flex flex-col items-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-br from-clay/10 to-clay/5 border border-clay/20 hover:border-clay/40 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[140px]">
+                <Zap className="h-6 w-6 text-clay group-hover:animate-pulse" />
+                <span className="text-sm font-semibold text-foreground text-center">AI-Powered</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Zap className="h-4 w-4 text-clay" />
-                <span>Instant Generation</span>
+              <div className="group flex flex-col items-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-br from-clay/10 to-clay/5 border border-clay/20 hover:border-clay/40 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[140px]">
+                <Award className="h-6 w-6 text-clay group-hover:animate-pulse" />
+                <span className="text-sm font-semibold text-foreground text-center">Print-Ready</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Award className="h-4 w-4 text-clay" />
-                <span>Print-Ready</span>
+              <div className="group flex flex-col items-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-br from-clay/10 to-clay/5 border border-clay/20 hover:border-clay/40 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[140px]">
+                <Wand2 className="h-6 w-6 text-clay group-hover:animate-pulse" />
+                <span className="text-sm font-semibold text-foreground text-center">Personalized</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Wand2 className="h-4 w-4 text-clay" />
-                <span>Personalized</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Sparkles className="h-4 w-4 text-clay" />
-                <span>Brand-Aligned</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
-                <Download className="h-4 w-4 text-clay" />
-                <span>AI-Powered</span>
+              <div className="group flex flex-col items-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-br from-clay/10 to-clay/5 border border-clay/20 hover:border-clay/40 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[140px]">
+                <Sparkles className="h-6 w-6 text-clay group-hover:animate-pulse" />
+                <span className="text-sm font-semibold text-foreground text-center">Instant</span>
               </div>
             </div>
 
@@ -1859,71 +1851,119 @@ const AffirmationBuilder = () => {
         </div>
 
         {/* Reviews Section */}
-        <div className="max-w-5xl mx-auto px-4 py-16 md:py-24 border-t border-border/50">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-border/50">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl text-clay mb-4">What Our Community Says</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hear from people who've transformed their spaces and mindset with Affirmation Studio
+              Real stories from people transforming their spaces with Affirmation Studio
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card className="border hover:border-clay/30 transition-colors">
-              <CardHeader>
-                <div className="flex gap-1 mb-3">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className="w-5 h-5 fill-clay" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <CardTitle className="text-lg font-semibold">Perfect for My Morning Routine</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  "I've printed three different affirmations and they're now framed in my bedroom. The quality is incredible and the designs are so calming. It's the first thing I see every morning."
-                </p>
-                <p className="text-sm font-medium text-foreground">— Sarah M.</p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Review 1 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-clay/20 to-clay/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
+              <Card className="relative border-2 border-border hover:border-clay/30 transition-all duration-300 bg-card animate-fade-in">
+                <CardHeader className="pb-4">
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-5 h-5 fill-clay drop-shadow-sm" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  
+                  {/* Avatar & Name */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-clay/30 to-clay/10 flex items-center justify-center border-2 border-clay/20">
+                      <span className="text-clay font-semibold text-lg">S</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Sarah M.</p>
+                      <p className="text-xs text-muted-foreground">Verified User</p>
+                    </div>
+                  </div>
+                  
+                  <CardTitle className="text-lg font-semibold text-foreground">Perfect for My Morning Routine</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed italic">
+                    "I've printed three different affirmations and they're now framed in my bedroom. The quality is incredible and the designs are so calming. It's the first thing I see every morning."
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
 
-            <Card className="border hover:border-clay/30 transition-colors">
-              <CardHeader>
-                <div className="flex gap-1 mb-3">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className="w-5 h-5 fill-clay" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <CardTitle className="text-lg font-semibold">Better Than Etsy Options</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  "I used to buy generic affirmation prints on Etsy, but this is on another level. The customization options let me create something that actually speaks to MY goals."
-                </p>
-                <p className="text-sm font-medium text-foreground">— Jessica T.</p>
-              </CardContent>
-            </Card>
+            {/* Review 2 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-clay/20 to-clay/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
+              <Card className="relative border-2 border-border hover:border-clay/30 transition-all duration-300 bg-card animate-fade-in [animation-delay:100ms]">
+                <CardHeader className="pb-4">
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-5 h-5 fill-clay drop-shadow-sm" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  
+                  {/* Avatar & Name */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-clay/30 to-clay/10 flex items-center justify-center border-2 border-clay/20">
+                      <span className="text-clay font-semibold text-lg">J</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Jessica T.</p>
+                      <p className="text-xs text-muted-foreground">Verified User</p>
+                    </div>
+                  </div>
+                  
+                  <CardTitle className="text-lg font-semibold text-foreground">Better Than Etsy Options</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed italic">
+                    "I used to buy generic affirmation prints on Etsy, but this is on another level. The customization options let me create something that actually speaks to MY goals."
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
 
-            <Card className="border hover:border-clay/30 transition-colors">
-              <CardHeader>
-                <div className="flex gap-1 mb-3">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className="w-5 h-5 fill-clay" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <CardTitle className="text-lg font-semibold">So Easy to Use</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  "I'm not tech-savvy at all, but this was incredibly simple. Within minutes I had a beautiful affirmation designed and downloaded. Already shared it on Instagram!"
-                </p>
-                <p className="text-sm font-medium text-foreground">— Michael R.</p>
-              </CardContent>
-            </Card>
+            {/* Review 3 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-clay/20 to-clay/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
+              <Card className="relative border-2 border-border hover:border-clay/30 transition-all duration-300 bg-card animate-fade-in [animation-delay:200ms]">
+                <CardHeader className="pb-4">
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-5 h-5 fill-clay drop-shadow-sm" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  
+                  {/* Avatar & Name */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-clay/30 to-clay/10 flex items-center justify-center border-2 border-clay/20">
+                      <span className="text-clay font-semibold text-lg">M</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Michael R.</p>
+                      <p className="text-xs text-muted-foreground">Verified User</p>
+                    </div>
+                  </div>
+                  
+                  <CardTitle className="text-lg font-semibold text-foreground">So Easy to Use</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed italic">
+                    "I'm not tech-savvy at all, but this was incredibly simple. Within minutes I had a beautiful affirmation designed and downloaded. Already shared it on Instagram!"
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
