@@ -691,78 +691,44 @@ const AffirmationBuilder = () => {
 
       <div className="min-h-screen bg-background py-8 md:py-16">
         <div className="container-custom max-w-screen-xl mx-auto px-4">
-          {/* Header with Why Section */}
-          <div className="text-center mb-12 md:mb-16">
+          {/* Header */}
+          <div className="text-center mb-8 md:mb-12">
             <div className="flex justify-center items-center gap-3 mb-4">
               <Sparkles className="h-6 w-6 text-clay animate-pulse" />
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-clay">Affirmation Studio</h1>
+              <Badge className="bg-clay text-white text-xs px-2 py-1">NEW</Badge>
               <Sparkles className="h-6 w-6 text-clay animate-pulse" />
             </div>
             
-            <p className="text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-foreground/80 mb-8 max-w-3xl mx-auto">
               Create meaningful affirmation art that reflects your unique journey
             </p>
 
-            {/* Trust Badges */}
-            <div className="flex flex-wrap justify-center items-center gap-6 mb-8">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Shield className="h-5 w-5 text-clay" />
+            {/* Consolidated Trust Banner */}
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-6">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Shield className="h-4 w-4 text-clay" />
                 <span>Professional Quality</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Zap className="h-5 w-5 text-clay" />
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Zap className="h-4 w-4 text-clay" />
                 <span>Instant Generation</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Award className="h-5 w-5 text-clay" />
-                <span>Print-Ready Files</span>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Award className="h-4 w-4 text-clay" />
+                <span>Print-Ready</span>
               </div>
-            </div>
-
-            {/* Why Use This Section */}
-            <div className="max-w-4xl mx-auto mb-8">
-              <div className="grid md:grid-cols-3 gap-6">
-                <Card className="border-2 hover:border-clay/50 transition-colors">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
-                      <Wand2 className="h-6 w-6 text-clay" />
-                    </div>
-                    <CardTitle className="text-lg">Personalized Design</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Every affirmation is uniquely crafted to match your energy, style, and intentions—never generic templates.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-2 hover:border-clay/50 transition-colors">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
-                      <Sparkles className="h-6 w-6 text-clay" />
-                    </div>
-                    <CardTitle className="text-lg">Premium Aesthetic</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Designed with the same luxury minimal aesthetic as LunaRituals—calm, intentional, and effortlessly beautiful.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-2 hover:border-clay/50 transition-colors">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
-                      <Download className="h-6 w-6 text-clay" />
-                    </div>
-                    <CardTitle className="text-lg">Print & Frame Ready</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      High-resolution downloads perfect for printing at home or professional framing services.
-                    </p>
-                  </CardContent>
-                </Card>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Wand2 className="h-4 w-4 text-clay" />
+                <span>Personalized</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Sparkles className="h-4 w-4 text-clay" />
+                <span>Brand-Aligned</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground px-3 py-2 rounded-full bg-muted/30">
+                <Download className="h-4 w-4 text-clay" />
+                <span>AI-Powered</span>
               </div>
             </div>
 
@@ -1833,6 +1799,60 @@ const AffirmationBuilder = () => {
                     </div>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Why Affirmation Studio Section */}
+        <div className="max-w-5xl mx-auto px-4 py-16 md:py-24 border-t border-border/50 mt-16">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl text-clay mb-4">Why Affirmation Studio?</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Designed to support your intentional living journey with personalized, premium-quality affirmation art
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="border-2 hover:border-clay/50 transition-colors">
+              <CardHeader>
+                <div className="w-14 h-14 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-4">
+                  <Wand2 className="h-7 w-7 text-clay" />
+                </div>
+                <CardTitle className="text-xl text-center">Personalized to Your Goals</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-center leading-relaxed">
+                  Every affirmation is uniquely crafted to match your personal energy, style, and intentions. Choose from themes like confidence, peace, focus, and gratitude—never generic templates.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-clay/50 transition-colors">
+              <CardHeader>
+                <div className="w-14 h-14 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="h-7 w-7 text-clay" />
+                </div>
+                <CardTitle className="text-xl text-center">Brand-Aligned Design</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-center leading-relaxed">
+                  Designed with the same luxury minimal aesthetic as LunaRituals—calm, intentional, and effortlessly beautiful. Every piece feels cohesive with your intentional lifestyle.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-clay/50 transition-colors">
+              <CardHeader>
+                <div className="w-14 h-14 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-7 w-7 text-clay" />
+                </div>
+                <CardTitle className="text-xl text-center">AI-Powered Creation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-center leading-relaxed">
+                  Instant inspiration powered by advanced AI. Generate unlimited variations, customize colors, and download high-resolution files ready for printing or sharing.
+                </p>
               </CardContent>
             </Card>
           </div>
