@@ -22,7 +22,7 @@ export const SearchBar = ({ onSearch, placeholder = "Search products..." }: Sear
   };
 
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full max-w-2xl mx-auto">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
       <Input
         type="text"

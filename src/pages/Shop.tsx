@@ -51,6 +51,10 @@ const Shop = () => {
     if (tab && ["fashion", "candles", "supplements", "affirmations", "books"].includes(tab)) {
       setSelectedTab(tab);
     }
+    const search = searchParams.get("search");
+    if (search) {
+      setSearchQuery(search);
+    }
   }, [searchParams]);
   const [candlesPage, setCandlesPage] = useState(1);
   const [supplementsPage, setSupplementsPage] = useState(1);

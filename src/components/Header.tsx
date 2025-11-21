@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, ShoppingCart, ChevronDown, Search, Sparkles } from "lucide-react";
+import { Menu, ShoppingCart, ChevronDown, Search, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SearchBar } from "@/components/SearchBar";
 import logo from "@/assets/logo.png";
 
 export const Header = () => {
@@ -27,13 +28,21 @@ export const Header = () => {
   const isActive = (path: string) => currentPath === path;
   const isShopActive = currentPath.includes('/shop');
 
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(query)}`);
+      setSearchOpen(false);
+    }
+  };
+
   return (
     <header 
       className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
         isScrolled ? "bg-background/60 backdrop-blur-md" : "bg-background/95 backdrop-blur"
       }`}
     >
-      <div className="container-custom flex h-16 items-center">
+      <div className="container-custom">
+        <div className="flex h-16 items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="LunaRituals Logo" className="h-12 w-12 logo-3d" />
           <span className="font-display text-2xl font-semibold text-foreground">
@@ -42,7 +51,7 @@ export const Header = () => {
         </Link>
 
         {/* Desktop Navigation - Centered */}
-        <nav className="hidden md:flex items-center gap-8 mx-auto">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 mx-auto">
           <Link 
             to="/" 
             className={`text-sm transition-all duration-200 relative py-1 ${
@@ -165,14 +174,14 @@ export const Header = () => {
         </nav>
 
         {/* Search & Cart & Mobile Menu */}
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 lg:gap-3">
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/shop')}
+            onClick={() => setSearchOpen(!searchOpen)}
             className="text-foreground hover:text-clay"
           >
-            <Search className="h-5 w-5" />
+            {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
           </Button>
           <Button
             variant="ghost"
@@ -190,7 +199,7 @@ export const Header = () => {
 
           {/* Mobile Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild className="md:hidden">
+            <SheetTrigger asChild className="lg:hidden">
               <Button variant="ghost" size="icon">
                 <Menu className="h-5 w-5" />
               </Button>
@@ -317,6 +326,17 @@ export const Header = () => {
             </SheetContent>
           </Sheet>
         </div>
+        </div>
+
+        {/* Search Bar - Full Width Below Header */}
+        {searchOpen && (
+          <div className="border-t border-border py-3 px-4">
+            <SearchBar 
+              onSearch={handleSearch} 
+              placeholder="Search products..." 
+            />
+          </div>
+        )}
       </div>
     </header>
   );
