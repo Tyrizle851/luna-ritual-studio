@@ -290,6 +290,31 @@ export const candles: Candle[] = [
     image: productCandleSpark,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0F3DRYY1N?tag=lunarituals10-20",
+    rating: 4.4,
+    reviewCount: 11000,
+    socialProof: "10K+ bought in past month",
+    isPrime: true,
+    scentProfile: "A cozy wintertime classic that evokes memories of twinkling lights and intimate gatherings. Spicy cinnamon is combined with warm clove notes to create an inviting holiday atmosphere that welcomes guests into your home.",
+    features: [
+      "Premium plant wax blend for optimal fragrance performance",
+      "Natural-fiber wick for clean, consistent burn",
+      "110-150 hours of room-filling fragrance",
+      "Classic glass jar with metal lid",
+      "Made in USA with globally sourced materials",
+      "Perfect for holiday entertaining and gifting"
+    ],
+    productDetails: {
+      waxType: "Premium plant wax blend",
+      wickType: "Natural fiber wick",
+      jarType: "Classic glass jar with lid",
+      madeIn: "Made in USA"
+    },
+    usageIdeas: [
+      "Create warm holiday ambiance for Christmas gatherings",
+      "Perfect centerpiece for winter dinner parties",
+      "Gift for cinnamon and spice fragrance lovers",
+      "Layer with other holiday scents for festive atmosphere"
+    ]
   },
   {
     id: "cnd-008",
@@ -298,46 +323,147 @@ export const candles: Candle[] = [
     scent: "Lavender, Floral",
     description: "Aromatherapy candle for women featuring natural crystals inside. Pure 10 oz soy wax with 10% natural essential oils. 60 hour burn time with elegant white ceramic jar and bamboo lid. Perfect for home relaxation, birthday, or Christmas gifts. Amazon's Choice. 2K+ bought in past month.",
     price: 16.99,
+    originalPrice: 21.99,
     burnTime: "60 hours",
     image: productCandleAoovooLavender,
     inStock: true,
     affiliateUrl: "https://amzn.to/3X1rR61",
+    rating: 4.5,
+    reviewCount: 1127,
+    socialProof: "2K+ bought in past month",
+    isPrime: true,
+    scentProfile: "Pure lavender essential oil creates a calming and relaxing aromatherapy experience. This natural floral scent helps reduce stress, promote better sleep, and create a peaceful sanctuary in your home. Features natural crystals for added wellness benefits.",
+    features: [
+      "Pure soy wax with 10% natural essential oils",
+      "Natural crystals embedded inside candle",
+      "Elegant white ceramic jar with bamboo lid",
+      "Made with sustainable, renewable materials",
+      "ClimeCo Certified carbon neutral product",
+      "Amazon's Choice for lavender candles"
+    ],
+    productDetails: {
+      waxType: "100% natural soy wax",
+      wickType: "Cotton wick",
+      jarType: "White ceramic jar with bamboo lid",
+      madeIn: "Designed in USA"
+    },
+    usageIdeas: [
+      "Perfect for meditation, yoga, and relaxation",
+      "Use during evening bath time for spa-like experience",
+      "Ideal for bedroom to promote restful sleep",
+      "Thoughtful gift for birthdays, Christmas, or self-care lovers"
+    ]
   },
   {
     id: "cnd-009",
     name: "Yankee Candle Harvest Large Jar",
     brand: "Yankee Candle",
     scent: "Fruity, Warm",
-    description: "Captures the essence of autumn harvest with warm, fruity notes. Perfect seasonal fragrance for creating cozy fall ambiance. 22oz large jar delivers 150 hours of room-filling scent.",
+    description: "Captures the essence of autumn harvest with warm, fruity notes. Perfect seasonal fragrance for creating cozy fall ambiance. 22oz large jar delivers 150 hours of room-filling scent. 10K+ bought in past month.",
     price: 14.99,
     burnTime: "150 hours",
     image: productCandleHarvest,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0F3DPN1R4?tag=lunarituals10-20",
+    rating: 4.4,
+    reviewCount: 11110,
+    socialProof: "10K+ bought in past month",
+    isPrime: true,
+    scentProfile: "This fall classic charms you with a blend of cinnamon, cloves, and musk, with hints of sweet apples and pumpkin. Captures the essence of autumn harvest with warm, comforting notes that fill your home with seasonal coziness.",
+    features: [
+      "Premium plant wax blend for optimal fragrance performance",
+      "Natural-fiber wick for clean, consistent burn",
+      "110-150 hours of room-filling fragrance",
+      "More fragrance in every burn",
+      "Classic glass jar with metal lid",
+      "Made in USA with globally sourced materials"
+    ],
+    productDetails: {
+      waxType: "Premium plant wax blend",
+      wickType: "Natural fiber wick",
+      jarType: "Classic glass jar with lid",
+      madeIn: "Made in USA"
+    },
+    usageIdeas: [
+      "Perfect for Thanksgiving dinner preparations and celebrations",
+      "Create warm autumn ambiance for fall gatherings",
+      "Gift for seasonal fragrance lovers and autumn enthusiasts",
+      "Layer with other fall scents for enhanced seasonal atmosphere"
+    ]
   },
   {
     id: "cnd-010",
     name: "Yankee Candle Apple Pumpkin Large Jar",
     brand: "Yankee Candle",
     scent: "Sweet, Fruity",
-    description: "Delightful fall blend of crisp, fresh apple with warm pumpkin. Sweet and fruity fragrance perfect for autumn gatherings. 22oz large jar provides 150 hours of seasonal comfort.",
+    description: "Delightful fall blend of crisp, fresh apple with warm pumpkin. Sweet and fruity fragrance perfect for autumn gatherings. 22oz large jar provides 150 hours of seasonal comfort. 10K+ bought in past month.",
     price: 14.99,
     burnTime: "150 hours",
     image: productCandleApplePumpkin,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0F3DQHQ9K?tag=lunarituals10-20",
+    rating: 4.4,
+    reviewCount: 11110,
+    socialProof: "10K+ bought in past month",
+    isPrime: true,
+    scentProfile: "A delightful autumn blend that combines the crispness of fresh picked apples with the warmth of pumpkin and seasonal spices. This sweet, fruity fragrance creates a welcoming atmosphere perfect for fall gatherings and cozy evenings at home.",
+    features: [
+      "Premium plant wax blend for optimal fragrance performance",
+      "Natural-fiber wick for clean, consistent burn",
+      "110-150 hours of room-filling fragrance",
+      "More fragrance in every burn",
+      "Classic glass jar with metal lid",
+      "Made in USA with globally sourced materials"
+    ],
+    productDetails: {
+      waxType: "Premium plant wax blend",
+      wickType: "Natural fiber wick",
+      jarType: "Classic glass jar with lid",
+      madeIn: "Made in USA"
+    },
+    usageIdeas: [
+      "Perfect for fall entertaining and dinner parties",
+      "Create welcoming autumn ambiance in living spaces",
+      "Gift for apple and pumpkin scent enthusiasts",
+      "Layer with other harvest scents for full seasonal experience"
+    ]
   },
   {
     id: "cnd-011",
     name: "Yankee Candle Autumn Leaves Large Jar",
     brand: "Yankee Candle",
     scent: "Earthy, Crisp",
-    description: "Captures the earthy essence of crisp autumn leaves underfoot. Fresh, outdoor-inspired scent brings nature indoors. 22oz large jar offers 150 hours of fall atmosphere.",
+    description: "Captures the earthy essence of crisp autumn leaves underfoot. Fresh, outdoor-inspired scent brings nature indoors. 22oz large jar offers 150 hours of fall atmosphere. 10K+ bought in past month.",
     price: 14.99,
     burnTime: "150 hours",
     image: productCandleAutumnLeaves,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0F3DQ4Z9J?tag=lunarituals10-20",
+    rating: 4.4,
+    reviewCount: 11110,
+    socialProof: "10K+ bought in past month",
+    isPrime: true,
+    scentProfile: "Experience the essence of a crisp autumn walk through falling leaves. This earthy, fresh fragrance captures the outdoor beauty of fall foliage with woody notes and hints of dried herbs, bringing the natural wonder of autumn indoors.",
+    features: [
+      "Premium plant wax blend for optimal fragrance performance",
+      "Natural-fiber wick for clean, consistent burn",
+      "110-150 hours of room-filling fragrance",
+      "More fragrance in every burn",
+      "Classic glass jar with metal lid",
+      "Made in USA with globally sourced materials"
+    ],
+    productDetails: {
+      waxType: "Premium plant wax blend",
+      wickType: "Natural fiber wick",
+      jarType: "Classic glass jar with lid",
+      madeIn: "Made in USA"
+    },
+    usageIdeas: [
+      "Perfect for creating outdoor-inspired ambiance indoors",
+      "Ideal for nature lovers and autumn enthusiasts",
+      "Use in entryways to welcome guests with seasonal scent",
+      "Layer with other earthy scents for full fall experience"
+    ]
   },
   {
     id: "cnd-012",
@@ -350,6 +476,30 @@ export const candles: Candle[] = [
     image: productCandlePumpkinNutmeg,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B08846RTGF?tag=lunarituals10-20",
+    rating: 4.5,
+    reviewCount: 8500,
+    isPrime: true,
+    scentProfile: "A cozy blend of sweet pumpkin and warm nutmeg spice creates the perfect autumn atmosphere. Enhanced by WoodWick's signature wooden wick that crackles as it burns, mimicking the sound of a crackling fireplace for ultimate relaxation.",
+    features: [
+      "Signature wooden wick creates soothing crackling sound",
+      "Premium soy-paraffin wax blend",
+      "10oz medium jar with elegant wooden lid",
+      "Unique hourglass shape for enhanced fragrance",
+      "50 hours of burn time",
+      "Perfect for creating cozy ambiance"
+    ],
+    productDetails: {
+      waxType: "Premium soy-paraffin wax blend",
+      wickType: "Signature crackling wooden wick",
+      jarType: "Hourglass glass jar with wooden lid",
+      madeIn: "Quality crafted"
+    },
+    usageIdeas: [
+      "Perfect for creating fireplace ambiance without a fireplace",
+      "Ideal for cozy autumn and winter evenings",
+      "Great gift for pumpkin spice lovers",
+      "Use during reading time or relaxation for soothing crackle sounds"
+    ]
   },
   {
     id: "cnd-013",
@@ -362,6 +512,30 @@ export const candles: Candle[] = [
     image: productCandleOrangeCinnamon,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B005S4LKNO?tag=lunarituals10-20",
+    rating: 4.6,
+    reviewCount: 3200,
+    isPrime: true,
+    scentProfile: "A festive and inviting blend of zesty orange peel, warm cinnamon sticks, and aromatic clove creates the perfect holiday atmosphere. This classic seasonal combination fills your home with comforting warmth and joyful memories of holiday gatherings.",
+    features: [
+      "Extra-large 34oz Papa jar for extended burn time",
+      "Premium wax blend for consistent fragrance throw",
+      "155 hours of burn time - exceptional value",
+      "Part of Keepers of the Light collection",
+      "Made with high-quality fragrance oils",
+      "Perfect for large rooms and open spaces"
+    ],
+    productDetails: {
+      waxType: "Premium paraffin wax blend",
+      wickType: "Cotton wick",
+      jarType: "Large glass Papa jar with lid",
+      madeIn: "Made in USA"
+    },
+    usageIdeas: [
+      "Perfect centerpiece for holiday entertaining",
+      "Ideal for large living rooms and open floor plans",
+      "Creates festive atmosphere for Christmas gatherings",
+      "Long-lasting gift for the holiday season"
+    ]
   },
   {
     id: "cnd-014",
@@ -380,24 +554,72 @@ export const candles: Candle[] = [
     name: "Yankee Candle Autumn Lodge Large Jar",
     brand: "Yankee Candle",
     scent: "Woody, Cozy",
-    description: "Evokes the warmth of a rustic mountain lodge with rich woody notes and cozy undertones. Perfect for creating cabin-inspired ambiance. Large jar delivers 110 hours of comforting fragrance.",
+    description: "Evokes the warmth of a rustic mountain lodge with rich woody notes and cozy undertones. Perfect for creating cabin-inspired ambiance. Large jar delivers 110 hours of comforting fragrance. Only 6 left in stock.",
     price: 37.99,
     burnTime: "110 hours",
     image: productCandleAutumnLodge,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B007N454XY?tag=lunarituals10-20",
+    rating: 4.5,
+    reviewCount: 850,
+    socialProof: "Limited stock - only 6 left",
+    scentProfile: "Experience the cozy warmth of a rustic mountain lodge retreat. Rich woody notes are balanced with warm, inviting undertones that evoke crackling fires and comfortable leather chairs. This USA exclusive scent creates an intimate cabin atmosphere in any room.",
+    features: [
+      "Paraffin-grade wax for clear, consistent burn",
+      "110-150 hours of burn time",
+      "Classic large jar design (22 oz)",
+      "USA Exclusive fragrance",
+      "Measures 4\"W x 7\"H",
+      "Long-burning for extended enjoyment"
+    ],
+    productDetails: {
+      waxType: "Paraffin-grade wax",
+      wickType: "Cotton wick",
+      jarType: "Classic glass jar",
+      madeIn: "Quality crafted"
+    },
+    usageIdeas: [
+      "Perfect for creating cabin or lodge ambiance",
+      "Ideal for cozy autumn and winter evenings",
+      "Great for man caves and rustic-themed spaces",
+      "Pair with plaid blankets and flannel for ultimate coziness"
+    ]
   },
   {
     id: "cnd-016",
     name: "Village Candle Mulled Cider Apothecary Jar",
     brand: "Village Candle",
     scent: "Spiced, Warm",
-    description: "Warm mulled cider fragrance infused with festive holiday spices. Reminiscent of simmering apple cider with cinnamon sticks. Large 21.25oz apothecary jar offers 105 hours of seasonal warmth.",
+    description: "Warm mulled cider fragrance infused with festive holiday spices. Reminiscent of simmering apple cider with cinnamon sticks. Large 21.25oz apothecary jar offers 105 hours of seasonal warmth. 3K+ reviews.",
     price: 21.95,
     burnTime: "105 hours",
     image: productCandleMulledCider,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B001J6O6FE?tag=lunarituals10-20",
+    rating: 4.6,
+    reviewCount: 3231,
+    isPrime: true,
+    scentProfile: "Experience the comforting aroma of warm mulled apple cider simmering on the stove. This festive blend combines sweet apples with cinnamon sticks, cloves, and aromatic spices, creating the perfect holiday atmosphere that fills your home with seasonal warmth.",
+    features: [
+      "Clean-burning premium wax blend",
+      "Large 21.25 oz apothecary jar",
+      "105 hours of burn time",
+      "Part of Village Candle's premium collection",
+      "Elegant apothecary-style glass jar",
+      "Made with high-quality fragrance oils"
+    ],
+    productDetails: {
+      waxType: "Premium paraffin wax blend",
+      wickType: "Cotton wick",
+      jarType: "Large apothecary glass jar",
+      madeIn: "Quality crafted in USA"
+    },
+    usageIdeas: [
+      "Perfect for holiday entertaining and gatherings",
+      "Creates festive autumn and winter atmosphere",
+      "Ideal for Thanksgiving and Christmas celebrations",
+      "Great gift for apple cider and spice lovers"
+    ]
   },
   {
     id: "cnd-017",
@@ -405,11 +627,35 @@ export const candles: Candle[] = [
     brand: "Yankee Candle",
     scent: "Fruity, Warm",
     description: "Timeless autumn harvest fragrance featuring warm, fruity notes. Classic seasonal scent perfect for fall traditions. 22oz jar provides over 110 hours of nostalgic harvest atmosphere.",
-    price: 34.3,
+    price: 34.30,
     burnTime: "110 hours",
     image: productCandleHarvestClassic,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B000W3RVA2?tag=lunarituals10-20",
+    rating: 4.5,
+    reviewCount: 2800,
+    isPrime: true,
+    scentProfile: "A timeless fall classic that blends cinnamon, cloves, and musk with hints of sweet apples and pumpkin. This nostalgic harvest fragrance captures the essence of autumn traditions and family gatherings, filling your home with warm, comforting memories.",
+    features: [
+      "Paraffin-grade wax for clear, consistent burn",
+      "110-150 hours of burn time",
+      "Classic large jar design (22 oz)",
+      "100% recyclable in partnership with TerraCycle",
+      "Measures 6.6\"H x 4\"D",
+      "Long-lasting seasonal fragrance"
+    ],
+    productDetails: {
+      waxType: "Paraffin-grade wax",
+      wickType: "Cotton wick",
+      jarType: "Classic glass jar",
+      madeIn: "Quality crafted"
+    },
+    usageIdeas: [
+      "Perfect for Thanksgiving and fall celebrations",
+      "Creates nostalgic atmosphere for family gatherings",
+      "Ideal for those who love traditional harvest scents",
+      "Layer with other autumn fragrances for full seasonal experience"
+    ]
   },
   {
     id: "cnd-018",
