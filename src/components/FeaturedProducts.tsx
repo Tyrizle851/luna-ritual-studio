@@ -1,10 +1,40 @@
-import { affiliateProducts } from "@/data/affiliateProducts";
 import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
+import productCandleBalsamCedar from "@/assets/product-candle-yankee-balsam-cedar-1763492326.jpg";
+import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
 
 export const FeaturedProducts = () => {
-  const featured = affiliateProducts.slice(0, 3);
+  const featured = [
+    {
+      id: "featured-1",
+      name: "Classic Satin Silk Pajama Set",
+      brand: "EKOUAER",
+      caption: "Sunday mornings deserve softness",
+      image: productSilkSleepSet,
+      affiliateLink: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?tag=lunarituals10-20",
+      category: "Fashion"
+    },
+    {
+      id: "featured-2",
+      name: "Balsam & Cedar Large Jar Candle",
+      brand: "YANKEE CANDLE",
+      caption: "Light this when you need to come home to yourself",
+      image: productCandleBalsamCedar,
+      affiliateLink: "https://amzn.to/43yPmai",
+      category: "Candles"
+    },
+    {
+      id: "featured-3",
+      name: "Throne of Glass",
+      brand: "SARAH J. MAAS",
+      caption: "The book that helps you remember who you were before the world told you who to be",
+      image: throneOfGlassImage,
+      affiliateLink: "https://amzn.to/4hTBnBz",
+      category: "Books"
+    }
+  ];
 
   return (
     <section className="section-padding bg-secondary">
@@ -30,7 +60,7 @@ export const FeaturedProducts = () => {
               </div>
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
               <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-              <p className="text-sm text-text-secondary leading-relaxed mb-4">{product.caption}</p>
+              <p className="text-sm text-text-secondary leading-relaxed mb-4 italic">{product.caption}</p>
               <Button
                 size="sm"
                 variant="outline"
