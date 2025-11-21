@@ -36,6 +36,7 @@ export interface Affirmation {
 }
 
 export const affirmations: Affirmation[] = [
+  // **PAGE 1: BEST PICKS** - Featured affirmations with longest descriptions
   {
     id: "aff-001",
     title: "I am worthy of rest",

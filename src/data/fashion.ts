@@ -65,6 +65,110 @@ export interface FashionProduct {
 }
 
 export const fashionProducts: FashionProduct[] = [
+  // **PAGE 1: BEST PICKS** - Highest rated, best sellers, most reviewed
+  {
+    id: "fsh-014",
+    name: "DREAM PAIRS Over The Knee Thigh High Boots",
+    brand: "DREAM PAIRS",
+    category: "Shoes",
+    description: "Sleek over-the-knee boots with chunky heel for all-day comfort. Stretchy design creates a flattering silhouette while the block heel provides stability. Perfect statement piece for fall and winter outfits.",
+    price: 40.27,
+    originalPrice: 69.99,
+    badge: "#1 Best Seller",
+    sizes: ["6", "7", "8", "9", "10", "11"],
+    colors: ["Black", "Grey", "Brown"],
+    image: productOverKneeBoots,
+    inStock: true,
+    affiliateUrl: "https://www.amazon.com/DREAM-PAIRS-Womens-Laurence-Chunky/dp/B071K971NT?crid=1XC8BGG3LBDI8&dib=eyJ2IjoiMSJ9._WcQbEU6v6HOUhUG_kIJ7ALyxbH9zchjElZTzt_5AUgzY6NtdIQaokzOAEz-bFz4-jCCckdIk4wQta7fz_pCEGhpO7Fk4GctdCnNOhTuJcgbswIggIsDyD9yruVON1ao9u1RRmfoSbpCCLAHvOE5q1iJUG79hCJlMS_tNaxJtUipyegRocVZd4Q3hIBE3s7GP1rcEZrZdD5Z-VNaXjrBl3FcwBvX9Ndbq5ZSu2a1QPQgDHnIyCEmuaChCJTnhKYbxCHJeCwZN1UjH9YWaMhFtP2NZfKxsvqqxE2JuZNmJ4E.Woi_1G3-bocty7p5xUui2whfXYB7wkfm6etB-rl550Q&dib_tag=se&keywords=womens%2Bfall%2Bboots&qid=1763584235&sprefix=womens%2Bfall%2Bboots%2Caps%2C157&sr=8-30&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=27629330f7f08d52e40627ffd9c20288&language=en_US&ref_=as_li_ss_tl&psc=1",
+    rating: 4.5,
+    reviewCount: 10379,
+    isPrime: true,
+    styleNotes: "These #1 bestselling over-the-knee boots are a wardrobe game-changer. The stretchy construction hugs your legs for a custom fit while the chunky block heel offers stability without sacrificing style. Perfect for making a statement while staying comfortable all day - whether you're conquering the city streets or heading to a special event.",
+    features: [
+      "Over-the-knee thigh-high design",
+      "Chunky block heel for stability",
+      "Stretchy fit hugs legs",
+      "Pull-on construction",
+      "Comfortable for all-day wear",
+      "#1 Best Seller in category"
+    ],
+    productDetails: {
+      fabric: "Stretchy synthetic upper with block heel",
+      care: "Wipe clean with soft cloth, store upright to maintain shape",
+      fit: "Stretchy fit accommodates various leg sizes - true to size",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Night Out",
+        suggestion: "Pair with a mini dress or skirt for show-stopping evening style"
+      },
+      {
+        occasion: "Street Style",
+        suggestion: "Wear with skinny jeans tucked in and an oversized sweater for edgy urban looks"
+      },
+      {
+        occasion: "Fall Fashion",
+        suggestion: "Style with leggings and a long cardigan for trendy autumn outfits"
+      },
+      {
+        occasion: "Special Occasions",
+        suggestion: "Match with a bodycon dress for confident, leg-lengthening style"
+      }
+    ]
+  },
+  {
+    id: "fsh-002",
+    name: "Cozy Cable Knit Cardigan",
+    brand: "PRETTYGARDEN",
+    category: "Knitwear",
+    description: "Embrace effortless comfort with this chunky cable knit cardigan. Featuring oversized sleeves and classic button closure, it's the perfect layering piece for crisp autumn days. Pair with your favorite jeans for relaxed weekend style.",
+    price: 26.98,
+    originalPrice: 39.98,
+    badge: "#1 Best Seller",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: ["Apricot", "Army Green", "Black", "Brown", "Coffee", "Cream", "Grey"],
+    image: productChunkyCardigan,
+    inStock: true,
+    affiliateUrl: "https://www.amazon.com/PRETTYGARDEN-Sweater-Classic-Cardigan-Outwear/dp/B0B8D279W3?crid=9SQBFTZV30SO&dib=eyJ2IjoiMSJ9.mRR4D3go6QY88pPzkR6oi5ZGGbsus9B7iY71D4AR8OK_GvjK_7GCsjfAAXCTMtx4HmoKIbacCTaxNzI_4w8iZDMa0mlFmQL3w2S73Bxjls1BUOiAUQsl-r_huttnscab5X0DI7VxYhm2kXwiDVkJ3eB_2MXwDu-Q1975vlrTt0eYB65mQLU6CAiJoEw3eZXtHDVtVQT9ZidGxQuTNKmlX0jl0Wx3IKCBWJqC-ARlzYO953-Zfy0PJ-7sK6FE8Rw3rPpvGmtOS7060ii3J8J_6eTCr6_rmURrgNHEQ2gSUcI.bulsQUjV7Ps6yW2WzM_uErieV-3Es9mXSR6tPo6lPCM&dib_tag=se&keywords=womens%2Bcardigan&qid=1763479312&sprefix=womens%2Bcartigan%2Caps%2C143&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=8da2b55e55dcb08c7bd054687628fdd3&language=en_US&ref_=as_li_ss_tl&psc=1",
+    rating: 4.4,
+    reviewCount: 3323,
+    socialProof: "1K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This chunky cable knit cardigan is your cozy companion for autumn and winter. The textured cable knit adds visual interest while the open front and button details offer versatile styling options. Layer over a simple tee and jeans for weekend errands or pair with your favorite slip dress for a feminine contrast.",
+    features: [
+      "Chunky cable knit texture",
+      "Open front with button closure",
+      "Oversized relaxed fit",
+      "Long sleeves with ribbed cuffs",
+      "Available in 7+ versatile colors",
+      "Perfect for layering"
+    ],
+    productDetails: {
+      fabric: "Soft knit blend (specific composition varies by color)",
+      care: "Hand wash cold, lay flat to dry",
+      fit: "Oversized, relaxed fit - size down for a closer fit",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Casual Weekend",
+        suggestion: "Layer over a white tee with black jeans and ankle boots for effortless weekend style"
+      },
+      {
+        occasion: "Coffee Date",
+        suggestion: "Pair with a flowy midi dress and sneakers for a feminine yet comfortable look"
+      },
+      {
+        occasion: "Cozy Night In",
+        suggestion: "Style with matching loungewear set for the ultimate comfort at home"
+      },
+      {
+        occasion: "Fall Layers",
+        suggestion: "Wear over a turtleneck with wide-leg trousers and loafers for sophisticated layering"
+      }
+    ]
+  },
   {
     id: "fsh-001",
     name: "Elegant Lace Sleeve Blouse",

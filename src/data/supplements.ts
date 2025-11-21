@@ -44,6 +44,7 @@ export interface Supplement {
 }
 
 export const supplements: Supplement[] = [
+  // **PAGE 1: BEST PICKS** - Top rated, most popular, best sellers
   {
     id: "sup-001",
     name: "Vital Proteins Collagen Peptides",
