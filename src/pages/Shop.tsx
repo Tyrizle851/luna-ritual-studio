@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ShoppingCart } from "lucide-react";
+import { ExternalLink, ShoppingCart, Shirt, Flame, Pill, BookOpen, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -249,38 +249,86 @@ const Shop = () => {
             { label: tabLabels[selectedTab] || "Collection" }
           ]} />
           
-          <h1 className="mb-3 sm:mb-4 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Shop Collection</h1>
-          <p className="text-center text-text-secondary mb-8 max-w-2xl mx-auto text-sm sm:text-base">
-            Curated essentials for intentional living
-          </p>
-
-          {/* Search and Sort Controls */}
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-8">
-            <div className="w-full sm:w-auto flex gap-2">
-              <div className="md:hidden">
-                <MobileFilterDrawer
-                  sortValue={sortOption}
-                  onSortChange={setSortOption}
-                  categories={[]}
-                  selectedCategory=""
-                  onCategoryChange={() => {}}
-                />
-              </div>
-            </div>
-            <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
-            <div className="hidden md:block">
-              <SortFilter value={sortOption} onChange={setSortOption} />
-            </div>
+          {/* Hero Section */}
+          <div className="text-center mb-12 sm:mb-16 mt-8">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display tracking-tight"
+            >
+              Shop Collection
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+            >
+              Curated essentials for intentional living
+            </motion.p>
           </div>
 
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8 sm:mb-12 h-auto gap-1">
-            <TabsTrigger value="fashion" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Fashion</TabsTrigger>
-            <TabsTrigger value="candles" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Candles</TabsTrigger>
-            <TabsTrigger value="supplements" className="text-[11px] sm:text-sm px-1 sm:px-3 py-2.5 tab-transition font-medium">Supplements</TabsTrigger>
-            <TabsTrigger value="books" className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-2.5 tab-transition font-medium">Books</TabsTrigger>
-            <TabsTrigger value="affirmations" className="text-[11px] sm:text-sm px-1 sm:px-3 py-2.5 tab-transition font-medium">Affirmations</TabsTrigger>
-          </TabsList>
+          {/* Tab Navigation with Icons */}
+          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+            <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-8 h-auto gap-2 bg-secondary/30 p-2 rounded-lg">
+              <TabsTrigger 
+                value="fashion" 
+                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+              >
+                <Shirt className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium">Fashion</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="candles" 
+                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+              >
+                <Flame className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium">Candles</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="supplements" 
+                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+              >
+                <Pill className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium">Supplements</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="books" 
+                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+              >
+                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium">Books</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="affirmations" 
+                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+              >
+                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium">Affirmations</span>
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Search and Sort Controls */}
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-10 mt-8 bg-secondary/20 p-4 sm:p-5 rounded-lg border border-border/50">
+              <div className="flex-1 max-w-2xl">
+                <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="md:hidden">
+                  <MobileFilterDrawer
+                    sortValue={sortOption}
+                    onSortChange={setSortOption}
+                    categories={[]}
+                    selectedCategory=""
+                    onCategoryChange={() => {}}
+                  />
+                </div>
+                <div className="hidden md:block">
+                  <SortFilter value={sortOption} onChange={setSortOption} />
+                </div>
+              </div>
+            </div>
 
           <AnimatePresence mode="wait">
             {/* Fashion Tab */}
@@ -291,7 +339,8 @@ const Shop = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
-                <p className="text-sm text-text-muted mb-4">
+                <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
                   Showing {getPaginatedItems(fashionProducts, fashionPage).length} of {getFilteredCount(fashionProducts)} items
                 </p>
                 
@@ -377,7 +426,8 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-4">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
                 Showing {getPaginatedItems(candles, candlesPage).length} of {getFilteredCount(candles)} items
               </p>
               
@@ -463,7 +513,8 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-4">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
                 Showing {getPaginatedItems(supplements, supplementsPage).length} of {getFilteredCount(supplements)} items
               </p>
               
@@ -558,7 +609,8 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-4">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
                 Showing {getPaginatedItems(affirmations, affirmationsPage).length} of {getFilteredCount(affirmations)} items
               </p>
               
@@ -615,7 +667,8 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-4">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
                 Showing {getPaginatedItems(books, booksPage).length} of {getFilteredCount(books)} items
               </p>
               
