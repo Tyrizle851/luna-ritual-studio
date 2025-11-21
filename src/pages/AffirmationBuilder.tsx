@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { toast } from "sonner";
@@ -8,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown } from "lucide-react";
+import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown, Wand2, Shield, Award, Zap } from "lucide-react";
 import morningRitualImg from "@/assets/affirmation-peace.jpg";
 import powerHourImg from "@/assets/affirmation-progress.jpg";
 import gratitudeGardenImg from "@/assets/affirmation-joy.jpg";
@@ -684,53 +685,120 @@ const AffirmationBuilder = () => {
   return (
     <>
       <Helmet>
-        <title>Affirmation Builder | Minimaluxe</title>
-        <meta name="description" content="Create custom affirmation posters. Describe your energy and we'll build the perfect print for your space." />
+        <title>Affirmation Studio | LunaRituals</title>
+        <meta name="description" content="Create custom affirmation posters with AI-powered design. Professional-quality printable art designed to inspire your intentional living journey." />
       </Helmet>
 
       <div className="min-h-screen bg-background py-8 md:py-16">
         <div className="container-custom max-w-screen-xl mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-8 md:mb-12">
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <h1 className="font-display text-3xl md:text-4xl lg:text-5xl text-clay">Affirmation Builder</h1>
-              <Dialog open={showGallery} onOpenChange={setShowGallery}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <History className="h-4 w-4" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Your Gallery</DialogTitle>
-                    <DialogDescription>Previously generated affirmations</DialogDescription>
-                  </DialogHeader>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                    {history.length === 0 ? (
-                      <p className="col-span-full text-center text-muted-foreground py-8">No history yet. Generate your first affirmation!</p>
-                    ) : (
-                      history.map((item) => (
-                        <div key={item.id} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => {
-                          setGeneratedImageB64(item.imageB64);
-                          setGeneratedData(item.generatedData);
-                          setShowGallery(false);
-                          toast.success('Loaded from gallery');
-                        }}>
-                          <img src={item.imageB64} alt="History" className="w-full h-auto" />
-                          <div className="p-2 bg-muted/50">
-                            <p className="text-xs text-muted-foreground">{new Date(item.timestamp).toLocaleDateString()}</p>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </DialogContent>
-              </Dialog>
+          {/* Header with Why Section */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="flex justify-center items-center gap-3 mb-4">
+              <Sparkles className="h-6 w-6 text-clay animate-pulse" />
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-clay">Affirmation Studio</h1>
+              <Sparkles className="h-6 w-6 text-clay animate-pulse" />
             </div>
-            <p className="text-lg md:text-xl text-text-secondary mb-2">Describe your energy. We'll build the print.</p>
-            <p className="text-xs md:text-sm text-text-secondary italic px-4">
-              This creates a high-resolution printable affirmation layout you can download later.
+            
+            <p className="text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto">
+              Create meaningful affirmation art that reflects your unique journey
             </p>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap justify-center items-center gap-6 mb-8">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Shield className="h-5 w-5 text-clay" />
+                <span>Professional Quality</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Zap className="h-5 w-5 text-clay" />
+                <span>Instant Generation</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Award className="h-5 w-5 text-clay" />
+                <span>Print-Ready Files</span>
+              </div>
+            </div>
+
+            {/* Why Use This Section */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="border-2 hover:border-clay/50 transition-colors">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
+                      <Wand2 className="h-6 w-6 text-clay" />
+                    </div>
+                    <CardTitle className="text-lg">Personalized Design</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      Every affirmation is uniquely crafted to match your energy, style, and intentions—never generic templates.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-clay/50 transition-colors">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
+                      <Sparkles className="h-6 w-6 text-clay" />
+                    </div>
+                    <CardTitle className="text-lg">Premium Aesthetic</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      Designed with the same luxury minimal aesthetic as LunaRituals—calm, intentional, and effortlessly beautiful.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-clay/50 transition-colors">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-3">
+                      <Download className="h-6 w-6 text-clay" />
+                    </div>
+                    <CardTitle className="text-lg">Print & Frame Ready</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      High-resolution downloads perfect for printing at home or professional framing services.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            <Dialog open={showGallery} onOpenChange={setShowGallery}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <History className="h-4 w-4" />
+                  View Gallery
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Your Gallery</DialogTitle>
+                  <DialogDescription>Previously generated affirmations</DialogDescription>
+                </DialogHeader>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                  {history.length === 0 ? (
+                    <p className="col-span-full text-center text-muted-foreground py-8">No history yet. Generate your first affirmation!</p>
+                  ) : (
+                    history.map((item) => (
+                      <div key={item.id} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => {
+                        setGeneratedImageB64(item.imageB64);
+                        setGeneratedData(item.generatedData);
+                        setShowGallery(false);
+                        toast.success('Loaded from gallery');
+                      }}>
+                        <img src={item.imageB64} alt="History" className="w-full h-auto" />
+                        <div className="p-2 bg-muted/50">
+                          <p className="text-xs text-muted-foreground">{new Date(item.timestamp).toLocaleDateString()}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           {/* Staff Picks Section - Collapsible on Mobile */}
