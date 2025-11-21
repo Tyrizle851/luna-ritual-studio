@@ -121,68 +121,258 @@ export const fashionProducts: FashionProduct[] = [
   {
     id: "fsh-002",
     name: "Cozy Cable Knit Cardigan",
-    brand: "LunaRituals",
+    brand: "PRETTYGARDEN",
     category: "Knitwear",
     description: "Embrace effortless comfort with this chunky cable knit cardigan. Featuring oversized sleeves and classic button closure, it's the perfect layering piece for crisp autumn days. Pair with your favorite jeans for relaxed weekend style.",
-    price: 32.98,
-    originalPrice: 42.99,
-    badge: "Best Seller",
+    price: 26.98,
+    originalPrice: 39.98,
+    badge: "#1 Best Seller",
     sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Cream", "Camel", "Grey"],
+    colors: ["Apricot", "Army Green", "Black", "Brown", "Coffee", "Cream", "Grey"],
     image: productChunkyCardigan,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/PRETTYGARDEN-Sweater-Classic-Cardigan-Outwear/dp/B0B8D279W3?crid=9SQBFTZV30SO&dib=eyJ2IjoiMSJ9.mRR4D3go6QY88pPzkR6oi5ZGGbsus9B7iY71D4AR8OK_GvjK_7GCsjfAAXCTMtx4HmoKIbacCTaxNzI_4w8iZDMa0mlFmQL3w2S73Bxjls1BUOiAUQsl-r_huttnscab5X0DI7VxYhm2kXwiDVkJ3eB_2MXwDu-Q1975vlrTt0eYB65mQLU6CAiJoEw3eZXtHDVtVQT9ZidGxQuTNKmlX0jl0Wx3IKCBWJqC-ARlzYO953-Zfy0PJ-7sK6FE8Rw3rPpvGmtOS7060ii3J8J_6eTCr6_rmURrgNHEQ2gSUcI.bulsQUjV7Ps6yW2WzM_uErieV-3Es9mXSR6tPo6lPCM&dib_tag=se&keywords=womens%2Bcardigan&qid=1763479312&sprefix=womens%2Bcartigan%2Caps%2C143&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=8da2b55e55dcb08c7bd054687628fdd3&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 3323,
+    socialProof: "1K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This chunky cable knit cardigan is your cozy companion for autumn and winter. The textured cable knit adds visual interest while the open front and button details offer versatile styling options. Layer over a simple tee and jeans for weekend errands or pair with your favorite slip dress for a feminine contrast.",
+    features: [
+      "Chunky cable knit texture",
+      "Open front with button closure",
+      "Oversized relaxed fit",
+      "Long sleeves with ribbed cuffs",
+      "Available in 7+ versatile colors",
+      "Perfect for layering"
+    ],
+    productDetails: {
+      fabric: "Soft knit blend (specific composition varies by color)",
+      care: "Hand wash cold, lay flat to dry",
+      fit: "Oversized, relaxed fit - size down for a closer fit",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Casual Weekend",
+        suggestion: "Layer over a white tee with black jeans and ankle boots for effortless weekend style"
+      },
+      {
+        occasion: "Coffee Date",
+        suggestion: "Pair with a flowy midi dress and sneakers for a feminine yet comfortable look"
+      },
+      {
+        occasion: "Cozy Night In",
+        suggestion: "Style with matching loungewear set for the ultimate comfort at home"
+      },
+      {
+        occasion: "Fall Layers",
+        suggestion: "Wear over a turtleneck with wide-leg trousers and loafers for sophisticated layering"
+      }
+    ]
   },
   {
     id: "fsh-003",
     name: "Quilted Shoulder Bag",
-    brand: "LunaRituals",
+    brand: "KKXIU",
     category: "Accessories",
     description: "Timeless elegance meets everyday functionality in this retro-inspired quilted bag. The soft clutch underarm design with gold hardware accents makes it perfect for both casual outings and refined occasions. A versatile piece that elevates any outfit.",
     price: 22.99,
-    colors: ["Cream", "Black", "Taupe"],
+    colors: ["Beige", "Black", "Brown"],
     image: productQuiltedShoulderBag,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/KKXIU-Shoulder-Handbags-Underarm-Removable/dp/B0FPC6W3G4?crid=1R95GH428BV72&dib=eyJ2IjoiMSJ9.VagrqrTvO8qHED0uKNmFdNDuN-pKo9LIKtQattDX9HkbTc4wlJvpdzLg6vwaXooGltJcmsXI8RPQaoodFWOqDCRu4OG5Lg9iMk7_M2csS3Y8hCeWKzDjaVB9ybVaLluPXGE28C0xVnwWqQJx-4YsmHDYw-oRVMaJuM1ueP5TU6oGuxBZnz5ihM6z5pl1yuIBm5BETVN8YkU6EP0rMJ2wGwejELz8reN2m_QyPrkquww9n3RLYk5sPtsqtDsMkLUpNk0IVwT4gomT74FdI6jttT_Jl7K7xHQlhQMY1Icq47A.aziBcO8_lO6-gnXPH7qrw3CMEqlU6x7d9Umpyg0rsZw&dib_tag=se&keywords=womens%2Bpurse&qid=1763479663&sprefix=womens%2Bpurse,aps,159&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=4a75c50323de381d60a8bbb08e030aaf&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 749,
+    socialProof: "50+ bought in past month",
+    isPrime: true,
+    styleNotes: "This retro-inspired quilted shoulder bag brings Y2K charm to modern wardrobes. The soft hobo silhouette and underarm design create an effortlessly chic look that's both practical and stylish. The quilted texture adds visual interest while keeping the design sophisticated and timeless.",
+    features: [
+      "Retro quilted clutch design",
+      "Soft hobo underarm style",
+      "Comfortable shoulder carry",
+      "Versatile neutral colors",
+      "Compact yet spacious interior",
+      "Lightweight and easy to carry"
+    ],
+    productDetails: {
+      fabric: "High-quality vegan leather with quilted detailing",
+      care: "Wipe clean with damp cloth",
+      fit: "Compact size perfect for essentials - phone, wallet, keys, lipstick",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Brunch with Friends",
+        suggestion: "Pair with a slip dress and ankle boots for a polished casual look"
+      },
+      {
+        occasion: "Date Night",
+        suggestion: "Carry with tailored trousers and a silk camisole for understated elegance"
+      },
+      {
+        occasion: "Weekend Shopping",
+        suggestion: "Style with high-waist jeans and an oversized blazer for effortless chic"
+      },
+      {
+        occasion: "Evening Out",
+        suggestion: "Match with a little black dress and heels for timeless sophistication"
+      }
+    ]
   },
   {
     id: "fsh-004",
     name: "Classic Satin Silk Pajama Set",
-    brand: "LunaRituals",
+    brand: "Ekouaer",
     category: "Loungewear",
     description: "Indulge in luxurious comfort with this classic button-down silk pajama set. The smooth satin finish feels incredible against your skin while the timeless design with contrast piping adds sophisticated style to your evening routine. Perfect for unwinding by the fire or enjoying a peaceful night's rest.",
     price: 31.44,
-    originalPrice: 39.99,
+    originalPrice: 36.99,
     badge: "Top Pick",
-    sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Caramel", "Black", "Champagne", "Navy"],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Champagne Gold", "Black", "Navy", "Leopard Print"],
     image: productSilkSleepSet,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?crid=1YX5CTOPT4Q7O&dib=eyJ2IjoiMSJ9.ndgDJZHyWeBr6KTIE90C54EBFDQ0AReqUP4UJBcuvQUKsr0DfECiC78VKM92bv1vafSHhk-alB8OtmWcvKzSZfv6V_Vr-1p4CG7zuTYyfImjEj7F-4e9Vwxi-9k7x50V1LFfkLy3kA-s4x2YD37Bq9XDnEff72ReNPhWer3fXmLLHLMdy6QeQ3Y_65nkC0y5xo9bbkmwnTgy70cXqu2cLIJJNEsyY6WBZ38JtY1yai4rSHfMP5LVeVKL6POctaCmJS3LllLtSmhzZsg1-eqWvp-AIQgauYgSCoaBP99Iowg.TPoekM7TRMTe9mpt2pGA6uSfLhJLtw-5GW_MnW8lP9g&dib_tag=se&keywords=womens%2Bsilk%2Bpajamas%2Bset&qid=1763480737&sprefix=womens%2Bsilk,aps,151&sr=8-8&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=d0004d1b857c6f4a0d375044662e01c3&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 3300,
+    isPrime: true,
+    styleNotes: "Elevate your sleep routine with this luxurious satin pajama set. The silky-smooth fabric drapes beautifully and feels gentle on skin, while the classic button-down design adds timeless sophistication. Perfect for those who believe that bedtime should feel like a luxury experience.",
+    features: [
+      "Smooth satin silk finish",
+      "Classic button-down top",
+      "Adjustable drawstring pants",
+      "Long sleeves with button cuffs",
+      "ISCC PLUS sustainability certified",
+      "Soft and breathable fabric"
+    ],
+    productDetails: {
+      fabric: "Premium satin polyester blend (softer than traditional silk)",
+      care: "Machine washable - gentle cycle, hang or lay flat to dry",
+      fit: "True to size with relaxed comfortable fit for sleep",
+      origin: "Imported, ISCC PLUS certified for sustainability"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Bedtime Luxury",
+        suggestion: "Pair with fuzzy slippers and a silk sleep mask for ultimate relaxation"
+      },
+      {
+        occasion: "Morning Coffee",
+        suggestion: "Layer a cozy cardigan over the set for a chic loungewear look"
+      },
+      {
+        occasion: "Self-Care Sunday",
+        suggestion: "Wear during your skincare routine and journaling for a spa-like experience"
+      },
+      {
+        occasion: "Lazy Weekend",
+        suggestion: "Stay in the set all day - it's comfortable and polished enough for video calls"
+      }
+    ]
   },
   {
     id: "fsh-005",
-    name: "Dainty Silver Cross Necklace",
-    brand: "LunaRituals",
+    name: "Dainty Cross Necklace",
+    brand: "PAVOI",
     category: "Jewelry",
-    description: "Elevate your everyday style with this delicate silver cross necklace. Featuring sparkling crystals on a dainty chain, it adds a touch of refined elegance to any outfit. Perfect for layering or wearing alone, this versatile piece transitions seamlessly from day to night.",
-    price: 16.99,
+    description: "Elevate your everyday style with this delicate gold plated cross necklace. Featuring sparkling cubic zirconia crystals on a dainty chain, it adds a touch of refined elegance to any outfit. Perfect for layering or wearing alone, this versatile piece transitions seamlessly from day to night.",
+    price: 13.95,
     image: productGoldNecklace,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/PAVOI-Yellow-Necklace-Pendant-Necklaces/dp/B07QTJ1WWL?crid=3TII9MRA1XD3L&dib=eyJ2IjoiMSJ9.xfZVj4M-vgegbZDgsGiLsCqhgYnBg0DhBecyK6qQOSRrGqJp7tHc0Ta5SheU-Xv9TXWmk3QehPU7i-49NC1zdLdbfxYYndq5XwbWJFpi3Zs9w8TkJolrmYuukt2mOSDVZABuV5XyF-mHXdDXRr5bzVG-XjXaoAu1wFV_uJcFA5DSF8jw71t8oKUOyhiiZhqLyvmwkvMLeXpF8W-lmzTXr-yd2Zh8etOigxCZfc6gspBO97xDV8Wp9zb61AOrmQrwxfa08dfuL9EUa5yquboc9jVtg4Rd8LbZm3j6HdN0oVU.IqmgDfpFQ5_vGOCbEViIy1o92SSaCo-G5cm8LnbFWyo&dib_tag=se&keywords=womens%2Bnecklace&qid=1763481278&sprefix=womens%2Bnecklace%2Caps%2C172&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f4a083c9fcaae1f1ffadec7d2691c12&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 13355,
+    socialProof: "5K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This delicate cross necklace adds meaningful elegance to any outfit. The sparkling cubic zirconia stones catch the light beautifully, while the dainty chain creates a refined, feminine look. Wear it as a symbol of faith or simply as a timeless jewelry piece that elevates both casual and dressed-up looks.",
+    features: [
+      "14K gold plated finish",
+      "Sparkling cubic zirconia crystals",
+      "Delicate dainty chain",
+      "Perfect for layering",
+      "Adjustable length",
+      "Hypoallergenic and nickel-free"
+    ],
+    productDetails: {
+      fabric: "14K gold plated brass with cubic zirconia stones",
+      care: "Avoid water and chemicals, store in jewelry box when not wearing",
+      fit: "Adjustable chain length for perfect placement",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Everyday Elegance",
+        suggestion: "Wear alone with a simple tee and jeans for understated sophistication"
+      },
+      {
+        occasion: "Layered Look",
+        suggestion: "Stack with other delicate necklaces of varying lengths for trendy layering"
+      },
+      {
+        occasion: "Special Occasions",
+        suggestion: "Pair with a little black dress for timeless elegance"
+      },
+      {
+        occasion: "Meaningful Gift",
+        suggestion: "Perfect for confirmations, baptisms, or as a thoughtful faith-based gift"
+      }
+    ]
   },
   {
     id: "fsh-006",
     name: "Stretch Pull-On Skinny Jeans",
-    brand: "LunaRituals",
+    brand: "Jvini",
     category: "Bottoms",
     description: "Effortlessly stylish distressed denim jeggings that combine comfort with edge. Features a stretchy pull-on waistband for all-day ease and trendy ripped details for that perfectly lived-in look. Available in regular and plus sizes to flatter every figure.",
-    price: 21.97,
-    sizes: ["S", "M", "L", "XL", "1X", "2X", "3X"],
-    colors: ["Dark Wash"],
+    price: 17.58,
+    originalPrice: 21.97,
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    colors: ["Dark Denim", "Blue", "Black Denim"],
     image: productCottonTee,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Womens-Stretch-Distressed-Jeggings-Pockets/dp/B079LVFJGD?crid=3NE6PB167JEZC&dib=eyJ2IjoiMSJ9.U8CzB686tvJ3fA0AA7uEZoZ-nDrdED_f8xsZtWAdRnNrj93o1_jX6eBxspEjVbm0H30RbD8ruICI-9bbf3FvrqU8lSeI5rHfe0mJS8wSsozt8Gq5XsXedF2MCYo1XIM9ypwQktJ8N5huniqGYp8RDdTTAJJcRcugV2rC3XKrJ24CI4J75wmIvqcuAlbNgIS42cu247bQgVffbjaUeEsEQvc94Dd-m28X9-fkA3U78xO0ypGO6e150ZuHifrA87ciIOnatVKNSc3rrw2pZIgfm8SQcWTNBB8DCGts-8bd9pg.SodubwEn5Dczd05Dn1UvIJWWCAonVe66EWK7NXQkg8I&dib_tag=se&keywords=womens%2Bdenim%2Bjeans%2Bripped&qid=1763485361&sprefix=womens%2Bdenim%2Bjeans%2Bripped,aps,129&sr=8-7&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=a52bbd990c868da58af5eece4b3404e5&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.2,
+    reviewCount: 16645,
+    socialProof: "100+ bought in past month",
+    isPrime: true,
+    styleNotes: "These distressed skinny jeggings combine the edgy look of ripped denim with the comfort of stretchy jeggings. The pull-on elastic waistband means no uncomfortable buttons or zippers, while the distressed details add trendy street style appeal. They offer the perfect balance of comfort and fashion-forward design.",
+    features: [
+      "Soft stretch denim fabric",
+      "Easy pull-on elastic waistband",
+      "Trendy distressed ripped details",
+      "Functional front and back pockets",
+      "Flattering skinny leg fit",
+      "Available in regular and plus sizes"
+    ],
+    productDetails: {
+      fabric: "76% Cotton, 22% Polyester, 2% Spandex",
+      care: "Machine wash cold, tumble dry low",
+      fit: "True to size, high-waisted with stretchy skinny leg fit",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Casual Cool",
+        suggestion: "Pair with an oversized graphic tee and sneakers for effortless street style"
+      },
+      {
+        occasion: "Date Night",
+        suggestion: "Style with a fitted bodysuit and heeled booties for a trendy look"
+      },
+      {
+        occasion: "Weekend Errands",
+        suggestion: "Wear with a cozy sweater and slip-on sneakers for comfortable all-day wear"
+      },
+      {
+        occasion: "Girls Night Out",
+        suggestion: "Match with a crop top and statement jewelry for fun evening vibes"
+      }
+    ]
   },
   {
     id: "fsh-007",
