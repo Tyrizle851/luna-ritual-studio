@@ -47,6 +47,7 @@ export interface Book {
 }
 
 export const books: Book[] = [
+  // **PAGE 1: BEST PICKS** - Highest rated, most reviewed, bestsellers
   {
     id: "book-000",
     title: "Throne of Glass",

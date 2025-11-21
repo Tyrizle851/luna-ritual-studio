@@ -50,6 +50,7 @@ export interface Candle {
 }
 
 export const candles: Candle[] = [
+  // **PAGE 1: BEST PICKS** - Highest rated, most popular, best sellers
   {
     id: "cnd-001",
     name: "Yankee Candle Balsam & Cedar Large Jar",
