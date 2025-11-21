@@ -131,7 +131,7 @@ export const fashionProducts: FashionProduct[] = [
     colors: ["Cream", "Camel", "Grey"],
     image: productChunkyCardigan,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4phC9ej",
+    affiliateUrl: "https://www.amazon.com/PRETTYGARDEN-Sweater-Classic-Cardigan-Outwear/dp/B0B8D279W3?crid=9SQBFTZV30SO&dib=eyJ2IjoiMSJ9.mRR4D3go6QY88pPzkR6oi5ZGGbsus9B7iY71D4AR8OK_GvjK_7GCsjfAAXCTMtx4HmoKIbacCTaxNzI_4w8iZDMa0mlFmQL3w2S73Bxjls1BUOiAUQsl-r_huttnscab5X0DI7VxYhm2kXwiDVkJ3eB_2MXwDu-Q1975vlrTt0eYB65mQLU6CAiJoEw3eZXtHDVtVQT9ZidGxQuTNKmlX0jl0Wx3IKCBWJqC-ARlzYO953-Zfy0PJ-7sK6FE8Rw3rPpvGmtOS7060ii3J8J_6eTCr6_rmURrgNHEQ2gSUcI.bulsQUjV7Ps6yW2WzM_uErieV-3Es9mXSR6tPo6lPCM&dib_tag=se&keywords=womens%2Bcardigan&qid=1763479312&sprefix=womens%2Bcartigan%2Caps%2C143&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=8da2b55e55dcb08c7bd054687628fdd3&language=en_US&ref_=as_li_ss_tl&psc=1",
   },
   {
     id: "fsh-003",
@@ -143,7 +143,7 @@ export const fashionProducts: FashionProduct[] = [
     colors: ["Cream", "Black", "Taupe"],
     image: productQuiltedShoulderBag,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4r7s5Gs",
+    affiliateUrl: "https://www.amazon.com/KKXIU-Shoulder-Handbags-Underarm-Removable/dp/B0FPC6W3G4?crid=1R95GH428BV72&dib=eyJ2IjoiMSJ9.VagrqrTvO8qHED0uKNmFdNDuN-pKo9LIKtQattDX9HkbTc4wlJvpdzLg6vwaXooGltJcmsXI8RPQaoodFWOqDCRu4OG5Lg9iMk7_M2csS3Y8hCeWKzDjaVB9ybVaLluPXGE28C0xVnwWqQJx-4YsmHDYw-oRVMaJuM1ueP5TU6oGuxBZnz5ihM6z5pl1yuIBm5BETVN8YkU6EP0rMJ2wGwejELz8reN2m_QyPrkquww9n3RLYk5sPtsqtDsMkLUpNk0IVwT4gomT74FdI6jttT_Jl7K7xHQlhQMY1Icq47A.aziBcO8_lO6-gnXPH7qrw3CMEqlU6x7d9Umpyg0rsZw&dib_tag=se&keywords=womens%2Bpurse&qid=1763479663&sprefix=womens%2Bpurse,aps,159&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=4a75c50323de381d60a8bbb08e030aaf&language=en_US&ref_=as_li_ss_tl",
   },
   {
     id: "fsh-004",
@@ -158,7 +158,7 @@ export const fashionProducts: FashionProduct[] = [
     colors: ["Caramel", "Black", "Champagne", "Navy"],
     image: productSilkSleepSet,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4i3els4",
+    affiliateUrl: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?crid=1YX5CTOPT4Q7O&dib=eyJ2IjoiMSJ9.ndgDJZHyWeBr6KTIE90C54EBFDQ0AReqUP4UJBcuvQUKsr0DfECiC78VKM92bv1vafSHhk-alB8OtmWcvKzSZfv6V_Vr-1p4CG7zuTYyfImjEj7F-4e9Vwxi-9k7x50V1LFfkLy3kA-s4x2YD37Bq9XDnEff72ReNPhWer3fXmLLHLMdy6QeQ3Y_65nkC0y5xo9bbkmwnTgy70cXqu2cLIJJNEsyY6WBZ38JtY1yai4rSHfMP5LVeVKL6POctaCmJS3LllLtSmhzZsg1-eqWvp-AIQgauYgSCoaBP99Iowg.TPoekM7TRMTe9mpt2pGA6uSfLhJLtw-5GW_MnW8lP9g&dib_tag=se&keywords=womens%2Bsilk%2Bpajamas%2Bset&qid=1763480737&sprefix=womens%2Bsilk,aps,151&sr=8-8&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=d0004d1b857c6f4a0d375044662e01c3&language=en_US&ref_=as_li_ss_tl",
   },
   {
     id: "fsh-005",
@@ -169,7 +169,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 16.99,
     image: productGoldNecklace,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4o2CksP",
+    affiliateUrl: "https://www.amazon.com/PAVOI-Yellow-Necklace-Pendant-Necklaces/dp/B07QTJ1WWL?crid=3TII9MRA1XD3L&dib=eyJ2IjoiMSJ9.xfZVj4M-vgegbZDgsGiLsCqhgYnBg0DhBecyK6qQOSRrGqJp7tHc0Ta5SheU-Xv9TXWmk3QehPU7i-49NC1zdLdbfxYYndq5XwbWJFpi3Zs9w8TkJolrmYuukt2mOSDVZABuV5XyF-mHXdDXRr5bzVG-XjXaoAu1wFV_uJcFA5DSF8jw71t8oKUOyhiiZhqLyvmwkvMLeXpF8W-lmzTXr-yd2Zh8etOigxCZfc6gspBO97xDV8Wp9zb61AOrmQrwxfa08dfuL9EUa5yquboc9jVtg4Rd8LbZm3j6HdN0oVU.IqmgDfpFQ5_vGOCbEViIy1o92SSaCo-G5cm8LnbFWyo&dib_tag=se&keywords=womens%2Bnecklace&qid=1763481278&sprefix=womens%2Bnecklace%2Caps%2C172&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f4a083c9fcaae1f1ffadec7d2691c12&language=en_US&ref_=as_li_ss_tl",
   },
   {
     id: "fsh-006",
@@ -182,7 +182,7 @@ export const fashionProducts: FashionProduct[] = [
     colors: ["Dark Wash"],
     image: productCottonTee,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4oODvxj",
+    affiliateUrl: "https://www.amazon.com/Womens-Stretch-Distressed-Jeggings-Pockets/dp/B079LVFJGD?crid=3NE6PB167JEZC&dib=eyJ2IjoiMSJ9.U8CzB686tvJ3fA0AA7uEZoZ-nDrdED_f8xsZtWAdRnNrj93o1_jX6eBxspEjVbm0H30RbD8ruICI-9bbf3FvrqU8lSeI5rHfe0mJS8wSsozt8Gq5XsXedF2MCYo1XIM9ypwQktJ8N5huniqGYp8RDdTTAJJcRcugV2rC3XKrJ24CI4J75wmIvqcuAlbNgIS42cu247bQgVffbjaUeEsEQvc94Dd-m28X9-fkA3U78xO0ypGO6e150ZuHifrA87ciIOnatVKNSc3rrw2pZIgfm8SQcWTNBB8DCGts-8bd9pg.SodubwEn5Dczd05Dn1UvIJWWCAonVe66EWK7NXQkg8I&dib_tag=se&keywords=womens%2Bdenim%2Bjeans%2Bripped&qid=1763485361&sprefix=womens%2Bdenim%2Bjeans%2Bripped,aps,129&sr=8-7&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=a52bbd990c868da58af5eece4b3404e5&language=en_US&ref_=as_li_ss_tl",
   },
   {
     id: "fsh-007",
