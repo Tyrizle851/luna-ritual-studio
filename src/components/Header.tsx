@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, ShoppingCart, ChevronDown, Search, Sparkles, X } from "lucide-react";
+import { Menu, ShoppingCart, ChevronDown, Search, Sparkles, X, Home, BookOpen, Mail, Info, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchBar } from "@/components/SearchBar";
+import { Separator } from "@/components/ui/separator";
 import logo from "@/assets/logo.png";
 
 export const Header = () => {
@@ -179,7 +180,7 @@ export const Header = () => {
             variant="ghost"
             size="icon"
             onClick={() => setSearchOpen(!searchOpen)}
-            className="text-foreground hover:text-clay"
+            className="hidden lg:flex text-foreground hover:text-clay"
           >
             {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
           </Button>
@@ -204,123 +205,137 @@ export const Header = () => {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px]">
-              <nav className="flex flex-col gap-6 mt-8">
+            <SheetContent side="right" className="w-[300px] px-0">
+              <nav className="flex flex-col mt-6">
+                {/* Search Bar in Mobile Menu */}
+                <div className="px-6 mb-6">
+                  <SearchBar 
+                    onSearch={handleSearch} 
+                    placeholder="Search..." 
+                  />
+                </div>
+
+                <Separator className="mb-2" />
+
                 <Link
                   to="/"
-                  className={`text-lg transition-colors relative ${
+                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
                     isActive('/') 
-                      ? 'text-clay font-medium' 
-                      : 'text-foreground hover:text-clay'
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Home
-                  {isActive('/') && (
-                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                  )}
+                  <Home className="h-5 w-5" />
+                  <span>Home</span>
                 </Link>
-                <div className="flex flex-col gap-3">
-                  <span className={`text-lg font-medium ${isShopActive ? 'text-clay' : ''}`}>
-                    Shop
-                    {isShopActive && (
-                      <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                    )}
-                  </span>
+
+                <Separator className="my-2" />
+
+                <div className="flex flex-col">
+                  <div className={`flex items-center gap-3 px-6 py-3 text-base font-medium ${isShopActive ? 'text-clay' : 'text-foreground'}`}>
+                    <ShoppingBag className="h-5 w-5" />
+                    <span>Shop</span>
+                  </div>
                   <Link
                     to="/shop?tab=fashion"
-                    className="text-base hover:text-clay transition-colors pl-4"
+                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Fashion
                   </Link>
                   <Link
                     to="/shop?tab=candles"
-                    className="text-base hover:text-clay transition-colors pl-4"
+                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Candles
                   </Link>
                   <Link
                     to="/shop?tab=supplements"
-                    className="text-base hover:text-clay transition-colors pl-4"
+                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Supplements
                   </Link>
                   <Link
                     to="/shop?tab=books"
-                    className="text-base hover:text-clay transition-colors pl-4"
+                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Books
                   </Link>
                   <Link
                     to="/shop?tab=affirmations"
-                    className="text-base hover:text-clay transition-colors pl-4"
+                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Affirmations
                   </Link>
                 </div>
+
+                <Separator className="my-2" />
+
                 <Link
                   to="/journal"
-                  className={`text-lg transition-colors relative ${
+                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
                     isActive('/journal') 
-                      ? 'text-clay font-medium' 
-                      : 'text-foreground hover:text-clay'
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Journal
-                  {isActive('/journal') && (
-                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                  )}
+                  <BookOpen className="h-5 w-5" />
+                  <span>Journal</span>
                 </Link>
+
+                <Separator className="my-2" />
+
                 <Link
                   to="/about"
-                  className={`text-lg transition-colors relative ${
+                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
                     isActive('/about') 
-                      ? 'text-clay font-medium' 
-                      : 'text-foreground hover:text-clay'
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  About
-                  {isActive('/about') && (
-                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                  )}
+                  <Info className="h-5 w-5" />
+                  <span>About</span>
                 </Link>
+
+                <Separator className="my-2" />
+
                 <Link
                   to="/contact"
-                  className={`text-lg transition-colors relative ${
+                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
                     isActive('/contact') 
-                      ? 'text-clay font-medium' 
-                      : 'text-foreground hover:text-clay'
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Contact
-                  {isActive('/contact') && (
-                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                  )}
+                  <Mail className="h-5 w-5" />
+                  <span>Contact</span>
                 </Link>
+
+                <Separator className="my-2" />
+
                 <Link
                   to="/affirmation-builder"
-                  className={`flex items-center gap-2 text-lg transition-colors relative ${
+                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
                     isActive('/affirmation-builder') 
-                      ? 'text-clay font-medium' 
-                      : 'text-foreground hover:text-clay'
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Sparkles className="h-4 w-4" />
-                  <span className="px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
-                  Studio
-                  <Sparkles className="h-4 w-4" />
-                  {isActive('/affirmation-builder') && (
-                    <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
-                  )}
+                  <Sparkles className="h-5 w-5" />
+                  <span className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
+                    Studio
+                  </span>
+                  <Sparkles className="h-5 w-5 ml-auto" />
                 </Link>
               </nav>
             </SheetContent>
