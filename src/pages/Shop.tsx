@@ -338,11 +338,11 @@ const Shop = () => {
                       className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedFashionProduct(product);
-                        setIsFashionModalOpen(true);
+                        window.open(product.affiliateUrl, '_blank');
                       }}
                     >
-                      View Details
+                      Shop Now
+                      <ExternalLink className="w-3 h-3 ml-1" />
                     </Button>
                         </div>
                       </div>
