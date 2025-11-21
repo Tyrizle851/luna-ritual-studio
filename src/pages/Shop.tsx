@@ -29,6 +29,8 @@ import { books } from "@/data/books";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
+import { CandleModal } from "@/components/CandleModal";
+import { Candle } from "@/data/candles";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -54,6 +56,8 @@ const Shop = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFashionProduct, setSelectedFashionProduct] = useState<FashionProduct | null>(null);
   const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
+  const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
+  const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
   
   const { addItem } = useCartStore();
 
@@ -370,13 +374,20 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
-                    <div key={candle.id} className="group relative">
+                    <div 
+                      key={candle.id} 
+                      className="group relative cursor-pointer"
+                      onClick={() => {
+                        setSelectedCandle(candle);
+                        setIsCandleModalOpen(true);
+                      }}
+                    >
                       <WishlistButton productId={candle.id} />
                       {candle.badge && (
                         <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
                           candle.badge === 'Sale' ? 'bg-foreground text-background' :
-                          candle.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
-                          candle.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                          candle.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                          candle.badge === 'Best Value' ? 'bg-accent text-accent-foreground' :
                           'bg-secondary text-foreground'
                         }`}>
                           {candle.badge}
@@ -391,8 +402,19 @@ const Shop = () => {
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
-                  <p className="text-xs text-text-muted mb-2">{candle.scent} • {candle.burnTime}</p>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{candle.description}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{candle.description}</p>
+                  
+                  {/* Rating if available */}
+                  {candle.rating && (
+                    <div className="flex items-center gap-1 mb-3 text-xs">
+                      <span className="text-primary">★</span>
+                      <span className="font-semibold">{candle.rating}</span>
+                      {candle.reviewCount && (
+                        <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
+                      )}
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {candle.originalPrice && (
@@ -400,23 +422,18 @@ const Shop = () => {
                       )}
                       <span className="text-base font-semibold text-text-primary">${candle.price}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {candle.affiliateUrl && (
-                        <span className="text-[10px] text-text-muted/60 italic">via Amazon</span>
-                      )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                        onClick={() => candle.affiliateUrl ? window.open(candle.affiliateUrl, '_blank') : handleAddToCart(candle, "candle")}
-                      >
-                        {candle.affiliateUrl ? (
-                          <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
-                        ) : (
-                          <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
-                        )}
-                      </Button>
-                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(candle.affiliateUrl, '_blank');
+                      }}
+                    >
+                      Shop Now
+                      <ExternalLink className="w-3 h-3 ml-1" />
+                    </Button>
                       </div>
                     </div>
                   ))}
@@ -617,6 +634,16 @@ const Shop = () => {
         onOpenChange={(open) => {
           setIsFashionModalOpen(open);
           if (!open) setSelectedFashionProduct(null);
+        }}
+      />
+
+      {/* Candle Product Modal */}
+      <CandleModal
+        product={selectedCandle}
+        open={isCandleModalOpen}
+        onOpenChange={(open) => {
+          setIsCandleModalOpen(open);
+          if (!open) setSelectedCandle(null);
         }}
       />
 
