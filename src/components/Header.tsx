@@ -155,8 +155,8 @@ export const Header = () => {
             }`}
           >
             <Sparkles className="h-3 w-3" />
+            <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
             Studio
-            <span className="ml-1 px-1.5 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
             <Sparkles className="h-3 w-3" />
             {isActive('/affirmation-builder') && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
@@ -306,8 +306,8 @@ export const Header = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Sparkles className="h-4 w-4" />
+                  <span className="px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
                   Studio
-                  <span className="ml-1 px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
                   <Sparkles className="h-4 w-4" />
                   {isActive('/affirmation-builder') && (
                     <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
