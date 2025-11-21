@@ -659,7 +659,7 @@ const Shop = () => {
                           className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                         >
                           <a href={book.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                            View Book <ExternalLink className="ml-1 h-3 w-3" />
+                            Shop Now <ExternalLink className="ml-1 h-3 w-3" />
                           </a>
                         </Button>
                       </div>
