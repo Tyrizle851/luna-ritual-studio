@@ -686,12 +686,51 @@ export const fashionProducts: FashionProduct[] = [
     brand: "DREAM PAIRS",
     category: "Shoes",
     description: "Classic knee-high pull-on boots perfect for fall and winter. Features a comfortable fit, versatile design, and quality construction. Ideal for pairing with jeans, dresses, or skirts for effortless seasonal style.",
-    price: 48.99,
+    price: 44.99,
+    originalPrice: 58.99,
     sizes: ["6", "7", "8", "9", "10", "11"],
     colors: ["Black", "Brown", "Taupe"],
     image: productKneeHighBoots,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4i9RQ4U",
+    affiliateUrl: "https://www.amazon.com/DREAM-PAIRS-Womens-Black-Weather/dp/B01G990RDK?crid=1XC8BGG3LBDI8&dib=eyJ2IjoiMSJ9._WcQbEU6v6HOUhUG_kIJ7ALyxbH9zchjElZTzt_5AUgzY6NtdIQaokzOAEz-bFz4-jCCckdIk4wQta7fz_pCEGhpO7Fk4GctdCnNOhTuJcgbswIggIsDyD9yruVON1ao9u1RRmfoSbpCCLAHvOE5q1iJUG79hCJlMS_tNaxJtUipyegRocVZd4Q3hIBE3s7GP1rcEZrZdD5Z-VNaXjrBl3FcwBvX9Ndbq5ZSu2a1QPQgDHnIyCEmuaChCJTnhKYbxCHJeCwZN1UjH9YWaMhFtP2NZfKxsvqqxE2JuZNmJ4E.Woi_1G3-bocty7p5xUui2whfXYB7wkfm6etB-rl550Q&dib_tag=se&keywords=womens%2Bfall%2Bboots&qid=1763584235&sprefix=womens%2Bfall%2Bboots%2Caps%2C157&sr=8-10&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=c797c75d3ffa15f7e0a74fe9d4ee7c53&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 10311,
+    socialProof: "800+ bought in past month",
+    isPrime: true,
+    styleNotes: "These classic knee-high boots combine timeless silhouette with everyday wearability. The pull-on design offers easy on-off convenience while the mid-calf height creates a versatile look that pairs beautifully with everything from skinny jeans to flowy dresses. Quality construction ensures these boots will be your go-to fall and winter footwear season after season.",
+    features: [
+      "Classic knee-high silhouette",
+      "Pull-on design for easy wear",
+      "Comfortable fit for all-day wear",
+      "Quality construction",
+      "Versatile styling options",
+      "Available in multiple colors"
+    ],
+    productDetails: {
+      fabric: "Synthetic upper with durable sole",
+      care: "Wipe clean with damp cloth, avoid excessive moisture",
+      fit: "True to size - pull-on style, regular calf width",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Office Chic",
+        suggestion: "Pair with black skinny jeans and a blazer for polished workwear"
+      },
+      {
+        occasion: "Weekend Casual",
+        suggestion: "Style with a sweater dress and tights for cozy weekend vibes"
+      },
+      {
+        occasion: "Date Night",
+        suggestion: "Wear with a midi skirt and fitted top for elegant evening style"
+      },
+      {
+        occasion: "Fall Layers",
+        suggestion: "Match with leggings and an oversized cardigan for relaxed autumn looks"
+      }
+    ]
   },
   {
     id: "fsh-014",
@@ -699,12 +738,51 @@ export const fashionProducts: FashionProduct[] = [
     brand: "DREAM PAIRS",
     category: "Shoes",
     description: "Sleek over-the-knee boots with chunky heel for all-day comfort. Stretchy design creates a flattering silhouette while the block heel provides stability. Perfect statement piece for fall and winter outfits.",
-    price: 42.99,
+    price: 40.27,
+    originalPrice: 69.99,
+    badge: "#1 Best Seller",
     sizes: ["6", "7", "8", "9", "10", "11"],
     colors: ["Black", "Grey", "Brown"],
     image: productOverKneeBoots,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4r6M8Vq",
+    affiliateUrl: "https://www.amazon.com/DREAM-PAIRS-Womens-Laurence-Chunky/dp/B071K971NT?crid=1XC8BGG3LBDI8&dib=eyJ2IjoiMSJ9._WcQbEU6v6HOUhUG_kIJ7ALyxbH9zchjElZTzt_5AUgzY6NtdIQaokzOAEz-bFz4-jCCckdIk4wQta7fz_pCEGhpO7Fk4GctdCnNOhTuJcgbswIggIsDyD9yruVON1ao9u1RRmfoSbpCCLAHvOE5q1iJUG79hCJlMS_tNaxJtUipyegRocVZd4Q3hIBE3s7GP1rcEZrZdD5Z-VNaXjrBl3FcwBvX9Ndbq5ZSu2a1QPQgDHnIyCEmuaChCJTnhKYbxCHJeCwZN1UjH9YWaMhFtP2NZfKxsvqqxE2JuZNmJ4E.Woi_1G3-bocty7p5xUui2whfXYB7wkfm6etB-rl550Q&dib_tag=se&keywords=womens%2Bfall%2Bboots&qid=1763584235&sprefix=womens%2Bfall%2Bboots%2Caps%2C157&sr=8-30&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=27629330f7f08d52e40627ffd9c20288&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.5,
+    reviewCount: 10379,
+    isPrime: true,
+    styleNotes: "These #1 bestselling over-the-knee boots are a wardrobe game-changer. The stretchy construction hugs your legs for a custom fit while the chunky block heel offers stability without sacrificing style. Perfect for making a statement while staying comfortable all day - whether you're conquering the city streets or heading to a special event.",
+    features: [
+      "Over-the-knee thigh-high design",
+      "Chunky block heel for stability",
+      "Stretchy fit hugs legs",
+      "Pull-on construction",
+      "Comfortable for all-day wear",
+      "#1 Best Seller in category"
+    ],
+    productDetails: {
+      fabric: "Stretchy synthetic upper with block heel",
+      care: "Wipe clean with soft cloth, store upright to maintain shape",
+      fit: "Stretchy fit accommodates various leg sizes - true to size",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Night Out",
+        suggestion: "Pair with a mini dress or skirt for show-stopping evening style"
+      },
+      {
+        occasion: "Street Style",
+        suggestion: "Wear with skinny jeans tucked in and an oversized sweater for edgy urban looks"
+      },
+      {
+        occasion: "Fall Fashion",
+        suggestion: "Style with leggings and a long cardigan for trendy autumn outfits"
+      },
+      {
+        occasion: "Special Occasions",
+        suggestion: "Match with a bodycon dress for confident, leg-lengthening style"
+      }
+    ]
   },
   {
     id: "fsh-015",
@@ -713,87 +791,360 @@ export const fashionProducts: FashionProduct[] = [
     category: "Accessories",
     description: "Versatile 3-pack leather waist belts with elegant gold buckles. Perfect for jeans, dresses, and pants. Classic design works for casual or professional settings. Essential wardrobe staple in three coordinating colors.",
     price: 24.89,
+    originalPrice: 27.89,
+    badge: "#1 Best Seller",
     colors: ["Black", "Brown", "Cream"],
     image: productBelts3Pack,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4r3cqb3",
+    affiliateUrl: "https://www.amazon.com/XZQTIVE-Dresses-Ladies-Leather-Buckle/dp/B0CLJFZRH2?crid=2T8VDBI5GBCXE&dib=eyJ2IjoiMSJ9.Qw38qq-rL8zDFC-teFmzgcH9rbPy3wbdOniVrY0t-rggQYYRRRG9WPV8lWaUGxeR9b25iXIJudEBQ9obP5jTKXSEpnm9a2SbnilnfJKQoDlxh0s47mX00BFjS2rTQVnwHVAVq70Rk83MuIzFCTJfKSWbCF-uiAlD0QFjzoEQeiNgb2Vy5__jRheOs9EhZY3JQcWwFVFugj55qtE6HKrwUDvg2v-61D1_E58vfBhXhlLXgqy5DAOMh-V7TvhzyMAUm8qmEZ4H_MeDDn4vuvunNxVqG_b9hHu5cHn5obUCTnU.ltN8mmoaPw-O7wzbz8GK1fImNwtToxcSkT6iIznNZvk&dib_tag=se&keywords=womens%2Bbelts&qid=1763584771&sprefix=womens%2Bbelts%2Caps%2C741&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=ec36209f92a9547b848183d477b6441c&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.6,
+    reviewCount: 3866,
+    socialProof: "6K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This #1 bestselling 3-pack belt set is the ultimate wardrobe essential. Three versatile colors (black, brown, cream) ensure you always have the perfect match, while the gold buckle adds a touch of elegance to any outfit. From cinching dresses to elevating jeans, these quality belts work from casual weekends to professional settings - making them an incredible value.",
+    features: [
+      "3-pack in coordinating colors",
+      "High-quality leather construction",
+      "Elegant gold buckle detail",
+      "Versatile for multiple occasions",
+      "Adjustable fit",
+      "#1 Best Seller in category"
+    ],
+    productDetails: {
+      fabric: "Premium PU leather with metal buckle",
+      care: "Wipe clean with damp cloth, avoid prolonged moisture exposure",
+      fit: "Adjustable - multiple hole settings for custom fit",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Work Professional",
+        suggestion: "Wear with dress pants and a tucked blouse for polished office style"
+      },
+      {
+        occasion: "Casual Weekend",
+        suggestion: "Pair with high-waisted jeans and a tucked tee for effortless casual looks"
+      },
+      {
+        occasion: "Dress Styling",
+        suggestion: "Cinch over a flowy dress to define waist and add structure"
+      },
+      {
+        occasion: "Layered Looks",
+        suggestion: "Add over a cardigan or blazer to create visual interest"
+      }
+    ]
   },
   {
     id: "fsh-016",
-    name: "High Waisted Skinny Jeans",
-    brand: "LunaRituals",
+    name: "High Waisted Ripped Skinny Jeans",
+    brand: "LOVER BRAND FASHION",
     category: "Bottoms",
-    description: "Classic black high-waisted skinny jeans with stretch comfort. Perfect for everyday wear with a flattering fit that hugs your curves. Features a button closure and timeless design that pairs with everything in your wardrobe.",
+    description: "High-waisted stretch skinny jeans with trendy destroyed ripped distressed detailing. Features a comfortable stretch fit that hugs your curves while the high-rise design flatters and elongates. Perfect for creating edgy casual looks with a modern edge.",
     price: 24.99,
+    originalPrice: 27.99,
     sizes: ["S", "M", "L", "XL", "1X", "2X", "3X"],
-    colors: ["Black"],
+    colors: ["Black", "Olive", "Mustard"],
     image: productBlackJeans,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4nY2ZXH",
+    affiliateUrl: "https://www.amazon.com/LOVER-BRAND-FASHION-Waisted-Rise-Distressed/dp/B07B6TT6F3?crid=3NE6PB167JEZC&dib=eyJ2IjoiMSJ9.U8CzB686tvJ3fA0AA7uEZoZ-nDrdED_f8xsZtWAdRnNrj93o1_jX6eBxspEjVbm0H30RbD8ruICI-9bbf3FvrqU8lSeI5rHfe0mJS8wSsozt8Gq5XsXedF2MCYo1XIM9ypwQktJ8N5huniqGYp8RDdTTAJJcRcugV2rC3XKrJ24CI4J75wmIvqcuAlbNgIS42cu247bQgVffbjaUeEsEQvc94Dd-m28X9-fkA3U78xO0ypGO6e150ZuHifrA87ciIOnatVKNSc3rrw2pZIgfm8SQcWTNBB8DCGts-8bd9pg.SodubwEn5Dczd05Dn1UvIJWWCAonVe66EWK7NXQkg8I&dib_tag=se&keywords=womens%2Bdenim%2Bjeans%2Bripped&qid=1763485361&sprefix=womens%2Bdenim%2Bjeans%2Bripped%2Caps%2C129&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=a1a087e8f4b962b63a80d7f36b6b46b1&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.2,
+    reviewCount: 11292,
+    socialProof: "500+ bought in past month",
+    isPrime: true,
+    styleNotes: "These high-waisted ripped jeans bring edgy street style to your everyday wardrobe. The strategic distressing adds a lived-in, fashion-forward vibe while the stretch denim ensures comfort throughout the day. The high-rise cut creates a flattering silhouette that pairs perfectly with crop tops, bodysuits, or tucked-in tees for effortlessly cool looks.",
+    features: [
+      "High-waisted design",
+      "Destroyed ripped detailing",
+      "Stretch denim for comfort",
+      "Skinny fit silhouette",
+      "Button closure",
+      "Multiple color options"
+    ],
+    productDetails: {
+      fabric: "Stretch cotton denim blend",
+      care: "Machine wash cold with like colors, tumble dry low",
+      fit: "High-rise skinny fit - stretchy, true to size",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Edgy Casual",
+        suggestion: "Pair with a graphic tee and sneakers for street-style vibes"
+      },
+      {
+        occasion: "Night Out",
+        suggestion: "Style with a bodysuit and heels for confident evening looks"
+      },
+      {
+        occasion: "Festival Fashion",
+        suggestion: "Wear with a crop top and combat boots for music festival style"
+      },
+      {
+        occasion: "Layered Autumn",
+        suggestion: "Match with an oversized flannel and ankle boots for fall fashion"
+      }
+    ]
   },
   {
     id: "fsh-017",
     name: "High Waist Stretchy Jeggings",
-    brand: "LunaRituals",
+    brand: "IUGA",
     category: "Bottoms",
-    description: "Ultra-comfortable stretchy jeggings with tummy control and a flattering high waist design. The perfect blend of style and comfort with functional pockets. Casual yet polished enough for any occasion.",
-    price: 24.99,
+    description: "Ultra-comfortable stretchy jeggings with tummy control and a flattering high waist design. The perfect blend of leggings comfort and jeans styling with functional pockets. Ideal for casual wear that's both comfortable and polished.",
+    price: 19.99,
+    originalPrice: 41.99,
     sizes: ["S", "M", "L", "XL", "1X", "2X"],
-    colors: ["Dark Denim"],
+    colors: ["Dark Blue", "Black", "Grey"],
     image: productBlueJeggings,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4p5ZYGp",
+    affiliateUrl: "https://www.amazon.com/IUGA-Jeggings-Waisted-Stretchy-Leggings/dp/B0CJBHLF3J?crid=SBN85EWB2WDK&dib=eyJ2IjoiMSJ9.pJK3xqDv-fSGyXNZ_WQqI2jpJlByB_5wpWLFoICM1IczSpfiy0KhpsZaTfaSt8GKTtiMifs4RVRxgmRJHHPyoYFJcWgX8Hrwt0pGd-7mA4JeuMTqJkNviFNQ0iv0mq17YwjR9WnFj09ip4NCT3krSgFZk0DBqDu2apefA8PuzVVpfyXTvALkO67A0bbqcaP6xpqnqW-iRWIbfTrjtYdQkAnnYFTWnSNTqcfw9mK1n-LANtGpSKvD0XUVpcRG4TfDhVodFLRynsCZrlfgagkiW8nz5P33JzpHGvKZ3zxndNs.ow19oZLpV0h12yLbvk-RlX-0ZdU5sWSxZjmbpnjObmM&dib_tag=se&keywords=womens%2Bdenim%2Bjeans&qid=1763486015&sprefix=womens%2Bdenim%2Bjeans%2B%2Caps%2C149&sr=8-5-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f7c76b5784c9f9c809fa697bbe61467&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.3,
+    reviewCount: 1777,
+    socialProof: "1K+ bought in past month",
+    isPrime: true,
+    styleNotes: "These IUGA jeggings are the perfect hybrid of leggings comfort and jeans style. The high-waisted design offers tummy control and a flattering silhouette, while the stretchy fabric moves with you throughout the day. Functional pockets add practicality without compromising the sleek look - making these your new go-to for everything from errands to casual outings.",
+    features: [
+      "High waist with tummy control",
+      "Ultra-stretchy denim-look fabric",
+      "Functional pockets",
+      "Pull-on design",
+      "Skinny fit silhouette",
+      "All-day comfort"
+    ],
+    productDetails: {
+      fabric: "Stretchy denim-look polyester blend",
+      care: "Machine wash cold, tumble dry low",
+      fit: "High-rise pull-on fit - very stretchy, true to size",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Everyday Comfort",
+        suggestion: "Pair with a tunic top and flats for relaxed everyday style"
+      },
+      {
+        occasion: "Work Casual",
+        suggestion: "Style with a button-down and loafers for comfortable office wear"
+      },
+      {
+        occasion: "Weekend Errands",
+        suggestion: "Wear with a cozy sweater and sneakers for running errands in comfort"
+      },
+      {
+        occasion: "Casual Night",
+        suggestion: "Match with a nice top and ankle boots for easy dinner-out style"
+      }
+    ]
   },
   {
     id: "fsh-018",
     name: "High Waist Yoga Pants",
-    brand: "LunaRituals",
+    brand: "OQQ",
     category: "Activewear",
-    description: "Soft stretch casual straight leg bottoms designed for all-day comfort. Features a high waist for support and flattering fit. Perfect for yoga, lounging, or casual outings with their versatile straight leg design.",
-    price: 32.99,
+    description: "Soft stretch casual straight leg yoga bottoms designed for all-day comfort. Features a high waist for support and flattering fit. Perfect for yoga, lounging, or casual outings with their versatile straight leg design.",
+    price: 26.39,
+    originalPrice: 45.00,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    colors: ["Black"],
+    colors: ["Black", "Dark Brown", "Grey"],
     image: productYogaPants,
     inStock: true,
-    affiliateUrl: "https://amzn.to/3X6sOKe",
+    affiliateUrl: "https://www.amazon.com/OQQ-Pants-Women-Straight-Darkbrown/dp/B0FDKW1SDT?crid=2VU4ZW93T9CGC&dib=eyJ2IjoiMSJ9.Ay3SUOu8xaSZf7Ftiodx3YZkT3bivfOYyiccqnWSjdM9nGSSBYuwISQ162RoxGfkNHrVlib6Io5OMhs2gzQW3kFpAyBdiSZJcty6S2blCO0EzUbm5Je1it1bDLWFeh0WICdTQVWk-ker7aXbpwZBEF9xj-i5614RtEuptGoQV9EegBegZncyGzbR5smtIRqnyruEVIOBHw-8e__LkE94kBP1OD6jMaFh3JB9Hn5ymoFh28kLGftbY66vsIx5aNQzmSNpFspIqBGQNnY_W61P-CJOolZ67vtFXM7igfmhw7I.T755V6EBN5UYdcIOEGXOT_N0Y4rBqYXedV2yw71kk50&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486142&sprefix=womens%2Bfall%2Bsweatshirt,aps,144&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=a18073805ee1b89b10b8c07fd557be4b&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.1,
+    reviewCount: 760,
+    socialProof: "2K+ bought in past month",
+    isPrime: true,
+    styleNotes: "These OQQ yoga pants redefine versatile comfort. The straight leg design offers a more relaxed alternative to traditional leggings while the soft, stretchy fabric ensures freedom of movement for workouts or daily wear. The high waist provides both support and a flattering silhouette - making these perfect for yoga class, lounging at home, or casual weekend outings.",
+    features: [
+      "Straight leg design",
+      "High waist for support",
+      "Soft stretch fabric",
+      "Breathable and lightweight",
+      "Versatile styling",
+      "Casual comfort fit"
+    ],
+    productDetails: {
+      fabric: "Soft stretch polyester blend",
+      care: "Machine wash cold, tumble dry low",
+      fit: "High-rise straight leg - relaxed fit, true to size",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Yoga & Wellness",
+        suggestion: "Pair with a fitted tank or sports bra for yoga or Pilates classes"
+      },
+      {
+        occasion: "Athleisure",
+        suggestion: "Style with a cropped hoodie and sneakers for trendy casual looks"
+      },
+      {
+        occasion: "Loungewear",
+        suggestion: "Wear with an oversized tee for comfortable at-home style"
+      },
+      {
+        occasion: "Coffee Run",
+        suggestion: "Match with a sweatshirt and slip-on shoes for quick errand outfits"
+      }
+    ]
   },
   {
     id: "fsh-019",
     name: "Plaid Shacket Jacket",
-    brand: "LunaRituals",
+    brand: "Beaully",
     category: "Outerwear",
-    description: "Cozy fall fashion meets classic style with this plaid flannel shacket. Features a button-down front and relaxed fit perfect for layering. The timeless camel and cream plaid pattern adds sophistication to any casual outfit.",
-    price: 29.89,
+    description: "Cozy 2025 fall fashion meets classic style with this plaid flannel shacket. Features a button-down front, long sleeves, and relaxed fit perfect for layering. The timeless brushed flannel fabric adds warmth and sophistication to any casual outfit.",
+    price: 23.61,
+    originalPrice: 45.89,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    colors: ["Camel Plaid", "Grey Plaid"],
+    colors: ["Camel Plaid", "Grey Plaid", "Red Plaid"],
     image: productPlaidShacket,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4oRYm2I",
+    affiliateUrl: "https://www.amazon.com/Brushed-Flannel-Pocketed-Shackets-X-Large/dp/B09NRJ8F5R?crid=1BN326ZN8K6V8&dib=eyJ2IjoiMSJ9.Ay3SUOu8xaSZf7Ftiodx3UVmyT90nKOxYX3lhzwuIOoohmR52xw2Ht1wyew74DaE-wTeqDtmZ1cgAPCdQm1ErU0gbT6ec4OCtKETQZ9Ai4EEzUbm5Je1it1bDLWFeh0WICdTQVWk-ker7aXbpwZBEF9xj-i5614RtEuptGoQV9EegBegZncyGzbR5smtIRqnyruEVIOBHw-8e__LkE94kBP1OD6jMaFh3JB9Hn5ymoFh28kLGftbY66vsIx5aNQzmSNpFspIqBGQNnY_W61P-CJOolZ67vtFXM7igfmhw7I.0Cn5AWJDmppZRNdKjyGm6CLIYiBRbtADT-pEb3MiEFA&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486284&sprefix=womens%2Bfall%2Bsweatshirt%2Caps%2C482&sr=8-5-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=5fe5999eeda8edae48c75f6c7c589edc&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 3046,
+    socialProof: "500+ bought in past month",
+    isPrime: true,
+    styleNotes: "This trendy 2025 fall shacket perfectly blends shirt and jacket functionality. The brushed flannel fabric provides cozy warmth without bulk, while the button-front design allows for versatile styling - wear it open as a layer or buttoned as a shirt. The classic plaid pattern adds timeless appeal that transitions seamlessly from outdoor adventures to casual coffee dates.",
+    features: [
+      "Button-down front",
+      "Soft brushed flannel fabric",
+      "Pocketed design",
+      "Relaxed oversized fit",
+      "Long sleeves with cuffs",
+      "Perfect for layering"
+    ],
+    productDetails: {
+      fabric: "Soft brushed flannel polyester blend",
+      care: "Machine wash cold, tumble dry low",
+      fit: "Relaxed oversized fit - great for layering",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Fall Layers",
+        suggestion: "Layer over a tee with jeans and boots for classic autumn style"
+      },
+      {
+        occasion: "Outdoor Adventure",
+        suggestion: "Wear as an outer layer with leggings and hiking boots for trails"
+      },
+      {
+        occasion: "Casual Weekend",
+        suggestion: "Button up and pair with black jeans for effortless weekend looks"
+      },
+      {
+        occasion: "Cozy Comfort",
+        suggestion: "Layer over a hoodie for extra warmth on chilly days"
+      }
+    ]
   },
   {
     id: "fsh-020",
     name: "Oversized Batwing Sweater",
-    brand: "LunaRituals",
+    brand: "LILLUSORY",
     category: "Knitwear",
-    description: "Trendy oversized crewneck knit pullover with distinctive side slit design and batwing sleeves. This fashion-forward sweater offers cozy comfort with an elevated asymmetric hemline. Perfect for creating effortless 2025 fall outfits.",
-    price: 36.99,
+    description: "Trendy oversized crewneck knit pullover with distinctive side slit design and batwing sleeves. This OEKO-TEX certified fashion-forward sweater offers cozy comfort with an elevated asymmetric hemline. Perfect for creating effortless 2025 fall outfits.",
+    price: 26.59,
+    originalPrice: 36.99,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Brown", "Black", "Grey"],
+    colors: ["Nutmeg", "Brown", "Black", "Grey"],
     image: productBrownSweater,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4r7zl52",
+    affiliateUrl: "https://www.amazon.com/LILLUSORY-Sweaters-Crewneck-Oversized-Pullover/dp/B0BFL5MKKC?crid=3NE8IPYLW4A3E&dib=eyJ2IjoiMSJ9.3VXmLjSnGin3FTM1kP_n2y60TtrfVce4iiD-Fa56xijLCgTyyobffrA1XATDk6BWiKYSdWzehoKhYxrpFI4iqMjxYF0Qe7tRs6WmKxZk2JJk0c-iAqckQd88GReYZ2TgnYh8yua7855nJlplNHRXFtWu31uVHCbACM9dY4V-LsZXAUu9TDi3CvKZvYhin_2l8c1lu8Jz-L1HUeVHCLwW6Pa1ssCb2vmvX4oHdXC0MkOI-vqXgUGJIqwC3W_Pl7iHScfp7U-mZE_RqWdFHx0mbOBa3_1zEsmyEMhKCzgmG3M.IRh-qiE2li-Ropnk9OLqpMkwZ_mQKv-dWb3dPUUxwYc&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486380&sprefix=womens%2Bfall%2Bsweatshirt%2Caps%2C225&sr=8-3&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=7ad1357daa5942de565280b38bdf203f&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 6890,
+    socialProof: "2K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This OEKO-TEX certified oversized sweater defines modern cozy chic. The distinctive batwing sleeves and side slit details add fashion-forward flair to the classic crewneck silhouette. The oversized fit creates an effortlessly cool, lived-in look while the soft knit fabric ensures comfort. Plus, knowing it's made with safer chemicals gives you peace of mind with every wear.",
+    features: [
+      "Oversized batwing sleeves",
+      "Side slit asymmetric hem",
+      "OEKO-TEX STANDARD 100 certified",
+      "Crewneck design",
+      "Soft knit construction",
+      "Fashion-forward 2025 style"
+    ],
+    productDetails: {
+      fabric: "Soft knit blend - OEKO-TEX certified safe",
+      care: "Hand wash cold or gentle machine wash, lay flat to dry",
+      fit: "Oversized relaxed fit - intentionally roomy",
+      origin: "Imported, Certification #25.HCN.75532"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Casual Chic",
+        suggestion: "Pair with leggings and ankle boots for effortless style"
+      },
+      {
+        occasion: "Layered Look",
+        suggestion: "Wear over a collared shirt with jeans for preppy layering"
+      },
+      {
+        occasion: "Cozy Weekend",
+        suggestion: "Style with joggers and slippers for ultimate comfort"
+      },
+      {
+        occasion: "Fall Fashion",
+        suggestion: "Match with skinny jeans and booties for trendy autumn outfits"
+      }
+    ]
   },
   {
     id: "fsh-021",
     name: "Faux Fur Pom Beanie Hat",
-    brand: "LunaRituals",
+    brand: "FURTALK",
     category: "Accessories",
-    description: "Cozy winter warmth meets timeless style with this knitted beanie featuring a luxurious faux fur pom. The warm knit skull cap design provides comfortable coverage while the statement fur pom adds a playful touch. Perfect for cold weather fashion.",
-    price: 12.99,
-    colors: ["Cream", "Black", "Grey", "Camel"],
+    description: "Cozy winter warmth meets timeless style with this OEKO-TEX certified knitted beanie featuring a luxurious faux fur pom. The warm knit skull cap design with fleece lining provides comfortable coverage while the statement fur pom adds a playful touch. Perfect for cold weather fashion.",
+    price: 12.34,
+    originalPrice: 19.99,
+    colors: ["Cream", "Black", "Grey", "Camel", "Burgundy"],
     image: productPomBeanie,
     inStock: true,
-    affiliateUrl: "https://amzn.to/48j4qeG",
+    affiliateUrl: "https://www.amazon.com/Womens-Knitted-Winter-Beanie-bobble/dp/B074TFDM7K?crid=FVUEQBAIL6B9&dib=eyJ2IjoiMSJ9.VGQJmpwr9gVAIxS4F8ejqYMuZ3YFDmhKCQQyC2FBI30psWVxzctoBLHGfzZ5ptG5YSOKvYyHU_IgOwzECWegUNx__iwIRLwLmrfxIhsikbbA8H6jDC_AhLGmRqJeWGf3jDC3c5SYEL-_lWf5XDhWZrhWV6yleh_tjnldC9J5BZvg-WrS4VAQspWSs9qKoO1xV4vKm-3NPmgz5vicxL0NDybiLLJFLpZtphtJtQDFy5sAYxA-V597d0pu806WyBhfCXa-nWpdESyIAa5Uokqtf_I_YZe8kID74j1TbectYAI.xib3eAif2qbUdAjgYHa_bybxCdqFHDqy1ecHkIYFS1I&dib_tag=se&keywords=womens%2Bfall%2Bhat&qid=1763486538&sprefix=womens%2Bfall%2Bhat%2Caps%2C154&sr=8-15&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=544e3990644e3339f9b663850523ca72&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.7,
+    reviewCount: 17505,
+    isPrime: true,
+    styleNotes: "This highly-rated OEKO-TEX certified beanie combines winter warmth with playful style. The soft knit construction with fleece lining keeps you cozy in cold weather, while the statement faux fur pom adds a touch of whimsy. With over 17,000 five-star reviews, this bestseller proves that quality, comfort, and style can coexist - all while being made with safer chemicals for you and the environment.",
+    features: [
+      "Faux fur pom detail",
+      "Soft knit construction",
+      "Fleece lined for warmth",
+      "OEKO-TEX STANDARD 100 certified",
+      "Stretchy comfortable fit",
+      "Multiple color options"
+    ],
+    productDetails: {
+      fabric: "Knit acrylic with fleece lining - OEKO-TEX certified",
+      care: "Hand wash cold, reshape and air dry flat",
+      fit: "One size fits most - stretchy knit adapts to head size",
+      origin: "Imported, Certification #23.HCN.22830"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Winter Casual",
+        suggestion: "Pair with a puffer coat and jeans for cozy cold-weather style"
+      },
+      {
+        occasion: "Ski Trip",
+        suggestion: "Wear with a ski jacket and snow pants for slope-ready fashion"
+      },
+      {
+        occasion: "Coffee Date",
+        suggestion: "Style with a cozy sweater and leggings for cute winter outfits"
+      },
+      {
+        occasion: "Holiday Season",
+        suggestion: "Match with a festive sweater for cheerful holiday gatherings"
+      }
+    ]
   },
   {
     id: "fsh-022",
