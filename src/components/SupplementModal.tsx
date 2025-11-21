@@ -1,132 +1,180 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Star, ShoppingBag, Package, Clock, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ExternalLink, Star, Package, Truck, RefreshCw } from "lucide-react";
 import type { Supplement } from "@/data/supplements";
 
 interface SupplementModalProps {
-  product: Supplement;
+  product: Supplement | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export const SupplementModal = ({ product, open, onOpenChange }: SupplementModalProps) => {
+  if (!product) return null;
+
   const handleShopNow = () => {
     if (product.affiliateUrl) {
-      window.open(product.affiliateUrl, '_blank');
+      window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        {!product ? null : (
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-4">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+        <div className="relative">
+          {/* Hero Image Section */}
+          <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full rounded-lg object-cover"
+              className="w-full h-full object-contain"
             />
+            {product.badge && (
+              <Badge 
+                className={`absolute top-3 left-3 ${
+                  product.badge === 'Sale' ? 'bg-foreground text-background' :
+                  product.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
+                  product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                  'bg-secondary text-foreground'
+                } font-semibold`}
+              >
+                {product.badge}
+              </Badge>
+            )}
           </div>
 
-          <div className="space-y-6">
+          {/* Content Section */}
+          <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+            {/* Header */}
             <div>
-              <p className="text-sm text-muted-foreground mb-2">{product.category}</p>
-              <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
-              
-              {product.rating && (
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < Math.floor(product.rating!)
-                            ? "fill-yellow-400 text-yellow-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm font-medium">{product.rating}</span>
+              <h2 className="font-display text-xl md:text-2xl lg:text-3xl mb-1">{product.name}</h2>
+              <p className="text-xs md:text-sm text-muted-foreground">{product.category}</p>
+            </div>
+
+            {/* Rating & Social Proof */}
+            {product.rating && (
+              <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3.5 w-3.5 md:h-4 md:w-4 fill-primary text-primary" />
+                  <span className="font-semibold">{product.rating}</span>
                   {product.reviewCount && (
-                    <span className="text-sm text-muted-foreground">
-                      ({product.reviewCount.toLocaleString()} reviews)
-                    </span>
+                    <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
                   )}
                 </div>
-              )}
-
-              <div className="flex items-center gap-2 flex-wrap mb-4">
-                {product.badge && (
-                  <Badge variant="secondary">{product.badge}</Badge>
-                )}
-                {product.isPrime && (
-                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                    Prime
-                  </Badge>
-                )}
                 {product.socialProof && (
-                  <Badge variant="outline">{product.socialProof}</Badge>
+                  <span className="text-muted-foreground text-xs">{product.socialProof}</span>
                 )}
               </div>
+            )}
 
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-bold">${product.price}</span>
-                {product.originalPrice && (
-                  <span className="text-lg text-muted-foreground line-through">
-                    ${product.originalPrice}
-                  </span>
-                )}
-              </div>
+            {/* Price */}
+            <div className="flex items-center gap-2 md:gap-3">
+              {product.originalPrice && (
+                <span className="text-base md:text-lg text-muted-foreground line-through">
+                  ${product.originalPrice.toFixed(2)}
+                </span>
+              )}
+              <span className="text-2xl md:text-3xl font-bold">${product.price.toFixed(2)}</span>
+              {product.originalPrice && (
+                <Badge className="text-xs bg-foreground text-background">
+                  -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                </Badge>
+              )}
+            </div>
 
-              <p className="text-muted-foreground mb-4">{product.description}</p>
-
-              <div className="space-y-2 mb-6">
-                <div className="flex items-center gap-2 text-sm">
-                  <Package className="w-4 h-4 text-muted-foreground" />
-                  <span><strong>Servings:</strong> {product.servings}</span>
+            {/* Prime Badge & Shop Now */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              {product.isPrime && (
+                <div className="flex items-center gap-2 text-xs md:text-sm bg-primary/10 text-primary px-3 py-2 rounded-md">
+                  <Truck className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="font-medium">Prime - Free Shipping</span>
                 </div>
-                {product.dosageInfo && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span><strong>Dosage:</strong> {product.dosageInfo}</span>
-                  </div>
-                )}
-              </div>
-
-              <Button onClick={handleShopNow} className="w-full" size="lg">
-                <ShoppingBag className="mr-2 h-5 w-5" />
-                Shop Now on Amazon
+              )}
+              <Button
+                onClick={handleShopNow}
+                size="lg"
+                className="w-full sm:w-auto bg-foreground hover:bg-foreground/90 text-background"
+              >
+                Shop Now <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
             </div>
 
+            {/* Description */}
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed">{product.description}</p>
+
+            {/* Key Benefits Highlight */}
             {product.benefits && product.benefits.length > 0 && (
-              <div>
-                <h3 className="font-semibold mb-3">Key Benefits</h3>
-                <div className="grid grid-cols-2 gap-2">
+              <div className="bg-secondary/30 p-3 md:p-4 rounded-lg">
+                <h3 className="font-semibold mb-3 text-xs md:text-sm uppercase tracking-wide">Key Benefits</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {product.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">{benefit}</span>
+                    <div key={index} className="flex items-start gap-2 text-xs md:text-sm">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span className="text-text-secondary">{benefit}</span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
+            {/* Quick Features */}
+            {product.features && product.features.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {product.features.map((feature, index) => (
+                  <div key={index} className="flex items-start gap-2 text-xs md:text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span className="text-text-secondary">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Accordions */}
             <Accordion type="single" collapsible className="w-full">
+              {/* Product Details */}
+              <AccordionItem value="details">
+                <AccordionTrigger className="text-left py-3 text-sm md:text-base">
+                  <div className="flex items-center gap-2">
+                    <Package className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                    <span>Product Details</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 text-xs md:text-sm">
+                  <div className="flex justify-between py-1.5 border-b border-border/50 gap-4">
+                    <span className="text-muted-foreground flex-shrink-0">Servings:</span>
+                    <span className="font-medium text-right">{product.servings}</span>
+                  </div>
+                  {product.dosageInfo && (
+                    <div className="flex justify-between py-1.5 border-b border-border/50 gap-4">
+                      <span className="text-muted-foreground flex-shrink-0">Dosage:</span>
+                      <span className="font-medium text-right">{product.dosageInfo}</span>
+                    </div>
+                  )}
+                  {product.certifications && product.certifications.length > 0 && (
+                    <div className="flex justify-between py-1.5 gap-4">
+                      <span className="text-muted-foreground flex-shrink-0">Certifications:</span>
+                      <div className="flex flex-wrap gap-1 justify-end">
+                        {product.certifications.map((cert, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">{cert}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Key Ingredients */}
               {product.keyIngredients && product.keyIngredients.length > 0 && (
                 <AccordionItem value="ingredients">
-                  <AccordionTrigger>Key Ingredients</AccordionTrigger>
+                  <AccordionTrigger className="text-left py-3 text-sm md:text-base">Key Ingredients</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2.5 text-xs md:text-sm">
                       {product.keyIngredients.map((ingredient, index) => (
-                        <li key={index} className="text-sm flex items-start gap-2">
-                          <span className="text-primary">•</span>
-                          {ingredient}
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span className="text-text-secondary">{ingredient}</span>
                         </li>
                       ))}
                     </ul>
@@ -134,65 +182,52 @@ export const SupplementModal = ({ product, open, onOpenChange }: SupplementModal
                 </AccordionItem>
               )}
 
-              {product.features && product.features.length > 0 && (
-                <AccordionItem value="features">
-                  <AccordionTrigger>Product Features</AccordionTrigger>
-                  <AccordionContent>
-                    <ul className="space-y-2">
-                      {product.features.map((feature, index) => (
-                        <li key={index} className="text-sm">{feature}</li>
-                      ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
-              {product.certifications && product.certifications.length > 0 && (
-                <AccordionItem value="certifications">
-                  <AccordionTrigger>Certifications</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-wrap gap-2">
-                      {product.certifications.map((cert, index) => (
-                        <Badge key={index} variant="outline">{cert}</Badge>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
+              {/* Usage Ideas */}
               {product.usageIdeas && product.usageIdeas.length > 0 && (
                 <AccordionItem value="usage">
-                  <AccordionTrigger>Usage Ideas</AccordionTrigger>
+                  <AccordionTrigger className="text-left py-3 text-sm md:text-base">Usage Ideas</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2.5 text-xs md:text-sm">
                       {product.usageIdeas.map((idea, index) => (
-                        <li key={index} className="text-sm">{idea}</li>
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span className="text-text-secondary">{idea}</span>
+                        </li>
                       ))}
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
               )}
 
+              {/* Shipping & Returns */}
               <AccordionItem value="shipping">
-                <AccordionTrigger>Shipping & Returns</AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-3 text-sm">
+                <AccordionTrigger className="text-left py-3 text-sm md:text-base">
+                  <div className="flex items-center gap-2">
+                    <RefreshCw className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                    <span>Shipping & Returns</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2.5 text-xs md:text-sm text-text-secondary leading-relaxed">
+                  {product.isPrime && (
                     <div>
-                      <strong>Shipping:</strong>
-                      <p className="text-muted-foreground mt-1">Free shipping on orders over $35. Prime members get free 2-day shipping.</p>
+                      <p className="font-semibold text-primary mb-1">Prime Eligible</p>
+                      <p>Free 2-day shipping for Prime members. Free shipping on $35+ orders.</p>
                     </div>
-                    <div>
-                      <strong>Returns:</strong>
-                      <p className="text-muted-foreground mt-1">30-day return policy. Items must be unopened and in original condition.</p>
-                    </div>
-                    <p className="text-xs text-muted-foreground italic">Purchase through Amazon</p>
+                  )}
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Easy Returns</p>
+                    <p>Free returns within 30 days. Items must be unopened and in original condition.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Amazon Fulfillment</p>
+                    <p>Fulfilled by Amazon. All transactions and customer service handled through Amazon.</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+
           </div>
         </div>
-        )}
       </DialogContent>
     </Dialog>
   );
