@@ -1149,37 +1149,154 @@ export const fashionProducts: FashionProduct[] = [
   {
     id: "fsh-022",
     name: "Winter Accessories Gift Set",
-    brand: "LunaRituals",
+    brand: "APEVAN",
     category: "Accessories",
-    description: "Complete winter essentials in one beautiful set: fleece-lined beanie, cozy long scarf, touchscreen-compatible gloves, and plush earmuffs. All crafted in soft knit fabric with warm fleece lining. The perfect 4-in-1 gift set for staying warm and stylish all winter.",
-    price: 29.99,
-    colors: ["Cream", "Black", "Grey"],
+    description: "Complete winter warmth essentials in one beautiful 4-in-1 set. Includes a fleece-lined beanie, long scarf, touchscreen gloves, and ear warmers. Coordinated design with premium fleece lining for extra warmth and comfort. Makes a perfect gift or treat yourself bundle.",
+    price: 34.99,
+    originalPrice: 49.99,
+    colors: ["White", "Black", "Army Green", "Grey"],
     image: productWinterSet,
     inStock: true,
-    affiliateUrl: "https://amzn.to/3X5G3Ld",
+    affiliateUrl: "https://www.amazon.com/Earmuffs-Touchscreen-Adjustable-Fashionable-Weather-01/dp/B0FHNVC3XF?crid=2PNJGZUJS86F&dib=eyJ2IjoiMSJ9.VGQJmpwr9gVAIxS4F8ejqYMuZ3YFDmhKCQQyC2FBI30psWVxzctoBLHGfzZ5ptG5YSOKvYyHU_IgOwzECWegUNx__iwIRLwLmrfxIhsikbbA8H6jDC_AhLGmRqJeWGf3jDC3c5SYEL-_lWf5XDhWZrhWV6yleh_tjnldC9J5BZvg-WrS4VAQspWSs9qKoO1xV4vKm-3NPmgz5vicxL0NDybiLLJFLpZtphtJtQDFy5sAYxA-V597d0pu806WyBhfCXa-nWpdESyIAa5Uokqtf_I_YZe8kID74j1TbectYAI.xib3eAif2qbUdAjgYHa_bybxCdqFHDqy1ecHkIYFS1I&dib_tag=se&keywords=womens%2Bfall%2Bhat&qid=1763487037&sprefix=womens%2Bfall%2Bhat%2Caps%2C454&sr=8-38&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=c7d3e35830659d977774ca44680ea0bd&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.9,
+    reviewCount: 117,
+    socialProof: "50+ bought in past month",
+    isPrime: true,
+    styleNotes: "This highly-rated 4-in-1 winter accessories set is the ultimate cold-weather solution. The coordinated pieces (fleece-lined beanie, long scarf, touchscreen gloves, ear warmers) work together or separately for maximum versatility. The touchscreen-compatible gloves mean you don't have to choose between warmth and connectivity. With a perfect 4.9 rating, this makes an ideal gift set or personal winter wardrobe essential.",
+    features: [
+      "4-piece coordinated set",
+      "Fleece lined for warmth",
+      "Touchscreen compatible gloves",
+      "Adjustable ear warmers",
+      "Long scarf for versatility",
+      "Gift-ready presentation"
+    ],
+    productDetails: {
+      fabric: "Soft knit with fleece lining",
+      care: "Hand wash cold, lay flat to dry",
+      fit: "One size fits most - adjustable components",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Winter Commute",
+        suggestion: "Wear the full set for maximum warmth during cold commutes"
+      },
+      {
+        occasion: "Gift Giving",
+        suggestion: "Perfect ready-to-give gift set for holidays or birthdays"
+      },
+      {
+        occasion: "Outdoor Activities",
+        suggestion: "Use ear warmers and gloves for running or hiking"
+      },
+      {
+        occasion: "Mix & Match",
+        suggestion: "Pair individual pieces with different outfits throughout winter"
+      }
+    ]
   },
   {
     id: "fsh-023",
-    name: "Hooded Puffer Parka Coat",
-    brand: "LunaRituals",
+    name: "Waterproof Puffer Coat",
+    brand: "MOERDENG",
     category: "Outerwear",
-    description: "Stay warm and chic with this thickened fleece-lined down jacket featuring a detachable faux fur hood. The waterproof parka design offers premium winter protection with a flattering silhouette. Practical pockets and adjustable drawstrings complete this essential cold-weather coat.",
-    price: 69.99,
+    description: "Stay warm and dry all winter with this thickened fleece-lined waterproof puffer coat. Features a detachable faux fur hood, down jacket insulation, and multiple pockets. The waterproof parka design provides protection from elements without bulk.",
+    price: 55.99,
+    originalPrice: 69.99,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    colors: ["Black", "Navy", "Army Green"],
+    colors: ["Black", "Dark Grey", "Denim Blue"],
     image: productPufferCoat,
     inStock: true,
-    affiliateUrl: "https://amzn.to/4r5zRk9",
+    affiliateUrl: "https://www.amazon.com/MOERDENG-Womens-Thicken-Waterproof-Detachable/dp/B0CDBSGTTH?dib=eyJ2IjoiMSJ9.kckKtKS-XbJV3vWd2j6OxXESA1RkM0NMA17uirHyLhILXrZfIFd001GH1eGJMgrhsU-3BzAg81JfgGt_cPO8vGUMQXEKoGXmqV56DA9NTtDpkUOWFi_y5O0gwahLtnFwK7-zEuq_iUbi77wU4JKxX5ijWGrOXgKxGtvPz0cALpMSF227m9ZSA5fRyYCS6GL1geOMtJdvBUI2NvaeVzgIZrbuoIRGGDINdr8gG5uzIhnLyulalSaH-NKgjt3DAMrDBPkV3WBJ25o6yIQr9FoEYnzoR65Lo6Hf4JzLxYmARKQ.ZbsZ8_3W_rq9mOg02EIrs5MVXWhCLjRQqLpsYzIwTPo&dib_tag=se&keywords=womens%2Bcoats&qid=1763487201&s=apparel&sr=1-6&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=98dd2972af8c1a20d220e304004b0d43&language=en_US&ref_=as_li_ss_tl&psc=1",
+    // Enhanced details
+    rating: 4.5,
+    reviewCount: 1972,
+    socialProof: "1K+ bought in past month",
+    isPrime: true,
+    styleNotes: "This bestselling waterproof puffer coat is your ultimate winter armor. The fleece-lined interior provides cozy warmth while the waterproof exterior shields you from rain and snow. The detachable faux fur hood adds versatility - remove it for a sleeker look or keep it on for extra warmth. With over 1,000 purchases last month, this coat proves that style and function can coexist beautifully.",
+    features: [
+      "Waterproof exterior",
+      "Thickened fleece lining",
+      "Detachable faux fur hood",
+      "Multiple pockets",
+      "Down jacket insulation",
+      "Windproof design"
+    ],
+    productDetails: {
+      fabric: "Waterproof polyester shell with fleece lining and down fill",
+      care: "Machine wash cold gentle cycle, tumble dry low",
+      fit: "True to size with room for layering",
+      origin: "Imported"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Winter Commute",
+        suggestion: "Pair with jeans and boots for weather-proof daily wear"
+      },
+      {
+        occasion: "Snow Day",
+        suggestion: "Wear with snow pants and winter boots for outdoor activities"
+      },
+      {
+        occasion: "Casual Weekend",
+        suggestion: "Style with leggings and sneakers for errands in cold weather"
+      },
+      {
+        occasion: "Travel",
+        suggestion: "Perfect packable coat for winter vacations or ski trips"
+      }
+    ]
   },
   {
     id: "fsh-024",
-    name: "14K Gold Plated Chunky Hoops",
-    brand: "LunaRituals",
-    category: "Jewelry",
-    description: "Elevate your everyday look with these hypoallergenic 14K gold plated chunky hoop earrings. Lightweight design perfect for sensitive ears, these non-tarnish huggie hoops are versatile enough for stacking or wearing alone. The set includes 3 pairs for endless styling options.",
-    price: 8.99,
+    name: "Gold Hoop Earrings Set",
+    brand: "LOLIAS",
+    category: "Accessories",
+    description: "Delicate 14K gold plated small chunky hoop earrings perfect for everyday wear. Hypoallergenic and nickel-free for sensitive ears with 95% recycled materials (RCS100 certified). Lightweight huggie hoops comfortable for all-day wear. Set of 3 pairs in varying sizes for versatile styling and multiple piercings.",
+    price: 8.54,
+    originalPrice: 12.99,
     image: productHoopEarrings,
     inStock: true,
-    affiliateUrl: "https://amzn.to/43DMw3I",
+    affiliateUrl: "https://www.amazon.com/LOLIAS-Hypoallergenic-Sensitive-Lightweight-3Pairs-14K/dp/B0DM7H9QWV?crid=BX9K9EQ58Z2Y&dib=eyJ2IjoiMSJ9._1gSn9VgwLkCZvchWKTpjhUq5Q_Us5hGg372EzlXdLrYA4iwVoQApRfV6CVmTdXa4bkwDj9LuJ_BlRtLkGM9GkAWCfOiupnmldPE23UGP6Qzsux6EVy4vrWqzJRAojs9maJBzHFA5uJyq4hHxv87MR_2fOIXBmiUBVZqmXg190xPFjXIWJqyNqgj6zLLxKJeCi2RwVwsj6gvfFeAwFPPLegwprTEnNEgDZGfA4OAaoKbzzcDfGfXvKRfExtdeObt0DELE5SWUVLi-hOA5KE59CId-p1L1uAF0FEGCQTp064.KJLGfGgNgoXflDC1__5qyKT57vxos7hlaXDisCbZNY0&dib_tag=se&keywords=womens%2Bgold%2Bearrings&qid=1763487334&sprefix=womens%2Bgold%2Bearings%2Caps%2C149&sr=8-7&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=dde4f10d23f6d2ec3c913370707757e4&language=en_US&ref_=as_li_ss_tl",
+    // Enhanced details
+    rating: 4.4,
+    reviewCount: 691,
+    socialProof: "9K+ bought in past month",
+    isPrime: true,
+    styleNotes: "These RCS100 certified sustainable hoop earrings (95% recycled materials) prove that eco-friendly can be beautiful. The 14K gold plating offers a luxe look while the hypoallergenic construction means no irritation for sensitive ears. Three pairs in different sizes allow for creative ear stacking or simple daily wear. With 9,000+ purchases last month, these have become the go-to hoops for style-conscious, sustainability-minded shoppers.",
+    features: [
+      "3-pair set in varying sizes",
+      "14K gold plated finish",
+      "Hypoallergenic for sensitive ears",
+      "95% recycled materials (RCS100)",
+      "Lightweight huggie design",
+      "Non-tarnish construction"
+    ],
+    productDetails: {
+      fabric: "14K gold plated brass with 95% recycled content",
+      care: "Remove before water exposure, store in provided pouch",
+      fit: "Small chunky huggie hoops - comfortable for all-day wear",
+      origin: "Imported, Certification #TE-00081220"
+    },
+    stylingIdeas: [
+      {
+        occasion: "Everyday Minimal",
+        suggestion: "Wear one pair for simple, elegant daily style"
+      },
+      {
+        occasion: "Ear Stacking",
+        suggestion: "Use all three pairs to create trendy multiple piercing looks"
+      },
+      {
+        occasion: "Work Professional",
+        suggestion: "Pair with business attire for polished, understated elegance"
+      },
+      {
+        occasion: "Gift Giving",
+        suggestion: "Perfect sustainable gift for eco-conscious jewelry lovers"
+      }
+    ]
   },
 ];
