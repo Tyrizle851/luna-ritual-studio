@@ -31,8 +31,10 @@ import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
 import { CandleModal } from "@/components/CandleModal";
 import { SupplementModal } from "@/components/SupplementModal";
+import { BookModal } from "@/components/BookModal";
 import { Candle } from "@/data/candles";
 import { Supplement } from "@/data/supplements";
+import { Book } from "@/data/books";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -60,8 +62,10 @@ const Shop = () => {
   const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
   const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
   const [selectedSupplement, setSelectedSupplement] = useState<Supplement | null>(null);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
   const [isSupplementModalOpen, setIsSupplementModalOpen] = useState(false);
+  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
   
   const { addItem } = useCartStore();
 
@@ -616,7 +620,14 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(books, booksPage).map((book) => (
-                    <div key={book.id} className="group relative">
+                    <div 
+                      key={book.id} 
+                      className="group relative cursor-pointer"
+                      onClick={() => {
+                        setSelectedBook(book);
+                        setIsBookModalOpen(true);
+                      }}
+                    >
                       <WishlistButton productId={book.id} />
                       <div className="mb-4 overflow-hidden rounded-lg aspect-[3/4] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                         <img
@@ -628,6 +639,16 @@ const Shop = () => {
                       <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
                       <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
                       <p className="text-xs text-text-muted mb-2">by {book.author}</p>
+                      
+                      {book.rating && (
+                        <div className="flex items-center gap-1 mb-2 text-xs">
+                          <span className="text-primary">★</span>
+                          <span className="font-semibold">{book.rating}</span>
+                          {book.reviewCount && (
+                            <span className="text-muted-foreground">({book.reviewCount.toLocaleString()})</span>
+                          )}
+                        </div>
+                      )}
                       <p className="text-sm text-text-secondary leading-relaxed mb-4">{book.description}</p>
                       <div className="flex items-center justify-between">
                         <span className="text-base font-semibold text-text-primary">${book.price}</span>
@@ -680,6 +701,16 @@ const Shop = () => {
         onOpenChange={(open) => {
           setIsSupplementModalOpen(open);
           if (!open) setSelectedSupplement(null);
+        }}
+      />
+
+      {/* Book Product Modal */}
+      <BookModal
+        product={selectedBook}
+        open={isBookModalOpen}
+        onOpenChange={(open) => {
+          setIsBookModalOpen(open);
+          if (!open) setSelectedBook(null);
         }}
       />
 
