@@ -32,6 +32,7 @@ import { FashionProductModal } from "@/components/FashionProductModal";
 import { CandleModal } from "@/components/CandleModal";
 import { SupplementModal } from "@/components/SupplementModal";
 import { Candle } from "@/data/candles";
+import { Supplement } from "@/data/supplements";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -60,6 +61,7 @@ const Shop = () => {
   const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
   const [selectedSupplement, setSelectedSupplement] = useState<Supplement | null>(null);
   const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
+  const [isSupplementModalOpen, setIsSupplementModalOpen] = useState(false);
   
   const { addItem } = useCartStore();
 
@@ -462,7 +464,14 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
-                    <div key={supplement.id} className="group relative">
+                    <div 
+                      key={supplement.id} 
+                      className="group relative cursor-pointer"
+                      onClick={() => {
+                        setSelectedSupplement(supplement);
+                        setIsSupplementModalOpen(true);
+                      }}
+                    >
                       <WishlistButton productId={supplement.id} />
                       {supplement.badge && (
                         <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
@@ -483,7 +492,19 @@ const Shop = () => {
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-2">{supplement.description}</p>
+                  
+                  {/* Rating if available */}
+                  {supplement.rating && (
+                    <div className="flex items-center gap-1 mb-2 text-xs">
+                      <span className="text-primary">★</span>
+                      <span className="font-semibold">{supplement.rating}</span>
+                      {supplement.reviewCount && (
+                        <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
+                      )}
+                    </div>
+                  )}
+                  
+                  <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
                   <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -500,7 +521,10 @@ const Shop = () => {
                         size="sm"
                         variant="outline"
                         className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                        onClick={() => supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
+                        }}
                       >
                         {supplement.affiliateUrl ? (
                           <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
@@ -646,6 +670,16 @@ const Shop = () => {
         onOpenChange={(open) => {
           setIsCandleModalOpen(open);
           if (!open) setSelectedCandle(null);
+        }}
+      />
+
+      {/* Supplement Product Modal */}
+      <SupplementModal
+        product={selectedSupplement}
+        open={isSupplementModalOpen}
+        onOpenChange={(open) => {
+          setIsSupplementModalOpen(open);
+          if (!open) setSelectedSupplement(null);
         }}
       />
 
