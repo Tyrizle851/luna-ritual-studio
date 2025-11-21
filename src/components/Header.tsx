@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, ShoppingCart, ChevronDown, Search } from "lucide-react";
+import { Menu, ShoppingCart, ChevronDown, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -148,13 +148,16 @@ export const Header = () => {
 
           <Link 
             to="/affirmation-builder" 
-            className={`text-sm transition-all duration-200 relative py-1 ${
+            className={`flex items-center gap-1.5 text-sm transition-all duration-200 relative py-1 ${
               isActive('/affirmation-builder') 
                 ? 'text-clay font-medium' 
                 : 'text-foreground hover:text-clay'
             }`}
           >
-            Builder
+            <Sparkles className="h-3 w-3" />
+            Studio
+            <span className="ml-1 px-1.5 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
+            <Sparkles className="h-3 w-3" />
             {isActive('/affirmation-builder') && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-clay" />
             )}
@@ -295,14 +298,17 @@ export const Header = () => {
                 </Link>
                 <Link
                   to="/affirmation-builder"
-                  className={`text-lg transition-colors relative ${
+                  className={`flex items-center gap-2 text-lg transition-colors relative ${
                     isActive('/affirmation-builder') 
                       ? 'text-clay font-medium' 
                       : 'text-foreground hover:text-clay'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Builder
+                  <Sparkles className="h-4 w-4" />
+                  Studio
+                  <span className="ml-1 px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
+                  <Sparkles className="h-4 w-4" />
                   {isActive('/affirmation-builder') && (
                     <span className="absolute bottom-0 left-0 w-8 h-0.5 bg-clay" />
                   )}
