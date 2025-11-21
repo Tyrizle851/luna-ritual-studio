@@ -629,6 +629,18 @@ const Shop = () => {
                       }}
                     >
                       <WishlistButton productId={book.id} />
+                      {book.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          book.badge === 'Sale' ? 'bg-foreground text-background' :
+                          book.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                          book.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                          book.badge === 'Award Winner' ? 'bg-primary text-primary-foreground' :
+                          book.badge === 'Netflix Series' ? 'bg-foreground text-background' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {book.badge}
+                        </div>
+                      )}
                       <div className="mb-4 overflow-hidden rounded-lg aspect-[3/4] bg-secondary transition-all duration-300 group-hover:shadow-xl">
                         <img
                           src={book.image}

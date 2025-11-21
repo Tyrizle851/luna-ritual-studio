@@ -2,7 +2,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ExternalLink, Star, BookOpen, Truck, RefreshCw } from "lucide-react";
+import { ExternalLink, Star, BookOpen, Truck, RefreshCw, Award } from "lucide-react";
 import type { Book } from "@/data/books";
 
 interface BookModalProps {
@@ -106,6 +106,23 @@ export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
 
             {/* Description */}
             <p className="text-sm md:text-base text-text-secondary leading-relaxed">{product.description}</p>
+
+            {/* Awards */}
+            {product.awards && product.awards.length > 0 && (
+              <div className="bg-primary/10 border border-primary/20 p-3 md:p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Award className="h-4 w-4 text-primary" />
+                  <h3 className="font-semibold text-xs md:text-sm uppercase tracking-wide">Awards & Recognition</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {product.awards.map((award, index) => (
+                    <Badge key={index} className="bg-primary text-primary-foreground text-xs">
+                      {award}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Themes Highlight */}
             {product.themes && product.themes.length > 0 && (
