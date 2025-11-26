@@ -291,53 +291,66 @@ const Shop = () => {
 
           {/* Tab Navigation with Counts */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            {/* Mobile: Two-row layout */}
+            {/* Mobile: 2x2 Grid Layout */}
             <div className="sm:hidden mb-6 space-y-2">
+              {/* Row 1: Affirmations (full width) */}
               <div className="flex justify-center">
-                <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+                <TabsList className="w-full max-w-xs">
                   <TabsTrigger 
                     value="affirmations" 
-                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
-                    <Sparkles className="h-4 w-4" />
+                    <Sparkles className="h-3.5 w-3.5" />
                     <span>Affirmations</span>
                     <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
-              <div className="flex justify-center">
-                <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+              
+              {/* Row 2: Fashion | Candles */}
+              <div className="flex justify-center gap-2">
+                <TabsList className="flex-1">
                   <TabsTrigger 
                     value="fashion" 
-                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-3 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
-                    <Shirt className="h-4 w-4" />
+                    <Shirt className="h-3.5 w-3.5" />
                     <span>Fashion</span>
-                    <span className="text-xs opacity-60">({getCategoryCounts().fashion})</span>
+                    <span className="text-[10px] opacity-60">({getCategoryCounts().fashion})</span>
                   </TabsTrigger>
+                </TabsList>
+                <TabsList className="flex-1">
                   <TabsTrigger 
                     value="candles" 
-                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-3 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
-                    <Flame className="h-4 w-4" />
+                    <Flame className="h-3.5 w-3.5" />
                     <span>Candles</span>
-                    <span className="text-xs opacity-60">({getCategoryCounts().candles})</span>
+                    <span className="text-[10px] opacity-60">({getCategoryCounts().candles})</span>
                   </TabsTrigger>
+                </TabsList>
+              </div>
+              
+              {/* Row 3: Supplements | Books */}
+              <div className="flex justify-center gap-2">
+                <TabsList className="flex-1">
                   <TabsTrigger 
                     value="supplements" 
-                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-2.5 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
-                    <Pill className="h-4 w-4" />
-                    <span className="text-xs">Supplements</span>
-                    <span className="text-xs opacity-60">({getCategoryCounts().supplements})</span>
+                    <Pill className="h-3.5 w-3.5" />
+                    <span>Supplements</span>
+                    <span className="text-[10px] opacity-60">({getCategoryCounts().supplements})</span>
                   </TabsTrigger>
+                </TabsList>
+                <TabsList className="flex-1">
                   <TabsTrigger 
                     value="books" 
-                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-3 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
-                    <BookOpen className="h-4 w-4" />
+                    <BookOpen className="h-3.5 w-3.5" />
                     <span>Books</span>
-                    <span className="text-xs opacity-60">({getCategoryCounts().books})</span>
+                    <span className="text-[10px] opacity-60">({getCategoryCounts().books})</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
