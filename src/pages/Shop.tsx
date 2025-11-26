@@ -192,8 +192,25 @@ const Shop = () => {
     fashion: "Fashion",
     candles: "Candles", 
     supplements: "Supplements",
-    affirmations: "Affirmations"
+    affirmations: "Affirmations",
+    books: "Books"
   };
+
+  const categorySubtitles: Record<string, string> = {
+    fashion: "Timeless pieces for your wardrobe",
+    candles: "Set the mood with artisan scents",
+    supplements: "Nourish your wellness journey",
+    affirmations: "Daily inspiration for intentional living",
+    books: "Stories to inspire your journey"
+  };
+
+  const getCategoryCounts = () => ({
+    fashion: fashionProducts.length,
+    candles: candles.length,
+    supplements: supplements.length,
+    affirmations: affirmations.length,
+    books: books.length
+  });
 
   const getMetaData = () => {
     const metas: Record<string, { title: string; description: string; keywords: string }> = {
@@ -250,68 +267,76 @@ const Shop = () => {
           ]} />
           
           {/* Hero Section */}
-          <div className="text-center mb-8 sm:mb-10 mt-4">
+          <div className="text-center mb-6 mt-2">
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              key={selectedTab}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display tracking-tight"
+              transition={{ duration: 0.4 }}
+              className="mb-2 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight flex items-center justify-center gap-3"
             >
-              Shop Collection
+              <span className="text-clay text-2xl sm:text-3xl">✦</span>
+              Shop {tabLabels[selectedTab]}
             </motion.h1>
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+              key={`${selectedTab}-subtitle`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="text-text-secondary text-sm sm:text-base max-w-xl mx-auto"
             >
-              Curated essentials for intentional living
+              {categorySubtitles[selectedTab]}
             </motion.p>
           </div>
 
-          {/* Tab Navigation with Icons */}
+          {/* Tab Navigation with Counts */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-8 h-auto gap-2 bg-secondary/30 p-2 rounded-lg">
+            <TabsList className="flex w-full max-w-3xl mx-auto mb-6 h-auto gap-1 bg-transparent justify-center flex-wrap">
               <TabsTrigger 
                 value="fashion" 
-                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
               >
-                <Shirt className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Shirt className="h-4 w-4" />
                 <span className="font-medium">Fashion</span>
+                <span className="text-xs text-text-muted">({getCategoryCounts().fashion})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="candles" 
-                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
               >
-                <Flame className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Flame className="h-4 w-4" />
                 <span className="font-medium">Candles</span>
+                <span className="text-xs text-text-muted">({getCategoryCounts().candles})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="supplements" 
-                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
               >
-                <Pill className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Pill className="h-4 w-4" />
                 <span className="font-medium">Supplements</span>
+                <span className="text-xs text-text-muted">({getCategoryCounts().supplements})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="books" 
-                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
               >
-                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+                <BookOpen className="h-4 w-4" />
                 <span className="font-medium">Books</span>
+                <span className="text-xs text-text-muted">({getCategoryCounts().books})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="affirmations" 
-                className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-3 sm:py-3.5 rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
               >
-                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Sparkles className="h-4 w-4" />
                 <span className="font-medium">Affirmations</span>
+                <span className="text-xs text-text-muted">({getCategoryCounts().affirmations})</span>
               </TabsTrigger>
             </TabsList>
 
-            {/* Search and Sort Controls */}
-            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-10 mt-8 bg-secondary/20 p-4 sm:p-5 rounded-lg border border-border/50">
-              <div className="flex-1 max-w-2xl">
+            {/* Search and Sort Controls - Inline & Minimal */}
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between mb-6 mt-4">
+              <div className="flex-1 max-w-xl">
                 <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
               </div>
               <div className="flex items-center gap-3">
@@ -328,6 +353,13 @@ const Shop = () => {
                   <SortFilter value={sortOption} onChange={setSortOption} />
                 </div>
               </div>
+            </div>
+
+            {/* Decorative Separator */}
+            <div className="flex items-center justify-center mb-8">
+              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent w-full max-w-md"></div>
+              <span className="mx-4 text-clay text-sm">✦</span>
+              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent w-full max-w-md"></div>
             </div>
 
           <AnimatePresence mode="wait">
