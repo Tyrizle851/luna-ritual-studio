@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ShoppingCart, Shirt, Flame, Pill, BookOpen, Sparkles } from "lucide-react";
+import { ExternalLink, ShoppingCart, Shirt, Flame, Pill, BookOpen, Sparkles, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -762,37 +762,105 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
-                    <div key={affirmation.id} className="group cursor-pointer relative">
-                      <WishlistButton productId={affirmation.id} />
-                      <div
-                    className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl"
-                    onClick={() => {
-                      setSelectedProduct(affirmation);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <img
-                      src={affirmation.image}
-                      alt={affirmation.title}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{affirmation.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(affirmation, "affirmation");
+                    <div 
+                      key={affirmation.id} 
+                      className="group relative cursor-pointer"
+                      onClick={() => {
+                        setSelectedProduct(affirmation);
+                        setIsModalOpen(true);
                       }}
                     >
-                      Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
-                    </Button>
+                      <WishlistButton productId={affirmation.id} />
+                      {affirmation.badge && (
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
+                          affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                          affirmation.badge === 'Staff Pick' ? 'bg-accent text-accent-foreground' :
+                          affirmation.badge === 'Most Popular' ? 'bg-primary text-primary-foreground' :
+                          'bg-secondary text-foreground'
+                        }`}>
+                          {affirmation.badge}
+                        </div>
+                      )}
+                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                        <img
+                          src={affirmation.image}
+                          alt={affirmation.title}
+                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
+                      <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
+                      
+                      {affirmation.rating && (
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
+                            ))}
+                          </div>
+                          <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
+                          {affirmation.reviewCount && (
+                            <span className="text-xs text-text-muted">
+                              ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount} reviews)
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      
+                      {affirmation.socialProof && (
+                        <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
+                      )}
+                      
+                      <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
+                      
+                      {affirmation.certifications && affirmation.certifications.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          {affirmation.certifications.slice(0, 3).map((cert, idx) => (
+                            <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
+                              {cert}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          {affirmation.originalPrice && (
+                            <>
+                              <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                              <span className="px-2 py-0.5 bg-foreground text-background text-xs font-semibold rounded">
+                                {Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}% OFF
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <span className="text-lg font-semibold text-text-primary">${affirmation.price}</span>
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProduct(affirmation);
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          Preview
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 bg-clay text-white hover:bg-clay/90 transition-all duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(affirmation, "affirmation");
+                          }}
+                        >
+                          Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
+                        </Button>
                       </div>
                     </div>
                   ))}
