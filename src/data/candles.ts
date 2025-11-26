@@ -40,6 +40,7 @@ export interface Candle {
   isPrime?: boolean;
   scentProfile?: string;
   features?: string[];
+  certifications?: string[]; // Quality badges like "Natural Soy", "Lead-Free Wick"
   productDetails?: {
     waxType: string;
     wickType: string;
@@ -88,7 +89,8 @@ export const candles: Candle[] = [
       "Set the mood for fall gatherings and holiday entertaining",
       "Gift for housewarming, holidays, or candle enthusiasts",
       "Layer with other woody scents for enhanced forest ambiance"
-    ]
+    ],
+    certifications: ["Made in USA", "Natural Wax"]
   },
   {
     id: "cnd-002",
@@ -125,7 +127,8 @@ export const candles: Candle[] = [
       "Perfect for aromatherapy and stress relief during bath time",
       "Gift for holidays, birthdays, or special occasions",
       "Enhance meditation or yoga practice with calming scent and sound"
-    ]
+    ],
+    certifications: ["Made in USA", "Wooden Wick"]
   },
   {
     id: "cnd-003",
@@ -163,7 +166,8 @@ export const candles: Candle[] = [
       "Perfect for Thanksgiving gatherings and holiday celebrations",
       "Create cozy ambiance around crackling fires with loved ones",
       "Gift for women, men, mom, friends, or coworkers for autumn occasions"
-    ]
+    ],
+    certifications: ["Natural Soy Wax", "Cotton Wick"]
   },
   {
     id: "cnd-004",

@@ -52,6 +52,7 @@ export interface FashionProduct {
   isPrime?: boolean;
   styleNotes?: string; // Editorial content about the style
   features?: string[]; // Quick bullet points
+  certifications?: string[]; // Quality badges like "Amazon's Choice", "100% Cotton"
   productDetails?: {
     fabric?: string;
     care?: string;
@@ -92,6 +93,7 @@ export const fashionProducts: FashionProduct[] = [
       "Comfortable for all-day wear",
       "#1 Best Seller in category"
     ],
+    certifications: ["#1 Best Seller", "Prime"],
     productDetails: {
       fabric: "Stretchy synthetic upper with block heel",
       care: "Wipe clean with soft cloth, store upright to maintain shape",
@@ -145,6 +147,7 @@ export const fashionProducts: FashionProduct[] = [
       "Available in 7+ versatile colors",
       "Perfect for layering"
     ],
+    certifications: ["#1 Best Seller", "Prime"],
     productDetails: {
       fabric: "Soft knit blend (specific composition varies by color)",
       care: "Hand wash cold, lay flat to dry",
@@ -197,6 +200,7 @@ export const fashionProducts: FashionProduct[] = [
       "Lightweight and breathable",
       "Easy care - machine washable"
     ],
+    certifications: ["Prime", "360+ bought"],
     productDetails: {
       fabric: "60% Polyester, 35% Rayon, 5% Spandex",
       care: "Machine wash cold, tumble dry low",
