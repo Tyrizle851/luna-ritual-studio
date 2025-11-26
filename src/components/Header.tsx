@@ -208,7 +208,7 @@ export const Header = () => {
             <SheetContent side="right" className="w-[300px] px-0">
               <nav className="flex flex-col mt-6">
                 {/* Search Bar in Mobile Menu */}
-                <div className="px-6 mb-6">
+                <div className="px-6 mb-4">
                   <SearchBar 
                     onSearch={handleSearch} 
                     placeholder="Search..." 
@@ -219,55 +219,55 @@ export const Header = () => {
 
                 <Link
                   to="/"
-                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
+                  className={`flex items-center gap-3 px-6 py-3.5 text-base transition-colors ${
                     isActive('/') 
                       ? 'text-clay font-medium bg-clay/5' 
                       : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Home className="h-5 w-5" />
+                  <Home className="h-5 w-5 flex-shrink-0" />
                   <span>Home</span>
                 </Link>
 
                 <Separator className="my-2" />
 
                 <div className="flex flex-col">
-                  <div className={`flex items-center gap-3 px-6 py-3 text-base font-medium ${isShopActive ? 'text-clay' : 'text-foreground'}`}>
-                    <ShoppingBag className="h-5 w-5" />
+                  <div className={`flex items-center gap-3 px-6 py-3.5 text-base font-medium ${isShopActive ? 'text-clay' : 'text-foreground'}`}>
+                    <ShoppingBag className="h-5 w-5 flex-shrink-0" />
                     <span>Shop</span>
                   </div>
                   <Link
                     to="/shop?tab=fashion"
-                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
+                    className="flex items-center px-6 py-3 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Fashion
                   </Link>
                   <Link
                     to="/shop?tab=candles"
-                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
+                    className="flex items-center px-6 py-3 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Candles
                   </Link>
                   <Link
                     to="/shop?tab=supplements"
-                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
+                    className="flex items-center px-6 py-3 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Supplements
                   </Link>
                   <Link
                     to="/shop?tab=books"
-                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
+                    className="flex items-center px-6 py-3 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Books
                   </Link>
                   <Link
                     to="/shop?tab=affirmations"
-                    className="flex items-center gap-3 px-6 py-2.5 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
+                    className="flex items-center px-6 py-3 pl-14 text-sm hover:text-clay transition-colors hover:bg-secondary/50"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Affirmations
@@ -278,29 +278,47 @@ export const Header = () => {
 
                 <Link
                   to="/journal"
-                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
+                  className={`flex items-center gap-3 px-6 py-3.5 text-base transition-colors ${
                     isActive('/journal') 
                       ? 'text-clay font-medium bg-clay/5' 
                       : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <BookOpen className="h-5 w-5" />
+                  <BookOpen className="h-5 w-5 flex-shrink-0" />
                   <span>Journal</span>
                 </Link>
 
                 <Separator className="my-2" />
 
                 <Link
+                  to="/affirmation-builder"
+                  className={`flex items-center gap-3 px-6 py-3.5 text-base transition-colors ${
+                    isActive('/affirmation-builder') 
+                      ? 'text-clay font-medium bg-clay/5' 
+                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Sparkles className="h-5 w-5 flex-shrink-0" />
+                  <span className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
+                    Studio
+                  </span>
+                </Link>
+
+                <Separator className="my-2" />
+
+                <Link
                   to="/about"
-                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
+                  className={`flex items-center gap-3 px-6 py-3.5 text-base transition-colors ${
                     isActive('/about') 
                       ? 'text-clay font-medium bg-clay/5' 
                       : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Info className="h-5 w-5" />
+                  <Info className="h-5 w-5 flex-shrink-0" />
                   <span>About</span>
                 </Link>
 
@@ -308,34 +326,15 @@ export const Header = () => {
 
                 <Link
                   to="/contact"
-                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
+                  className={`flex items-center gap-3 px-6 py-3.5 text-base transition-colors ${
                     isActive('/contact') 
                       ? 'text-clay font-medium bg-clay/5' 
                       : 'text-foreground hover:text-clay hover:bg-secondary/50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Mail className="h-5 w-5" />
+                  <Mail className="h-5 w-5 flex-shrink-0" />
                   <span>Contact</span>
-                </Link>
-
-                <Separator className="my-2" />
-
-                <Link
-                  to="/affirmation-builder"
-                  className={`flex items-center gap-3 px-6 py-3 text-base transition-colors ${
-                    isActive('/affirmation-builder') 
-                      ? 'text-clay font-medium bg-clay/5' 
-                      : 'text-foreground hover:text-clay hover:bg-secondary/50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Sparkles className="h-5 w-5" />
-                  <span className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 text-[10px] font-semibold bg-clay text-white rounded-full">NEW</span>
-                    Studio
-                  </span>
-                  <Sparkles className="h-5 w-5 ml-auto" />
                 </Link>
               </nav>
             </SheetContent>
