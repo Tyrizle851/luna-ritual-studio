@@ -824,30 +824,30 @@ const Shop = () => {
                         </div>
                       )}
                       
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           {affirmation.originalPrice && (
                             <>
                               <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
-                              <span className="px-2 py-0.5 bg-foreground text-background text-xs font-semibold rounded">
-                                {Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}% OFF
+                              <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
                               </span>
                             </>
                           )}
+                          <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
                         </div>
-                        <span className="text-lg font-semibold text-text-primary">${affirmation.price}</span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(affirmation, "affirmation");
+                          }}
+                        >
+                          Add to Cart
+                        </Button>
                       </div>
-                      
-                      <Button
-                        size="sm"
-                        className="w-full bg-clay text-white hover:bg-clay/90 transition-all duration-300"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAddToCart(affirmation, "affirmation");
-                        }}
-                      >
-                        Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
-                      </Button>
                     </div>
                   ))}
                 </div>
