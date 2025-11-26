@@ -489,7 +489,18 @@ const Shop = () => {
                     </div>
                   )}
                   
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{product.description}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
+                  
+                  {/* Certifications badges */}
+                  {product.certifications && product.certifications.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {product.certifications.slice(0, 2).map((cert, index) => (
+                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -581,7 +592,18 @@ const Shop = () => {
                     </div>
                   )}
                   
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{candle.description}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
+                  
+                  {/* Certifications badges */}
+                  {candle.certifications && candle.certifications.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {candle.certifications.slice(0, 2).map((cert, index) => (
+                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -673,9 +695,12 @@ const Shop = () => {
                     </div>
                   )}
                   
+                  <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
+                  <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
+                  
                   {/* Certifications badges */}
                   {supplement.certifications && supplement.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="flex flex-wrap gap-1.5 mb-4">
                       {supplement.certifications.slice(0, 2).map((cert, index) => (
                         <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                           {cert}
@@ -683,9 +708,6 @@ const Shop = () => {
                       ))}
                     </div>
                   )}
-                  
-                  <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
-                  <p className="text-xs text-text-muted mb-4">{supplement.servings}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {supplement.originalPrice && (
