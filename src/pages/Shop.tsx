@@ -477,7 +477,6 @@ const Shop = () => {
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{product.description}</p>
                   
                   {/* Rating if available */}
                   {product.rating && (
@@ -489,6 +488,8 @@ const Shop = () => {
                       )}
                     </div>
                   )}
+                  
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{product.description}</p>
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -568,7 +569,6 @@ const Shop = () => {
                   </div>
                   <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
                   <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{candle.description}</p>
                   
                   {/* Rating if available */}
                   {candle.rating && (
@@ -580,6 +580,8 @@ const Shop = () => {
                       )}
                     </div>
                   )}
+                  
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-2">{candle.description}</p>
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -662,12 +664,23 @@ const Shop = () => {
                   
                   {/* Rating if available */}
                   {supplement.rating && (
-                    <div className="flex items-center gap-1 mb-2 text-xs">
+                    <div className="flex items-center gap-1 mb-3 text-xs">
                       <span className="text-primary">★</span>
                       <span className="font-semibold">{supplement.rating}</span>
                       {supplement.reviewCount && (
                         <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
                       )}
+                    </div>
+                  )}
+                  
+                  {/* Certifications badges */}
+                  {supplement.certifications && supplement.certifications.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {supplement.certifications.slice(0, 2).map((cert, index) => (
+                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                          {cert}
+                        </span>
+                      ))}
                     </div>
                   )}
                   
