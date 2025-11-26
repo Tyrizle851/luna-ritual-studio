@@ -251,6 +251,7 @@ export const fashionProducts: FashionProduct[] = [
       "Compact yet spacious interior",
       "Lightweight and easy to carry"
     ],
+    certifications: ["Vegan Leather", "Lightweight"],
     productDetails: {
       fabric: "High-quality vegan leather with quilted detailing",
       care: "Wipe clean with damp cloth",
@@ -303,6 +304,7 @@ export const fashionProducts: FashionProduct[] = [
       "ISCC PLUS sustainability certified",
       "Soft and breathable fabric"
     ],
+    certifications: ["Silky Smooth", "Breathable"],
     productDetails: {
       fabric: "Premium satin polyester blend (softer than traditional silk)",
       care: "Machine washable - gentle cycle, hang or lay flat to dry",
@@ -352,6 +354,7 @@ export const fashionProducts: FashionProduct[] = [
       "Adjustable length",
       "Hypoallergenic and nickel-free"
     ],
+    certifications: ["Hypoallergenic", "Nickel-Free"],
     productDetails: {
       fabric: "14K gold plated brass with cubic zirconia stones",
       care: "Avoid water and chemicals, store in jewelry box when not wearing",
@@ -404,6 +407,7 @@ export const fashionProducts: FashionProduct[] = [
       "Flattering skinny leg fit",
       "Available in regular and plus sizes"
     ],
+    certifications: ["Stretchy Fit", "Soft Denim"],
     productDetails: {
       fabric: "76% Cotton, 22% Polyester, 2% Spandex",
       care: "Machine wash cold, tumble dry low",
@@ -455,6 +459,7 @@ export const fashionProducts: FashionProduct[] = [
       "Elastic waistband for comfort",
       "Breathable and lightweight"
     ],
+    certifications: ["Breathable Linen", "Lightweight"],
     productDetails: {
       fabric: "Cotton and linen blend",
       care: "Machine wash cold, tumble dry low or line dry",
@@ -507,6 +512,7 @@ export const fashionProducts: FashionProduct[] = [
       "Long sleeves with ribbed cuffs",
       "Perfect for layering"
     ],
+    certifications: ["Soft Knit", "OEKO-TEX Certified"],
     productDetails: {
       fabric: "Soft knit blend - OEKO-TEX certified safe",
       care: "Hand wash cold or gentle machine wash, lay flat to dry",
@@ -559,6 +565,7 @@ export const fashionProducts: FashionProduct[] = [
       "Compact size for essentials",
       "Western-boho inspired style"
     ],
+    certifications: ["Vegan Leather", "Adjustable Strap"],
     productDetails: {
       fabric: "Premium vegan leather (PU)",
       care: "Wipe clean with damp cloth, avoid harsh chemicals",
@@ -609,6 +616,7 @@ export const fashionProducts: FashionProduct[] = [
       "Perfect for sleep or style",
       "Neutral colors match everything"
     ],
+    certifications: ["Silky Satin", "Hair-Safe"],
     productDetails: {
       fabric: "High-quality satin polyester",
       care: "Hand wash cold, air dry flat",
@@ -660,6 +668,7 @@ export const fashionProducts: FashionProduct[] = [
       "Structured felt construction",
       "Unisex styling"
     ],
+    certifications: ["Wool Felt", "Adjustable Fit"],
     productDetails: {
       fabric: "Wool felt blend",
       care: "Spot clean only, reshape while damp if needed",
@@ -710,6 +719,7 @@ export const fashionProducts: FashionProduct[] = [
       "Available in multiple colors",
       "Unisex styling"
     ],
+    certifications: ["UV400 Protection", "Lightweight"],
     productDetails: {
       fabric: "Metal frame with polarized polycarbonate lenses",
       care: "Clean with microfiber cloth, store in protective case",
@@ -762,6 +772,7 @@ export const fashionProducts: FashionProduct[] = [
       "Versatile styling options",
       "Available in multiple colors"
     ],
+    certifications: ["Comfortable Fit", "Pull-On Design"],
     productDetails: {
       fabric: "Synthetic upper with durable sole",
       care: "Wipe clean with damp cloth, avoid excessive moisture",
@@ -814,6 +825,7 @@ export const fashionProducts: FashionProduct[] = [
       "Adjustable fit",
       "#1 Best Seller in category"
     ],
+    certifications: ["Premium Leather", "Adjustable"],
     productDetails: {
       fabric: "Premium PU leather with metal buckle",
       care: "Wipe clean with damp cloth, avoid prolonged moisture exposure",
@@ -866,6 +878,7 @@ export const fashionProducts: FashionProduct[] = [
       "Button closure",
       "Multiple color options"
     ],
+    certifications: ["Stretchy Denim", "High-Waisted"],
     productDetails: {
       fabric: "Stretch cotton denim blend",
       care: "Machine wash cold with like colors, tumble dry low",
@@ -918,6 +931,7 @@ export const fashionProducts: FashionProduct[] = [
       "Skinny fit silhouette",
       "All-day comfort"
     ],
+    certifications: ["Ultra-Stretchy", "Tummy Control"],
     productDetails: {
       fabric: "Stretchy denim-look polyester blend",
       care: "Machine wash cold, tumble dry low",
@@ -970,6 +984,7 @@ export const fashionProducts: FashionProduct[] = [
       "Versatile styling",
       "Casual comfort fit"
     ],
+    certifications: ["Soft Stretch", "Breathable"],
     productDetails: {
       fabric: "Soft stretch polyester blend",
       care: "Machine wash cold, tumble dry low",
@@ -1022,6 +1037,7 @@ export const fashionProducts: FashionProduct[] = [
       "Long sleeves with cuffs",
       "Perfect for layering"
     ],
+    certifications: ["Soft Flannel", "Oversized Fit"],
     productDetails: {
       fabric: "Soft brushed flannel polyester blend",
       care: "Machine wash cold, tumble dry low",
@@ -1074,6 +1090,7 @@ export const fashionProducts: FashionProduct[] = [
       "Soft knit construction",
       "Fashion-forward 2025 style"
     ],
+    certifications: ["Soft Knit", "OEKO-TEX Certified"],
     productDetails: {
       fabric: "Soft knit blend - OEKO-TEX certified safe",
       care: "Hand wash cold or gentle machine wash, lay flat to dry",
@@ -1124,6 +1141,7 @@ export const fashionProducts: FashionProduct[] = [
       "Stretchy comfortable fit",
       "Multiple color options"
     ],
+    certifications: ["Fleece Lined", "Stretchy Fit"],
     productDetails: {
       fabric: "Knit acrylic with fleece lining - OEKO-TEX certified",
       care: "Hand wash cold, reshape and air dry flat",
@@ -1175,6 +1193,7 @@ export const fashionProducts: FashionProduct[] = [
       "Long scarf for versatility",
       "Gift-ready presentation"
     ],
+    certifications: ["Fleece Lined", "Touchscreen Compatible"],
     productDetails: {
       fabric: "Soft knit with fleece lining",
       care: "Hand wash cold, lay flat to dry",
@@ -1227,6 +1246,7 @@ export const fashionProducts: FashionProduct[] = [
       "Down jacket insulation",
       "Windproof design"
     ],
+    certifications: ["Waterproof", "Fleece Lined"],
     productDetails: {
       fabric: "Waterproof polyester shell with fleece lining and down fill",
       care: "Machine wash cold gentle cycle, tumble dry low",
@@ -1277,6 +1297,7 @@ export const fashionProducts: FashionProduct[] = [
       "Lightweight huggie design",
       "Non-tarnish construction"
     ],
+    certifications: ["Hypoallergenic", "95% Recycled"],
     productDetails: {
       fabric: "14K gold plated brass with 95% recycled content",
       care: "Remove before water exposure, store in provided pouch",

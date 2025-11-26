@@ -201,6 +201,7 @@ export const candles: Candle[] = [
       jarType: "Reusable amber glass jars",
       madeIn: "Handcrafted"
     },
+    certifications: ["Natural Soy Wax", "100% Natural"],
     usageIdeas: [
       "Create cozy holiday home atmosphere in living room, bedroom, or bathroom",
       "Perfect for Christmas gifting to moms, sisters, teachers, coworkers, or friends",
@@ -239,6 +240,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Warm Spice", "Gourmand"],
     usageIdeas: [
       "Perfect for Thanksgiving dinner preparations and celebrations",
       "Create warm autumn ambiance for fall gatherings",
@@ -277,6 +279,7 @@ export const candles: Candle[] = [
       jarType: "Soft frosted glass jar",
       madeIn: "Designed and poured in USA"
     },
+    certifications: ["Herbal Notes", "Essential Oils"],
     usageIdeas: [
       "Create a peaceful meditation or yoga space",
       "Use during bath time for ultimate relaxation",
@@ -314,6 +317,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Warm Spice", "Holiday Blend"],
     usageIdeas: [
       "Create warm holiday ambiance for Christmas gatherings",
       "Perfect centerpiece for winter dinner parties",
@@ -352,6 +356,7 @@ export const candles: Candle[] = [
       jarType: "White ceramic jar with bamboo lid",
       madeIn: "Designed in USA"
     },
+    certifications: ["Fresh Floral", "Natural Soy"],
     usageIdeas: [
       "Perfect for meditation, yoga, and relaxation",
       "Use during evening bath time for spa-like experience",
@@ -389,6 +394,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Fruity Notes", "Warm Spice"],
     usageIdeas: [
       "Perfect for Thanksgiving dinner preparations and celebrations",
       "Create warm autumn ambiance for fall gatherings",
@@ -426,6 +432,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Sweet & Fruity", "Gourmand"],
     usageIdeas: [
       "Perfect for fall entertaining and dinner parties",
       "Create welcoming autumn ambiance in living spaces",
@@ -463,6 +470,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Earthy & Fresh", "Woody Notes"],
     usageIdeas: [
       "Perfect for creating outdoor-inspired ambiance indoors",
       "Ideal for nature lovers and autumn enthusiasts",
@@ -499,6 +507,7 @@ export const candles: Candle[] = [
       jarType: "Hourglass glass jar with wooden lid",
       madeIn: "Quality crafted"
     },
+    certifications: ["Gourmand", "Crackling Wick"],
     usageIdeas: [
       "Perfect for creating fireplace ambiance without a fireplace",
       "Ideal for cozy autumn and winter evenings",
@@ -535,6 +544,7 @@ export const candles: Candle[] = [
       jarType: "Large glass Papa jar with lid",
       madeIn: "Made in USA"
     },
+    certifications: ["Citrus & Spice", "Holiday Scent"],
     usageIdeas: [
       "Perfect centerpiece for holiday entertaining",
       "Ideal for large living rooms and open floor plans",
@@ -553,6 +563,7 @@ export const candles: Candle[] = [
     image: productCandleVillageSpicedPumpkin,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B002YX0GAA?tag=lunarituals10-20",
+    certifications: ["Warm Spice", "Gourmand"]
   },
   {
     id: "cnd-015",
@@ -583,6 +594,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar",
       madeIn: "Quality crafted"
     },
+    certifications: ["Woody & Cozy", "Lodge Scent"],
     usageIdeas: [
       "Perfect for creating cabin or lodge ambiance",
       "Ideal for cozy autumn and winter evenings",
@@ -619,6 +631,7 @@ export const candles: Candle[] = [
       jarType: "Large apothecary glass jar",
       madeIn: "Quality crafted in USA"
     },
+    certifications: ["Spiced Apple", "Holiday Warmth"],
     usageIdeas: [
       "Perfect for holiday entertaining and gatherings",
       "Creates festive autumn and winter atmosphere",
@@ -655,6 +668,7 @@ export const candles: Candle[] = [
       jarType: "Classic glass jar",
       madeIn: "Quality crafted"
     },
+    certifications: ["Fruity & Warm", "Classic Harvest"],
     usageIdeas: [
       "Perfect for Thanksgiving and fall celebrations",
       "Creates nostalgic atmosphere for family gatherings",
@@ -673,5 +687,6 @@ export const candles: Candle[] = [
     image: productCandleAutumnOrchards,
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B009D4ZW0M?tag=lunarituals10-20",
+    certifications: ["Sweet & Fruity", "Orchard Fresh"]
   },
 ];
