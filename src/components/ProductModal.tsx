@@ -82,7 +82,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               <div className="flex items-center gap-3 mb-4 pb-4 border-b">
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-gold text-gold" />
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
                 <span className="text-sm font-medium">{product.rating || 4.9}</span>
@@ -101,16 +101,16 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               {/* Price Section */}
               <div className="flex items-center gap-3 mb-6">
                 {product.originalPrice && (
-                  <span className="text-lg text-muted-foreground line-through">
-                    ${product.originalPrice}
-                  </span>
+                  <>
+                    <span className="text-xl text-muted-foreground line-through">
+                      ${product.originalPrice}
+                    </span>
+                    <span className="px-2 py-1 bg-foreground text-background text-sm font-semibold rounded">
+                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                    </span>
+                  </>
                 )}
-                <span className="text-3xl font-semibold">${product.price}</span>
-                {discount > 0 && (
-                  <span className="text-sm bg-destructive/10 text-destructive px-2 py-1 rounded font-medium">
-                    Save {discount}%
-                  </span>
-                )}
+                <span className="text-2xl md:text-3xl font-bold">${product.price}</span>
               </div>
 
               {/* Description */}
@@ -119,17 +119,34 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               </p>
 
               {/* Quick Benefits Box */}
+              <div className="bg-secondary/30 rounded-lg p-4 mb-6 border border-border">
+                <h3 className="font-semibold text-text-primary mb-2 uppercase tracking-wide text-sm">Why This Affirmation?</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  This carefully crafted affirmation combines powerful language with beautiful design to help you 
+                  manifest your intentions. Perfect for daily practice, meditation spaces, or as inspiring wall art.
+                </p>
+              </div>
+
+              {/* Features Grid */}
               {product.features && product.features.length > 0 && (
-                <div className="bg-muted/50 rounded-lg p-4 mb-6">
-                  <h3 className="font-semibold mb-3">Why This Affirmation</h3>
-                  <div className="grid gap-2">
-                    {product.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-text-secondary">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {product.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-2">
+                      <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-text-secondary">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Certifications Pills */}
+              {product.certifications && product.certifications.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {product.certifications.map((cert, idx) => (
+                    <span key={idx} className="px-3 py-1 bg-secondary/50 rounded-full text-xs text-text-muted border border-border">
+                      {cert}
+                    </span>
+                  ))}
                 </div>
               )}
 
@@ -148,73 +165,91 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 </RadioGroup>
               </div>
 
-              {/* Certifications Pills */}
-              {product.certifications && product.certifications.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {product.certifications.map((cert, idx) => (
-                    <span 
-                      key={idx}
-                      className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              )}
-
               {/* Accordion Sections */}
               <Accordion type="single" collapsible className="mb-6">
-                {product.productDetails && (
-                  <AccordionItem value="whats-included">
-                    <AccordionTrigger className="text-sm font-semibold">
-                      What's Included
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="space-y-2 text-sm text-text-secondary">
-                        {product.productDetails.resolution && (
-                          <p><strong>Resolution:</strong> {product.productDetails.resolution}</p>
-                        )}
-                        {product.productDetails.fileFormats && (
-                          <p><strong>File Formats:</strong> {product.productDetails.fileFormats}</p>
-                        )}
-                        {product.productDetails.aspectRatios && (
-                          <p><strong>Aspect Ratios:</strong> {product.productDetails.aspectRatios}</p>
-                        )}
-                        {product.productDetails.delivery && (
-                          <p><strong>Delivery:</strong> {product.productDetails.delivery}</p>
-                        )}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-
-                {product.usageIdeas && product.usageIdeas.length > 0 && (
-                  <AccordionItem value="how-to-use">
-                    <AccordionTrigger className="text-sm font-semibold">
-                      How to Use
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="space-y-2 text-sm text-text-secondary">
-                        {product.usageIdeas.map((idea, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-primary mt-0.5">•</span>
-                            {idea}
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-
-                <AccordionItem value="digital-delivery">
-                  <AccordionTrigger className="text-sm font-semibold">
-                    Digital Delivery & Licensing
+                <AccordionItem value="whats-included">
+                  <AccordionTrigger className="text-sm font-semibold hover:text-clay">
+                    <span className="flex items-center gap-2">
+                      <span>📦</span>
+                      <span>What's Included</span>
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-2 text-sm text-text-secondary">
-                      <p>After purchase, you'll receive instant access to download your affirmation files.</p>
-                      <p><strong>License:</strong> Personal use only. You may print for personal use but may not resell or redistribute.</p>
-                      <p><strong>No refunds:</strong> Due to the digital nature of this product, all sales are final.</p>
+                      {product.productDetails?.resolution && (
+                        <p><span className="font-medium text-text-primary">Resolution:</span> {product.productDetails.resolution}</p>
+                      )}
+                      {product.productDetails?.fileFormats && (
+                        <p><span className="font-medium text-text-primary">File Formats:</span> {product.productDetails.fileFormats}</p>
+                      )}
+                      {product.productDetails?.aspectRatios && (
+                        <p><span className="font-medium text-text-primary">Aspect Ratios:</span> {product.productDetails.aspectRatios}</p>
+                      )}
+                      {product.productDetails?.delivery && (
+                        <p><span className="font-medium text-text-primary">Delivery:</span> {product.productDetails.delivery}</p>
+                      )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="how-to-use">
+                  <AccordionTrigger className="text-sm font-semibold hover:text-clay">
+                    <span className="flex items-center gap-2">
+                      <span>✨</span>
+                      <span>How to Use</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    {product.usageIdeas && product.usageIdeas.length > 0 ? (
+                      <ul className="space-y-2 text-sm text-text-secondary">
+                        {product.usageIdeas.map((idea, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-clay mt-0.5">•</span>
+                            <span>{idea}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-text-secondary">
+                        Download the file, print at your preferred size, or use as a digital wallpaper. 
+                        Perfect for framing, vision boards, or daily affirmation practice.
+                      </p>
+                    )}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="digital-delivery">
+                  <AccordionTrigger className="text-sm font-semibold hover:text-clay">
+                    <span className="flex items-center gap-2">
+                      <span>📄</span>
+                      <span>Digital Delivery & Licensing</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 text-sm text-text-secondary">
+                      <p>
+                        Your digital files will be available for instant download after purchase. 
+                        You'll receive a download link via email and can access your files anytime from your account.
+                      </p>
+                      <p className="font-medium text-text-primary">Personal Use License:</p>
+                      <ul className="space-y-1 ml-4">
+                        <li className="flex items-start gap-2">
+                          <span className="text-clay">•</span>
+                          <span>Print for personal home decor</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-clay">•</span>
+                          <span>Use as phone or computer wallpapers</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-clay">•</span>
+                          <span>Include in personal vision boards</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-clay">•</span>
+                          <span>Share on personal social media (with credit)</span>
+                        </li>
+                      </ul>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
