@@ -500,16 +500,13 @@ const Shop = () => {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 flex flex-col items-center py-2 h-auto"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         window.open(product.affiliateUrl, '_blank');
                       }}
                     >
-                      <span className="flex items-center gap-1">
-                        Shop Now <ExternalLink className="w-3 h-3" />
-                      </span>
-                      <span className="text-[9px] opacity-60">via Amazon</span>
+                      Shop Now <ExternalLink className="w-3 h-3 ml-1" />
                     </Button>
                         </div>
                       </div>
@@ -589,16 +586,13 @@ const Shop = () => {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 flex flex-col items-center py-2 h-auto"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         window.open(candle.affiliateUrl, '_blank');
                       }}
                     >
-                      <span className="flex items-center gap-1">
-                        Shop Now <ExternalLink className="w-3 h-3" />
-                      </span>
-                      <span className="text-[9px] opacity-60">via Amazon</span>
+                      Shop Now <ExternalLink className="w-3 h-3 ml-1" />
                     </Button>
                       </div>
                     </div>
@@ -679,19 +673,14 @@ const Shop = () => {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 flex flex-col items-center py-2 h-auto"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
                       }}
                     >
                       {supplement.affiliateUrl ? (
-                        <>
-                          <span className="flex items-center gap-1">
-                            Shop Now <ExternalLink className="w-3 h-3" />
-                          </span>
-                          <span className="text-[9px] opacity-60">via Amazon</span>
-                        </>
+                        <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
                       ) : (
                         <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
                       )}
@@ -850,16 +839,13 @@ const Shop = () => {
                         <Button
                           size="sm"
                           variant="outline"
-                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 flex flex-col items-center py-2 h-auto"
+                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             window.open(book.affiliateUrl, '_blank');
                           }}
                         >
-                          <span className="flex items-center gap-1">
-                            Shop Now <ExternalLink className="w-3 h-3" />
-                          </span>
-                          <span className="text-[9px] opacity-60">via Amazon</span>
+                          Shop Now <ExternalLink className="w-3 h-3 ml-1" />
                         </Button>
                       </div>
                     </div>
