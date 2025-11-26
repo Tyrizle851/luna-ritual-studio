@@ -291,10 +291,10 @@ const Shop = () => {
 
           {/* Tab Navigation with Counts */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="flex w-full max-w-3xl mx-auto mb-6 h-auto gap-1 bg-transparent justify-center flex-wrap">
+            <TabsList className="flex w-full max-w-4xl mx-auto mb-6 h-auto gap-2 bg-transparent justify-center flex-wrap px-4">
               <TabsTrigger 
                 value="fashion" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
+                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
               >
                 <Shirt className="h-4 w-4" />
                 <span className="font-medium">Fashion</span>
@@ -302,7 +302,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="candles" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
+                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
               >
                 <Flame className="h-4 w-4" />
                 <span className="font-medium">Candles</span>
@@ -310,7 +310,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="supplements" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
+                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
               >
                 <Pill className="h-4 w-4" />
                 <span className="font-medium">Supplements</span>
@@ -318,7 +318,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="books" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
+                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
               >
                 <BookOpen className="h-4 w-4" />
                 <span className="font-medium">Books</span>
@@ -326,7 +326,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="affirmations" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
+                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
               >
                 <Sparkles className="h-4 w-4" />
                 <span className="font-medium">Affirmations</span>
