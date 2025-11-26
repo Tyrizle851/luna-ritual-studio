@@ -250,12 +250,12 @@ const Shop = () => {
           ]} />
           
           {/* Hero Section */}
-          <div className="text-center mb-12 sm:mb-16 mt-8">
+          <div className="text-center mb-8 sm:mb-10 mt-4">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display tracking-tight"
+              className="mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display tracking-tight"
             >
               Shop Collection
             </motion.h1>
