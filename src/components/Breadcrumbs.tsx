@@ -12,7 +12,7 @@ interface BreadcrumbsProps {
 
 export const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
-    <nav className="flex items-center gap-2 text-sm text-text-muted mb-6" aria-label="Breadcrumb">
+    <nav className="flex items-center gap-2 text-sm text-text-muted mb-4" aria-label="Breadcrumb">
       <Link to="/" className="hover:text-clay transition-colors flex items-center gap-1">
         <Home className="h-3.5 w-3.5" />
         <span className="sr-only">Home</span>
