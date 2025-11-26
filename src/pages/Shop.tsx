@@ -294,7 +294,7 @@ const Shop = () => {
             <TabsList className="flex w-full max-w-3xl mx-auto mb-6 h-auto gap-1 bg-transparent justify-center flex-wrap">
               <TabsTrigger 
                 value="fashion" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
               >
                 <Shirt className="h-4 w-4" />
                 <span className="font-medium">Fashion</span>
@@ -302,7 +302,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="candles" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
               >
                 <Flame className="h-4 w-4" />
                 <span className="font-medium">Candles</span>
@@ -310,7 +310,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="supplements" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
               >
                 <Pill className="h-4 w-4" />
                 <span className="font-medium">Supplements</span>
@@ -318,7 +318,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="books" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
               >
                 <BookOpen className="h-4 w-4" />
                 <span className="font-medium">Books</span>
@@ -326,7 +326,7 @@ const Shop = () => {
               </TabsTrigger>
               <TabsTrigger 
                 value="affirmations" 
-                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200"
+                className="relative flex items-center gap-2 text-sm px-4 py-2.5 rounded-md bg-transparent border-b-2 border-transparent data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-all duration-200 hover:bg-secondary/30 hover:border-clay/40"
               >
                 <Sparkles className="h-4 w-4" />
                 <span className="font-medium">Affirmations</span>
