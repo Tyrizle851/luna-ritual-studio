@@ -205,7 +205,7 @@ export const Header = () => {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] px-0">
+            <SheetContent side="right" className="w-[300px] px-0 overflow-y-auto">
               <nav className="flex flex-col mt-6">
                 {/* Search Bar in Mobile Menu */}
                 <div className="px-6 mb-4">
