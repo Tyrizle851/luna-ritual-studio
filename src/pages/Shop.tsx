@@ -493,7 +493,12 @@ const Shop = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {product.originalPrice && (
-                        <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                        <>
+                          <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                          </span>
+                        </>
                       )}
                       <span className="text-base font-semibold text-text-primary">${product.price}</span>
                     </div>
@@ -579,7 +584,12 @@ const Shop = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {candle.originalPrice && (
-                        <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                        <>
+                          <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                            -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
+                          </span>
+                        </>
                       )}
                       <span className="text-base font-semibold text-text-primary">${candle.price}</span>
                     </div>
@@ -666,7 +676,12 @@ const Shop = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {supplement.originalPrice && (
-                        <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                        <>
+                          <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                            -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
+                          </span>
+                        </>
                       )}
                       <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
                     </div>
