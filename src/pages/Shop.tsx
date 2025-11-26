@@ -291,48 +291,50 @@ const Shop = () => {
 
           {/* Tab Navigation with Counts */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-auto mx-auto mb-6">
-              <TabsTrigger 
-                value="fashion" 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-              >
-                <Shirt className="h-4 w-4" />
-                <span>Fashion</span>
-                <span className="text-xs opacity-60">({getCategoryCounts().fashion})</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="candles" 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-              >
-                <Flame className="h-4 w-4" />
-                <span>Candles</span>
-                <span className="text-xs opacity-60">({getCategoryCounts().candles})</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="supplements" 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-              >
-                <Pill className="h-4 w-4" />
-                <span>Supplements</span>
-                <span className="text-xs opacity-60">({getCategoryCounts().supplements})</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="books" 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-              >
-                <BookOpen className="h-4 w-4" />
-                <span>Books</span>
-                <span className="text-xs opacity-60">({getCategoryCounts().books})</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="affirmations" 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-              >
-                <Sparkles className="h-4 w-4" />
-                <span>Affirmations</span>
-                <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex justify-center w-full mb-6">
+              <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full sm:w-auto overflow-x-auto">
+                <TabsTrigger 
+                  value="fashion" 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-3 sm:px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-shrink-0"
+                >
+                  <Shirt className="h-4 w-4" />
+                  <span className="hidden sm:inline">Fashion</span>
+                  <span className="text-xs opacity-60">({getCategoryCounts().fashion})</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="candles" 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-3 sm:px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-shrink-0"
+                >
+                  <Flame className="h-4 w-4" />
+                  <span className="hidden sm:inline">Candles</span>
+                  <span className="text-xs opacity-60">({getCategoryCounts().candles})</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="supplements" 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-3 sm:px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-shrink-0"
+                >
+                  <Pill className="h-4 w-4" />
+                  <span className="hidden sm:inline">Supplements</span>
+                  <span className="text-xs opacity-60">({getCategoryCounts().supplements})</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="books" 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-3 sm:px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-shrink-0"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span className="hidden sm:inline">Books</span>
+                  <span className="text-xs opacity-60">({getCategoryCounts().books})</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="affirmations" 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-3 sm:px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-shrink-0"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span className="hidden sm:inline">Affirmations</span>
+                  <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             {/* Search and Sort Controls - Inline & Minimal */}
             <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between mb-6 mt-4">
