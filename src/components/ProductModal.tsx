@@ -2,13 +2,12 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Affirmation } from "@/data/affirmations";
 import { useCartStore } from "@/store/cartStore";
 import { generateAffirmationSchema } from "@/lib/seoUtils";
-import { Star, Check } from "lucide-react";
+import { Star, Check, Package, Sparkles, FileText } from "lucide-react";
 
 interface ProductModalProps {
   product: Affirmation | null;
@@ -153,16 +152,18 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               {/* Format Selector */}
               <div className="mb-6">
                 <h3 className="font-semibold mb-3">Select Format</h3>
-                <RadioGroup value={selectedFormat} onValueChange={setSelectedFormat}>
-                  {product.formats.map((format) => (
-                    <div key={format} className="flex items-center space-x-2 mb-2">
-                      <RadioGroupItem value={format} id={format} />
-                      <Label htmlFor={format} className="cursor-pointer">
+                <Select value={selectedFormat} onValueChange={setSelectedFormat}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Choose a format or print size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {product.formats.map((format) => (
+                      <SelectItem key={format} value={format}>
                         {format}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Accordion Sections */}
@@ -170,7 +171,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 <AccordionItem value="whats-included">
                   <AccordionTrigger className="text-sm font-semibold hover:text-clay">
                     <span className="flex items-center gap-2">
-                      <span>📦</span>
+                      <Package className="h-4 w-4" />
                       <span>What's Included</span>
                     </span>
                   </AccordionTrigger>
@@ -195,7 +196,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 <AccordionItem value="how-to-use">
                   <AccordionTrigger className="text-sm font-semibold hover:text-clay">
                     <span className="flex items-center gap-2">
-                      <span>✨</span>
+                      <Sparkles className="h-4 w-4" />
                       <span>How to Use</span>
                     </span>
                   </AccordionTrigger>
@@ -221,7 +222,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 <AccordionItem value="digital-delivery">
                   <AccordionTrigger className="text-sm font-semibold hover:text-clay">
                     <span className="flex items-center gap-2">
-                      <span>📄</span>
+                      <FileText className="h-4 w-4" />
                       <span>Digital Delivery & Licensing</span>
                     </span>
                   </AccordionTrigger>

@@ -838,30 +838,16 @@ const Shop = () => {
                         <span className="text-lg font-semibold text-text-primary">${affirmation.price}</span>
                       </div>
                       
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1 border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProduct(affirmation);
-                            setIsModalOpen(true);
-                          }}
-                        >
-                          Preview
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="flex-1 bg-clay text-white hover:bg-clay/90 transition-all duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(affirmation, "affirmation");
-                          }}
-                        >
-                          Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
-                        </Button>
-                      </div>
+                      <Button
+                        size="sm"
+                        className="w-full bg-clay text-white hover:bg-clay/90 transition-all duration-300"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(affirmation, "affirmation");
+                        }}
+                      >
+                        Add to Cart <ShoppingCart className="ml-1 h-3 w-3" />
+                      </Button>
                     </div>
                   ))}
                 </div>
