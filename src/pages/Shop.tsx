@@ -291,46 +291,46 @@ const Shop = () => {
 
           {/* Tab Navigation with Counts */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="flex w-full max-w-4xl mx-auto mb-6 h-auto gap-2 bg-transparent justify-center flex-wrap px-4">
+            <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-auto mx-auto mb-6">
               <TabsTrigger 
                 value="fashion" 
-                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 <Shirt className="h-4 w-4" />
-                <span className="font-medium">Fashion</span>
-                <span className="text-xs text-text-muted">({getCategoryCounts().fashion})</span>
+                <span>Fashion</span>
+                <span className="text-xs opacity-60">({getCategoryCounts().fashion})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="candles" 
-                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 <Flame className="h-4 w-4" />
-                <span className="font-medium">Candles</span>
-                <span className="text-xs text-text-muted">({getCategoryCounts().candles})</span>
+                <span>Candles</span>
+                <span className="text-xs opacity-60">({getCategoryCounts().candles})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="supplements" 
-                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 <Pill className="h-4 w-4" />
-                <span className="font-medium">Supplements</span>
-                <span className="text-xs text-text-muted">({getCategoryCounts().supplements})</span>
+                <span>Supplements</span>
+                <span className="text-xs opacity-60">({getCategoryCounts().supplements})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="books" 
-                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 <BookOpen className="h-4 w-4" />
-                <span className="font-medium">Books</span>
-                <span className="text-xs text-text-muted">({getCategoryCounts().books})</span>
+                <span>Books</span>
+                <span className="text-xs opacity-60">({getCategoryCounts().books})</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="affirmations" 
-                className="relative flex items-center justify-center gap-2 text-sm px-4 py-3 rounded-lg bg-secondary/40 border border-border/50 data-[state=active]:border-clay data-[state=active]:bg-clay/10 data-[state=active]:shadow-sm transition-all duration-200 hover:bg-secondary/60 hover:border-clay/60 flex-1 sm:flex-initial min-w-[140px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 <Sparkles className="h-4 w-4" />
-                <span className="font-medium">Affirmations</span>
-                <span className="text-xs text-text-muted">({getCategoryCounts().affirmations})</span>
+                <span>Affirmations</span>
+                <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
               </TabsTrigger>
             </TabsList>
 
