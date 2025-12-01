@@ -23,10 +23,30 @@ const Index = () => {
       originalPrice: 15.99,
       image: affirmationRest, 
       description: "Permission to pause and honor your need for restoration without guilt",
+      category: "Rest" as const,
       rating: 4.9,
       reviewCount: 2847,
+      socialProof: "2.8K+ sold",
       badge: "Best Seller",
-      certifications: ["Instant Download", "High Resolution"]
+      certifications: ["Instant Download", "High Resolution"],
+      formats: ["Phone Wallpaper", "Desktop Wallpaper", "5x7", "8x10", "11x14", "16x20", "18x24", "24x36"],
+      tags: ["rest", "self-care", "restoration"],
+      features: [
+        "Instant digital download - no waiting",
+        "Print at home or use your favorite print service",
+        "High-resolution files optimized for crisp prints",
+        "Works on any device - phone, tablet, desktop"
+      ],
+      productDetails: {
+        fileTypes: "JPG, PNG",
+        resolution: "4000x5000px (300 DPI)",
+        license: "Personal use only"
+      },
+      usageIdeas: [
+        "Morning meditation companion",
+        "Bedtime affirmation ritual",
+        "Desk reminder for busy days"
+      ]
     },
     { 
       id: "aff-002", 
@@ -35,10 +55,30 @@ const Index = () => {
       originalPrice: 14.99,
       image: affirmationIntuition, 
       description: "Listen to the quiet voice within that already knows the way forward",
+      category: "Self-Love" as const,
       rating: 4.8,
       reviewCount: 2134,
+      socialProof: "2.1K+ sold",
       badge: "Staff Pick",
-      certifications: ["Instant Download", "Print Ready"]
+      certifications: ["Instant Download", "Print Ready"],
+      formats: ["Phone Wallpaper", "Desktop Wallpaper", "5x7", "8x10", "11x14", "16x20", "18x24", "24x36"],
+      tags: ["intuition", "wisdom", "trust"],
+      features: [
+        "Instant digital download - no waiting",
+        "Print at home or use your favorite print service",
+        "High-resolution files optimized for crisp prints",
+        "Works on any device - phone, tablet, desktop"
+      ],
+      productDetails: {
+        fileTypes: "JPG, PNG",
+        resolution: "4000x5000px (300 DPI)",
+        license: "Personal use only"
+      },
+      usageIdeas: [
+        "Decision-making ritual",
+        "Meditation space focal point",
+        "Daily reminder to trust yourself"
+      ]
     },
     { 
       id: "aff-003", 
@@ -47,9 +87,29 @@ const Index = () => {
       originalPrice: 17.99,
       image: affirmationDreams, 
       description: "Manifest with intention and build the beautiful life you envision",
+      category: "Strength" as const,
       rating: 4.9,
       reviewCount: 3201,
-      certifications: ["Instant Download", "Multiple Formats"]
+      socialProof: "3.2K+ sold",
+      certifications: ["Instant Download", "Multiple Formats"],
+      formats: ["Phone Wallpaper", "Desktop Wallpaper", "5x7", "8x10", "11x14", "16x20", "18x24", "24x36"],
+      tags: ["manifestation", "dreams", "creation"],
+      features: [
+        "Instant digital download - no waiting",
+        "Print at home or use your favorite print service",
+        "High-resolution files optimized for crisp prints",
+        "Works on any device - phone, tablet, desktop"
+      ],
+      productDetails: {
+        fileTypes: "JPG, PNG",
+        resolution: "4000x5000px (300 DPI)",
+        license: "Personal use only"
+      },
+      usageIdeas: [
+        "Vision board centerpiece",
+        "Morning manifestation ritual",
+        "Workspace inspiration"
+      ]
     },
     { 
       id: "aff-004", 
@@ -58,9 +118,29 @@ const Index = () => {
       originalPrice: 13.99,
       image: affirmationRelease, 
       description: "Let go with grace and make space for what truly nourishes your soul",
+      category: "Self-Love" as const,
       rating: 4.7,
       reviewCount: 1892,
-      certifications: ["Instant Download", "High Resolution"]
+      socialProof: "1.9K+ sold",
+      certifications: ["Instant Download", "High Resolution"],
+      formats: ["Phone Wallpaper", "Desktop Wallpaper", "5x7", "8x10", "11x14", "16x20", "18x24", "24x36"],
+      tags: ["release", "letting-go", "renewal"],
+      features: [
+        "Instant digital download - no waiting",
+        "Print at home or use your favorite print service",
+        "High-resolution files optimized for crisp prints",
+        "Works on any device - phone, tablet, desktop"
+      ],
+      productDetails: {
+        fileTypes: "JPG, PNG",
+        resolution: "4000x5000px (300 DPI)",
+        license: "Personal use only"
+      },
+      usageIdeas: [
+        "New moon ritual companion",
+        "Letting go meditation",
+        "Fresh start reminder"
+      ]
     },
   ];
 
