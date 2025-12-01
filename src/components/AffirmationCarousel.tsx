@@ -3,20 +3,9 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { WishlistButton } from "@/components/WishlistButton";
+import { ProductModal } from "@/components/ProductModal";
 import { toast } from "sonner";
-
-interface Affirmation {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  description?: string;
-  rating?: number;
-  reviewCount?: number;
-  originalPrice?: number;
-  badge?: string;
-  certifications?: string[];
-}
+import { Affirmation } from "@/data/affirmations";
 
 interface AffirmationCarouselProps {
   affirmations: Affirmation[];
@@ -26,6 +15,8 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
   const [scrollPosition, setScrollPosition] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Affirmation | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { addItem } = useCartStore();
   
@@ -115,7 +106,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
             className="flex-none w-[260px] sm:w-[280px] md:w-[320px] group animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="relative">
+            <div className="relative flex flex-col h-full">
               <WishlistButton productId={affirmation.id} />
               
               {affirmation.badge && (
@@ -124,7 +115,13 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
                 </div>
               )}
               
-              <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary cursor-pointer">
+              <div 
+                className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary cursor-pointer"
+                onClick={() => {
+                  setSelectedProduct(affirmation);
+                  setModalOpen(true);
+                }}
+              >
                 <img
                   src={affirmation.image}
                   alt={affirmation.title}
@@ -132,59 +129,65 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
                 />
               </div>
               
-              {affirmation.rating && (
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                  ))}
-                  <span className="text-xs text-text-muted ml-1">
-                    ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K reviews
+              <div className="flex-grow">
+                {affirmation.rating && (
+                  <div className="flex items-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                    ))}
+                    <span className="text-xs text-text-muted ml-1">
+                      ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K reviews
+                    </span>
+                  </div>
+                )}
+                
+                {affirmation.socialProof && (
+                  <span className="text-xs text-text-muted mb-2 block">{affirmation.socialProof}</span>
+                )}
+                
+                {affirmation.category && (
+                  <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
+                    {affirmation.category}
                   </span>
-                </div>
-              )}
-              
-              <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-              
-              {affirmation.description && (
-                <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
-              )}
-              
-              {affirmation.certifications && affirmation.certifications.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {affirmation.certifications.map((cert, idx) => (
-                    <span key={idx} className="text-xs px-2 py-0.5 rounded-full bg-muted text-text-secondary">
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 flex-wrap">
-                  {affirmation.originalPrice && (
-                    <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
-                  )}
-                  <span className="font-semibold">${affirmation.price.toFixed(2)}</span>
-                  {affirmation.originalPrice && (
-                    <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
-                      -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
-                    </span>
-                  )}
-                </div>
+                )}
+                
+                <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+                
+                {affirmation.description && (
+                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}...</p>
+                )}
+                
+                {affirmation.certifications && affirmation.certifications.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {affirmation.certifications.map((cert, idx) => (
+                      <span key={idx} className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+                        {cert}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
               
-              <div className="flex gap-2 mt-3">
+              <div className="flex items-center justify-between mt-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {affirmation.originalPrice && (
+                    <>
+                      <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
+                      </span>
+                    </>
+                  )}
+                  <span className="font-semibold">${affirmation.price.toFixed(2)}</span>
+                </div>
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="flex-1 border-clay text-clay hover:bg-clay/10"
-                >
-                  Preview
-                </Button>
-                <Button 
-                  size="sm" 
-                  className="flex-1 bg-clay hover:bg-clay-dark text-white"
-                  onClick={() => handleAddToCart(affirmation)}
+                  className="border-clay text-clay hover:bg-clay/10"
+                  onClick={() => {
+                    setSelectedProduct(affirmation);
+                    setModalOpen(true);
+                  }}
                 >
                   Add to Cart
                 </Button>
@@ -255,6 +258,14 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
           <ChevronRight className="h-5 w-5" />
         </Button>
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+        />
+      )}
     </div>
   );
 };
