@@ -68,14 +68,14 @@ const Index = () => {
             Digital art and curated goods for intentional living
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-[26px] justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             {/* Primary CTA */}
-            <Button asChild className="h-[37px] px-7 bg-[#A97E63] hover:bg-[#986F5A] text-white font-semibold rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.18)] hover:-translate-y-0.5 transition-all duration-300">
+            <Button asChild className="h-[37px] px-8 bg-[#A97E63] hover:bg-[#8B6950] text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
             
             {/* Secondary CTA */}
-            <Button asChild variant="outline" className="h-[37px] px-7 border border-white/70 bg-transparent text-white font-medium rounded-md hover:bg-[#E6D6C9]/35 transition-all duration-300">
+            <Button asChild variant="outline" className="h-[37px] px-8 border border-white/80 bg-white/5 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/15 hover:border-white transition-all duration-300 ease-out">
               <Link to="/affirmation-builder">Create Your Own</Link>
             </Button>
           </div>
@@ -100,25 +100,33 @@ const Index = () => {
       {/* Affirmation Builder Section - Moved Below Hero */}
       <section className="pt-24 pb-16 sm:pt-28 sm:pb-20 bg-gradient-to-b from-[#FAF7F4] to-[#F7F3EF]">
         <div className="container-custom max-w-3xl">
-          <div className="flex flex-col items-center gap-2 p-4 sm:p-5 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto" style={{ 
-            boxShadow: '0 12px 26px rgba(0,0,0,0.07)',
-            maxWidth: '520px'
-          }}>
-            <div className="flex items-center gap-2">
-              <Sprout className="h-3.5 w-3.5 text-[#A97E63]/70" />
-              <span className="text-[10px] text-[#A97E63]/70 font-medium uppercase tracking-wide">Create Your Own</span>
-              <Wand2 className="h-3.5 w-3.5 text-[#A97E63]/70" />
-            </div>
-            <Link 
-              to="/affirmation-builder" 
-              className="text-lg sm:text-xl font-display text-[#8B6B54] font-semibold hover:text-[#A97E63] transition-colors group text-center"
-            >
-              <span className="relative">
+          {/* Section Header Above */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-display text-[#8B6B54] font-semibold mb-3">Design Something Personal</h2>
+            <p className="text-base text-[#8B6B54]/70 max-w-xl mx-auto">Create custom affirmations that resonate with your unique journey and intentions</p>
+          </div>
+
+          {/* Builder Card */}
+          <Link to="/affirmation-builder" className="block">
+            <div className="flex flex-col items-center gap-2 p-5 sm:p-6 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto hover:border-[#A97E63]/40 transition-all duration-300 hover:shadow-[0_16px_32px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 group" style={{ 
+              boxShadow: '0 12px 26px rgba(0,0,0,0.07)',
+              maxWidth: '520px'
+            }}>
+              <div className="flex items-center gap-2">
+                <Sprout className="h-3.5 w-3.5 text-[#A97E63]/70 group-hover:text-[#A97E63] transition-colors" />
+                <span className="text-[10px] text-[#A97E63]/70 font-medium uppercase tracking-wide group-hover:text-[#A97E63] transition-colors">Create Your Own</span>
+                <Wand2 className="h-3.5 w-3.5 text-[#A97E63]/70 group-hover:text-[#A97E63] transition-colors" />
+              </div>
+              <span className="text-lg sm:text-xl font-display text-[#8B6B54] font-semibold group-hover:text-[#A97E63] transition-colors text-center">
                 Custom Affirmation Builder
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#A97E63] transition-all duration-300 group-hover:w-full"></span>
               </span>
-            </Link>
-            <p className="text-sm text-[#8B6B54]/75 max-w-md font-normal text-center">Design personalized affirmations tailored to your journey</p>
+              <p className="text-sm text-[#8B6B54]/75 max-w-md font-normal text-center">Design personalized affirmations tailored to your journey</p>
+            </div>
+          </Link>
+
+          {/* Reinforcing Statement Below */}
+          <div className="text-center mt-8">
+            <p className="text-sm text-[#8B6B54]/60 font-normal">Join thousands creating meaningful affirmations that inspire daily intention</p>
           </div>
         </div>
       </section>
