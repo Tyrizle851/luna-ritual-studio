@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
+import { WishlistButton } from "@/components/WishlistButton";
 import { toast } from "sonner";
 
 interface Affirmation {
@@ -10,6 +11,11 @@ interface Affirmation {
   price: number;
   image: string;
   description?: string;
+  rating?: number;
+  reviewCount?: number;
+  originalPrice?: number;
+  badge?: string;
+  certifications?: string[];
 }
 
 interface AffirmationCarouselProps {
@@ -109,27 +115,80 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
             className="flex-none w-[260px] sm:w-[280px] md:w-[320px] group animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary shadow-md transition-all duration-300 group-hover:shadow-2xl">
-              <img
-                src={affirmation.image}
-                alt={affirmation.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <h3 className="font-display text-lg sm:text-xl mb-2 leading-tight">{affirmation.title}</h3>
-            {affirmation.description && (
-              <p className="text-sm text-text-secondary italic mb-3">{affirmation.description}</p>
-            )}
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-lg">${affirmation.price}</span>
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                onClick={() => handleAddToCart(affirmation)}
-              >
-                Add <ShoppingCart className="ml-1 h-3 w-3" />
-              </Button>
+            <div className="relative">
+              <WishlistButton productId={affirmation.id} />
+              
+              {affirmation.badge && (
+                <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
+                  {affirmation.badge}
+                </div>
+              )}
+              
+              <div className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary cursor-pointer">
+                <img
+                  src={affirmation.image}
+                  alt={affirmation.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              
+              {affirmation.rating && (
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                  ))}
+                  <span className="text-xs text-text-muted ml-1">
+                    ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K reviews
+                  </span>
+                </div>
+              )}
+              
+              <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+              
+              {affirmation.description && (
+                <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+              )}
+              
+              {affirmation.certifications && affirmation.certifications.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {affirmation.certifications.map((cert, idx) => (
+                    <span key={idx} className="text-xs px-2 py-0.5 rounded-full bg-muted text-text-secondary">
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {affirmation.originalPrice && (
+                    <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
+                  )}
+                  <span className="font-semibold">${affirmation.price.toFixed(2)}</span>
+                  {affirmation.originalPrice && (
+                    <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
+                      -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
+                    </span>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex gap-2 mt-3">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="flex-1 border-clay text-clay hover:bg-clay/10"
+                >
+                  Preview
+                </Button>
+                <Button 
+                  size="sm" 
+                  className="flex-1 bg-clay hover:bg-clay-dark text-white"
+                  onClick={() => handleAddToCart(affirmation)}
+                >
+                  Add to Cart
+                </Button>
+              </div>
             </div>
           </div>
         ))}
