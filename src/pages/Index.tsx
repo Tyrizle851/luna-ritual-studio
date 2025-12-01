@@ -52,24 +52,25 @@ const Index = () => {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards] brightness-[0.4] blur-[2px]"
-          style={{ filter: 'brightness(0.4) blur(2px)' }}
+          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards] brightness-[0.75] blur-[2px]"
+          style={{ filter: 'brightness(0.75) blur(2px)' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        {/* Strong light overlay for dark text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F4ECE4]/95 via-[#F4ECE4]/85 to-[#F4ECE4]/75" />
+        {/* Vertical gradient: #F4ECE4 at 15-20% opacity fading to transparent by 40% */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F4ECE4]/[0.18] via-transparent to-transparent" style={{ backgroundSize: '100% 40%', backgroundRepeat: 'no-repeat' }} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
         <div className="relative z-10 container-custom max-w-4xl px-4">
-          <h1 className="mb-10 text-balance text-foreground font-normal tracking-tight">
+          <h1 className="mb-10 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
             Affirmations for women building calm, beautiful lives
           </h1>
-          <p className="text-xl md:text-2xl mb-14 text-balance text-text-secondary font-normal">
+          <p className="text-xl md:text-2xl mb-14 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] font-normal" style={{ fontWeight: 400 }}>
             Digital art and curated goods for intentional living
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             {/* Primary CTA */}
-            <Button asChild className="h-[37px] px-8 bg-clay hover:bg-clay-dark text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <Button asChild className="h-[37px] px-8 bg-[#A97E63] hover:bg-[#8B6950] text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <Link to="/shop?tab=affirmations" className="inline-flex items-center gap-2">
                 <Sparkles className="h-4 w-4" />
                 Shop Affirmations
@@ -77,7 +78,7 @@ const Index = () => {
             </Button>
             
             {/* Secondary CTA */}
-            <Button asChild variant="outline" className="h-[37px] px-8 border-2 border-clay bg-transparent text-clay hover:bg-clay hover:text-white font-medium rounded-md transition-all duration-300 ease-out">
+            <Button asChild variant="outline" className="h-[37px] px-8 border border-white/80 bg-white/5 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/15 hover:border-white transition-all duration-300 ease-out">
               <Link to="/affirmation-builder" className="inline-flex items-center gap-2">
                 <Moon className="h-4 w-4" />
                 Create Your Own
@@ -89,12 +90,12 @@ const Index = () => {
           <div className="mt-10">
             <Link 
               to="/journal" 
-              className="inline-flex items-center gap-2 text-text-secondary hover:text-foreground text-base group transition-colors"
+              className="inline-flex items-center gap-2 text-white/85 hover:text-white text-base group transition-colors drop-shadow-sm"
               style={{ fontWeight: 400 }}
             >
               <span className="relative">
                 Explore the Journal
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-clay transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
