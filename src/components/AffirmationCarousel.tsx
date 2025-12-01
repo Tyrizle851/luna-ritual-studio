@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/cartStore";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductModal } from "@/components/ProductModal";
+import { toast } from "sonner";
 import { Affirmation } from "@/data/affirmations";
 
 interface AffirmationCarouselProps {
@@ -16,6 +18,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
   const [selectedProduct, setSelectedProduct] = useState<Affirmation | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCartStore();
   
   const updateScrollButtons = () => {
     const container = containerRef.current;
@@ -54,6 +57,17 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
     
     container.scrollTo({ left: newPosition, behavior: "smooth" });
     setScrollPosition(newPosition);
+  };
+
+  const handleAddToCart = (affirmation: Affirmation) => {
+    addItem({
+      id: affirmation.id,
+      title: affirmation.title,
+      price: affirmation.price,
+      image: affirmation.image,
+      type: 'affirmation',
+    });
+    toast.success("Added to cart!");
   };
 
   return (
@@ -115,66 +129,68 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
                 />
               </div>
               
-              <div className="flex items-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                ))}
-                <span className="text-xs text-text-muted ml-1">
-                  ({affirmation.rating || 4.9})
-                  {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
-                </span>
+              <div className="flex-grow">
+                {affirmation.rating && (
+                  <div className="flex items-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                    ))}
+                    <span className="text-xs text-text-muted ml-1">
+                      ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K reviews
+                    </span>
+                  </div>
+                )}
+                
+                {affirmation.socialProof && (
+                  <span className="text-xs text-text-muted mb-2 block">{affirmation.socialProof}</span>
+                )}
+                
+                {affirmation.category && (
+                  <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
+                    {affirmation.category}
+                  </span>
+                )}
+                
+                <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+                
+                {affirmation.description && (
+                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}...</p>
+                )}
+                
+                {affirmation.certifications && affirmation.certifications.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {affirmation.certifications.map((cert, idx) => (
+                      <span key={idx} className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+                        {cert}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-              <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-              <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
               
-              {affirmation.certifications && affirmation.certifications.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {affirmation.certifications.map((cert, idx) => (
-                    <span 
-                      key={idx}
-                      className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between mt-3">
+                <div className="flex items-center gap-2 flex-wrap">
                   {affirmation.originalPrice && (
-                    <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                    <>
+                      <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
+                      </span>
+                    </>
                   )}
-                  <span className="font-semibold">${affirmation.price}</span>
-                  {affirmation.originalPrice && (
-                    <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
-                      Save ${affirmation.originalPrice - affirmation.price}
-                    </span>
-                  )}
+                  <span className="font-semibold">${affirmation.price.toFixed(2)}</span>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-clay text-clay hover:bg-clay/10"
-                    onClick={() => {
-                      setSelectedProduct(affirmation);
-                      setModalOpen(true);
-                    }}
-                  >
-                    Preview
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="bg-clay hover:bg-clay-dark text-white"
-                    onClick={() => {
-                      setSelectedProduct(affirmation);
-                      setModalOpen(true);
-                    }}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-clay text-clay hover:bg-clay/10"
+                  onClick={() => {
+                    setSelectedProduct(affirmation);
+                    setModalOpen(true);
+                  }}
+                >
+                  Add to Cart
+                </Button>
               </div>
             </div>
           </div>
