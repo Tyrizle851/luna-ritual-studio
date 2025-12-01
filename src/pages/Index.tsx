@@ -65,32 +65,32 @@ const Index = () => {
             Digital art and curated goods for intentional living
           </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-clay-dark hover:bg-[hsl(27,28%,54%)] text-white shadow-lg">
+            <Button asChild size="lg" className="bg-clay-dark hover:bg-[hsl(27,28%,50%)] text-white shadow-[0_4px_20px_rgba(139,107,84,0.3),0_2px_8px_rgba(139,107,84,0.2)] hover:shadow-[0_6px_28px_rgba(139,107,84,0.4),0_4px_12px_rgba(139,107,84,0.3)] hover:-translate-y-0.5 transition-all duration-300">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/80 bg-white/10 text-white font-semibold hover:bg-white/20 hover:border-white backdrop-blur-sm shadow-lg">
+            <Button asChild size="lg" className="bg-clay-dark hover:bg-[hsl(27,28%,50%)] text-white shadow-[0_4px_20px_rgba(139,107,84,0.3),0_2px_8px_rgba(139,107,84,0.2)] hover:shadow-[0_6px_28px_rgba(139,107,84,0.4),0_4px_12px_rgba(139,107,84,0.3)] hover:-translate-y-0.5 transition-all duration-300">
               <Link to="/journal">Explore The Journal</Link>
             </Button>
           </div>
           
           {/* Affirmation Builder Link */}
           <div className="mt-12 text-center">
-            <div className="inline-flex flex-col items-center gap-3 p-6 rounded-lg bg-white/15 backdrop-blur-md border border-white/30 hover:bg-white/25 hover:border-white/40 transition-all duration-300 shadow-lg">
+            <div className="inline-flex flex-col items-center gap-3 p-6 rounded-lg bg-clay-dark border border-clay-light/40 shadow-[0_6px_28px_rgba(139,107,84,0.4),0_4px_16px_rgba(139,107,84,0.3)] hover:shadow-[0_10px_40px_rgba(139,107,84,0.5),0_6px_20px_rgba(139,107,84,0.4),0_0_0_1px_rgba(212,175,55,0.3)] hover:-translate-y-1 hover:scale-[1.015] transition-all duration-300">
               <div className="flex items-center gap-2">
-                <Sprout className="h-5 w-5 text-[#2a1810]" />
-                <span className="text-sm text-[#2a1810] font-semibold uppercase tracking-wider drop-shadow-sm">Create Your Own</span>
-                <Wand2 className="h-5 w-5 text-[#2a1810]" />
+                <Sprout className="h-5 w-5 text-white" />
+                <span className="text-sm text-white font-semibold uppercase tracking-wider drop-shadow-sm">Create Your Own</span>
+                <Wand2 className="h-5 w-5 text-white" />
               </div>
               <Link 
                 to="/affirmation-builder" 
-                className="text-xl font-display text-[#2a1810] font-semibold hover:text-text-primary transition-colors group drop-shadow-md"
+                className="text-xl font-display text-white font-semibold hover:text-white/90 transition-colors group drop-shadow-md"
               >
                 <span className="relative">
                   Custom Affirmation Builder
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2a1810] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
                 </span>
               </Link>
-              <p className="text-sm text-[#2a1810]/90 max-w-xs font-medium drop-shadow-sm">Design personalized affirmations tailored to your journey</p>
+              <p className="text-sm text-white/90 max-w-xs font-medium drop-shadow-sm">Design personalized affirmations tailored to your journey</p>
             </div>
           </div>
         </div>
