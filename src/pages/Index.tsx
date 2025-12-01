@@ -261,9 +261,9 @@ const Index = () => {
 
       {/* Diamond Separator */}
       <div className="flex items-center justify-center gap-4 my-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-clay-dark to-clay-dark flex-1 max-w-[120px]"></div>
-        <div className="w-3 h-3 rotate-45 border border-clay-dark bg-background"></div>
-        <div className="h-px bg-gradient-to-l from-transparent via-clay-dark to-clay-dark flex-1 max-w-[120px]"></div>
+        <div className="h-px bg-gradient-to-r from-transparent via-foreground to-foreground flex-1 max-w-[120px]"></div>
+        <div className="w-3 h-3 rotate-45 border border-foreground bg-background"></div>
+        <div className="h-px bg-gradient-to-l from-transparent via-foreground to-foreground flex-1 max-w-[120px]"></div>
       </div>
 
       {/* Featured Affirmations */}
