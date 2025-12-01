@@ -260,10 +260,10 @@ const Index = () => {
       </section>
 
       {/* Diamond Separator */}
-      <div className="flex items-center justify-center gap-4 my-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-border flex-1 max-w-[120px]"></div>
-        <div className="w-3 h-3 rotate-45 border border-border bg-background"></div>
-        <div className="h-px bg-gradient-to-l from-transparent via-border to-border flex-1 max-w-[120px]"></div>
+      <div className="flex items-center justify-center gap-4 my-8">
+        <div className="h-px bg-gradient-to-r from-transparent via-clay-dark to-clay-dark flex-1 max-w-[120px]"></div>
+        <div className="w-3 h-3 rotate-45 border border-clay-dark bg-background"></div>
+        <div className="h-px bg-gradient-to-l from-transparent via-clay-dark to-clay-dark flex-1 max-w-[120px]"></div>
       </div>
 
       {/* Featured Affirmations */}
