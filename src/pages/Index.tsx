@@ -46,7 +46,7 @@ const Index = () => {
       </Helmet>
       <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden py-20 sm:py-[120px_0_140px_0]" style={{ paddingTop: '80px', paddingBottom: '100px' }}>
+      <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden py-20">
         <video
           autoPlay
           loop
@@ -57,54 +57,35 @@ const Index = () => {
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        {/* Sophisticated gradient overlay for improved legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(45,35,30,0.65)] to-[rgba(25,20,18,0.75)]" />
-        {/* Vignette effect */}
-        <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 100px rgba(0,0,0,0.4)' }} />
-        
-        <div className="relative z-10 container-custom px-4" style={{ maxWidth: '600px' }}>
-          <h1 
-            className="mb-8 text-balance text-white font-normal animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-            style={{ 
-              letterSpacing: '-0.02em', 
-              lineHeight: '1.15', 
-              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
-              animationDelay: '0s'
-            }}
-          >
+        {/* Vertical gradient: #F4ECE4 at 15-20% opacity fading to transparent by 40% */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F4ECE4]/[0.18] via-transparent to-transparent" style={{ backgroundSize: '100% 40%', backgroundRepeat: 'no-repeat' }} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
+        <div className="relative z-10 container-custom max-w-4xl px-4">
+          <h1 className="mb-10 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
             Affirmations for women building calm, beautiful lives
           </h1>
-          <p 
-            className="text-xl md:text-2xl mb-12 text-balance text-white font-normal animate-fade-in opacity-0 [animation-fill-mode:forwards]" 
-            style={{ 
-              fontWeight: 400,
-              opacity: 0.9,
-              letterSpacing: '0.01em',
-              lineHeight: '1.6',
-              animationDelay: '0.15s'
-            }}
-          >
+          <p className="text-xl md:text-2xl mb-14 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] font-normal" style={{ fontWeight: 400 }}>
             Digital art and curated goods for intentional living
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col sm:flex-row gap-[26px] justify-center items-center">
             {/* Primary CTA */}
-            <Button asChild className="h-[52px] px-10 bg-[#C4956A] hover:bg-[#B5875E] text-white font-medium uppercase text-sm rounded-[4px] shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(196,149,106,0.35)] hover:-translate-y-[2px] transition-all duration-300" style={{ letterSpacing: '0.05em', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+            <Button asChild className="h-[37px] px-7 bg-[#A97E63] hover:bg-[#986F5A] text-white font-semibold rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.18)] hover:-translate-y-0.5 transition-all duration-300">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
             
             {/* Secondary CTA */}
-            <Button asChild variant="outline" className="h-[52px] px-10 border border-white/60 bg-transparent text-white font-medium uppercase text-sm rounded-[4px] hover:bg-white/10 hover:border-white transition-all duration-300" style={{ letterSpacing: '0.05em', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+            <Button asChild variant="outline" className="h-[37px] px-7 border border-white/70 bg-transparent text-white font-medium rounded-md hover:bg-[#E6D6C9]/35 transition-all duration-300">
               <Link to="/affirmation-builder">Create Your Own</Link>
             </Button>
           </div>
           
           {/* Tertiary CTA - Text Link */}
-          <div className="mt-10 animate-fade-in opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '0.45s' }}>
+          <div className="mt-10">
             <Link 
               to="/journal" 
-              className="inline-flex items-center gap-2 text-white/85 hover:text-white text-base group transition-colors"
-              style={{ fontWeight: 400, letterSpacing: '0.03em' }}
+              className="inline-flex items-center gap-2 text-white/85 hover:text-white text-base group transition-colors drop-shadow-sm"
+              style={{ fontWeight: 400 }}
             >
               <span className="relative">
                 Explore the Journal
