@@ -28,8 +28,9 @@ export const NewsletterSection = () => {
     <section className="section-padding bg-card">
       <div className="container-custom max-w-2xl text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Mail className="h-6 w-6 text-clay" />
+          <Sparkles className="h-6 w-6 text-clay" />
           <h2 className="mb-0">Stay Connected</h2>
+          <Sparkles className="h-6 w-6 text-clay" />
         </div>
         <p className="text-lg text-text-secondary mb-8">
           Weekly reflections, new affirmations, and curated finds delivered to your inbox
