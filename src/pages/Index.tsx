@@ -259,8 +259,15 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Diamond Separator */}
+      <div className="flex items-center justify-center gap-4 my-12">
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-border flex-1 max-w-[120px]"></div>
+        <div className="w-3 h-3 rotate-45 border border-border bg-background"></div>
+        <div className="h-px bg-gradient-to-l from-transparent via-border to-border flex-1 max-w-[120px]"></div>
+      </div>
+
       {/* Featured Affirmations */}
-      <section className="section-padding">
+      <section className="pb-16 sm:pb-20 pt-6 sm:pt-8">
         <div className="container-custom">
           <div className="text-center mb-8 sm:mb-12">
             <div className="flex items-center justify-center gap-3 mb-4">
