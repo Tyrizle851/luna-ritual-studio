@@ -119,20 +119,20 @@ const Index = () => {
               maxWidth: '520px'
             }}>
               <div className="flex items-center gap-2">
-                <Sprout className="h-3.5 w-3.5 text-clay/70 group-hover:text-clay transition-colors" />
-                <span className="text-[10px] text-clay/70 font-medium uppercase tracking-wide group-hover:text-clay transition-colors">Create Your Own</span>
-                <Wand2 className="h-3.5 w-3.5 text-clay/70 group-hover:text-clay transition-colors" />
+                <Sprout className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
+                <span className="text-[10px] text-clay-dark/70 font-medium uppercase tracking-wide group-hover:text-clay-dark transition-colors">Create Your Own</span>
+                <Wand2 className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
               </div>
-              <span className="text-lg sm:text-xl font-display text-clay-dark font-semibold group-hover:text-clay transition-colors text-center">
+              <span className="text-lg sm:text-xl font-display text-foreground font-semibold group-hover:text-clay-dark transition-colors text-center">
                 Custom Affirmation Studio
               </span>
-              <p className="text-sm text-clay-dark/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
+              <p className="text-sm text-foreground/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
             </div>
           </Link>
 
           {/* Reinforcing Statement Below */}
           <div className="text-center mt-5">
-            <p className="text-sm text-clay/70 font-normal">Join thousands using our studio to create meaningful daily affirmations</p>
+            <p className="text-sm text-text-secondary font-normal">Join thousands using our studio to create meaningful daily affirmations</p>
           </div>
         </div>
       </section>
