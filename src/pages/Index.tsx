@@ -16,10 +16,52 @@ import affirmationRelease from "@/assets/affirmation-release.jpg";
 
 const Index = () => {
   const featuredAffirmations = [
-    { id: "aff-001", title: "I honor my need for rest", price: 12, image: affirmationRest, description: "Permission to pause" },
-    { id: "aff-002", title: "I trust my intuition and inner wisdom", price: 12, image: affirmationIntuition, description: "Listen within" },
-    { id: "aff-003", title: "I am creating the life of my dreams", price: 15, image: affirmationDreams, description: "Manifest with intention" },
-    { id: "aff-004", title: "I release what no longer serves me", price: 12, image: affirmationRelease, description: "Let go with grace" },
+    { 
+      id: "aff-001", 
+      title: "I honor my need for rest", 
+      price: 11.99,
+      originalPrice: 15.99,
+      image: affirmationRest, 
+      description: "Permission to pause and honor your need for restoration without guilt",
+      rating: 4.9,
+      reviewCount: 2847,
+      badge: "Best Seller",
+      certifications: ["Instant Download", "High Resolution"]
+    },
+    { 
+      id: "aff-002", 
+      title: "I trust my intuition and inner wisdom", 
+      price: 10.99,
+      originalPrice: 14.99,
+      image: affirmationIntuition, 
+      description: "Listen to the quiet voice within that already knows the way forward",
+      rating: 4.8,
+      reviewCount: 2134,
+      badge: "Staff Pick",
+      certifications: ["Instant Download", "Print Ready"]
+    },
+    { 
+      id: "aff-003", 
+      title: "I am creating the life of my dreams", 
+      price: 12.99,
+      originalPrice: 17.99,
+      image: affirmationDreams, 
+      description: "Manifest with intention and build the beautiful life you envision",
+      rating: 4.9,
+      reviewCount: 3201,
+      certifications: ["Instant Download", "Multiple Formats"]
+    },
+    { 
+      id: "aff-004", 
+      title: "I release what no longer serves me", 
+      price: 9.99,
+      originalPrice: 13.99,
+      image: affirmationRelease, 
+      description: "Let go with grace and make space for what truly nourishes your soul",
+      rating: 4.7,
+      reviewCount: 1892,
+      certifications: ["Instant Download", "High Resolution"]
+    },
   ];
 
   return (
