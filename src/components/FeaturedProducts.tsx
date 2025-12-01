@@ -51,17 +51,12 @@ export const FeaturedProducts = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {featured.map((product) => (
             <div key={product.id} className="group animate-fade-up">
-              <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl relative">
+              <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 bg-background/90 backdrop-blur-sm text-xs font-medium rounded-full border border-border text-foreground">
-                    {product.category}
-                  </span>
-                </div>
               </div>
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
               <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>

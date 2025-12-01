@@ -6,7 +6,7 @@ import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
 import { Testimonials } from "@/components/Testimonials";
-import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon, Zap, Users, Shirt, Flame, Pill } from "lucide-react";
+import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 
 import affirmationRest from "@/assets/affirmation-rest.jpg";
@@ -137,58 +137,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trust Badges Strip */}
-      <section className="py-8 bg-secondary/50 border-y border-border">
-        <div className="container-custom">
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-            <div className="flex items-center gap-2 text-sm text-text-secondary">
-              <Sparkles className="h-4 w-4 text-clay" />
-              <span>Premium Design Quality</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-text-secondary">
-              <Zap className="h-4 w-4 text-clay" />
-              <span>Instant Digital Delivery</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-text-secondary">
-              <Heart className="h-4 w-4 text-clay" />
-              <span>Created with Intention</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-text-secondary">
-              <Users className="h-4 w-4 text-clay" />
-              <span>Trusted by 10,000+ Women</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Category Quick-Nav */}
-      <section className="py-12 bg-background">
-        <div className="container-custom">
-          <div className="flex flex-wrap items-center justify-center gap-4 max-w-3xl mx-auto">
-            <Link to="/shop?tab=affirmations" className="group flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary hover:bg-secondary/70 transition-all duration-300 hover:shadow-md min-w-[100px]">
-              <Sparkles className="h-6 w-6 text-clay group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-medium text-foreground">Affirmations</span>
-            </Link>
-            <Link to="/shop?tab=fashion" className="group flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary hover:bg-secondary/70 transition-all duration-300 hover:shadow-md min-w-[100px]">
-              <Shirt className="h-6 w-6 text-clay group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-medium text-foreground">Fashion</span>
-            </Link>
-            <Link to="/shop?tab=candles" className="group flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary hover:bg-secondary/70 transition-all duration-300 hover:shadow-md min-w-[100px]">
-              <Flame className="h-6 w-6 text-clay group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-medium text-foreground">Candles</span>
-            </Link>
-            <Link to="/shop?tab=supplements" className="group flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary hover:bg-secondary/70 transition-all duration-300 hover:shadow-md min-w-[100px]">
-              <Pill className="h-6 w-6 text-clay group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-medium text-foreground">Supplements</span>
-            </Link>
-            <Link to="/shop?tab=books" className="group flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary hover:bg-secondary/70 transition-all duration-300 hover:shadow-md min-w-[100px]">
-              <BookOpen className="h-6 w-6 text-clay group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-medium text-foreground">Books</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Featured Affirmations */}
       <section className="section-padding">
         <div className="container-custom">
@@ -227,21 +175,13 @@ const Index = () => {
       <section className="section-padding bg-secondary">
         <div className="container-custom max-w-3xl text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Sparkles className="h-6 w-6 text-clay" />
             <Heart className="h-6 w-6 text-clay" />
             <h2 className="mb-0">Every word a reflection, every product an intention</h2>
-            <Heart className="h-6 w-6 text-clay" />
-            <Sparkles className="h-6 w-6 text-clay" />
           </div>
           <p className="text-lg text-text-secondary mb-8 leading-relaxed">
             LunaRituals exists to help you create a life you love—one affirmation, 
             one beautiful object, one intentional choice at a time.
           </p>
-          <div className="max-w-2xl mx-auto mb-8 p-6 bg-background/50 rounded-lg border border-clay/20">
-            <p className="text-xl font-display text-foreground italic leading-relaxed">
-              "You are not building a perfect life. You are building a meaningful one."
-            </p>
-          </div>
           <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
             <Link to="/about">
               <BookOpen className="mr-2 h-4 w-4" />

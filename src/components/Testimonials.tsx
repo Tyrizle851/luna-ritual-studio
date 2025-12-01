@@ -1,4 +1,4 @@
-import { Star, Sparkles } from "lucide-react";
+import { Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const testimonials = [
@@ -33,11 +33,7 @@ export const Testimonials = () => {
     <section className="section-padding bg-secondary">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Sparkles className="h-6 w-6 text-clay" />
-            <h2 className="mb-0">Loved by Our Community</h2>
-            <Sparkles className="h-6 w-6 text-clay" />
-          </div>
+          <h2 className="mb-4">Loved by Our Community</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
             See what our customers are saying about their LunaRituals experience
           </p>
