@@ -71,7 +71,10 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             {/* Primary CTA */}
             <Button asChild className="h-[37px] px-8 bg-[#A97E63] hover:bg-[#8B6950] text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
-              <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
+              <Link to="/shop?tab=affirmations" className="inline-flex items-center gap-2">
+                <Sparkles className="h-4 w-4" />
+                Shop Affirmations
+              </Link>
             </Button>
             
             {/* Secondary CTA */}
@@ -100,13 +103,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Affirmation Builder Section - Moved Below Hero */}
+      {/* Affirmation Studio Section */}
       <section className="pt-16 pb-12 sm:pt-20 sm:pb-16 bg-gradient-to-b from-[#FAF7F4] to-[#F7F3EF]">
         <div className="container-custom max-w-3xl">
           {/* Section Header Above */}
           <div className="text-center mb-6">
-            <h2 className="text-2xl sm:text-3xl font-display text-clay-dark font-semibold mb-2">Design Something Personal</h2>
-            <p className="text-base text-clay/80 max-w-xl mx-auto">Create custom affirmations that resonate with your unique journey and intentions</p>
+            <h2 className="text-2xl sm:text-3xl font-display text-foreground font-semibold mb-2">Your Personal Affirmation Studio</h2>
+            <p className="text-base text-text-secondary max-w-xl mx-auto">Design custom affirmations with our intuitive studio tools</p>
           </div>
 
           {/* Builder Card */}
@@ -121,15 +124,15 @@ const Index = () => {
                 <Wand2 className="h-3.5 w-3.5 text-clay/70 group-hover:text-clay transition-colors" />
               </div>
               <span className="text-lg sm:text-xl font-display text-clay-dark font-semibold group-hover:text-clay transition-colors text-center">
-                Custom Affirmation Builder
+                Custom Affirmation Studio
               </span>
-              <p className="text-sm text-clay-dark/75 max-w-md font-normal text-center">Design personalized affirmations tailored to your journey</p>
+              <p className="text-sm text-clay-dark/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
             </div>
           </Link>
 
           {/* Reinforcing Statement Below */}
           <div className="text-center mt-5">
-            <p className="text-sm text-clay/70 font-normal">Join thousands creating meaningful affirmations that inspire daily intention</p>
+            <p className="text-sm text-clay/70 font-normal">Join thousands using our studio to create meaningful daily affirmations</p>
           </div>
         </div>
       </section>
