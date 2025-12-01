@@ -57,37 +57,38 @@ const Index = () => {
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(30,25%,92%)]/70 via-background/50 to-background/85" />
+        {/* Soft vertical gradient: light creamy-beige at top fading to transparent */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(35,35%,88%)]/20 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
         <div className="relative z-10 container-custom max-w-4xl px-4">
-          <h1 className="mb-6 text-balance text-white drop-shadow-[0_6px_16px_rgba(0,0,0,0.7)] font-bold">
+          <h1 className="mb-8 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
             Affirmations for women building calm, beautiful lives
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-balance text-white/95 drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
+          <p className="text-xl md:text-2xl mb-12 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] font-normal">
             Digital art and curated goods for intentional living
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             {/* Primary CTA */}
-            <Button asChild size="lg" className="bg-[hsl(27,28%,40%)] hover:bg-[hsl(27,28%,35%)] text-white font-bold shadow-[0_6px_24px_rgba(0,0,0,0.4),0_3px_10px_rgba(139,107,84,0.5)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.5),0_4px_14px_rgba(139,107,84,0.6)] hover:-translate-y-1 transition-all duration-300 border-2 border-clay-light/30">
+            <Button asChild className="h-11 sm:h-10 px-8 bg-[hsl(27,28%,40%)] hover:bg-[hsl(27,28%,35%)] text-white font-semibold shadow-[0_4px_16px_rgba(139,107,84,0.4)] hover:shadow-[0_6px_20px_rgba(139,107,84,0.5)] hover:-translate-y-0.5 transition-all duration-300">
               <Link to="/shop?tab=affirmations">Shop Affirmations</Link>
             </Button>
             
             {/* Secondary CTA */}
-            <Button asChild size="lg" variant="outline" className="border-2 border-white/90 bg-transparent text-white font-semibold hover:bg-white hover:text-clay-dark shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_24px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm">
+            <Button asChild variant="outline" className="h-11 sm:h-10 px-8 border-2 border-white/80 bg-white/5 text-white font-medium hover:bg-white/15 hover:border-white shadow-[0_3px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(255,255,255,0.3)] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm">
               <Link to="/affirmation-builder">Create Your Own</Link>
             </Button>
           </div>
           
           {/* Tertiary CTA - Text Link */}
-          <div className="mt-6">
+          <div className="mt-8">
             <Link 
               to="/journal" 
-              className="inline-flex items-center gap-2 text-white/90 hover:text-white font-medium text-base group transition-colors drop-shadow-md"
+              className="inline-flex items-center gap-2 text-white/85 hover:text-white font-normal text-base group transition-colors drop-shadow-sm"
             >
               <span className="relative">
                 Explore the Journal
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white/50 transition-all duration-300 group-hover:bg-white"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
@@ -96,24 +97,24 @@ const Index = () => {
       </section>
 
       {/* Affirmation Builder Section - Moved Below Hero */}
-      <section className="section-padding bg-secondary">
-        <div className="container-custom max-w-3xl text-center">
-          <div className="inline-flex flex-col items-center gap-3 p-6 sm:p-8 rounded-lg bg-clay-dark border border-clay-light/40 shadow-[0_6px_28px_rgba(139,107,84,0.4),0_4px_16px_rgba(139,107,84,0.3)] hover:shadow-[0_10px_40px_rgba(139,107,84,0.5),0_6px_20px_rgba(139,107,84,0.4),0_0_0_1px_rgba(212,175,55,0.3)] hover:-translate-y-1 hover:scale-[1.015] transition-all duration-300">
+      <section className="py-16 sm:py-20 bg-secondary">
+        <div className="container-custom max-w-4xl">
+          <div className="flex flex-col items-center sm:items-start gap-2.5 p-5 sm:p-6 rounded-lg bg-[hsl(27,28%,40%)] border border-[hsl(27,28%,50%)]/20 shadow-[0_3px_16px_rgba(139,107,84,0.25)] hover:shadow-[0_5px_24px_rgba(139,107,84,0.35)] hover:-translate-y-0.5 transition-all duration-300 mx-auto sm:mx-0">
             <div className="flex items-center gap-2">
-              <Sprout className="h-5 w-5 text-white" />
-              <span className="text-sm text-white font-semibold uppercase tracking-wider drop-shadow-sm">Create Your Own</span>
-              <Wand2 className="h-5 w-5 text-white" />
+              <Sprout className="h-4 w-4 text-white/90" />
+              <span className="text-xs text-white/90 font-medium uppercase tracking-wide">Create Your Own</span>
+              <Wand2 className="h-4 w-4 text-white/90" />
             </div>
             <Link 
               to="/affirmation-builder" 
-              className="text-xl sm:text-2xl font-display text-white font-semibold hover:text-white/90 transition-colors group drop-shadow-md"
+              className="text-lg sm:text-xl font-display text-white font-semibold hover:text-white/95 transition-colors group"
             >
               <span className="relative">
                 Custom Affirmation Builder
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/80 transition-all duration-300 group-hover:w-full"></span>
               </span>
             </Link>
-            <p className="text-sm sm:text-base text-white/90 max-w-md font-medium drop-shadow-sm">Design personalized affirmations tailored to your journey</p>
+            <p className="text-sm text-white/85 max-w-md font-normal">Design personalized affirmations tailored to your journey</p>
           </div>
         </div>
       </section>
