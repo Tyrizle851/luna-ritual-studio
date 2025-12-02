@@ -8,7 +8,7 @@ export const SubscriptionBanner = () => {
 
   useEffect(() => {
     // Check if user has dismissed the banner before
-    const dismissed = localStorage.getItem("subscription-banner-dismissed");
+    const dismissed = localStorage.getItem("subscription-banner-v2");
     if (!dismissed) {
       // Show after a short delay for better UX
       const timer = setTimeout(() => setIsVisible(true), 3000);
@@ -18,7 +18,7 @@ export const SubscriptionBanner = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem("subscription-banner-dismissed", "true");
+    localStorage.setItem("subscription-banner-v2", "true");
   };
 
   if (!isVisible) return <SubscriptionPopup open={showPopup} onOpenChange={setShowPopup} />;
