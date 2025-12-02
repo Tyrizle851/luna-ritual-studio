@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ExternalLink, Star, Package, Truck, RefreshCw } from "lucide-react";
 import { FashionProduct } from "@/data/fashion";
+import { useProductImages } from "@/hooks/useProductImages";
+import { cn } from "@/lib/utils";
 
 interface FashionProductModalProps {
   product: FashionProduct | null;
@@ -12,6 +15,9 @@ interface FashionProductModalProps {
 }
 
 export const FashionProductModal = ({ product, open, onOpenChange }: FashionProductModalProps) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { images, isLoading } = useProductImages(product?.id || null, "fashion");
+
   if (!product) return null;
 
   const handleShopNow = () => {
@@ -20,27 +26,69 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
     }
   };
 
+  // Build gallery images - use generated images if available, otherwise just original
+  const galleryImages = images.length > 0 
+    ? images.map(img => ({
+        url: img.image_url,
+        label: img.variation_type === "original" ? "Product" : 
+               img.variation_type === "lifestyle" ? "Lifestyle" :
+               img.variation_type === "detail" ? "Detail" : "Styled"
+      }))
+    : [{ url: product.image, label: "Product" }];
+
+  const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
         <div className="relative">
-          {/* Hero Image Section */}
-          <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-contain"
-            />
-            {product.badge && (
-              <Badge 
-                className={`absolute top-3 left-3 ${
-                  product.badge === 'Sale' ? 'bg-foreground text-background' :
-                  product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
-                  'bg-accent text-accent-foreground'
-                } font-semibold`}
-              >
-                {product.badge}
-              </Badge>
+          {/* Hero Image Section with Gallery */}
+          <div className="relative bg-white overflow-hidden">
+            {/* Main Image */}
+            <div className="relative aspect-square md:aspect-video">
+              <img
+                src={currentImage}
+                alt={product.name}
+                className="w-full h-full object-contain transition-opacity duration-300"
+              />
+              {product.badge && (
+                <Badge 
+                  className={`absolute top-3 left-3 ${
+                    product.badge === 'Sale' ? 'bg-foreground text-background' :
+                    product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                    'bg-accent text-accent-foreground'
+                  } font-semibold`}
+                >
+                  {product.badge}
+                </Badge>
+              )}
+            </div>
+
+            {/* Thumbnail Strip - only show if we have multiple images */}
+            {galleryImages.length > 1 && (
+              <div className="flex gap-2 p-3 bg-secondary/30 overflow-x-auto">
+                {galleryImages.map((img, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={cn(
+                      "relative flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all",
+                      selectedImageIndex === index 
+                        ? "border-primary ring-2 ring-primary/20" 
+                        : "border-transparent hover:border-muted-foreground/30"
+                    )}
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.label}
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[9px] px-1 py-0.5 text-center truncate">
+                      {img.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
