@@ -174,7 +174,7 @@ const Index = () => {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center scale-110 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
+          className="absolute inset-0 w-full h-full object-cover object-center scale-125 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
           style={{ filter: 'brightness(0.6) blur(4px) saturate(0.85)' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
