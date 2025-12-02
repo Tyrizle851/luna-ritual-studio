@@ -191,7 +191,7 @@ export const affirmations: Affirmation[] = [
   },
   {
     id: "aff-005",
-    title: "I am enough, always",
+    title: "I am always enough",
     category: "Self-Love",
     description: "Your worth isn't tied to productivity or achievement. You are inherently valuable simply because you exist. Soft, compassionate colors and timeless typography feel like a warm embrace.",
     price: 13.95,
