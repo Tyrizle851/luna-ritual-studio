@@ -123,30 +123,30 @@ export const affirmations: Affirmation[] = [
   },
   {
     id: "aff-003",
-    title: "Abundance flows to me",
-    category: "Abundance",
-    description: "Shift your mindset from scarcity to possibility. This manifestation wallpaper reminds you that abundance isn't just money—it's love, opportunities, and joy flowing freely. Elegant design with luxurious tones evokes prosperity.",
+    title: "Growth is a journey, not a destination",
+    category: "Strength",
+    description: "Embrace the beauty of becoming. This affirmation celebrates progress over perfection and reminds you that every step forward matters. Warm, grounding tones inspire patience and self-compassion.",
     price: 17.99,
     originalPrice: 22.99,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
     image: affirmationAbundance,
     featured: true,
-    tags: ["abundance", "wealth", "receiving"],
+    tags: ["growth", "journey", "patience", "progress"],
     rating: 4.9,
     reviewCount: 2127,
     socialProof: "2K+ sold",
     certifications: ["Instant Download", "Premium Design", "High Resolution"],
     badge: "Most Popular",
     features: [
-      "Luxurious design evoking prosperity",
-      "Perfect for manifestation practices",
-      "Ideal for vision boards and goal-setting",
-      "Rich color palette for abundance mindset"
+      "Grounding design celebrating progress",
+      "Perfect for personal development journeys",
+      "Ideal for goal-setting and reflection",
+      "Warm color palette for self-compassion"
     ],
     usageIdeas: [
-      "Daily phone wallpaper for manifestation practice",
-      "Vision board centerpiece",
-      "Print for your workspace or wealth corner",
+      "Daily phone wallpaper for growth mindset",
+      "Vision board for personal development",
+      "Print for your workspace or journal corner",
       "Morning meditation visual anchor"
     ],
     productDetails: {
