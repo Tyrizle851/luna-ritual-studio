@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.generate-preview-image]
 verify_jwt = false
+
+[functions.generate-product-images]
+verify_jwt = false
