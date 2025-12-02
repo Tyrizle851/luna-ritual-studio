@@ -10,6 +10,7 @@ import { Cart } from "./components/Cart";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { BackToTop } from "./components/BackToTop";
 import { PromotionalBanner } from "./components/PromotionalBanner";
+import { SubscriptionBanner } from "./components/SubscriptionBanner";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import Journal from "./pages/Journal";
@@ -59,6 +60,7 @@ const App = () => (
         <Footer />
         <Cart />
         <BackToTop />
+        <SubscriptionBanner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
