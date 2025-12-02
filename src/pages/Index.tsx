@@ -167,21 +167,21 @@ const Index = () => {
         <meta name="keywords" content="affirmations, digital affirmations, affirmation wallpaper, self-love affirmations, manifestation wallpaper, intentional living, mindfulness, wellness, self-care" />
       </Helmet>
       <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[85vh] flex items-center justify-center text-center overflow-hidden py-20">
+      {/* Hero Section - reduced height by 15% */}
+      <section className="relative h-[72vh] flex items-center justify-center text-center overflow-hidden py-16">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards] brightness-[0.75] blur-[2px]"
-          style={{ filter: 'brightness(0.75) blur(2px)' }}
+          className="absolute inset-0 w-full h-full object-cover animate-fade-in opacity-0 [animation-fill-mode:forwards]"
+          style={{ filter: 'brightness(0.6) blur(4px) saturate(0.85)' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        {/* Vertical gradient: #F4ECE4 at 15-20% opacity fading to transparent by 40% */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F4ECE4]/[0.18] via-transparent to-transparent" style={{ backgroundSize: '100% 40%', backgroundRepeat: 'no-repeat' }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
+        {/* Soft vignette overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)]" />
         <div className="relative z-10 container-custom max-w-4xl px-4">
           <h1 className="mb-10 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
             Affirmations for women building calm, beautiful lives
