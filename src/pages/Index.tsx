@@ -13,6 +13,8 @@ import affirmationRest from "@/assets/affirmation-rest.jpg";
 import affirmationIntuition from "@/assets/affirmation-intuition.jpg";
 import affirmationDreams from "@/assets/affirmation-dreams.jpg";
 import affirmationRelease from "@/assets/affirmation-release.jpg";
+import morningRitualImg from "@/assets/affirmation-peace.jpg";
+import powerHourImg from "@/assets/affirmation-progress.jpg";
 
 const Index = () => {
   const featuredAffirmations = [
@@ -261,8 +263,8 @@ const Index = () => {
                     className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
                     style={{ transform: 'rotate(-2deg)' }}
                   >
-                    <div className="aspect-square bg-gradient-to-br from-[#FDF6F0] via-[#FAF3EC] to-[#F5EBE0] flex items-center justify-center">
-                      <span className="text-xl">🌅</span>
+                    <div className="aspect-square overflow-hidden">
+                      <img src={morningRitualImg} alt="Morning Ritual" className="w-full h-full object-cover" />
                     </div>
                     <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
                       <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Morning Ritual</span>
@@ -280,8 +282,8 @@ const Index = () => {
                     className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
                     style={{ transform: 'rotate(2deg)' }}
                   >
-                    <div className="aspect-square bg-gradient-to-br from-[#2C2825] via-[#3D3835] to-[#4A4340] flex items-center justify-center">
-                      <span className="text-xl">⚡</span>
+                    <div className="aspect-square overflow-hidden">
+                      <img src={powerHourImg} alt="Power Hour" className="w-full h-full object-cover" />
                     </div>
                     <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
                       <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Power Hour</span>
