@@ -1,40 +1,159 @@
-import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { ExternalLink, ShoppingBag, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { FashionProductModal } from "@/components/FashionProductModal";
+import { CandleModal } from "@/components/CandleModal";
+import { BookModal } from "@/components/BookModal";
+import { WishlistButton } from "@/components/WishlistButton";
+import { FashionProduct } from "@/data/fashion";
+import { Candle } from "@/data/candles";
+import { Book } from "@/data/books";
+
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
-import productCandleBalsamCedar from "@/assets/product-candle-yankee-balsam-cedar-1763492326.jpg";
+import productCandleWoodwickVanilla from "@/assets/product-candle-woodwick-vanilla-bean-featured.jpg";
 import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
 
+// Complete product data matching shop exactly
+const featuredFashion: FashionProduct = {
+  id: "fsh-004",
+  name: "Classic Satin Silk Pajama Set",
+  brand: "Ekouaer",
+  category: "Loungewear",
+  description: "Indulge in luxurious comfort with this classic button-down silk pajama set. The smooth satin finish feels incredible against your skin while the timeless design with contrast piping adds sophisticated style to your evening routine. Perfect for unwinding by the fire or enjoying a peaceful night's rest.",
+  price: 31.44,
+  originalPrice: 36.99,
+  badge: "Top Pick",
+  sizes: ["S", "M", "L", "XL", "XXL"],
+  colors: ["Champagne Gold", "Black", "Navy", "Leopard Print"],
+  image: productSilkSleepSet,
+  inStock: true,
+  affiliateUrl: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?tag=lunarituals10-20",
+  rating: 4.4,
+  reviewCount: 3300,
+  isPrime: true,
+  styleNotes: "Elevate your sleep routine with this luxurious satin pajama set. The silky-smooth fabric drapes beautifully and feels gentle on skin, while the classic button-down design adds timeless sophistication. Perfect for those who believe that bedtime should feel like a luxury experience.",
+  features: [
+    "Smooth satin silk finish",
+    "Classic button-down top",
+    "Adjustable drawstring pants",
+    "Long sleeves with button cuffs",
+    "ISCC PLUS sustainability certified",
+    "Soft and breathable fabric"
+  ],
+  certifications: ["Silky Smooth", "Breathable"],
+  productDetails: {
+    fabric: "Premium satin polyester blend (softer than traditional silk)",
+    care: "Machine washable - gentle cycle, hang or lay flat to dry",
+    fit: "True to size with relaxed comfortable fit for sleep",
+    origin: "Imported, ISCC PLUS certified for sustainability"
+  },
+  stylingIdeas: [
+    { occasion: "Bedtime Luxury", suggestion: "Pair with fuzzy slippers and a silk sleep mask for ultimate relaxation" },
+    { occasion: "Morning Coffee", suggestion: "Layer a cozy cardigan over the set for a chic loungewear look" },
+    { occasion: "Self-Care Sunday", suggestion: "Wear during your skincare routine and journaling for a spa-like experience" },
+    { occasion: "Lazy Weekend", suggestion: "Stay in the set all day - it's comfortable and polished enough for video calls" }
+  ]
+};
+
+const featuredCandle: Candle = {
+  id: "cnd-002",
+  name: "WoodWick Vanilla Bean Hourglass Candle",
+  brand: "WoodWick",
+  scent: "Sweet, Warm",
+  description: "Holiday candle featuring a distinctive crackling wood wick that mimics a cozy fireplace. Rich, creamy vanilla bean fragrance fills your space. 9.7 oz medium hourglass jar with elegant design. Perfect gift for women and men. 60 hour burn time.",
+  price: 17.99,
+  burnTime: "60 hours",
+  image: productCandleWoodwickVanilla,
+  inStock: true,
+  affiliateUrl: "https://amzn.to/43EdcRX",
+  rating: 4.6,
+  reviewCount: 9660,
+  socialProof: "2K+ bought in past month",
+  isPrime: true,
+  scentProfile: "Decadent vanilla bean scent infused with notes of pure sugar cane. Creates an enchanting, warm aroma that fills your home with comfort and sweetness. The multi-sensory crackling wick adds auditory relaxation to the olfactory experience.",
+  features: [
+    "Distinctive Pluswick Innovation creates signature crackling sound",
+    "Premium soy-paraffin blend ensures clean, consistent burn",
+    "Iconic hourglass shape with wooden lid enhances home decor",
+    "Made in USA for quality and authenticity",
+    "60 hours of burn time",
+    "Ideal gift for friends or yourself"
+  ],
+  productDetails: {
+    waxType: "Premium soy-paraffin blend",
+    wickType: "Wooden wick (Pluswick Innovation)",
+    jarType: "Hourglass glass jar with wooden lid",
+    madeIn: "Made in USA"
+  },
+  usageIdeas: [
+    "Create a warm, inviting ambiance for cozy evenings at home",
+    "Perfect for aromatherapy and stress relief during bath time",
+    "Gift for holidays, birthdays, or special occasions",
+    "Enhance meditation or yoga practice with calming scent and sound"
+  ],
+  certifications: ["Made in USA", "Wooden Wick"]
+};
+
+const featuredBook: Book = {
+  id: "book-000",
+  title: "Throne of Glass",
+  author: "Sarah J. Maas",
+  price: 16.88,
+  originalPrice: 22.99,
+  image: throneOfGlassImage,
+  description: "A captivating fantasy epic about Celaena Sardothien, a legendary assassin who must compete for her freedom in a deadly tournament. Perfect for those who crave adventure, romance, and a fierce heroine who will stop at nothing to reclaim her destiny.",
+  category: "Epic Fantasy",
+  affiliateUrl: "https://amzn.to/4hTBnBz",
+  rating: 4.9,
+  reviewCount: 48612,
+  socialProof: "60K+ bought in past month",
+  isPrime: true,
+  badge: "Best Seller",
+  series: "Throne of Glass #1",
+  awards: ["New York Times #1 Bestseller", "Goodreads Choice Finalist"],
+  bookDetails: {
+    publisher: "Bloomsbury YA",
+    pages: 432,
+    format: "Paperback",
+    language: "English"
+  },
+  themes: ["Strong Female Lead", "Political Intrigue", "Slow Burn Romance", "Competitive Tournament"],
+  features: [
+    "New York Times #1 bestselling series",
+    "Perfect for fans of ACOTAR and Fourth Wing",
+    "Epic fantasy with romance and action",
+    "First book in completed 8-book series"
+  ],
+  similarReads: ["A Court of Thorns and Roses", "Fourth Wing", "The Cruel Prince"]
+};
+
 export const FeaturedProducts = () => {
-  const featured = [
-    {
-      id: "featured-1",
-      name: "Classic Satin Silk Pajama Set",
-      brand: "EKOUAER",
-      caption: "Sunday mornings deserve softness",
-      image: productSilkSleepSet,
-      affiliateLink: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?tag=lunarituals10-20",
-      category: "Fashion"
-    },
-    {
-      id: "featured-2",
-      name: "Balsam & Cedar Large Jar Candle",
-      brand: "YANKEE CANDLE",
-      caption: "Light this when you need to come home to yourself",
-      image: productCandleBalsamCedar,
-      affiliateLink: "https://amzn.to/43yPmai",
-      category: "Candles"
-    },
-    {
-      id: "featured-3",
-      name: "Throne of Glass",
-      brand: "SARAH J. MAAS",
-      caption: "The book that helps you remember who you were before the world told you who to be",
-      image: throneOfGlassImage,
-      affiliateLink: "https://amzn.to/4hTBnBz",
-      category: "Books"
-    }
-  ];
+  const [selectedFashion, setSelectedFashion] = useState<FashionProduct | null>(null);
+  const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
+  const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
+  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
+
+  const handleFashionClick = () => {
+    setSelectedFashion(featuredFashion);
+    setIsFashionModalOpen(true);
+  };
+
+  const handleCandleClick = () => {
+    setSelectedCandle(featuredCandle);
+    setIsCandleModalOpen(true);
+  };
+
+  const handleBookClick = () => {
+    setSelectedBook(featuredBook);
+    setIsBookModalOpen(true);
+  };
+
+  const calculateDiscount = (original: number, current: number) => {
+    return Math.round(((original - current) / original) * 100);
+  };
 
   return (
     <section className="section-padding bg-secondary">
@@ -49,30 +168,212 @@ export const FeaturedProducts = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {featured.map((product) => (
-            <div key={product.id} className="group animate-fade-up">
-              <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                />
-              </div>
-              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-              <p className="text-sm text-text-secondary leading-relaxed mb-4 italic">{product.caption}</p>
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full"
-                asChild
-              >
-                <a href={product.affiliateLink} target="_blank" rel="noopener noreferrer">
-                  View Product <ExternalLink className="ml-1 h-3 w-3" />
-                </a>
-              </Button>
+          {/* Fashion Product Card */}
+          <div 
+            className="group animate-fade-up cursor-pointer"
+            onClick={handleFashionClick}
+          >
+            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl">
+              {featuredFashion.badge && (
+                <span className="absolute top-2 left-2 z-10 bg-clay text-white text-xs px-2 py-1 rounded-full font-medium">
+                  {featuredFashion.badge}
+                </span>
+              )}
+              <WishlistButton productId={featuredFashion.id} />
+              <img
+                src={featuredFashion.image}
+                alt={featuredFashion.name}
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+              />
             </div>
-          ))}
+            <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{featuredFashion.brand}</p>
+            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
+            
+            {/* Rating */}
+            {featuredFashion.rating && (
+              <div className="flex items-center gap-1 mb-2">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="text-sm font-medium">{featuredFashion.rating}</span>
+                <span className="text-sm text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
+              </div>
+            )}
+            
+            {/* Description */}
+            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
+            
+            {/* Certifications */}
+            {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-3">
+                {featuredFashion.certifications.slice(0, 2).map((cert, idx) => (
+                  <span key={idx} className="text-xs bg-muted text-text-muted px-2 py-0.5 rounded-full">
+                    {cert}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            {/* Price */}
+            <div className="flex items-center gap-2 mb-4">
+              {featuredFashion.originalPrice && (
+                <>
+                  <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
+                  <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">
+                    -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
+                  </span>
+                </>
+              )}
+              <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
+            </div>
+            
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full"
+              asChild
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+              </a>
+            </Button>
+          </div>
+
+          {/* Candle Product Card */}
+          <div 
+            className="group animate-fade-up cursor-pointer"
+            onClick={handleCandleClick}
+          >
+            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl">
+              <WishlistButton productId={featuredCandle.id} />
+              <img
+                src={featuredCandle.image}
+                alt={featuredCandle.name}
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+              />
+            </div>
+            <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{featuredCandle.brand}</p>
+            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
+            
+            {/* Rating */}
+            {featuredCandle.rating && (
+              <div className="flex items-center gap-1 mb-2">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="text-sm font-medium">{featuredCandle.rating}</span>
+                <span className="text-sm text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
+              </div>
+            )}
+            
+            {/* Social Proof */}
+            {featuredCandle.socialProof && (
+              <p className="text-xs text-clay mb-2">{featuredCandle.socialProof}</p>
+            )}
+            
+            {/* Description */}
+            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
+            
+            {/* Certifications */}
+            {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-3">
+                {featuredCandle.certifications.slice(0, 2).map((cert, idx) => (
+                  <span key={idx} className="text-xs bg-muted text-text-muted px-2 py-0.5 rounded-full">
+                    {cert}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            {/* Price */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
+            </div>
+            
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full"
+              asChild
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+              </a>
+            </Button>
+          </div>
+
+          {/* Book Product Card */}
+          <div 
+            className="group animate-fade-up cursor-pointer"
+            onClick={handleBookClick}
+          >
+            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-background transition-all duration-300 group-hover:shadow-xl">
+              {featuredBook.badge && (
+                <span className="absolute top-2 left-2 z-10 bg-clay text-white text-xs px-2 py-1 rounded-full font-medium">
+                  {featuredBook.badge}
+                </span>
+              )}
+              <WishlistButton productId={featuredBook.id} />
+              <img
+                src={featuredBook.image}
+                alt={featuredBook.title}
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+              />
+            </div>
+            <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{featuredBook.author}</p>
+            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
+            
+            {/* Rating */}
+            {featuredBook.rating && (
+              <div className="flex items-center gap-1 mb-2">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="text-sm font-medium">{featuredBook.rating}</span>
+                <span className="text-sm text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
+              </div>
+            )}
+            
+            {/* Social Proof */}
+            {featuredBook.socialProof && (
+              <p className="text-xs text-clay mb-2">{featuredBook.socialProof}</p>
+            )}
+            
+            {/* Description */}
+            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
+            
+            {/* Awards */}
+            {featuredBook.awards && featuredBook.awards.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-3">
+                {featuredBook.awards.slice(0, 2).map((award, idx) => (
+                  <span key={idx} className="text-xs bg-muted text-text-muted px-2 py-0.5 rounded-full">
+                    {award}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            {/* Price */}
+            <div className="flex items-center gap-2 mb-4">
+              {featuredBook.originalPrice && (
+                <>
+                  <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
+                  <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">
+                    -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
+                  </span>
+                </>
+              )}
+              <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
+            </div>
+            
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full"
+              asChild
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+              </a>
+            </Button>
+          </div>
         </div>
 
         <div className="text-center mt-8">
@@ -84,6 +385,23 @@ export const FeaturedProducts = () => {
           </Button>
         </div>
       </div>
+
+      {/* Modals */}
+      <FashionProductModal
+        product={selectedFashion}
+        open={isFashionModalOpen}
+        onOpenChange={setIsFashionModalOpen}
+      />
+      <CandleModal
+        product={selectedCandle}
+        open={isCandleModalOpen}
+        onOpenChange={setIsCandleModalOpen}
+      />
+      <BookModal
+        product={selectedBook}
+        open={isBookModalOpen}
+        onOpenChange={setIsBookModalOpen}
+      />
     </section>
   );
 };
