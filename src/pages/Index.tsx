@@ -236,7 +236,7 @@ const Index = () => {
 
           {/* Builder Card */}
           <Link to="/affirmation-builder" className="block">
-            <div className="flex flex-col items-center gap-2 p-5 sm:p-6 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto hover:border-clay/40 transition-all duration-300 hover:shadow-[0_16px_32px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 group" style={{ 
+            <div className="flex flex-col items-center gap-3 p-5 sm:p-6 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto hover:border-clay/40 transition-all duration-300 hover:shadow-[0_16px_32px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 group" style={{ 
               boxShadow: '0 12px 26px rgba(0,0,0,0.07)',
               maxWidth: '520px'
             }}>
@@ -248,62 +248,55 @@ const Index = () => {
               <span className="text-lg sm:text-xl font-display text-foreground font-semibold group-hover:text-clay-dark transition-colors text-center">
                 Custom Affirmation Studio
               </span>
+              
+              {/* Staff Pick Mini-Cards Inside */}
+              <div className="flex justify-center gap-3 my-2" onClick={(e) => e.preventDefault()}>
+                {/* Morning Ritual Mini */}
+                <Link 
+                  to="/affirmation-builder?preset=morning" 
+                  className="group/mini"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div 
+                    className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
+                    style={{ transform: 'rotate(-2deg)' }}
+                  >
+                    <div className="aspect-square bg-gradient-to-br from-[#FDF6F0] via-[#FAF3EC] to-[#F5EBE0] flex items-center justify-center">
+                      <span className="text-xl">🌅</span>
+                    </div>
+                    <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
+                      <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Morning Ritual</span>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Power Hour Mini */}
+                <Link 
+                  to="/affirmation-builder?preset=power" 
+                  className="group/mini"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div 
+                    className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
+                    style={{ transform: 'rotate(2deg)' }}
+                  >
+                    <div className="aspect-square bg-gradient-to-br from-[#2C2825] via-[#3D3835] to-[#4A4340] flex items-center justify-center">
+                      <span className="text-xl">⚡</span>
+                    </div>
+                    <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
+                      <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Power Hour</span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              
               <p className="text-sm text-foreground/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
             </div>
           </Link>
 
-          {/* Staff Pick Mini-Cards */}
-          <div className="flex justify-center gap-4 sm:gap-6 mt-6">
-            {/* Morning Ritual Card */}
-            <Link 
-              to="/affirmation-builder?preset=morning" 
-              className="group relative"
-            >
-              <div 
-                className="w-[140px] sm:w-[160px] bg-white rounded-lg border border-[#EBDDD1]/40 overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(139,107,84,0.15)] hover:-translate-y-1 transition-all duration-300"
-                style={{ transform: 'rotate(-2deg)' }}
-              >
-                <div className="aspect-[4/5] bg-gradient-to-br from-[#FDF6F0] via-[#FAF3EC] to-[#F5EBE0] flex items-center justify-center p-3">
-                  <div className="text-center">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-[#E8D9C8] flex items-center justify-center">
-                      <span className="text-lg">🌅</span>
-                    </div>
-                    <p className="text-[10px] text-clay-dark/80 italic leading-tight">"I greet this day with open heart..."</p>
-                  </div>
-                </div>
-                <div className="p-2.5 text-center border-t border-[#EBDDD1]/30">
-                  <span className="text-xs font-medium text-foreground group-hover:text-clay-dark transition-colors">Morning Ritual</span>
-                </div>
-              </div>
-            </Link>
-
-            {/* Power Hour Card */}
-            <Link 
-              to="/affirmation-builder?preset=power" 
-              className="group relative"
-            >
-              <div 
-                className="w-[140px] sm:w-[160px] bg-white rounded-lg border border-[#EBDDD1]/40 overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(139,107,84,0.15)] hover:-translate-y-1 transition-all duration-300"
-                style={{ transform: 'rotate(2deg)' }}
-              >
-                <div className="aspect-[4/5] bg-gradient-to-br from-[#2C2825] via-[#3D3835] to-[#4A4340] flex items-center justify-center p-3">
-                  <div className="text-center">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-[#A97E63]/30 flex items-center justify-center">
-                      <span className="text-lg">⚡</span>
-                    </div>
-                    <p className="text-[10px] text-white/80 italic leading-tight">"I am unstoppable..."</p>
-                  </div>
-                </div>
-                <div className="p-2.5 text-center border-t border-[#EBDDD1]/30">
-                  <span className="text-xs font-medium text-foreground group-hover:text-clay-dark transition-colors">Power Hour</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          {/* Social Proof Pill */}
+          {/* Social Proof Card */}
           <div className="flex justify-center mt-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FAF7F4] border border-[#EBDDD1]/50 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white border border-[#EBDDD1]/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
               <Users className="h-4 w-4 text-clay-dark/70" />
               <span className="text-sm text-text-secondary font-medium">5,000+ creators using the studio</span>
             </div>
