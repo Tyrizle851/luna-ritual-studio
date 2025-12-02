@@ -110,60 +110,64 @@ const Index = () => {
           </div>
 
           {/* Builder Card */}
-          <div className="flex flex-col items-center gap-3 p-5 sm:p-6 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto hover:border-clay/40 transition-all duration-300 hover:shadow-[0_16px_32px_rgba(139,107,84,0.12)] group" style={{ 
-            boxShadow: '0 12px 26px rgba(0,0,0,0.07)',
-            maxWidth: '520px'
-          }}>
-            <div className="flex items-center gap-2">
-              <Sprout className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
-              <span className="text-[10px] text-clay-dark/70 font-medium uppercase tracking-wide group-hover:text-clay-dark transition-colors">Create Your Own</span>
-              <Wand2 className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
-            </div>
-            <Link to="/affirmation-builder" className="text-lg sm:text-xl font-display text-foreground font-semibold hover:text-clay-dark transition-colors text-center">
-              Custom Affirmation Studio
-            </Link>
-            
-            {/* Staff Pick Mini-Cards Inside */}
-            <div className="flex justify-center gap-3 my-2">
-              {/* Morning Ritual Mini */}
-              <Link 
-                to="/affirmation-builder?preset=morning" 
-                className="group/mini"
-              >
-                <div 
-                  className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
-                  style={{ transform: 'rotate(-2deg)' }}
+          <Link to="/affirmation-builder" className="block">
+            <div className="flex flex-col items-center gap-3 p-5 sm:p-6 rounded-lg bg-white border border-[#EBDDD1]/30 mx-auto hover:border-clay/40 transition-all duration-300 hover:shadow-[0_16px_32px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 group" style={{ 
+              boxShadow: '0 12px 26px rgba(0,0,0,0.07)',
+              maxWidth: '520px'
+            }}>
+              <div className="flex items-center gap-2">
+                <Sprout className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
+                <span className="text-[10px] text-clay-dark/70 font-medium uppercase tracking-wide group-hover:text-clay-dark transition-colors">Create Your Own</span>
+                <Wand2 className="h-3.5 w-3.5 text-clay-dark/70 group-hover:text-clay-dark transition-colors" />
+              </div>
+              <span className="text-lg sm:text-xl font-display text-foreground font-semibold group-hover:text-clay-dark transition-colors text-center">
+                Custom Affirmation Studio
+              </span>
+              
+              {/* Staff Pick Mini-Cards Inside */}
+              <div className="flex justify-center gap-3 my-2" onClick={(e) => e.preventDefault()}>
+                {/* Morning Ritual Mini */}
+                <Link 
+                  to="/affirmation-builder?preset=morning" 
+                  className="group/mini"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="aspect-square overflow-hidden">
-                    <img src={morningRitualImg} alt="Morning Ritual" className="w-full h-full object-cover" />
+                  <div 
+                    className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
+                    style={{ transform: 'rotate(-2deg)' }}
+                  >
+                    <div className="aspect-square overflow-hidden">
+                      <img src={morningRitualImg} alt="Morning Ritual" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
+                      <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Morning Ritual</span>
+                    </div>
                   </div>
-                  <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
-                    <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Morning Ritual</span>
-                  </div>
-                </div>
-              </Link>
+                </Link>
 
-              {/* Power Hour Mini */}
-              <Link 
-                to="/affirmation-builder?preset=power" 
-                className="group/mini"
-              >
-                <div 
-                  className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
-                  style={{ transform: 'rotate(2deg)' }}
+                {/* Power Hour Mini */}
+                <Link 
+                  to="/affirmation-builder?preset=power" 
+                  className="group/mini"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="aspect-square overflow-hidden">
-                    <img src={powerHourImg} alt="Power Hour" className="w-full h-full object-cover" />
+                  <div 
+                    className="w-[80px] sm:w-[90px] bg-white rounded-md border border-[#EBDDD1]/50 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(139,107,84,0.12)] hover:-translate-y-0.5 transition-all duration-300"
+                    style={{ transform: 'rotate(2deg)' }}
+                  >
+                    <div className="aspect-square overflow-hidden">
+                      <img src={powerHourImg} alt="Power Hour" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
+                      <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Power Hour</span>
+                    </div>
                   </div>
-                  <div className="py-1.5 px-1 text-center border-t border-[#EBDDD1]/30">
-                    <span className="text-[9px] font-medium text-foreground/80 group-hover/mini:text-clay-dark transition-colors">Power Hour</span>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
+              
+              <p className="text-sm text-foreground/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
             </div>
-            
-            <p className="text-sm text-foreground/75 max-w-md font-normal text-center">Craft personalized affirmations tailored to your intentions</p>
-          </div>
+          </Link>
 
           {/* Social Proof Card */}
           <div className="flex justify-center mt-6">
