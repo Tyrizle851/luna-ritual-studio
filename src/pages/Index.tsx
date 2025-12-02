@@ -6,7 +6,7 @@ import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
 import { Testimonials } from "@/components/Testimonials";
-import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon } from "lucide-react";
+import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon, Users } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 
 import affirmationRest from "@/assets/affirmation-rest.jpg";
@@ -252,9 +252,61 @@ const Index = () => {
             </div>
           </Link>
 
-          {/* Reinforcing Statement Below */}
-          <div className="text-center mt-5">
-            <p className="text-sm text-text-secondary font-normal">Join thousands using our studio to create meaningful daily affirmations</p>
+          {/* Staff Pick Mini-Cards */}
+          <div className="flex justify-center gap-4 sm:gap-6 mt-6">
+            {/* Morning Ritual Card */}
+            <Link 
+              to="/affirmation-builder?preset=morning" 
+              className="group relative"
+            >
+              <div 
+                className="w-[140px] sm:w-[160px] bg-white rounded-lg border border-[#EBDDD1]/40 overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(139,107,84,0.15)] hover:-translate-y-1 transition-all duration-300"
+                style={{ transform: 'rotate(-2deg)' }}
+              >
+                <div className="aspect-[4/5] bg-gradient-to-br from-[#FDF6F0] via-[#FAF3EC] to-[#F5EBE0] flex items-center justify-center p-3">
+                  <div className="text-center">
+                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-[#E8D9C8] flex items-center justify-center">
+                      <span className="text-lg">🌅</span>
+                    </div>
+                    <p className="text-[10px] text-clay-dark/80 italic leading-tight">"I greet this day with open heart..."</p>
+                  </div>
+                </div>
+                <div className="p-2.5 text-center border-t border-[#EBDDD1]/30">
+                  <span className="text-xs font-medium text-foreground group-hover:text-clay-dark transition-colors">Morning Ritual</span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Power Hour Card */}
+            <Link 
+              to="/affirmation-builder?preset=power" 
+              className="group relative"
+            >
+              <div 
+                className="w-[140px] sm:w-[160px] bg-white rounded-lg border border-[#EBDDD1]/40 overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(139,107,84,0.15)] hover:-translate-y-1 transition-all duration-300"
+                style={{ transform: 'rotate(2deg)' }}
+              >
+                <div className="aspect-[4/5] bg-gradient-to-br from-[#2C2825] via-[#3D3835] to-[#4A4340] flex items-center justify-center p-3">
+                  <div className="text-center">
+                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-[#A97E63]/30 flex items-center justify-center">
+                      <span className="text-lg">⚡</span>
+                    </div>
+                    <p className="text-[10px] text-white/80 italic leading-tight">"I am unstoppable..."</p>
+                  </div>
+                </div>
+                <div className="p-2.5 text-center border-t border-[#EBDDD1]/30">
+                  <span className="text-xs font-medium text-foreground group-hover:text-clay-dark transition-colors">Power Hour</span>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Social Proof Pill */}
+          <div className="flex justify-center mt-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FAF7F4] border border-[#EBDDD1]/50 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <Users className="h-4 w-4 text-clay-dark/70" />
+              <span className="text-sm text-text-secondary font-medium">5,000+ creators using the studio</span>
+            </div>
           </div>
         </div>
       </section>
