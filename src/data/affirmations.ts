@@ -88,9 +88,9 @@ export const affirmations: Affirmation[] = [
   },
   {
     id: "aff-002",
-    title: "I choose joy today",
-    category: "Joy",
-    description: "Joy is a conscious decision you make each morning. This uplifting design celebrates the power of intention, reminding you that happiness begins with choice. Warm colors and modern typography inspire daily gratitude.",
+    title: "I am worthy of peace",
+    category: "Self-Love",
+    description: "Peace is your birthright. This serene design reminds you that inner tranquility comes from within and is always available to you. Soft, calming tones create a sanctuary for your soul.",
     price: 14.49,
     originalPrice: 18.99,
     formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
