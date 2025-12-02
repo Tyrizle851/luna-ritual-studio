@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Sparkles } from "lucide-react";
+import { X } from "lucide-react";
 import { SubscriptionPopup } from "./SubscriptionPopup";
 
 export const SubscriptionBanner = () => {
@@ -25,27 +25,29 @@ export const SubscriptionBanner = () => {
 
   return (
     <>
-      <div className="fixed bottom-4 left-4 z-40 animate-fade-up">
+      <div 
+        className={`fixed bottom-6 right-6 z-40 transition-all duration-500 ease-out ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}
+      >
         <div 
           onClick={() => setShowPopup(true)}
-          className="relative bg-gradient-to-r from-clay to-gold text-white px-5 py-3 rounded-full shadow-lg cursor-pointer hover:shadow-xl transition-all hover:scale-105 group"
+          className="relative bg-background text-foreground px-8 py-5 rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-0.5 border border-border/30"
         >
           <button
             onClick={(e) => {
               e.stopPropagation();
               handleDismiss();
             }}
-            className="absolute -top-2 -right-2 bg-background text-foreground rounded-full p-1 shadow-md hover:bg-muted transition-colors"
+            className="absolute -top-2 -right-2 bg-foreground text-background rounded-full p-1.5 shadow-md hover:bg-foreground/80 transition-colors"
           >
-            <X className="h-3 w-3" />
+            <X className="h-3.5 w-3.5" />
           </button>
           
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium whitespace-nowrap">
-              30% off first bundle
-            </span>
-          </div>
+          <p className="text-base font-semibold text-center">
+            Get 30% off<br />
+            <span className="tracking-wide">SITEWIDE!</span>
+          </p>
         </div>
       </div>
       
