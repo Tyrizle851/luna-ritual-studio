@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Sparkles } from "lucide-react";
+import { X } from "lucide-react";
 import { SubscriptionPopup } from "./SubscriptionPopup";
 
 export const SubscriptionBanner = () => {
@@ -11,7 +11,7 @@ export const SubscriptionBanner = () => {
     const dismissed = localStorage.getItem("subscription-banner-dismissed");
     if (!dismissed) {
       // Show after a short delay for better UX
-      const timer = setTimeout(() => setIsVisible(true), 2000);
+      const timer = setTimeout(() => setIsVisible(true), 3000);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -25,27 +25,24 @@ export const SubscriptionBanner = () => {
 
   return (
     <>
-      <div className="fixed bottom-4 left-4 z-40 animate-fade-up">
+      <div className="fixed bottom-3 left-3 z-40 animate-fade-up sm:bottom-4 sm:left-4">
         <div 
           onClick={() => setShowPopup(true)}
-          className="relative bg-gradient-to-r from-clay to-gold text-white px-5 py-3 rounded-full shadow-lg cursor-pointer hover:shadow-xl transition-all hover:scale-105 group"
+          className="relative bg-clay/90 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-sm cursor-pointer hover:bg-clay hover:shadow-md transition-all text-xs sm:text-sm"
         >
           <button
             onClick={(e) => {
               e.stopPropagation();
               handleDismiss();
             }}
-            className="absolute -top-2 -right-2 bg-background text-foreground rounded-full p-1 shadow-md hover:bg-muted transition-colors"
+            className="absolute -top-1.5 -right-1.5 bg-background/90 text-muted-foreground rounded-full p-0.5 shadow-sm hover:bg-background transition-colors"
           >
-            <X className="h-3 w-3" />
+            <X className="h-2.5 w-2.5" />
           </button>
           
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium whitespace-nowrap">
-              30% off first bundle
-            </span>
-          </div>
+          <span className="font-medium">
+            30% off first bundle
+          </span>
         </div>
       </div>
       
