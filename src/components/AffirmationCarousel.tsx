@@ -106,7 +106,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
             className="flex-none w-[260px] sm:w-[280px] md:w-[320px] animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="relative h-full bg-white/70 backdrop-blur-sm rounded-xl border border-[#EBDDD1]/60 shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.12)] hover:-translate-y-1 transition-all duration-300 mx-[-6px]">
+            <div className="relative h-full bg-[#FAF8F5] rounded-xl border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300 mx-[-6px]">
               <WishlistButton productId={affirmation.id} />
               
               {affirmation.badge && (
