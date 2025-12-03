@@ -10,6 +10,7 @@ interface ProductImageRequest {
   productId: string;
   productCategory: string;
   productName: string;
+  productBrand: string;
   productDescription: string;
   originalImageUrl: string;
 }
@@ -20,10 +21,10 @@ serve(async (req) => {
   }
 
   try {
-    const { productId, productCategory, productName, productDescription, originalImageUrl } = 
+    const { productId, productCategory, productName, productBrand, productDescription, originalImageUrl } = 
       await req.json() as ProductImageRequest;
 
-    console.log(`Generating images for product: ${productId} (${productName})`);
+    console.log(`Generating images for product: ${productId} (${productName} by ${productBrand})`);
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
@@ -57,19 +58,19 @@ serve(async (req) => {
       });
     }
 
-    // Define image variation prompts
+    // Define image variation prompts that reference the original image
     const variations = [
       {
         type: "lifestyle",
-        prompt: `Create a premium lifestyle photograph of ${productName}. Show the item in an elegant, warm setting with soft natural lighting. The scene should feel luxurious and aspirational - think high-end editorial photography. Maintain the product's exact appearance and quality. Warm tones, cozy atmosphere, magazine-quality composition.`
+        prompt: `Using this exact ${productBrand} ${productName} product as reference, create a premium lifestyle photograph. Show someone wearing/using this EXACT product in an elegant, warm home setting with soft natural lighting. CRITICAL: The product must look IDENTICAL to the reference image - same design, colors, patterns, and brand styling. The scene should feel luxurious and aspirational. Warm tones, cozy atmosphere, magazine-quality composition.`
       },
       {
         type: "detail",
-        prompt: `Create a beautiful close-up detail shot of ${productName}. Focus on the luxurious texture, quality craftsmanship, and fine details. Show the material's sheen and quality. Soft, diffused lighting. Clean, minimal background. Premium product photography style.`
+        prompt: `Using this exact ${productBrand} ${productName} product as reference, create a beautiful close-up detail shot. Focus on the luxurious texture, quality craftsmanship, and fine details of THIS EXACT product. CRITICAL: Maintain the exact design, colors, and any visible branding from the reference image. Soft, diffused lighting. Clean, minimal background. Premium product photography style.`
       },
       {
         type: "styled",
-        prompt: `Create an aspirational styled shot of ${productName}. Show the item artfully arranged with complementary items in a curated flat-lay or vignette style. Think lifestyle magazine editorial. Warm, inviting colors. Premium aesthetic with natural textures like linen, wood, or fresh flowers nearby.`
+        prompt: `Using this exact ${productBrand} ${productName} product as reference, create an aspirational styled flat-lay shot. Show THIS EXACT product artfully arranged with complementary items. CRITICAL: The product must be identical to the reference - same design, colors, patterns. Think lifestyle magazine editorial. Warm, inviting colors with natural textures like linen, wood, or fresh flowers nearby.`
       }
     ];
 
@@ -91,10 +92,10 @@ serve(async (req) => {
       generatedImages.push({ variation_type: "original", image_url: originalImageUrl });
     }
 
-    // Generate each variation
+    // Generate each variation using the original image as reference
     for (const variation of variations) {
       try {
-        console.log(`Generating ${variation.type} variation for ${productId}...`);
+        console.log(`Generating ${variation.type} variation for ${productId} using image reference...`);
 
         const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
           method: "POST",
@@ -107,7 +108,18 @@ serve(async (req) => {
             messages: [
               {
                 role: "user",
-                content: variation.prompt
+                content: [
+                  {
+                    type: "text",
+                    text: variation.prompt
+                  },
+                  {
+                    type: "image_url",
+                    image_url: {
+                      url: originalImageUrl
+                    }
+                  }
+                ]
               }
             ],
             modalities: ["image", "text"]

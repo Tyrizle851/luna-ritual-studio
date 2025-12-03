@@ -45,11 +45,11 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
           {/* Hero Image Section with Gallery */}
           <div className="relative bg-white overflow-hidden">
             {/* Main Image */}
-            <div className="relative aspect-square md:aspect-video">
+            <div className="relative w-full flex items-center justify-center bg-white min-h-[300px] md:min-h-[450px]">
               <img
                 src={currentImage}
                 alt={product.name}
-                className="w-full h-full object-contain transition-opacity duration-300"
+                className="max-w-full max-h-[400px] md:max-h-[500px] object-contain transition-opacity duration-300"
               />
               {product.badge && (
                 <Badge 
