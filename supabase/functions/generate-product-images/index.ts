@@ -14,6 +14,7 @@ interface ProductImageRequest {
   productBrand: string;
   productDescription: string;
   originalImageUrl: string;
+  imageBase64?: string; // Optional: if provided, skips fetching
 }
 
 // Fetch image and convert to base64 data URL
@@ -53,7 +54,7 @@ serve(async (req) => {
   }
 
   try {
-    const { productId, productCategory, productName, productBrand, productDescription, originalImageUrl } = 
+    const { productId, productCategory, productName, productBrand, productDescription, originalImageUrl, imageBase64: providedBase64 } = 
       await req.json() as ProductImageRequest;
 
     console.log(`Generating images for product: ${productId} (${productName} by ${productBrand})`);
@@ -90,12 +91,18 @@ serve(async (req) => {
       });
     }
 
-    // Fetch the original image and convert to base64
-    console.log(`Fetching original image from: ${originalImageUrl}`);
-    const imageBase64 = await fetchImageAsBase64(originalImageUrl);
+    // Use provided base64 or fetch the original image
+    let imageBase64: string | null = providedBase64 || null;
     
     if (!imageBase64) {
-      throw new Error("Failed to fetch original product image. The URL may be inaccessible.");
+      console.log(`Fetching original image from: ${originalImageUrl}`);
+      imageBase64 = await fetchImageAsBase64(originalImageUrl);
+    } else {
+      console.log(`Using provided base64 image data`);
+    }
+    
+    if (!imageBase64) {
+      throw new Error("Failed to fetch original product image. The URL may be inaccessible. Try providing imageBase64 directly.");
     }
     
     console.log(`Successfully fetched image, base64 length: ${imageBase64.length}`);
