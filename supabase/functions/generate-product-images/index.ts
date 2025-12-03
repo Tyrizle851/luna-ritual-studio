@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -13,6 +14,37 @@ interface ProductImageRequest {
   productBrand: string;
   productDescription: string;
   originalImageUrl: string;
+}
+
+// Fetch image and convert to base64 data URL
+async function fetchImageAsBase64(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
+      }
+    });
+    
+    if (!response.ok) {
+      console.error(`Failed to fetch image: ${response.status}`);
+      return null;
+    }
+    
+    const contentType = response.headers.get("content-type") || "image/jpeg";
+    const arrayBuffer = await response.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuffer);
+    let binary = "";
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64 = btoa(binary);
+    
+    return `data:${contentType};base64,${base64}`;
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return null;
+  }
 }
 
 serve(async (req) => {
@@ -57,6 +89,16 @@ serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    // Fetch the original image and convert to base64
+    console.log(`Fetching original image from: ${originalImageUrl}`);
+    const imageBase64 = await fetchImageAsBase64(originalImageUrl);
+    
+    if (!imageBase64) {
+      throw new Error("Failed to fetch original product image. The URL may be inaccessible.");
+    }
+    
+    console.log(`Successfully fetched image, base64 length: ${imageBase64.length}`);
 
     // Define image variation prompts that reference the original image
     const variations = [
@@ -116,7 +158,7 @@ serve(async (req) => {
                   {
                     type: "image_url",
                     image_url: {
-                      url: originalImageUrl
+                      url: imageBase64
                     }
                   }
                 ]
