@@ -11,7 +11,7 @@ import { Candle } from "@/data/candles";
 import { Book } from "@/data/books";
 
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
-import productCandleWoodwickVanilla from "@/assets/product-candle-woodwick-vanilla-bean-featured.jpg";
+import productCandleWoodwickVanilla from "@/assets/product-candle-vanilla-bean.jpg";
 import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
 
 // Complete product data matching shop exactly
