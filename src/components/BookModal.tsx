@@ -14,6 +14,17 @@ interface BookModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
+// Category-specific labels for Books
+const getImageLabel = (variationType: string): string => {
+  switch (variationType) {
+    case "original": return "Cover";
+    case "lifestyle": return "Reading";
+    case "detail": return "Pages";
+    case "styled": return "Display";
+    default: return variationType;
+  }
+};
+
 export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { images } = useProductImages(product?.id || null, "books");
@@ -26,15 +37,13 @@ export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
     }
   };
 
-  // Build gallery images - use generated images if available, otherwise just original
+  // Build gallery images - use product.image for original, generated images for variations
   const galleryImages = images.length > 0 
     ? images.map(img => ({
-        url: img.image_url,
-        label: img.variation_type === "original" ? "Product" : 
-               img.variation_type === "lifestyle" ? "Lifestyle" :
-               img.variation_type === "detail" ? "Detail" : "Styled"
+        url: img.variation_type === "original" ? product.image : img.image_url,
+        label: getImageLabel(img.variation_type)
       }))
-    : [{ url: product.image, label: "Product" }];
+    : [{ url: product.image, label: "Cover" }];
 
   const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
 
@@ -52,7 +61,7 @@ export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
                   <img
                     src={currentImage}
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-[0.85] origin-center"
                   />
                   {product.badge && (
                     <Badge 
@@ -84,7 +93,7 @@ export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
                       <img
                         src={img.url}
                         alt={img.label}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover scale-[0.85] origin-center"
                       />
                       <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
                         {img.label}
@@ -99,7 +108,7 @@ export const BookModal = ({ product, open, onOpenChange }: BookModalProps) => {
                 <img
                   src={currentImage}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover scale-[0.85] origin-center"
                 />
                 {product.badge && (
                   <Badge 

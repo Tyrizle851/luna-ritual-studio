@@ -17,6 +17,17 @@ interface ProductModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
+// Category-specific labels for Affirmations
+const getImageLabel = (variationType: string): string => {
+  switch (variationType) {
+    case "original": return "Artwork";
+    case "lifestyle": return "In Space";
+    case "detail": return "Close-up";
+    case "styled": return "Styled";
+    default: return variationType;
+  }
+};
+
 export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps) => {
   const [selectedFormat, setSelectedFormat] = useState("");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -45,15 +56,13 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
-  // Build gallery images - use generated images if available, otherwise just original
+  // Build gallery images - use product.image for original, generated images for variations
   const galleryImages = images.length > 0 
     ? images.map(img => ({
-        url: img.image_url,
-        label: img.variation_type === "original" ? "Product" : 
-               img.variation_type === "lifestyle" ? "Lifestyle" :
-               img.variation_type === "detail" ? "Detail" : "Styled"
+        url: img.variation_type === "original" ? product.image : img.image_url,
+        label: getImageLabel(img.variation_type)
       }))
-    : [{ url: product.image, label: "Product" }];
+    : [{ url: product.image, label: "Artwork" }];
 
   const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
 
@@ -86,7 +95,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                   <img
                     src={currentImage}
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-[0.85] origin-center"
                   />
                 </div>
                 
@@ -106,7 +115,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                       <img
                         src={img.url}
                         alt={img.label}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover scale-[0.85] origin-center"
                       />
                       <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
                         {img.label}
@@ -126,7 +135,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 <img
                   src={currentImage}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover scale-[0.85] origin-center"
                 />
               </div>
             )}
