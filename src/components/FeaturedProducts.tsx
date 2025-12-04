@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -9,6 +9,9 @@ import { WishlistButton } from "@/components/WishlistButton";
 import { FashionProduct } from "@/data/fashion";
 import { Candle } from "@/data/candles";
 import { Book } from "@/data/books";
+import { generateProductImages } from "@/lib/generateProductImages";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
 import productCandleWoodwickVanilla from "@/assets/product-candle-vanilla-bean.jpg";
@@ -135,6 +138,64 @@ export const FeaturedProducts = () => {
   const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
   const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
+
+  // DEV: Auto-generate images for featured products if they don't exist
+  useEffect(() => {
+    const generateMissingImages = async () => {
+      const productsToGenerate = [
+        {
+          id: "cnd-002",
+          category: "candles",
+          name: featuredCandle.name,
+          brand: featuredCandle.brand,
+          description: featuredCandle.description,
+          image: featuredCandle.image,
+        },
+        {
+          id: "book-000",
+          category: "books",
+          name: featuredBook.title,
+          brand: featuredBook.author,
+          description: featuredBook.description,
+          image: featuredBook.image,
+        },
+      ];
+
+      for (const product of productsToGenerate) {
+        // Check if images already exist
+        const { data: existing } = await supabase
+          .from("product_images")
+          .select("id")
+          .eq("product_id", product.id)
+          .limit(1);
+
+        if (existing && existing.length > 0) {
+          console.log(`Images already exist for ${product.id}, skipping...`);
+          continue;
+        }
+
+        console.log(`Generating images for ${product.id}...`);
+        toast.info(`Generating AI images for ${product.name}...`);
+
+        try {
+          await generateProductImages({
+            productId: product.id,
+            productCategory: product.category,
+            productName: product.name,
+            productBrand: product.brand,
+            productDescription: product.description,
+            imageSource: product.image,
+          });
+          toast.success(`Images generated for ${product.name}!`);
+        } catch (error) {
+          console.error(`Failed to generate images for ${product.id}:`, error);
+          toast.error(`Failed to generate images for ${product.name}`);
+        }
+      }
+    };
+
+    generateMissingImages();
+  }, []);
 
   const handleFashionClick = () => {
     setSelectedFashion(featuredFashion);
