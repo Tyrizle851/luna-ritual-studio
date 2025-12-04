@@ -3,12 +3,10 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ExternalLink, Star, Package, Truck, RefreshCw, Wand2 } from "lucide-react";
+import { ExternalLink, Star, Package, Truck, RefreshCw } from "lucide-react";
 import { FashionProduct } from "@/data/fashion";
 import { useProductImages } from "@/hooks/useProductImages";
 import { cn } from "@/lib/utils";
-import { generateProductImages } from "@/lib/generateProductImages";
-import { toast } from "sonner";
 
 interface FashionProductModalProps {
   product: FashionProduct | null;
@@ -18,7 +16,6 @@ interface FashionProductModalProps {
 
 export const FashionProductModal = ({ product, open, onOpenChange }: FashionProductModalProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isGenerating, setIsGenerating] = useState(false);
   const { images, isLoading } = useProductImages(product?.id || null, "fashion");
 
   if (!product) return null;
@@ -26,29 +23,6 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
   const handleShopNow = () => {
     if (product.affiliateUrl) {
       window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  const handleGenerateImages = async () => {
-    if (!product) return;
-    setIsGenerating(true);
-    toast.info("Generating AI image variations... This may take 1-2 minutes.");
-    
-    try {
-      await generateProductImages({
-        productId: product.id,
-        productCategory: "fashion",
-        productName: product.name,
-        productBrand: product.brand,
-        productDescription: product.description,
-        imageSource: product.image,
-      });
-      toast.success("Images generated! Refresh to see them.");
-    } catch (error) {
-      console.error("Failed to generate images:", error);
-      toast.error("Failed to generate images. Check console for details.");
-    } finally {
-      setIsGenerating(false);
     }
   };
 
@@ -68,68 +42,76 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
         <div className="relative">
-          {/* Hero Image Section with Gallery */}
+          {/* Hero Image Section with Side-by-Side Gallery */}
           <div className="relative bg-white overflow-hidden">
-            {/* Main Image */}
-            <div className="relative w-full flex items-center justify-center bg-white min-h-[300px] md:min-h-[450px]">
-              <img
-                src={currentImage}
-                alt={product.name}
-                className="max-w-full max-h-[400px] md:max-h-[500px] object-contain transition-opacity duration-300"
-              />
-              {product.badge && (
-                <Badge 
-                  className={`absolute top-3 left-3 ${
-                    product.badge === 'Sale' ? 'bg-foreground text-background' :
-                    product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
-                    'bg-accent text-accent-foreground'
-                  } font-semibold`}
-                >
-                  {product.badge}
-                </Badge>
-              )}
-            </div>
-
-            {/* Thumbnail Strip - only show if we have multiple images */}
-            {galleryImages.length > 1 && (
-              <div className="flex gap-2 p-3 bg-secondary/30 overflow-x-auto">
-                {galleryImages.map((img, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={cn(
-                      "relative flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all",
-                      selectedImageIndex === index 
-                        ? "border-primary ring-2 ring-primary/20" 
-                        : "border-transparent hover:border-muted-foreground/30"
-                    )}
-                  >
-                    <img
-                      src={img.url}
-                      alt={img.label}
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[9px] px-1 py-0.5 text-center truncate">
-                      {img.label}
-                    </span>
-                  </button>
-                ))}
+            {galleryImages.length > 1 ? (
+              /* Side-by-side layout: Main image left, thumbnails right */
+              <div className="flex flex-col md:flex-row">
+                {/* Main Image - Left Side */}
+                <div className="relative flex-1 flex items-center justify-center bg-white min-h-[300px] md:min-h-[400px]">
+                  <img
+                    src={currentImage}
+                    alt={product.name}
+                    className="max-w-full max-h-[350px] md:max-h-[400px] object-contain transition-opacity duration-300"
+                  />
+                  {product.badge && (
+                    <Badge 
+                      className={`absolute top-3 left-3 ${
+                        product.badge === 'Sale' ? 'bg-foreground text-background' :
+                        product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                        'bg-accent text-accent-foreground'
+                      } font-semibold`}
+                    >
+                      {product.badge}
+                    </Badge>
+                  )}
+                </div>
+                
+                {/* Thumbnails - Right Side (vertical stack) */}
+                <div className="flex md:flex-col gap-0 md:w-[120px] bg-secondary/20 border-t md:border-t-0 md:border-l border-border/50">
+                  {galleryImages.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={cn(
+                        "relative flex-1 overflow-hidden transition-all border-b md:border-b border-border/30 last:border-b-0",
+                        "min-h-[80px] md:min-h-0",
+                        selectedImageIndex === index 
+                          ? "ring-2 ring-inset ring-primary bg-white" 
+                          : "hover:bg-white/50"
+                      )}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[10px] px-1.5 py-1 text-center font-medium">
+                        {img.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            )}
-            
-            {/* Generate Images Button - show when no generated images exist */}
-            {images.length === 0 && (
-              <div className="p-3 bg-secondary/30 border-t border-border/50">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleGenerateImages}
-                  disabled={isGenerating}
-                  className="w-full"
-                >
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  {isGenerating ? "Generating AI Variations..." : "Generate AI Image Variations"}
-                </Button>
+            ) : (
+              /* Single image layout */
+              <div className="relative w-full flex items-center justify-center bg-white min-h-[300px] md:min-h-[400px]">
+                <img
+                  src={currentImage}
+                  alt={product.name}
+                  className="max-w-full max-h-[350px] md:max-h-[400px] object-contain"
+                />
+                {product.badge && (
+                  <Badge 
+                    className={`absolute top-3 left-3 ${
+                      product.badge === 'Sale' ? 'bg-foreground text-background' :
+                      product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                      'bg-accent text-accent-foreground'
+                    } font-semibold`}
+                  >
+                    {product.badge}
+                  </Badge>
+                )}
               </div>
             )}
           </div>
