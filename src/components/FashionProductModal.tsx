@@ -43,16 +43,16 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
         <div className="relative">
           {/* Hero Image Section with Side-by-Side Gallery */}
-          <div className="relative bg-white overflow-hidden">
+          <div className="relative overflow-hidden">
             {galleryImages.length > 1 ? (
               /* Side-by-side layout: Main image left, thumbnails right */
-              <div className="flex flex-row h-[280px] md:h-[320px]">
+              <div className="flex flex-row h-[250px] md:h-[280px]">
                 {/* Main Image - Left Side */}
-                <div className="relative flex-1 flex items-center justify-center bg-white p-2">
+                <div className="relative flex-1 overflow-hidden">
                   <img
                     src={currentImage}
                     alt={product.name}
-                    className="max-w-full max-h-full object-contain transition-opacity duration-300"
+                    className="w-full h-full object-cover"
                   />
                   {product.badge && (
                     <Badge 
@@ -68,7 +68,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                 </div>
                 
                 {/* Thumbnails - Right Side (vertical stack) */}
-                <div className="flex flex-col w-[90px] md:w-[100px] border-l border-border/40">
+                <div className="flex flex-col w-[70px] md:w-[80px] border-l border-border/40">
                   {galleryImages.map((img, index) => (
                     <button
                       key={index}
@@ -85,7 +85,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                         alt={img.label}
                         className="w-full h-full object-cover"
                       />
-                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[9px] px-1 py-0.5 text-center font-medium">
+                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
                         {img.label}
                       </span>
                     </button>
@@ -94,11 +94,11 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               </div>
             ) : (
               /* Single image layout */
-              <div className="relative w-full flex items-center justify-center bg-white h-[280px] md:h-[320px] p-2">
+              <div className="relative w-full h-[250px] md:h-[280px] overflow-hidden">
                 <img
                   src={currentImage}
                   alt={product.name}
-                  className="max-w-full max-h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
                 {product.badge && (
                   <Badge 
