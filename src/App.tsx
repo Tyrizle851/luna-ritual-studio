@@ -23,6 +23,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import NotFound from "./pages/NotFound";
+import AdminImageGen from "./pages/AdminImageGen";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const AnimatedRoutes = () => {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
+        <Route path="/admin/imagegen" element={<AdminImageGen />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
