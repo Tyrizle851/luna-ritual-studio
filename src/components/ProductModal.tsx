@@ -8,6 +8,8 @@ import { Affirmation } from "@/data/affirmations";
 import { useCartStore } from "@/store/cartStore";
 import { generateAffirmationSchema } from "@/lib/seoUtils";
 import { Star, Check, Package, Sparkles, FileText } from "lucide-react";
+import { useProductImages } from "@/hooks/useProductImages";
+import { cn } from "@/lib/utils";
 
 interface ProductModalProps {
   product: Affirmation | null;
@@ -17,7 +19,9 @@ interface ProductModalProps {
 
 export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps) => {
   const [selectedFormat, setSelectedFormat] = useState("");
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addItem } = useCartStore();
+  const { images } = useProductImages(product?.id || null, "affirmations");
 
   if (!product) return null;
 
@@ -41,6 +45,18 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
+  // Build gallery images - use generated images if available, otherwise just original
+  const galleryImages = images.length > 0 
+    ? images.map(img => ({
+        url: img.image_url,
+        label: img.variation_type === "original" ? "Product" : 
+               img.variation_type === "lifestyle" ? "Lifestyle" :
+               img.variation_type === "detail" ? "Detail" : "Styled"
+      }))
+    : [{ url: product.image, label: "Product" }];
+
+  const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
+
   return (
     <>
       {product && (
@@ -55,18 +71,65 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
           {/* Accessibility Title (visually hidden) */}
           <DialogTitle className="sr-only">{product.title}</DialogTitle>
           
-          {/* Image Section - Top */}
-          <div className="relative aspect-[4/3] bg-secondary">
-            {product.badge && (
-              <div className="absolute top-4 left-4 z-10 bg-accent text-accent-foreground text-xs font-semibold px-2.5 py-1 rounded shadow-lg">
-                {product.badge}
+          {/* Image Section with Side-by-Side Gallery */}
+          <div className="relative overflow-hidden">
+            {galleryImages.length > 1 ? (
+              /* Side-by-side layout: Main image left, thumbnails right */
+              <div className="flex flex-row h-[300px] md:h-[340px]">
+                {/* Main Image - Left Side */}
+                <div className="relative flex-1 overflow-hidden">
+                  {product.badge && (
+                    <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg">
+                      {product.badge}
+                    </div>
+                  )}
+                  <img
+                    src={currentImage}
+                    alt={product.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                {/* Thumbnails - Right Side (vertical stack) */}
+                <div className="flex flex-col w-[85px] md:w-[95px] border-l border-border/40">
+                  {galleryImages.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={cn(
+                        "relative flex-1 overflow-hidden transition-all border-b border-border/30 last:border-b-0",
+                        selectedImageIndex === index 
+                          ? "ring-2 ring-inset ring-primary" 
+                          : "hover:opacity-80"
+                      )}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
+                        {img.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Single image layout */
+              <div className="relative w-full h-[300px] md:h-[340px] overflow-hidden">
+                {product.badge && (
+                  <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg">
+                    {product.badge}
+                  </div>
+                )}
+                <img
+                  src={currentImage}
+                  alt={product.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
             )}
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full h-full object-cover"
-            />
           </div>
 
           {/* Content Section - Below */}

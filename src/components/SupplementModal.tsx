@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ExternalLink, Star, Package, Truck, RefreshCw } from "lucide-react";
 import type { Supplement } from "@/data/supplements";
+import { useProductImages } from "@/hooks/useProductImages";
+import { cn } from "@/lib/utils";
 
 interface SupplementModalProps {
   product: Supplement | null;
@@ -12,6 +15,9 @@ interface SupplementModalProps {
 }
 
 export const SupplementModal = ({ product, open, onOpenChange }: SupplementModalProps) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { images } = useProductImages(product?.id || null, "supplements");
+
   if (!product) return null;
 
   const handleShopNow = () => {
@@ -20,28 +26,94 @@ export const SupplementModal = ({ product, open, onOpenChange }: SupplementModal
     }
   };
 
+  // Build gallery images - use generated images if available, otherwise just original
+  const galleryImages = images.length > 0 
+    ? images.map(img => ({
+        url: img.image_url,
+        label: img.variation_type === "original" ? "Product" : 
+               img.variation_type === "lifestyle" ? "Lifestyle" :
+               img.variation_type === "detail" ? "Detail" : "Styled"
+      }))
+    : [{ url: product.image, label: "Product" }];
+
+  const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
         <div className="relative">
-          {/* Hero Image Section */}
-          <div className="relative aspect-square md:aspect-video bg-white overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-contain"
-            />
-            {product.badge && (
-              <Badge 
-                className={`absolute top-3 left-3 ${
-                  product.badge === 'Sale' ? 'bg-foreground text-background' :
-                  product.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
-                  product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
-                  'bg-secondary text-foreground'
-                } font-semibold`}
-              >
-                {product.badge}
-              </Badge>
+          {/* Hero Image Section with Side-by-Side Gallery */}
+          <div className="relative overflow-hidden">
+            {galleryImages.length > 1 ? (
+              /* Side-by-side layout: Main image left, thumbnails right */
+              <div className="flex flex-row h-[300px] md:h-[340px]">
+                {/* Main Image - Left Side */}
+                <div className="relative flex-1 overflow-hidden">
+                  <img
+                    src={currentImage}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                  {product.badge && (
+                    <Badge 
+                      className={`absolute top-2 left-2 text-[10px] ${
+                        product.badge === 'Sale' ? 'bg-foreground text-background' :
+                        product.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
+                        product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                        'bg-secondary text-foreground'
+                      } font-semibold`}
+                    >
+                      {product.badge}
+                    </Badge>
+                  )}
+                </div>
+                
+                {/* Thumbnails - Right Side (vertical stack) */}
+                <div className="flex flex-col w-[85px] md:w-[95px] border-l border-border/40">
+                  {galleryImages.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={cn(
+                        "relative flex-1 overflow-hidden transition-all border-b border-border/30 last:border-b-0",
+                        selectedImageIndex === index 
+                          ? "ring-2 ring-inset ring-primary" 
+                          : "hover:opacity-80"
+                      )}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
+                        {img.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Single image layout */
+              <div className="relative w-full h-[300px] md:h-[340px] overflow-hidden">
+                <img
+                  src={currentImage}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+                {product.badge && (
+                  <Badge 
+                    className={`absolute top-2 left-2 text-[10px] ${
+                      product.badge === 'Sale' ? 'bg-foreground text-background' :
+                      product.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
+                      product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                      'bg-secondary text-foreground'
+                    } font-semibold`}
+                  >
+                    {product.badge}
+                  </Badge>
+                )}
+              </div>
             )}
           </div>
 

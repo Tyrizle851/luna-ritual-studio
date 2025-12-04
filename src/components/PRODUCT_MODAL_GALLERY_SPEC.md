@@ -50,8 +50,8 @@ When only 1 image exists:
 5. Always horizontal layout (no mobile vertical stacking)
 
 ## Files Using This Pattern
-- `src/components/FashionProductModal.tsx` ✅ (reference implementation)
+- `src/components/FashionProductModal.tsx` ✅
 - `src/components/CandleModal.tsx` ✅
 - `src/components/BookModal.tsx` ✅
-- `src/components/SupplementModal.tsx` (TODO)
-- `src/components/ProductModal.tsx` (TODO - Affirmations)
+- `src/components/SupplementModal.tsx` ✅
+- `src/components/ProductModal.tsx` ✅ (Affirmations)
