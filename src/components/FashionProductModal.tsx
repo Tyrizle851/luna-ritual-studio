@@ -46,7 +46,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
           <div className="relative overflow-hidden">
             {galleryImages.length > 1 ? (
               /* Side-by-side layout: Main image left, thumbnails right */
-              <div className="flex flex-row h-[250px] md:h-[280px]">
+              <div className="flex flex-row h-[300px] md:h-[340px]">
                 {/* Main Image - Left Side */}
                 <div className="relative flex-1 overflow-hidden">
                   <img
@@ -68,7 +68,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                 </div>
                 
                 {/* Thumbnails - Right Side (vertical stack) */}
-                <div className="flex flex-col w-[70px] md:w-[80px] border-l border-border/40">
+                <div className="flex flex-col w-[85px] md:w-[95px] border-l border-border/40">
                   {galleryImages.map((img, index) => (
                     <button
                       key={index}
@@ -94,7 +94,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               </div>
             ) : (
               /* Single image layout */
-              <div className="relative w-full h-[250px] md:h-[280px] overflow-hidden">
+              <div className="relative w-full h-[300px] md:h-[340px] overflow-hidden">
                 <img
                   src={currentImage}
                   alt={product.name}

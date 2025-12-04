@@ -7,7 +7,7 @@ Side-by-side layout with main image on LEFT, thumbnails stacked vertically on RI
 
 ### Container
 - `flex flex-row` (always horizontal, never stacks)
-- Height: `h-[250px] md:h-[280px]`
+- Height: `h-[300px] md:h-[340px]`
 - No background color, no padding
 
 ### Main Image (Left Side)
@@ -18,7 +18,7 @@ Side-by-side layout with main image on LEFT, thumbnails stacked vertically on RI
 - Badge positioned: `absolute top-2 left-2 text-[10px]`
 
 ### Thumbnails (Right Side)
-- Width: `w-[70px] md:w-[80px]`
+- Width: `w-[85px] md:w-[95px]`
 - `flex flex-col` (vertical stack)
 - `border-l border-border/40` (left border separator)
 - Each thumbnail:
@@ -38,7 +38,7 @@ Side-by-side layout with main image on LEFT, thumbnails stacked vertically on RI
 
 ## Single Image Fallback
 When only 1 image exists:
-- `h-[250px] md:h-[280px]`
+- `h-[300px] md:h-[340px]`
 - `overflow-hidden`
 - Image: `w-full h-full object-cover`
 
