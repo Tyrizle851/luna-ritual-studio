@@ -51,7 +51,7 @@ When only 1 image exists:
 
 ## Files Using This Pattern
 - `src/components/FashionProductModal.tsx` ✅ (reference implementation)
-- `src/components/CandleModal.tsx` (TODO)
+- `src/components/CandleModal.tsx` ✅
+- `src/components/BookModal.tsx` ✅
 - `src/components/SupplementModal.tsx` (TODO)
-- `src/components/BookModal.tsx` (TODO)
 - `src/components/ProductModal.tsx` (TODO - Affirmations)
