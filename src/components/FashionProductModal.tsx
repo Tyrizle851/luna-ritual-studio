@@ -3,10 +3,12 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ExternalLink, Star, Package, Truck, RefreshCw } from "lucide-react";
+import { ExternalLink, Star, Package, Truck, RefreshCw, Wand2 } from "lucide-react";
 import { FashionProduct } from "@/data/fashion";
 import { useProductImages } from "@/hooks/useProductImages";
 import { cn } from "@/lib/utils";
+import { generateProductImages } from "@/lib/generateProductImages";
+import { toast } from "sonner";
 
 interface FashionProductModalProps {
   product: FashionProduct | null;
@@ -16,6 +18,7 @@ interface FashionProductModalProps {
 
 export const FashionProductModal = ({ product, open, onOpenChange }: FashionProductModalProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
   const { images, isLoading } = useProductImages(product?.id || null, "fashion");
 
   if (!product) return null;
@@ -23,6 +26,29 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
   const handleShopNow = () => {
     if (product.affiliateUrl) {
       window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleGenerateImages = async () => {
+    if (!product) return;
+    setIsGenerating(true);
+    toast.info("Generating AI image variations... This may take 1-2 minutes.");
+    
+    try {
+      await generateProductImages({
+        productId: product.id,
+        productCategory: "fashion",
+        productName: product.name,
+        productBrand: product.brand,
+        productDescription: product.description,
+        imageSource: product.image,
+      });
+      toast.success("Images generated! Refresh to see them.");
+    } catch (error) {
+      console.error("Failed to generate images:", error);
+      toast.error("Failed to generate images. Check console for details.");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -88,6 +114,22 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                     </span>
                   </button>
                 ))}
+              </div>
+            )}
+            
+            {/* Generate Images Button - show when no generated images exist */}
+            {images.length === 0 && (
+              <div className="p-3 bg-secondary/30 border-t border-border/50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGenerateImages}
+                  disabled={isGenerating}
+                  className="w-full"
+                >
+                  <Wand2 className="h-4 w-4 mr-2" />
+                  {isGenerating ? "Generating AI Variations..." : "Generate AI Image Variations"}
+                </Button>
               </div>
             )}
           </div>
