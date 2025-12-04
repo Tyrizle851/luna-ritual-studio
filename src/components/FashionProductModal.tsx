@@ -46,17 +46,17 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
           <div className="relative bg-white overflow-hidden">
             {galleryImages.length > 1 ? (
               /* Side-by-side layout: Main image left, thumbnails right */
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-row h-[280px] md:h-[320px]">
                 {/* Main Image - Left Side */}
-                <div className="relative flex-1 flex items-center justify-center bg-white min-h-[300px] md:min-h-[400px]">
+                <div className="relative flex-1 flex items-center justify-center bg-white p-2">
                   <img
                     src={currentImage}
                     alt={product.name}
-                    className="max-w-full max-h-[350px] md:max-h-[400px] object-contain transition-opacity duration-300"
+                    className="max-w-full max-h-full object-contain transition-opacity duration-300"
                   />
                   {product.badge && (
                     <Badge 
-                      className={`absolute top-3 left-3 ${
+                      className={`absolute top-2 left-2 text-[10px] ${
                         product.badge === 'Sale' ? 'bg-foreground text-background' :
                         product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                         'bg-accent text-accent-foreground'
@@ -68,17 +68,16 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                 </div>
                 
                 {/* Thumbnails - Right Side (vertical stack) */}
-                <div className="flex md:flex-col gap-0 md:w-[120px] bg-secondary/20 border-t md:border-t-0 md:border-l border-border/50">
+                <div className="flex flex-col w-[90px] md:w-[100px] border-l border-border/40">
                   {galleryImages.map((img, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
                       className={cn(
-                        "relative flex-1 overflow-hidden transition-all border-b md:border-b border-border/30 last:border-b-0",
-                        "min-h-[80px] md:min-h-0",
+                        "relative flex-1 overflow-hidden transition-all border-b border-border/30 last:border-b-0",
                         selectedImageIndex === index 
-                          ? "ring-2 ring-inset ring-primary bg-white" 
-                          : "hover:bg-white/50"
+                          ? "ring-2 ring-inset ring-primary" 
+                          : "hover:opacity-80"
                       )}
                     >
                       <img
@@ -86,7 +85,7 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
                         alt={img.label}
                         className="w-full h-full object-cover"
                       />
-                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[10px] px-1.5 py-1 text-center font-medium">
+                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[9px] px-1 py-0.5 text-center font-medium">
                         {img.label}
                       </span>
                     </button>
@@ -95,15 +94,15 @@ export const FashionProductModal = ({ product, open, onOpenChange }: FashionProd
               </div>
             ) : (
               /* Single image layout */
-              <div className="relative w-full flex items-center justify-center bg-white min-h-[300px] md:min-h-[400px]">
+              <div className="relative w-full flex items-center justify-center bg-white h-[280px] md:h-[320px] p-2">
                 <img
                   src={currentImage}
                   alt={product.name}
-                  className="max-w-full max-h-[350px] md:max-h-[400px] object-contain"
+                  className="max-w-full max-h-full object-contain"
                 />
                 {product.badge && (
                   <Badge 
-                    className={`absolute top-3 left-3 ${
+                    className={`absolute top-2 left-2 text-[10px] ${
                       product.badge === 'Sale' ? 'bg-foreground text-background' :
                       product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                       'bg-accent text-accent-foreground'
