@@ -142,13 +142,18 @@ Photography style: Editorial product photography with emotional warmth. Soft nat
 
 CRITICAL: Use the EXACT artwork from the input image. Do not change the design, text, or colors. The poster must be fully visible.`,
 
-    framed: `Show the EXACT artwork from the input image in a Red Oak wood frame (warm honey-brown, #D4A489) holding an 18x24 inch print (portrait orientation).
+    framed: `Show the EXACT artwork from the input image in a simple Red Oak wood frame (warm honey-brown, #D4A489) holding an 18x24 inch print (portrait orientation).
+
+CRITICAL FRAME REQUIREMENTS:
+- Simple wood frame ONLY - NO white mat, NO white border, NO matting between frame and artwork
+- The artwork should go edge-to-edge inside the frame, touching the frame directly
+- Just Red Oak wood frame with visible grain directly surrounding the artwork
 
 The scene: A cozy reading corner with a worn leather armchair, a stack of beautiful books, warm wood floors, and late afternoon golden light streaming in. The framed artwork hangs on a textured cream plaster wall, casting a soft shadow. A trailing pothos plant is visible nearby.
 
-Photography style: Architectural Digest or Apartment Therapy quality. Warm, inviting, editorial. Soft diffused light, visible textures (leather, wood, linen), film grain warmth. This should feel like someone's dream home.
+Photography style: Architectural Digest or Apartment Therapy quality. Warm, inviting, editorial. Soft diffused light, visible textures (leather, wood, linen), film grain warmth.
 
-CRITICAL: Use the EXACT artwork from the input image. The frame should be simple and elegant with visible wood grain. Do not change the artwork design, text, or colors.`
+CRITICAL: Use the EXACT artwork from the input image. Do NOT add any white mat or border inside the frame. The artwork must touch the frame edges directly.`
   };
 }
 
