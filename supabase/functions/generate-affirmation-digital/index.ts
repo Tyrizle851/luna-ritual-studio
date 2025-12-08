@@ -102,9 +102,9 @@ serve(async (req) => {
 });
 
 function buildPrompt(title: string, category: string, supportingPhrases: string[]): string {
-  // Limit to 5-7 phrases for cleaner design
-  const phraseCount = 5 + Math.floor(Math.random() * 3);
-  const shuffledPhrases = supportingPhrases.sort(() => Math.random() - 0.5).slice(0, phraseCount);
+  // Use 8-10 phrases for rich but balanced design
+  const phraseCount = 8 + Math.floor(Math.random() * 3);
+  const shuffledPhrases = supportingPhrases.sort(() => Math.random() - 0.5).slice(0, Math.min(phraseCount, supportingPhrases.length));
   const phrasesText = shuffledPhrases.join('", "');
   
   // Get randomized styling
@@ -112,31 +112,37 @@ function buildPrompt(title: string, category: string, supportingPhrases: string[
   const palette = getRandomPalette();
   const typography = getRandomTypography();
   const layout = getRandomLayout();
-  const elements = getRandomElements(category);
+  const elements = getRandomElements();
+  const density = getRandomDensity();
   
-  return `Create a clean, minimal typography poster for an affirmation print.
+  return `Create a rich, layered typography poster for an affirmation print that feels like a curated art print.
 
 MAIN AFFIRMATION: "${title}"
-SUPPORTING PHRASES (arrange ${phraseCount} of these artistically): "${phrasesText}"
+SUPPORTING PHRASES to weave throughout the design: "${phrasesText}"
 
-CRITICAL DESIGN RULES:
-- ${background}
-- Clean, breathable design with generous whitespace (30-40% negative space)
-- Main affirmation is the clear focal point, large and centered
-- Supporting phrases are SUBTLE and SECONDARY, much smaller
-- NO clutter, NO busy compositions, NO overwhelming detail
+DESIGN APPROACH:
+- ${density}
+- Main affirmation is the clear hero, but surrounded by thoughtfully placed supporting text
+- Every phrase should be visible and readable at different sizes
+- Fill the canvas with intention - no large empty gaps
+- Mix of ${typography}
 
-SPECIFIC STYLE FOR THIS DESIGN:
+VISUAL STYLE:
 - Background: ${background}
 - Color palette: ${palette}
-- Typography approach: ${typography}
-- Layout style: ${layout}
-- Decorative accents (use sparingly): ${elements}
+- Layout: ${layout}
+- Decorative elements throughout: ${elements}
 
-QUALITY:
-- Edge-to-edge design, no paper edges visible
+MUST INCLUDE:
+- Multiple font sizes creating visual hierarchy
+- Decorative flourishes, botanical elements, and small icons scattered throughout
+- Text at various angles and orientations for visual interest
+- The design should feel collected and curated, like a vintage letterpress poster
+
+TECHNICAL:
+- Edge-to-edge design filling entire canvas
 - 4:5 aspect ratio
-- Premium minimal aesthetic like Kinfolk magazine or Cereal magazine
+- Premium quality like Rifle Paper Co or Anthropologie wall art
 - Ultra high resolution`;
 }
 
@@ -209,18 +215,29 @@ function getRandomLayout(): string {
   return layouts[Math.floor(Math.random() * layouts.length)];
 }
 
-function getRandomElements(category: string): string {
+function getRandomElements(): string {
   const elementSets = [
-    "tiny botanical sprigs, single leaf accents",
-    "minimal geometric dots, thin line dividers",
-    "delicate star bursts, subtle sparkles",
-    "small moon crescents, celestial dots",
-    "fine laurel branches, simple wreaths",
-    "abstract brush strokes, ink splatters",
-    "tiny hearts, diamond shapes",
-    "subtle sun rays, organic curves",
-    "minimal floral buds, stem lines",
-    "simple arrows, compass points"
+    "roses, peonies, olive branches, ferns, small birds, butterflies",
+    "sun and moon motifs, stars, celestial orbs, cosmic swirls",
+    "laurel wreaths, botanical sprigs, wildflowers, seed pods",
+    "geometric diamonds, circles, triangles, decorative borders",
+    "hearts, arrows, ribbons, banners, ornamental frames",
+    "feathers, leaves, vines, delicate florals, nature icons",
+    "mountains, clouds, waves, trees, natural landscapes",
+    "abstract watercolor washes, brush strokes, ink splatters",
+    "vintage ornaments, filigree, decorative corners, flourishes",
+    "mushrooms, crystals, moths, woodland creatures, organic shapes"
   ];
   return elementSets[Math.floor(Math.random() * elementSets.length)];
+}
+
+function getRandomDensity(): string {
+  const densities = [
+    "Rich and layered - fill 70-80% of the canvas with text and decorative elements",
+    "Balanced abundance - main affirmation with 8-10 supporting phrases woven throughout",
+    "Lush and detailed - every corner has purpose with botanical accents and text",
+    "Collected and curated - like a vintage poster with many typographic elements",
+    "Thoughtfully dense - supporting phrases orbit the main text in varied sizes"
+  ];
+  return densities[Math.floor(Math.random() * densities.length)];
 }
