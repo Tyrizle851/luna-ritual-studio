@@ -56,7 +56,6 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
   const [selectedFormat, setSelectedFormat] = useState<AffirmationFormat>("Digital Download");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [currentPrice, setCurrentPrice] = useState<number>(AFFIRMATION_FORMAT_PRICING["Digital Download"]);
-  const [currentPrice, setCurrentPrice] = useState(AFFIRMATION_FORMAT_PRICING["Digital Download"]);
   const { addItem } = useCartStore();
   const { images } = useProductImages(product?.id || null, "affirmations");
 
