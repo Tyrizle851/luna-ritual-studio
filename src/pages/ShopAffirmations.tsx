@@ -12,6 +12,7 @@ import { SortFilter, SortOption } from "@/components/SortFilter";
 import { WishlistButton } from "@/components/WishlistButton";
 import { MobileFilterDrawer } from "@/components/MobileFilterDrawer";
 import { ProductGridSkeleton } from "@/components/ProductSkeleton";
+import { ProductCard } from "@/components/ProductCard";
 import { Star } from "lucide-react";
 
 const ShopAffirmations = () => {
@@ -126,88 +127,92 @@ const ShopAffirmations = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredAffirmations.map((affirmation) => (
-              <div key={affirmation.id} className="group relative">
+              <ProductCard 
+                key={affirmation.id}
+                onClick={() => {
+                  setSelectedProduct(affirmation);
+                  setModalOpen(true);
+                }}
+              >
                 <WishlistButton productId={affirmation.id} />
                 {affirmation.badge && (
                   <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
                     {affirmation.badge}
                   </div>
                 )}
-                <div 
-                  className="mb-4 overflow-hidden rounded aspect-[4/5] bg-secondary cursor-pointer"
-                  onClick={() => {
-                    setSelectedProduct(affirmation);
-                    setModalOpen(true);
-                  }}
-                >
+                <div className="overflow-hidden aspect-[4/5] bg-secondary">
                   <img
                     src={affirmation.image}
                     alt={affirmation.title}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
-                <div className="flex gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                  ))}
-                  <span className="text-xs text-text-muted ml-1">
-                    ({affirmation.rating || 4.9})
-                    {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
-                  </span>
-                </div>
-                <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
-                
-                {affirmation.certifications && affirmation.certifications.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {affirmation.certifications.map((cert, idx) => (
-                      <span 
-                        key={idx}
-                        className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border"
-                      >
-                        {cert}
-                      </span>
+                <div className="p-4">
+                  <div className="flex gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
                     ))}
+                    <span className="text-xs text-text-muted ml-1">
+                      ({affirmation.rating || 4.9})
+                      {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
+                    </span>
                   </div>
-                )}
+                  <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
+                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+                  
+                  {affirmation.certifications && affirmation.certifications.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {affirmation.certifications.map((cert, idx) => (
+                        <span 
+                          key={idx}
+                          className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border"
+                        >
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {affirmation.originalPrice && (
-                      <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
-                    )}
-                    <span className="font-semibold">${affirmation.price}</span>
-                    {affirmation.originalPrice && (
-                      <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
-                        Save ${affirmation.originalPrice - affirmation.price}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10"
-                      onClick={() => {
-                        setSelectedProduct(affirmation);
-                        setModalOpen(true);
-                      }}
-                    >
-                      Preview
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-clay hover:bg-clay-dark text-white"
-                      onClick={() => {
-                        setSelectedProduct(affirmation);
-                        setModalOpen(true);
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
+                  <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                    <div className="flex items-center gap-2">
+                      {affirmation.originalPrice && (
+                        <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                      )}
+                      <span className="font-semibold">${affirmation.price}</span>
+                      {affirmation.originalPrice && (
+                        <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
+                          Save ${affirmation.originalPrice - affirmation.price}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-clay text-clay hover:bg-clay/10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProduct(affirmation);
+                          setModalOpen(true);
+                        }}
+                      >
+                        Preview
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="bg-clay hover:bg-clay-dark text-white"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProduct(affirmation);
+                          setModalOpen(true);
+                        }}
+                      >
+                        Add to Cart
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ProductCard>
             ))}
           </div>
         )}
