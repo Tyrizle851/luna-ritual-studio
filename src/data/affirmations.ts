@@ -23,13 +23,24 @@ import affirmationProductiveRest from "@/assets/affirmation-productive-rest.jpg"
 import affirmationAttract from "@/assets/affirmation-attract.jpg";
 import affirmationDuality from "@/assets/affirmation-duality.jpg";
 
+// Format pricing constants
+export const AFFIRMATION_FORMAT_PRICING = {
+  "Digital Download": 11.99,
+  "Canvas Print": 89.99,
+  "Unframed Poster": 39.99,
+  "Framed Poster": 129.99,
+} as const;
+
+export type AffirmationFormat = keyof typeof AFFIRMATION_FORMAT_PRICING;
+export type DisplayVariation = "canvas" | "unframed" | "framed";
+
 export interface Affirmation {
   id: string;
   title: string;
   category: "Self-Love" | "Abundance" | "Rest" | "Joy" | "Strength";
   description: string;
-  price: number;
-  formats: string[];
+  price: number; // Base price (Digital Download)
+  formats: AffirmationFormat[];
   image: string;
   featured?: boolean;
   tags: string[];
@@ -41,6 +52,7 @@ export interface Affirmation {
   badge?: string;
   features?: string[];
   usageIdeas?: string[];
+  displayVariation?: DisplayVariation; // Random initial display (canvas/unframed/framed)
   productDetails?: {
     resolution?: string;
     fileFormats?: string;
@@ -49,214 +61,228 @@ export interface Affirmation {
   };
 }
 
+// Standard formats for all affirmations
+const STANDARD_FORMATS: AffirmationFormat[] = [
+  "Digital Download",
+  "Canvas Print", 
+  "Unframed Poster",
+  "Framed Poster"
+];
+
+// Helper to get random display variation
+const getRandomDisplayVariation = (): DisplayVariation => {
+  const variations: DisplayVariation[] = ["canvas", "unframed", "framed"];
+  return variations[Math.floor(Math.random() * variations.length)];
+};
+
 export const affirmations: Affirmation[] = [
   // **PAGE 1: BEST PICKS** - Featured affirmations with premium positioning
   {
     id: "aff-001",
     title: "I am worthy of rest",
     category: "Self-Love",
-    description: "A gentle reminder that rest is your birthright. This affirmation gives you permission to pause and honor your need for restoration. Soft earth tones with delicate typography bring calm to your daily rituals.",
-    price: 11.99,
-    originalPrice: 15.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "A gentle reminder that rest is your birthright. This design gives you permission to pause and honor your need for restoration.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationRest,
     featured: true,
     tags: ["rest", "self-care", "boundaries"],
     rating: 4.9,
     reviewCount: 2847,
     socialProof: "1K+ sold",
-    certifications: ["Instant Download", "High Resolution", "Print Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
     badge: "Best Seller",
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Premium minimal aesthetic design",
-      "Works on all devices (phone, tablet, desktop)",
-      "Multiple format options included",
-      "Printable at professional quality (300 DPI)"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
-      "Set as your phone lock screen for daily reminders",
-      "Use as desktop wallpaper during work hours",
-      "Print and frame for your bedroom or meditation space",
-      "Share with friends who need permission to rest"
+      "Digital wallpaper for daily reminders",
+      "Canvas art for your bedroom sanctuary",
+      "Framed poster for meditation space",
+      "Gift for someone who needs permission to rest"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-002",
     title: "I am worthy of peace",
     category: "Self-Love",
-    description: "Peace is your birthright. This serene design reminds you that inner tranquility comes from within and is always available to you. Soft, calming tones create a sanctuary for your soul.",
-    price: 14.49,
-    originalPrice: 18.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Peace is your birthright. This serene design reminds you that inner tranquility comes from within and is always available to you.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationJoy,
     featured: true,
-    tags: ["joy", "intention", "morning"],
+    tags: ["peace", "tranquility", "calm"],
     rating: 4.8,
     reviewCount: 2914,
     socialProof: "1.5K+ sold",
-    certifications: ["Instant Download", "300 DPI", "Desktop Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Staff Pick"],
     badge: "Staff Pick",
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Uplifting design with warm colors",
-      "Perfect for morning mindfulness rituals",
-      "Multiple print sizes available",
-      "High-resolution files for crisp display"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
-      "Morning phone wallpaper to start your day with intention",
-      "Desktop background for work motivation",
-      "Print for bathroom mirror or bedroom wall",
-      "Gift to friends who need encouragement"
+      "Morning phone wallpaper for peaceful starts",
+      "Canvas for living room focal point",
+      "Framed art for home office calm",
+      "Gift for friends seeking serenity"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-003",
     title: "Growth is a journey, not a destination",
     category: "Strength",
-    description: "Embrace the beauty of becoming. This affirmation celebrates progress over perfection and reminds you that every step forward matters. Warm, grounding tones inspire patience and self-compassion.",
-    price: 17.99,
-    originalPrice: 22.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Embrace the beauty of becoming. This affirmation celebrates progress over perfection and reminds you that every step forward matters.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationAbundance,
     featured: true,
     tags: ["growth", "journey", "patience", "progress"],
     rating: 4.9,
     reviewCount: 2127,
     socialProof: "2K+ sold",
-    certifications: ["Instant Download", "Premium Design", "High Resolution"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
     badge: "Most Popular",
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Grounding design celebrating progress",
-      "Perfect for personal development journeys",
-      "Ideal for goal-setting and reflection",
-      "Warm color palette for self-compassion"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
-      "Daily phone wallpaper for growth mindset",
-      "Vision board for personal development",
-      "Print for your workspace or journal corner",
-      "Morning meditation visual anchor"
+      "Vision board centerpiece",
+      "Canvas for workspace inspiration",
+      "Framed poster for goal-setting corner",
+      "Gift for someone on a growth journey"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-004",
     title: "I trust my journey",
     category: "Strength",
-    description: "Release the need for control and embrace faith in your path. Trust means believing you're equipped to handle whatever comes. Calming, grounded design brings peace during moments of uncertainty.",
-    price: 9.99,
-    originalPrice: 14.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Release the need for control and embrace faith in your path. Trust means believing you are equipped to handle whatever comes.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationTrust,
     tags: ["trust", "journey", "faith"],
     rating: 4.4,
     reviewCount: 1923,
     socialProof: "900+ sold",
-    certifications: ["Instant Download", "Minimal Design", "Phone Wallpaper"],
+    certifications: ["Instant Download", "Minimal Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Grounded, calming design",
-      "Perfect for transitions and uncertainty",
-      "Elegant typography",
-      "Ideal for meditation spaces"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
       "Phone wallpaper during life transitions",
-      "Desktop background for daily reassurance",
-      "Print for meditation or journaling space",
+      "Canvas for meditation space",
+      "Framed poster for daily reassurance",
       "Comfort visual during challenging times"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-005",
     title: "I am always enough",
     category: "Self-Love",
-    description: "Your worth isn't tied to productivity or achievement. You are inherently valuable simply because you exist. Soft, compassionate colors and timeless typography feel like a warm embrace.",
-    price: 13.95,
-    originalPrice: 17.95,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Your worth is not tied to productivity or achievement. You are inherently valuable simply because you exist.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationEnough,
     featured: true,
     tags: ["self-love", "worthiness", "acceptance"],
     rating: 4.9,
     reviewCount: 2928,
     socialProof: "2.5K+ sold",
-    certifications: ["Instant Download", "Premium Aesthetic", "Print Ready"],
+    certifications: ["Instant Download", "Premium Aesthetic", "18x24 Print Size"],
     badge: "Best Seller",
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Compassionate, warm design",
-      "Perfect for perfectionists and people-pleasers",
-      "Timeless typography",
-      "Multiple format options for all uses"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
-      "Daily phone wallpaper for self-acceptance reminders",
-      "Print for bathroom mirror affirmations",
-      "Desktop background during work stress",
+      "Daily phone wallpaper for self-acceptance",
+      "Canvas for bedroom sanctuary",
+      "Framed poster for bathroom mirror view",
       "Gift for loved ones struggling with self-worth"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-006",
     title: "My calm is my power",
     category: "Strength",
-    description: "In chaos, your calm is your superpower. Peace is not passive—it's revolutionary. When you choose calm, you reclaim your power and anchor into your center. Serene colors with bold typography.",
-    price: 10.89,
-    originalPrice: 14.89,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "In chaos, your calm is your superpower. Peace is not passive—it is revolutionary. When you choose calm, you reclaim your power.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationCalm,
     featured: true,
     tags: ["calm", "power", "peace"],
     rating: 4.8,
     reviewCount: 2631,
     socialProof: "1.2K+ sold",
-    certifications: ["Instant Download", "High Resolution", "Minimal Design"],
+    certifications: ["Instant Download", "18x24 Print Size", "Minimal Design"],
     badge: "Staff Pick",
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Serene, grounding design",
-      "Perfect for stress management",
-      "Bold yet peaceful typography",
-      "Ideal for mindfulness practice"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
       "Phone wallpaper for nervous system regulation",
-      "Desktop background for high-stress work environments",
-      "Print for meditation or yoga space",
+      "Canvas for high-stress work environments",
+      "Framed poster for meditation or yoga space",
       "Visual anchor during anxious moments"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   // **PAGE 2: Additional Popular Affirmations**
@@ -264,313 +290,578 @@ export const affirmations: Affirmation[] = [
     id: "aff-007",
     title: "I receive what I desire",
     category: "Abundance",
-    description: "Your desires are signposts to your purpose. Release resistance and allow blessings to flow. This empowering design supports your manifestation journey with uplifting colors.",
-    price: 16.49,
-    originalPrice: 21.49,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Your desires are signposts to your purpose. Release resistance and allow blessings to flow into your life.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationReceive,
     tags: ["receiving", "desire", "manifestation"],
     rating: 4.6,
     reviewCount: 1456,
     socialProof: "700+ sold",
-    certifications: ["Instant Download", "Desktop Ready", "High Resolution"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Empowering manifestation design",
-      "Perfect for receiving mode activation",
-      "Large print format available"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
       "Vision board centerpiece",
-      "Phone wallpaper for manifestation rituals",
-      "Print for workspace or bedroom"
+      "Canvas for manifestation rituals",
+      "Framed poster for workspace"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-008",
     title: "Today, I honor myself",
     category: "Self-Love",
-    description: "Small acts of self-honor create a life you don't need to escape from. Make choices that respect your needs and boundaries. Gentle design with soothing colors perfect for morning rituals.",
-    price: 8.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Small acts of self-honor create a life you do not need to escape from. Make choices that respect your needs.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationHonor,
     tags: ["honor", "self-care", "daily"],
     rating: 4.3,
     reviewCount: 982,
     socialProof: "500+ sold",
-    certifications: ["Instant Download", "Premium Design", "Phone Wallpaper"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Daily self-honor reminder",
-      "Gentle, compassionate design",
-      "Perfect for morning rituals"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
       "Morning phone wallpaper",
-      "Bathroom mirror print",
+      "Canvas for bathroom mirror view",
       "Daily affirmation anchor"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-009",
     title: "I release what no longer serves",
     category: "Strength",
-    description: "Letting go makes room for what is meant for you. Release old patterns and beliefs that no longer align with your highest good. Design captures the essence of freedom and renewal.",
-    price: 11.49,
-    originalPrice: 15.49,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Letting go makes room for what is meant for you. Release old patterns and beliefs that no longer align with your highest good.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationRelease,
     tags: ["release", "letting-go", "growth"],
     rating: 4.7,
     reviewCount: 2145,
     socialProof: "1K+ sold",
-    certifications: ["Instant Download", "Print Ready", "High Resolution"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
     features: [
-      "Transformational letting-go design",
-      "Perfect for life transitions",
-      "Multiple print formats available"
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
     ],
     usageIdeas: [
       "Phone wallpaper during major life changes",
-      "Print for meditation space",
+      "Canvas for meditation space",
       "Visual reminder for release rituals"
     ],
     productDetails: {
       resolution: "300 DPI (print quality)",
-      fileFormats: "JPG and PNG included",
-      aspectRatios: "9:16 (phone), 16:9 (desktop), multiple print sizes",
-      delivery: "Instant digital download after purchase"
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
     }
   },
   {
     id: "aff-010",
     title: "Joy is my natural state",
     category: "Joy",
-    description: "Happiness is not a destination—it's your birthright to claim. Stop chasing joy and start embodying it. Vibrant, warm colors and optimistic typography bring lightness to your day.",
-    price: 13.49,
-    originalPrice: 17.49,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Happiness is not a destination—it is your birthright to claim. Stop chasing joy and start embodying it.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationNaturalJoy,
     tags: ["joy", "natural", "happiness"],
     rating: 4.5,
     reviewCount: 1672,
     socialProof: "800+ sold",
-    certifications: ["Instant Download", "Premium Design", "Phone Ready"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Uplifting phone wallpaper",
+      "Canvas for living room joy",
+      "Framed poster for bright spaces"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-011",
     title: "I am safe in my body",
     category: "Self-Love",
-    description: "Your body is your home, not your enemy. This grounding affirmation offers comfort for anyone healing their relationship with their physical self. Gentle colors communicate safety and belonging.",
-    price: 9.49,
-    originalPrice: 13.49,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Your body is your home, not your enemy. This grounding affirmation offers comfort for healing your relationship with your physical self.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationSafe,
     tags: ["body", "safety", "acceptance"],
     rating: 4.8,
     reviewCount: 1834,
     socialProof: "900+ sold",
-    certifications: ["Instant Download", "High Resolution", "Minimal Design"],
+    certifications: ["Instant Download", "18x24 Print Size", "Minimal Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Grounding phone wallpaper",
+      "Canvas for bedroom safety",
+      "Framed poster for healing spaces"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-012",
     title: "My voice matters",
     category: "Strength",
-    description: "Speak your truth, even when your voice shakes. Your voice carries power, and the world needs what you have to say. Bold design with confident typography reflects courage.",
-    price: 7.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Speak your truth, even when your voice shakes. Your voice carries power, and the world needs what you have to say.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationVoice,
     tags: ["voice", "truth", "courage"],
     rating: 4.2,
     reviewCount: 1245,
     socialProof: "600+ sold",
-    certifications: ["Instant Download", "Print Ready", "Desktop Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Courage-building phone wallpaper",
+      "Canvas for workspace empowerment",
+      "Framed poster for speaking spaces"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   // **PAGE 3: More Popular Affirmations**
   {
     id: "aff-013",
     title: "I am worthy of my dreams",
     category: "Abundance",
-    description: "Your dreams chose you for a reason—honor them. You are worthy of everything you desire simply because of who you are. Inspiring design with aspirational colors ignites belief.",
-    price: 18.99,
-    originalPrice: 24.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Your dreams chose you for a reason—honor them. You are worthy of everything you desire simply because of who you are.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationDreams,
     tags: ["dreams", "worthiness", "purpose"],
     rating: 4.7,
     reviewCount: 2387,
     socialProof: "1.1K+ sold",
-    certifications: ["Instant Download", "Premium Aesthetic", "High Resolution"],
+    certifications: ["Instant Download", "Premium Aesthetic", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Dream-inspiring phone wallpaper",
+      "Canvas for vision board wall",
+      "Framed poster for aspiration spaces"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-014",
     title: "I choose peace over perfection",
     category: "Rest",
-    description: "Perfection is exhausting—peace is possible. Give yourself permission to be human and make mistakes. Calming design with gentle typography whispers permission to let go.",
-    price: 10.49,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Perfection is exhausting—peace is possible. Give yourself permission to be human and make mistakes.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationPeace,
     tags: ["peace", "perfection", "rest"],
     rating: 4.6,
     reviewCount: 1563,
     socialProof: "750+ sold",
-    certifications: ["Instant Download", "Minimal Design", "Phone Wallpaper"],
+    certifications: ["Instant Download", "Minimal Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Calming phone wallpaper",
+      "Canvas for perfectionist recovery",
+      "Framed poster for restful spaces"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-015",
     title: "I celebrate my progress",
     category: "Joy",
-    description: "Every step forward deserves recognition, no matter how small. Honor your journey and acknowledge how far you've come. Joyful colors create a feeling of accomplishment.",
-    price: 8.49,
-    originalPrice: 11.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Every step forward deserves recognition, no matter how small. Honor your journey and acknowledge how far you have come.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationProgress,
     tags: ["progress", "celebration", "growth"],
     rating: 4.1,
     reviewCount: 1124,
     socialProof: "550+ sold",
-    certifications: ["Instant Download", "Premium Design", "Print Ready"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Progress-celebrating phone wallpaper",
+      "Canvas for goal-tracking walls",
+      "Framed poster for achievement displays"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-016",
     title: "My intuition guides me",
     category: "Strength",
-    description: "That whisper inside knows the way. Your intuition is your soul's GPS, guiding you toward alignment. Mystical design with ethereal colors evokes inner knowing and spiritual connection.",
-    price: 14.95,
-    originalPrice: 19.95,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "That whisper inside knows the way. Your intuition is your soul's GPS, guiding you toward alignment.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationIntuition,
     tags: ["intuition", "guidance", "inner-wisdom"],
     rating: 4.7,
     reviewCount: 1987,
     socialProof: "950+ sold",
-    certifications: ["Instant Download", "High Resolution", "Desktop Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Intuition-honoring phone wallpaper",
+      "Canvas for spiritual spaces",
+      "Framed poster for meditation corners"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-017",
     title: "I am open to miracles",
     category: "Abundance",
-    description: "Magic happens when you believe it can. Release cynicism and open your heart to unexpected blessings. Enchanting design with whimsical elements inspires wonder and faith.",
-    price: 15.99,
-    originalPrice: 20.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Magic happens when you believe it can. Release cynicism and open your heart to unexpected blessings.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationMiracles,
     tags: ["miracles", "magic", "possibility"],
     rating: 4.5,
     reviewCount: 1698,
     socialProof: "820+ sold",
-    certifications: ["Instant Download", "Premium Aesthetic", "Print Ready"],
+    certifications: ["Instant Download", "Premium Aesthetic", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Miracle-inviting phone wallpaper",
+      "Canvas for magical spaces",
+      "Framed poster for wonder walls"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-018",
     title: "I give myself permission to feel",
     category: "Self-Love",
-    description: "All feelings are welcome here. Your emotions are not weaknesses—they are wisdom, telling you what you need. Tender design with soft colors creates a safe space for expression.",
-    price: 11.79,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "All feelings are welcome here. Your emotions are not weaknesses—they are wisdom, telling you what you need.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationFeel,
     tags: ["feelings", "permission", "vulnerability"],
     rating: 4.8,
     reviewCount: 2214,
     socialProof: "1K+ sold",
-    certifications: ["Instant Download", "Minimal Design", "High Resolution"],
+    certifications: ["Instant Download", "Minimal Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Emotionally-supportive phone wallpaper",
+      "Canvas for therapy spaces",
+      "Framed poster for healing rooms"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   // **PAGE 4: Final Collection**
   {
     id: "aff-019",
     title: "I am creating the life I desire",
     category: "Strength",
-    description: "Every choice is a brushstroke. You are not a passive recipient of life—you are an active creator. Creative design with bold colors inspires agency and intentional living.",
-    price: 9.89,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Every choice is a brushstroke. You are not a passive recipient of life—you are an active creator.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationCreating,
     tags: ["creation", "life", "intention"],
     rating: 4.4,
     reviewCount: 1445,
     socialProof: "700+ sold",
-    certifications: ["Instant Download", "Premium Design", "Phone Ready"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Creation-inspiring phone wallpaper",
+      "Canvas for workspace motivation",
+      "Framed poster for intentional living"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-020",
     title: "Today is full of possibility",
     category: "Joy",
-    description: "Each sunrise brings infinite potential. Today is a blank canvas full of opportunities you haven't yet imagined. Bright, dawn-inspired colors evoke new beginnings.",
-    price: 10.99,
-    originalPrice: 14.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Each sunrise brings infinite potential. Today is a blank canvas full of opportunities you have not yet imagined.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationPossibility,
     tags: ["possibility", "potential", "today"],
     rating: 3.9,
     reviewCount: 1089,
     socialProof: "530+ sold",
-    certifications: ["Instant Download", "Desktop Ready", "Print Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Possibility-opening phone wallpaper",
+      "Canvas for morning spaces",
+      "Framed poster for optimistic corners"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-021",
     title: "I am allowed to change my mind",
     category: "Self-Love",
-    description: "Growth means evolution. Changing your mind is not failure—it's wisdom. You don't owe anyone consistency at the cost of authenticity. Fluid design reflects transformation.",
-    price: 13.29,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Growth means evolution. Changing your mind is not failure—it is wisdom. You do not owe anyone consistency at the cost of authenticity.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationChange,
     tags: ["change", "growth", "permission"],
     rating: 4.6,
     reviewCount: 1523,
     socialProof: "730+ sold",
-    certifications: ["Instant Download", "High Resolution", "Minimal Design"],
+    certifications: ["Instant Download", "18x24 Print Size", "Minimal Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Growth-embracing phone wallpaper",
+      "Canvas for transformation spaces",
+      "Framed poster for evolution walls"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-022",
     title: "My rest is productive",
     category: "Rest",
-    description: "Rest is not laziness—it's how you recharge your magic. Rest is the foundation of sustainable productivity, not its opposite. Calming design invites you to slow down guilt-free.",
-    price: 9.79,
-    originalPrice: 13.79,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Rest is not laziness—it is how you recharge your magic. Rest is the foundation of sustainable productivity.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationProductiveRest,
     tags: ["rest", "productivity", "recharge"],
     rating: 4.7,
     reviewCount: 1876,
     socialProof: "900+ sold",
-    certifications: ["Instant Download", "Premium Design", "Phone Wallpaper"],
+    certifications: ["Instant Download", "Premium Design", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Rest-validating phone wallpaper",
+      "Canvas for bedroom sanctuary",
+      "Framed poster for guilt-free rest"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-023",
     title: "I attract what I embody",
     category: "Abundance",
-    description: "Become the energy you wish to attract. You don't attract what you want—you attract who you are. Radiant design with magnetic colors reflects this powerful manifestation truth.",
-    price: 16.99,
-    originalPrice: 21.99,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "Become the energy you wish to attract. You do not attract what you want—you attract who you are.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationAttract,
     tags: ["attraction", "embodiment", "energy"],
     rating: 4.8,
     reviewCount: 2456,
     socialProof: "1.2K+ sold",
-    certifications: ["Instant Download", "Premium Aesthetic", "High Resolution"],
+    certifications: ["Instant Download", "Premium Aesthetic", "18x24 Print Size"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Manifestation phone wallpaper",
+      "Canvas for energy-setting spaces",
+      "Framed poster for attraction walls"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
   {
     id: "aff-024",
     title: "I am both the storm and the calm",
     category: "Strength",
-    description: "You contain multitudes. You can be strong and soft, fierce and gentle. Embrace all aspects of yourself without apology. Dynamic design honors your beautiful complexity.",
-    price: 11.29,
-    formats: ["Phone Wallpaper", "Desktop Wallpaper", "Print 5x7", "Print 8x10", "Print 11x14", "Print 16x20", "Print 18x24", "Print 24x36"],
+    description: "You contain multitudes. You can be strong and soft, fierce and gentle. Embrace all aspects of yourself without apology.",
+    price: AFFIRMATION_FORMAT_PRICING["Digital Download"],
+    formats: STANDARD_FORMATS,
     image: affirmationDuality,
     tags: ["duality", "wholeness", "acceptance"],
     rating: 4.5,
     reviewCount: 1334,
     socialProof: "650+ sold",
-    certifications: ["Instant Download", "Print Ready", "Desktop Ready"],
+    certifications: ["Instant Download", "18x24 Print Size", "Premium Design"],
+    displayVariation: getRandomDisplayVariation(),
+    features: [
+      "Digital download for instant access",
+      "Canvas print on premium stretched canvas",
+      "Unframed poster on quality matte paper",
+      "Framed poster with Red Oak wood frame"
+    ],
+    usageIdeas: [
+      "Duality-embracing phone wallpaper",
+      "Canvas for complexity-honoring spaces",
+      "Framed poster for wholeness walls"
+    ],
+    productDetails: {
+      resolution: "300 DPI (print quality)",
+      fileFormats: "High-resolution digital file",
+      aspectRatios: "18x24 portrait (all prints)",
+      delivery: "Digital: Instant download | Physical: 5-7 business days"
+    }
   },
 ];

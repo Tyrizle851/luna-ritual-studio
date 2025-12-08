@@ -27,14 +27,26 @@ export function useProductImages(productId: string | null, productCategory: stri
           .from("product_images")
           .select("*")
           .eq("product_id", productId)
-          .eq("product_category", productCategory)
-          .order("variation_type", { ascending: true });
+          .eq("product_category", productCategory);
 
         if (error) {
           console.error("Error fetching product images:", error);
           setImages([]);
         } else {
-          setImages(data || []);
+          // Sort images by variation type for consistent ordering
+          // For affirmations: digital, canvas, unframed, framed
+          // For other categories: original, lifestyle, detail, styled
+          const sortOrder = productCategory === "affirmations"
+            ? ["digital", "canvas", "unframed", "framed"]
+            : ["original", "lifestyle", "detail", "styled"];
+          
+          const sorted = (data || []).sort((a, b) => {
+            const aIndex = sortOrder.indexOf(a.variation_type);
+            const bIndex = sortOrder.indexOf(b.variation_type);
+            return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+          });
+          
+          setImages(sorted);
         }
       } catch (err) {
         console.error("Error fetching product images:", err);

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Affirmation } from "@/data/affirmations";
+import { Affirmation, AFFIRMATION_FORMAT_PRICING, AffirmationFormat } from "@/data/affirmations";
 import { useCartStore } from "@/store/cartStore";
 import { generateAffirmationSchema } from "@/lib/seoUtils";
-import { Star, Check, Package, Sparkles, FileText } from "lucide-react";
+import { Star, Check, Package, Sparkles, FileText, Download, Image, Frame } from "lucide-react";
 import { useProductImages } from "@/hooks/useProductImages";
 import { cn } from "@/lib/utils";
 
@@ -17,52 +17,116 @@ interface ProductModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-// Category-specific labels for Affirmations
+// Map variation types to format names and labels
+const VARIATION_TO_FORMAT: Record<string, AffirmationFormat> = {
+  "digital": "Digital Download",
+  "canvas": "Canvas Print",
+  "unframed": "Unframed Poster",
+  "framed": "Framed Poster"
+};
+
+const FORMAT_TO_VARIATION: Record<AffirmationFormat, string> = {
+  "Digital Download": "digital",
+  "Canvas Print": "canvas",
+  "Unframed Poster": "unframed",
+  "Framed Poster": "framed"
+};
+
 const getImageLabel = (variationType: string): string => {
   switch (variationType) {
-    case "original": return "Artwork";
-    case "lifestyle": return "In Space";
-    case "detail": return "Close-up";
-    case "styled": return "Styled";
+    case "digital": return "Digital";
+    case "canvas": return "Canvas";
+    case "unframed": return "Poster";
+    case "framed": return "Framed";
     default: return variationType;
   }
 };
 
+const getImageIcon = (variationType: string) => {
+  switch (variationType) {
+    case "digital": return Download;
+    case "canvas": return Image;
+    case "unframed": return FileText;
+    case "framed": return Frame;
+    default: return Image;
+  }
+};
+
 export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps) => {
-  const [selectedFormat, setSelectedFormat] = useState("");
+  const [selectedFormat, setSelectedFormat] = useState<AffirmationFormat>("Digital Download");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState<number>(AFFIRMATION_FORMAT_PRICING["Digital Download"]);
+  const [currentPrice, setCurrentPrice] = useState(AFFIRMATION_FORMAT_PRICING["Digital Download"]);
   const { addItem } = useCartStore();
   const { images } = useProductImages(product?.id || null, "affirmations");
+
+  // Reset state when modal opens with new product
+  useEffect(() => {
+    if (open && product) {
+      setSelectedFormat("Digital Download");
+      setSelectedImageIndex(0);
+      setCurrentPrice(AFFIRMATION_FORMAT_PRICING["Digital Download"]);
+    }
+  }, [open, product?.id]);
 
   if (!product) return null;
 
   const handleAddToCart = () => {
-    if (!selectedFormat) return;
-    
     addItem({
       id: product.id,
       title: product.title,
-      price: product.price,
+      price: currentPrice,
       image: product.image,
       format: selectedFormat,
       type: "affirmation"
     });
     
     onOpenChange(false);
-    setSelectedFormat("");
   };
 
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
+  // Handle format selection change
+  const handleFormatChange = (format: AffirmationFormat) => {
+    setSelectedFormat(format);
+    setCurrentPrice(AFFIRMATION_FORMAT_PRICING[format]);
+    
+    // Sync thumbnail selection with format
+    const variationType = FORMAT_TO_VARIATION[format];
+    const imageIndex = galleryImages.findIndex(img => img.variationType === variationType);
+    if (imageIndex >= 0) {
+      setSelectedImageIndex(imageIndex);
+    }
+  };
 
-  // Build gallery images - use product.image for original, generated images for variations
+  // Handle thumbnail click
+  const handleThumbnailClick = (index: number, variationType: string) => {
+    setSelectedImageIndex(index);
+    
+    // Sync format selector with thumbnail
+    const format = VARIATION_TO_FORMAT[variationType];
+    if (format) {
+      setSelectedFormat(format);
+      setCurrentPrice(AFFIRMATION_FORMAT_PRICING[format]);
+    }
+  };
+
+  // Build gallery images - order: digital, canvas, unframed, framed
+  const variationOrder = ["digital", "canvas", "unframed", "framed"];
+  
   const galleryImages = images.length > 0 
-    ? images.map(img => ({
-        url: img.variation_type === "original" ? product.image : img.image_url,
-        label: getImageLabel(img.variation_type)
-      }))
-    : [{ url: product.image, label: "Artwork" }];
+    ? variationOrder
+        .map(variation => {
+          const img = images.find(i => i.variation_type === variation);
+          if (img) {
+            return {
+              url: img.image_url,
+              label: getImageLabel(variation),
+              variationType: variation
+            };
+          }
+          return null;
+        })
+        .filter((img): img is { url: string; label: string; variationType: string } => img !== null)
+    : [{ url: product.image, label: "Artwork", variationType: "digital" }];
 
   const currentImage = galleryImages[selectedImageIndex]?.url || product.image;
 
@@ -84,9 +148,9 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
           <div className="relative overflow-hidden">
             {galleryImages.length > 1 ? (
               /* Side-by-side layout: Main image left, thumbnails right */
-              <div className="flex flex-row h-[300px] md:h-[340px]">
+              <div className="flex flex-row h-[300px] md:h-[380px]">
                 {/* Main Image - Left Side */}
-                <div className="relative flex-1 overflow-hidden">
+                <div className="relative flex-1 overflow-hidden bg-secondary/30">
                   {product.badge && (
                     <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg">
                       {product.badge}
@@ -94,39 +158,43 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                   )}
                   <img
                     src={currentImage}
-                    alt={product.title}
-                    className="w-full h-full object-cover scale-[0.85] origin-center"
+                    alt={`${product.title} - ${galleryImages[selectedImageIndex]?.label}`}
+                    className="w-full h-full object-contain p-2"
                   />
                 </div>
                 
                 {/* Thumbnails - Right Side (vertical stack) */}
                 <div className="flex flex-col w-[85px] md:w-[95px] border-l border-border/40">
-                  {galleryImages.map((img, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className={cn(
-                        "relative flex-1 overflow-hidden transition-all border-b border-border/30 last:border-b-0",
-                        selectedImageIndex === index 
-                          ? "ring-2 ring-inset ring-primary" 
-                          : "hover:opacity-80"
-                      )}
-                    >
-                      <img
-                        src={img.url}
-                        alt={img.label}
-                        className="w-full h-full object-cover scale-[0.85] origin-center"
-                      />
-                      <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium">
-                        {img.label}
-                      </span>
-                    </button>
-                  ))}
+                  {galleryImages.map((img, index) => {
+                    const IconComponent = getImageIcon(img.variationType);
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => handleThumbnailClick(index, img.variationType)}
+                        className={cn(
+                          "relative flex-1 overflow-hidden transition-all border-b border-border/30 last:border-b-0",
+                          selectedImageIndex === index 
+                            ? "ring-2 ring-inset ring-primary bg-primary/5" 
+                            : "hover:opacity-80 hover:bg-secondary/50"
+                        )}
+                      >
+                        <img
+                          src={img.url}
+                          alt={img.label}
+                          className="w-full h-full object-cover"
+                        />
+                        <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[8px] px-0.5 py-0.5 text-center font-medium flex items-center justify-center gap-0.5">
+                          <IconComponent className="h-2.5 w-2.5" />
+                          {img.label}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ) : (
               /* Single image layout */
-              <div className="relative w-full h-[300px] md:h-[340px] overflow-hidden">
+              <div className="relative w-full h-[300px] md:h-[380px] overflow-hidden bg-secondary/30">
                 {product.badge && (
                   <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg">
                     {product.badge}
@@ -135,7 +203,7 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                 <img
                   src={currentImage}
                   alt={product.title}
-                  className="w-full h-full object-cover scale-[0.85] origin-center"
+                  className="w-full h-full object-contain p-2"
                 />
               </div>
             )}
@@ -174,19 +242,15 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               )}
             </div>
 
-            {/* Price Section */}
-            <div className="flex items-center gap-2 flex-wrap">
-              {product.originalPrice && (
-                <>
-                  <span className="text-base text-muted-foreground line-through">
-                    ${product.originalPrice}
-                  </span>
-                  <span className="px-2 py-0.5 bg-foreground text-background text-xs font-semibold rounded">
-                    -{discount}%
-                  </span>
-                </>
-              )}
-              <span className="text-xl md:text-2xl font-bold">${product.price}</span>
+            {/* Dynamic Price Section */}
+            <div className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg">
+              <span className="text-2xl md:text-3xl font-bold">${currentPrice.toFixed(2)}</span>
+              <div className="text-xs text-muted-foreground">
+                {selectedFormat === "Digital Download" && "Instant download"}
+                {selectedFormat === "Canvas Print" && "18×24 stretched canvas"}
+                {selectedFormat === "Unframed Poster" && "18×24 matte poster"}
+                {selectedFormat === "Framed Poster" && "18×24 with Red Oak frame"}
+              </div>
             </div>
 
             {/* Description */}
@@ -205,6 +269,42 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               </div>
             )}
 
+            {/* Format Selector with Pricing */}
+            <div>
+              <h3 className="font-semibold text-sm mb-2">Select Format</h3>
+              <Select value={selectedFormat} onValueChange={(value) => handleFormatChange(value as AffirmationFormat)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Choose a format" />
+                </SelectTrigger>
+                <SelectContent>
+                  {(Object.keys(AFFIRMATION_FORMAT_PRICING) as AffirmationFormat[]).map((format) => (
+                    <SelectItem key={format} value={format}>
+                      <div className="flex items-center justify-between w-full gap-4">
+                        <span>{format}</span>
+                        <span className="text-muted-foreground">${AFFIRMATION_FORMAT_PRICING[format].toFixed(2)}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              {/* Format details */}
+              <div className="mt-2 text-xs text-muted-foreground">
+                {selectedFormat === "Digital Download" && (
+                  <p>High-resolution digital file for printing at home or at a print shop. Instant download after purchase.</p>
+                )}
+                {selectedFormat === "Canvas Print" && (
+                  <p>18×24 inch gallery-quality stretched canvas with 1.5" depth. Ready to hang. Ships in 5-7 business days.</p>
+                )}
+                {selectedFormat === "Unframed Poster" && (
+                  <p>18×24 inch museum-quality matte paper poster. Ships rolled in a protective tube. 5-7 business days.</p>
+                )}
+                {selectedFormat === "Framed Poster" && (
+                  <p>18×24 inch poster in a beautiful Red Oak wood frame. Ready to hang. Ships in 5-7 business days.</p>
+                )}
+              </div>
+            </div>
+
             {/* Features Grid */}
             {product.features && product.features.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -217,23 +317,6 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
               </div>
             )}
 
-            {/* Format Selector */}
-            <div>
-              <h3 className="font-semibold text-sm mb-2">Select Format</h3>
-              <Select value={selectedFormat} onValueChange={setSelectedFormat}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose a format or print size" />
-                </SelectTrigger>
-                <SelectContent>
-                  {product.formats.map((format) => (
-                    <SelectItem key={format} value={format}>
-                      {format}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
             {/* Accordion Sections */}
             <Accordion type="single" collapsible className="text-sm">
               <AccordionItem value="whats-included">
@@ -244,19 +327,25 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="space-y-1.5 text-xs text-text-secondary">
-                    {product.productDetails?.resolution && (
-                      <p><span className="font-medium text-text-primary">Resolution:</span> {product.productDetails.resolution}</p>
-                    )}
-                    {product.productDetails?.fileFormats && (
-                      <p><span className="font-medium text-text-primary">File Formats:</span> {product.productDetails.fileFormats}</p>
-                    )}
-                    {product.productDetails?.aspectRatios && (
-                      <p><span className="font-medium text-text-primary">Aspect Ratios:</span> {product.productDetails.aspectRatios}</p>
-                    )}
-                    {product.productDetails?.delivery && (
-                      <p><span className="font-medium text-text-primary">Delivery:</span> {product.productDetails.delivery}</p>
-                    )}
+                  <div className="space-y-2 text-xs text-text-secondary">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="p-2 bg-secondary/30 rounded">
+                        <p className="font-medium text-text-primary">Digital Download</p>
+                        <p>High-res file, instant access</p>
+                      </div>
+                      <div className="p-2 bg-secondary/30 rounded">
+                        <p className="font-medium text-text-primary">Canvas Print</p>
+                        <p>18×24 stretched canvas</p>
+                      </div>
+                      <div className="p-2 bg-secondary/30 rounded">
+                        <p className="font-medium text-text-primary">Unframed Poster</p>
+                        <p>18×24 matte paper</p>
+                      </div>
+                      <div className="p-2 bg-secondary/30 rounded">
+                        <p className="font-medium text-text-primary">Framed Poster</p>
+                        <p>18×24 Red Oak frame</p>
+                      </div>
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -280,32 +369,25 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
                     </ul>
                   ) : (
                     <p className="text-xs text-text-secondary">
-                      Download the file, print at your preferred size, or use as a digital wallpaper. 
-                      Perfect for framing, vision boards, or daily affirmation practice.
+                      Download the digital file for instant use, or order a physical print to display in your space.
                     </p>
                   )}
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="digital-delivery">
+              <AccordionItem value="shipping">
                 <AccordionTrigger className="text-sm font-semibold hover:text-clay py-2">
                   <span className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
-                    <span>Digital Delivery & Licensing</span>
+                    <span>Shipping & Delivery</span>
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-2 text-xs text-text-secondary">
-                    <p>
-                      Instant download after purchase. You'll receive a download link via email.
-                    </p>
-                    <p className="font-medium text-text-primary">Personal Use License:</p>
-                    <ul className="space-y-0.5 ml-3">
-                      <li>• Print for personal home decor</li>
-                      <li>• Use as phone or computer wallpapers</li>
-                      <li>• Include in personal vision boards</li>
-                      <li>• Share on personal social media (with credit)</li>
-                    </ul>
+                    <p><span className="font-medium text-text-primary">Digital Download:</span> Instant access via email</p>
+                    <p><span className="font-medium text-text-primary">Physical Products:</span> Ships within 5-7 business days</p>
+                    <p><span className="font-medium text-text-primary">Shipping:</span> Free shipping on orders over $75</p>
+                    <p className="text-muted-foreground italic">All prints are made-to-order by our print partner.</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -315,9 +397,8 @@ export const ProductModal = ({ product, open, onOpenChange }: ProductModalProps)
             <Button
               className="w-full bg-clay hover:bg-clay-dark text-white h-11 text-sm font-semibold"
               onClick={handleAddToCart}
-              disabled={!selectedFormat}
             >
-              Add to Cart
+              Add to Cart — ${currentPrice.toFixed(2)}
             </Button>
           </div>
         </DialogContent>
