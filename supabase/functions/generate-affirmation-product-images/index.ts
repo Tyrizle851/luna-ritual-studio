@@ -318,21 +318,33 @@ Create something museum-quality that would make someone pause and feel something
 function generateMockupPrompts(affirmation: AffirmationData) {
   const includeHuman = () => Math.random() < 0.5;
   
+  // CRITICAL: Dimensional accuracy for 18x24 inch prints
+  const dimensionalGuidance = `
+CRITICAL DIMENSIONAL ACCURACY (18x24 inches / 45.7 x 61 cm):
+- The artwork MUST appear as a PORTRAIT orientation rectangle with 3:4 aspect ratio
+- 18 inches wide x 24 inches tall - this is approximately 1.5 feet x 2 feet
+- For scale reference: the artwork should appear roughly the size of a standard movie poster
+- When shown on a wall, it should appear as a medium-large statement piece (not small, not oversized)
+- If hands are holding it, the artwork should extend well beyond the hand span
+- The proportions must be accurate - taller than wide, not square, not landscape
+- DO NOT generate a square image or landscape orientation
+`;
+
   const humanScenarios = {
     canvas: [
-      "A person with elegant hands gently adjusting the canvas on a minimalist gallery wall, soft cashmere sweater visible",
-      "Someone in a cozy knit sweater admiring the canvas in their bright, airy Scandinavian-style living room",
-      "A woman's silhouette hanging the canvas in a sunlit bedroom with linen bedding",
+      "A person with elegant hands gently adjusting the canvas on a minimalist gallery wall, soft cashmere sweater visible, the canvas clearly visible as 18x24 medium-large statement piece",
+      "Someone in a cozy knit sweater admiring the canvas in their bright, airy Scandinavian-style living room, canvas shown at realistic 18x24 scale relative to furniture",
+      "A woman's silhouette hanging the canvas in a sunlit bedroom with linen bedding, canvas proportioned correctly as portrait 3:4 ratio",
     ],
     unframed: [
-      "Elegant hands holding the unrolled poster, revealing the design against a clean marble surface",
-      "Someone in a minimalist space positioning the poster against a textured plaster wall",
-      "A person carefully unrolling the poster on a clean oak table in natural light",
+      "Elegant hands holding the unrolled 18x24 poster (the poster extends well beyond hand width), revealing the design against a clean marble surface",
+      "Someone in a minimalist space positioning the 18x24 poster against a textured plaster wall, poster shown at correct scale",
+      "A person carefully unrolling the poster on a clean oak table in natural light, poster dimensions clearly 18 inches wide by 24 inches tall",
     ],
     framed: [
-      "Someone in a cashmere sweater adjusting the framed piece on a gallery wall",
-      "A person admiring the framed artwork from their reading nook with afternoon light",
-      "Elegant hands placing the framed poster on a minimalist floating shelf display",
+      "Someone in a cashmere sweater adjusting the framed 18x24 piece on a gallery wall, frame sized appropriately for the print",
+      "A person admiring the framed artwork from their reading nook with afternoon light, frame proportions clearly 3:4 portrait ratio",
+      "Elegant hands placing the framed 18x24 poster on a minimalist floating shelf display, frame scaled correctly",
     ]
   };
 
@@ -373,10 +385,12 @@ Take THIS EXACT affirmation artwork shown in the image and place it on a stretch
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 Scene: ${randomFrom(humanScenarios.canvas)}
+${dimensionalGuidance}
 ${photographyStyle}
 CANVAS SPECIFICATIONS:
 - Premium gallery-wrapped canvas with visible edge wrap
-- Canvas dimensions appear as 18x24 inches
+- Canvas dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
+- The canvas should appear as a medium-large statement piece on the wall
 - Show the texture of quality canvas material
 - The text on the canvas must be fully visible and not cut off
 - Warm, inviting, aspirational home atmosphere
@@ -386,10 +400,12 @@ Take THIS EXACT affirmation artwork shown in the image and place it on a stretch
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 Show the canvas displayed ${randomFrom(styledScenarios.canvas)}
+${dimensionalGuidance}
 ${photographyStyle}
 CANVAS SPECIFICATIONS:
 - Premium gallery-wrapped canvas with visible edge wrap texture
-- Canvas dimensions appear as 18x24 inches
+- Canvas dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
+- The canvas should appear as a medium-large statement piece
 - The text on the canvas must be fully visible and readable
 - Interior design photography style - editorial quality
 `),
@@ -400,10 +416,12 @@ Take THIS EXACT affirmation artwork shown in the image and show it as an unframe
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 Scene: ${randomFrom(humanScenarios.unframed)}
+${dimensionalGuidance}
 ${photographyStyle}
 POSTER SPECIFICATIONS:
 - Premium matte archival paper finish
-- Poster dimensions are 18x24 inches
+- Poster dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
+- The poster should appear approximately movie-poster sized when held
 - Natural slight curl at edges is authentic
 - Show the quality weight of museum-grade paper stock
 - The text must be fully visible and not cut off at any edge
@@ -413,10 +431,12 @@ Take THIS EXACT affirmation artwork shown in the image and show it as an unframe
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 Show the poster ${randomFrom(styledScenarios.unframed)}
+${dimensionalGuidance}
 ${photographyStyle}
 POSTER SPECIFICATIONS:
 - Premium matte archival paper finish
-- Poster dimensions are 18x24 inches
+- Poster dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
+- The poster should appear as a medium-large print
 - Subtle paper curl is acceptable for authenticity
 - The text must be completely visible and readable
 - Premium paper quality should be evident in the image
@@ -433,9 +453,11 @@ FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or simi
 - Premium quality appearance like a custom frame shop
 
 Scene: ${randomFrom(humanScenarios.framed)}
+${dimensionalGuidance}
 ${photographyStyle}
 FRAME SPECIFICATIONS:
-- Frame holds an 18x24 print with appropriate mat border
+- Frame holds an 18x24 inch print (the print inside is 18" wide x 24" tall, 3:4 portrait ratio)
+- The overall framed piece will be slightly larger due to frame width and optional mat
 - Warm, inviting natural lighting
 - Frame casts subtle, soft shadows
 - The text on the poster must be fully visible within the frame
@@ -451,9 +473,11 @@ FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or simi
 - Premium quality like a custom frame shop
 
 Show the framed poster ${randomFrom(styledScenarios.framed)}
+${dimensionalGuidance}
 ${photographyStyle}
 FRAME SPECIFICATIONS:
-- Frame holds an 18x24 print
+- Frame holds an 18x24 inch print (the print inside is 18" wide x 24" tall, 3:4 portrait ratio)
+- The overall framed piece will be slightly larger due to frame width
 - Soft, warm natural lighting
 - Frame casts gentle, realistic shadows
 - The text must be completely visible and not cut off
