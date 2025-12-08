@@ -5,9 +5,7 @@ import { useCartStore } from "@/store/cartStore";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductModal } from "@/components/ProductModal";
 import { toast } from "sonner";
-import { Affirmation, AFFIRMATION_FORMAT_PRICING } from "@/data/affirmations";
-import { useAffirmationDisplayImage } from "@/hooks/useAffirmationDisplayImage";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Affirmation } from "@/data/affirmations";
 
 interface AffirmationCarouselProps {
   affirmations: Affirmation[];
@@ -21,33 +19,9 @@ const CarouselCard = ({
   affirmation: Affirmation; 
   onCardClick: () => void;
 }) => {
-  const { imageUrl, isLoading, variationType } = useAffirmationDisplayImage(affirmation.id);
-  const displayImage = imageUrl || affirmation.image;
+  // Always use local affirmation.image assets for carousel display
+  const displayImage = affirmation.image;
   
-  // Get price based on displayed variation
-  const getDisplayPrice = () => {
-    if (!variationType) return affirmation.price;
-    switch (variationType) {
-      case "canvas": return AFFIRMATION_FORMAT_PRICING["Canvas Print"];
-      case "unframed": return AFFIRMATION_FORMAT_PRICING["Unframed Poster"];
-      case "framed": return AFFIRMATION_FORMAT_PRICING["Framed Poster"];
-      default: return affirmation.price;
-    }
-  };
-
-  const getPriceLabel = () => {
-    if (!variationType) return null;
-    switch (variationType) {
-      case "canvas": return "Canvas";
-      case "unframed": return "Poster";
-      case "framed": return "Framed";
-      default: return null;
-    }
-  };
-
-  const priceLabel = getPriceLabel();
-  const displayPrice = getDisplayPrice();
-
   return (
     <div className="relative h-full bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300">
       <WishlistButton productId={affirmation.id} />
@@ -58,25 +32,15 @@ const CarouselCard = ({
         </div>
       )}
       
-      {priceLabel && (
-        <div className="absolute top-2 right-10 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 backdrop-blur-sm text-foreground border border-border/50">
-          {priceLabel}
-        </div>
-      )}
-      
       <div 
         className="overflow-hidden aspect-[4/5] bg-secondary cursor-pointer"
         onClick={onCardClick}
       >
-        {isLoading ? (
-          <Skeleton className="w-full h-full" />
-        ) : (
-          <img
-            src={displayImage}
-            alt={affirmation.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        )}
+        <img
+          src={displayImage}
+          alt={affirmation.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
       </div>
       
       <div className="p-4">
@@ -115,12 +79,7 @@ const CarouselCard = ({
         
         <div className="flex items-center justify-between pt-3 border-t border-border/50">
           <div className="flex flex-col">
-            <span className="font-semibold text-sm">${displayPrice.toFixed(2)}</span>
-            {priceLabel && (
-              <span className="text-[9px] text-text-muted">
-                From ${AFFIRMATION_FORMAT_PRICING["Digital Download"].toFixed(2)}
-              </span>
-            )}
+            <span className="font-semibold text-sm">${affirmation.price.toFixed(2)}</span>
           </div>
           <Button 
             size="sm" 
