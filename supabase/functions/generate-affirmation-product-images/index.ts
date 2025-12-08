@@ -94,31 +94,29 @@ const THEME_VISUALS: Record<string, ThemeVisuals> = {
 function generateDigitalPrompt(affirmation: AffirmationData): string {
   const theme = THEME_VISUALS[affirmation.category] || THEME_VISUALS["Self-Love"];
 
-  return `Create a hand-crafted affirmation art print with the text "${affirmation.title}" as the centerpiece.
+  return `Create a beautiful affirmation artwork with the text "${affirmation.title}".
 
-This should look like a $200 print from an independent artist's studio in Copenhagen.
+CRITICAL: The design must fill the ENTIRE image canvas edge-to-edge. No visible paper edges, no torn edges, no paper sitting on surfaces, no shadows beneath paper. The artwork IS the entire image.
 
-VISUAL STYLE:
-- Warm ${theme.colors} color palette
-- Background of ${theme.texture}
-- Delicate hand-drawn ${theme.botanicals} arranged organically around the text
-- Soft organic ink strokes with gentle artisanal imperfections
+DESIGN:
+- Solid warm background in ${theme.colors} that extends to all edges
+- The affirmation text "${affirmation.title}" as the centerpiece in elegant serif typography
+- Delicate hand-drawn ${theme.botanicals} as decorative accents around the text
 - The feeling of ${theme.mood}
 
 TYPOGRAPHY:
-- The affirmation text in elegant serif typography (like Canela or Freight)
-- Words arranged asymmetrically - some larger, some smaller, like a thoughtful typography collage
-- Text flows naturally across the page, not rigidly centered
-- Generous letter-spacing and breathing room
+- Elegant serif font (like the example "Peace of Mind" with varied word sizes)
+- Some words larger, some smaller - arranged asymmetrically like a typography collage
+- Generous letter-spacing for a luxury feel
 - The text is the emotional focal point
 
-COMPOSITION:
-- Hand-drawn botanical accents placed organically around the text
-- Generous negative space (at least 20% margins on all sides)
-- Warm natural lighting feel, like morning sun through linen curtains
-- Everything should feel intentional, calm, human
+STYLE:
+- Clean, flat design that fills the entire canvas
+- No 3D effects, no paper texture as a physical object
+- Warm, minimal, boutique art print aesthetic
+- Like something you'd see at a high-end stationery shop
 
-OUTPUT: Portrait orientation, 3:4 ratio, pure artwork only (no frame, no canvas, no mockup). Print-ready quality.`;
+OUTPUT: Portrait 3:4 ratio. The design must extend fully to all four edges of the image. No borders, no paper edges, no surface beneath.`;
 }
 
 // ============================================================================
