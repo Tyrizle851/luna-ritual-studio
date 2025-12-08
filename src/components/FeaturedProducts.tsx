@@ -6,6 +6,7 @@ import { FashionProductModal } from "@/components/FashionProductModal";
 import { CandleModal } from "@/components/CandleModal";
 import { BookModal } from "@/components/BookModal";
 import { WishlistButton } from "@/components/WishlistButton";
+import { ProductCard } from "@/components/ProductCard";
 import { FashionProduct } from "@/data/fashion";
 import { Candle } from "@/data/candles";
 import { Book } from "@/data/books";
@@ -169,205 +170,190 @@ export const FeaturedProducts = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Fashion Product Card */}
-          <div 
-            className="group animate-fade-up cursor-pointer"
-            onClick={handleFashionClick}
-          >
-            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
-              {featuredFashion.badge && (
-                <span className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs px-3 py-1 rounded-full font-medium">
-                  {featuredFashion.badge}
-                </span>
-              )}
-              <WishlistButton productId={featuredFashion.id} />
+          <ProductCard onClick={handleFashionClick} className="animate-fade-up">
+            {featuredFashion.badge && (
+              <span className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs px-3 py-1 rounded-full font-medium">
+                {featuredFashion.badge}
+              </span>
+            )}
+            <WishlistButton productId={featuredFashion.id} />
+            <div className="overflow-hidden aspect-[4/5] bg-secondary">
               <img
                 src={featuredFashion.image}
                 alt={featuredFashion.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
-            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
-            
-            {/* Rating */}
-            {featuredFashion.rating && (
-              <div className="flex items-center gap-1 mb-3">
-                <span className="text-primary text-xs">★</span>
-                <span className="text-xs font-medium">{featuredFashion.rating}</span>
-                <span className="text-xs text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
-              </div>
-            )}
-            
-            {/* Description */}
-            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
-            
-            {/* Certifications */}
-            {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {featuredFashion.certifications.slice(0, 2).map((cert, idx) => (
-                  <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                    {cert}
-                  </span>
-                ))}
-              </div>
-            )}
-            
-            {/* Price + Button inline */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {featuredFashion.originalPrice && (
-                  <>
-                    <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                    <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                      -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
-                    </span>
-                  </>
-                )}
-                <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
-              </div>
+            <div className="p-4">
+              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
               
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                asChild
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                  Shop Now <ExternalLink className="ml-1 h-3 w-3" />
-                </a>
-              </Button>
+              {featuredFashion.rating && (
+                <div className="flex items-center gap-1 mb-3">
+                  <span className="text-primary text-xs">★</span>
+                  <span className="text-xs font-medium">{featuredFashion.rating}</span>
+                  <span className="text-xs text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
+                </div>
+              )}
+              
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
+              
+              {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {featuredFashion.certifications.slice(0, 2).map((cert, idx) => (
+                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <div className="flex items-center gap-2">
+                  {featuredFashion.originalPrice && (
+                    <>
+                      <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
+                      </span>
+                    </>
+                  )}
+                  <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
+                </div>
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  asChild
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                  </a>
+                </Button>
+              </div>
             </div>
-          </div>
+          </ProductCard>
 
           {/* Candle Product Card */}
-          <div 
-            className="group animate-fade-up cursor-pointer"
-            onClick={handleCandleClick}
-          >
-            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
-              <WishlistButton productId={featuredCandle.id} />
+          <ProductCard onClick={handleCandleClick} className="animate-fade-up">
+            <WishlistButton productId={featuredCandle.id} />
+            <div className="overflow-hidden aspect-[4/5] bg-secondary">
               <img
                 src={featuredCandle.image}
                 alt={featuredCandle.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
-            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
-            
-            {/* Rating */}
-            {featuredCandle.rating && (
-              <div className="flex items-center gap-1 mb-3">
-                <span className="text-primary text-xs">★</span>
-                <span className="text-xs font-medium">{featuredCandle.rating}</span>
-                <span className="text-xs text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
-              </div>
-            )}
-            
-            {/* Description */}
-            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
-            
-            {/* Certifications */}
-            {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {featuredCandle.certifications.slice(0, 2).map((cert, idx) => (
-                  <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                    {cert}
-                  </span>
-                ))}
-              </div>
-            )}
-            
-            {/* Price + Button inline */}
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
+            <div className="p-4">
+              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
               
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                asChild
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                  Shop Now <ExternalLink className="ml-1 h-3 w-3" />
-                </a>
-              </Button>
+              {featuredCandle.rating && (
+                <div className="flex items-center gap-1 mb-3">
+                  <span className="text-primary text-xs">★</span>
+                  <span className="text-xs font-medium">{featuredCandle.rating}</span>
+                  <span className="text-xs text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
+                </div>
+              )}
+              
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
+              
+              {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {featuredCandle.certifications.slice(0, 2).map((cert, idx) => (
+                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  asChild
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                  </a>
+                </Button>
+              </div>
             </div>
-          </div>
+          </ProductCard>
 
           {/* Book Product Card */}
-          <div 
-            className="group animate-fade-up cursor-pointer"
-            onClick={handleBookClick}
-          >
-            <div className="relative mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
-              {featuredBook.badge && (
-                <span className="absolute top-3 left-3 z-10 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
-                  {featuredBook.badge}
-                </span>
-              )}
-              <WishlistButton productId={featuredBook.id} />
+          <ProductCard onClick={handleBookClick} className="animate-fade-up">
+            {featuredBook.badge && (
+              <span className="absolute top-3 left-3 z-10 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
+                {featuredBook.badge}
+              </span>
+            )}
+            <WishlistButton productId={featuredBook.id} />
+            <div className="overflow-hidden aspect-[4/5] bg-secondary">
               <img
                 src={featuredBook.image}
                 alt={featuredBook.title}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredBook.author}</p>
-            <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
-            
-            {/* Rating */}
-            {featuredBook.rating && (
-              <div className="flex items-center gap-1 mb-3">
-                <span className="text-primary text-xs">★</span>
-                <span className="text-xs font-medium">{featuredBook.rating}</span>
-                <span className="text-xs text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
-              </div>
-            )}
-            
-            {/* Description */}
-            <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
-            
-            {/* Awards */}
-            {featuredBook.awards && featuredBook.awards.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {featuredBook.awards.slice(0, 2).map((award, idx) => (
-                  <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                    {award}
-                  </span>
-                ))}
-              </div>
-            )}
-            
-            {/* Price + Button inline */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {featuredBook.originalPrice && (
-                  <>
-                    <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
-                    <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                      -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
-                    </span>
-                  </>
-                )}
-                <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
-              </div>
+            <div className="p-4">
+              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredBook.author}</p>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
               
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                asChild
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                  Shop Now <ExternalLink className="ml-1 h-3 w-3" />
-                </a>
-              </Button>
+              {featuredBook.rating && (
+                <div className="flex items-center gap-1 mb-3">
+                  <span className="text-primary text-xs">★</span>
+                  <span className="text-xs font-medium">{featuredBook.rating}</span>
+                  <span className="text-xs text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
+                </div>
+              )}
+              
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
+              
+              {featuredBook.awards && featuredBook.awards.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {featuredBook.awards.slice(0, 2).map((award, idx) => (
+                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                      {award}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <div className="flex items-center gap-2">
+                  {featuredBook.originalPrice && (
+                    <>
+                      <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
+                      </span>
+                    </>
+                  )}
+                  <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
+                </div>
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  asChild
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                  </a>
+                </Button>
+              </div>
             </div>
-          </div>
+          </ProductCard>
         </div>
 
         <div className="text-center mt-8">
