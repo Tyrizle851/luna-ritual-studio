@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -26,9 +25,9 @@ serve(async (req) => {
 
     const { affirmationId, title, category, supportingPhrases } = await req.json() as AffirmationRequest;
     
-    console.log(`Generating image for affirmation: ${title}`);
+    console.log(`Generating image for affirmation: ${title} (${category})`);
 
-    // Build the prompt for rich typography poster style
+    // Build the prompt for premium minimal brand aesthetic
     const prompt = buildPrompt(title, category, supportingPhrases);
     console.log("Prompt:", prompt);
 
@@ -101,143 +100,151 @@ serve(async (req) => {
   }
 });
 
+// Theme-specific elements that MATCH the affirmation meaning
+function getThemeContext(category: string): { accent: string; palette: string; mood: string } {
+  const themes: Record<string, { accent: string; palette: string; mood: string }> = {
+    rest: {
+      accent: "a single soft crescent moon OR a gentle cloud wisp OR a delicate feather",
+      palette: "warm cream, soft lavender, muted blush",
+      mood: "sleepy, quiet, nurturing stillness"
+    },
+    peace: {
+      accent: "a minimal olive branch OR single lotus silhouette OR gentle ripple",
+      palette: "sage green, warm cream, soft white",
+      mood: "serene, still water, deep tranquility"
+    },
+    growth: {
+      accent: "a tiny seedling OR unfurling fern frond OR gentle sunrise glow",
+      palette: "dusty sage, warm terracotta, soft cream",
+      mood: "patient hope, gentle becoming"
+    },
+    "self-love": {
+      accent: "a simple soft heart OR gentle embrace silhouette",
+      palette: "dusty rose, warm cream, soft mauve",
+      mood: "tender acceptance, warm self-regard"
+    },
+    calm: {
+      accent: "a breath symbol OR still water circle OR minimal horizon line",
+      palette: "soft blue-grey, warm cream, pale sage",
+      mood: "centered, grounded, quiet inner strength"
+    },
+    abundance: {
+      accent: "an open palm OR soft golden ray",
+      palette: "warm honey, soft cream, dusty gold",
+      mood: "grateful, receptive, gentle fullness"
+    },
+    trust: {
+      accent: "a simple compass OR gentle guiding star",
+      palette: "warm taupe, soft cream, dusty blue",
+      mood: "secure, anchored, faithful"
+    },
+    joy: {
+      accent: "a single ray of light OR soft sparkle OR gentle bloom",
+      palette: "warm peach, soft cream, gentle coral",
+      mood: "light, uplifted, quiet happiness"
+    }
+  };
+
+  return themes[category.toLowerCase()] || {
+    accent: "a single botanical sprig OR gentle curved line",
+    palette: "warm cream, soft beige, muted sage",
+    mood: "calm, intentional, quietly beautiful"
+  };
+}
+
 function buildPrompt(title: string, category: string, supportingPhrases: string[]): string {
-  // Use 8-10 phrases for rich but balanced design
-  const phraseCount = 8 + Math.floor(Math.random() * 3);
+  // Only 3-4 supporting phrases, whisper-quiet
+  const phraseCount = 3 + Math.floor(Math.random() * 2);
   const shuffledPhrases = supportingPhrases.sort(() => Math.random() - 0.5).slice(0, Math.min(phraseCount, supportingPhrases.length));
   const phrasesText = shuffledPhrases.join('", "');
   
-  // Get randomized styling
-  const background = getRandomBackground();
-  const palette = getRandomPalette();
+  // Get contextually-appropriate theme elements
+  const theme = getThemeContext(category);
   const typography = getRandomTypography();
   const layout = getRandomLayout();
-  const elements = getRandomElements();
-  const density = getRandomDensity();
+  const background = getRandomBackground();
   
-  return `Create a rich, layered typography poster for an affirmation print that feels like a curated art print.
+  return `Create a premium minimal typography print for a modern wellness brand.
 
 MAIN AFFIRMATION: "${title}"
-SUPPORTING PHRASES to weave throughout the design: "${phrasesText}"
+WHISPER PHRASES (barely visible, very small, at edges): "${phrasesText}"
 
-DESIGN APPROACH:
-- ${density}
-- Main affirmation is the clear hero, but surrounded by thoughtfully placed supporting text
-- Every phrase should be visible and readable at different sizes
-- Fill the canvas with intention - no large empty gaps
-- Mix of ${typography}
+BRAND DIRECTION - "QUIET LUXURY WELLNESS":
+Reference aesthetic: Kinfolk magazine, Cereal magazine, Aesop packaging, Apple meditation wallpapers
+This is NOT vintage. NOT letterpress. NOT cottage-core. NOT folk-art. NOT Victorian.
+This is: modern, clean, editorial, airy, premium, minimal, calm.
+
+CRITICAL DESIGN RULES:
+1. 60-70% NEGATIVE SPACE - generous breathing room is the priority
+2. Main affirmation in ${typography} - elegant, refined, the singular hero
+3. Supporting phrases are WHISPERS - tiny, faded, almost invisible at far edges
+4. Only ONE minimal accent element (optional): ${theme.accent}
+5. Emotional mood: ${theme.mood}
 
 VISUAL STYLE:
 - Background: ${background}
-- Color palette: ${palette}
+- Color palette: ${theme.palette}
 - Layout: ${layout}
-- Decorative elements throughout: ${elements}
+- Typography: clean, modern serif - think premium editorial
 
-MUST INCLUDE:
-- Multiple font sizes creating visual hierarchy
-- Decorative flourishes, botanical elements, and small icons scattered throughout
-- Text at various angles and orientations for visual interest
-- The design should feel collected and curated, like a vintage letterpress poster
+AVOID COMPLETELY:
+- Dense compositions (this should feel AIRY and SPACIOUS)
+- Heavy decorations, flourishes, ornaments
+- Vintage/rustic/folk/apothecary aesthetics
+- Woodland creatures, mushrooms, busy botanicals
+- Hand-inked or letterpress textures
+- Motivational poster energy
+- Multiple decorative elements (ONE accent max, or none)
+- Filled canvas - we want SPACE
+
+THE DESIGN SHOULD FEEL LIKE:
+A gallery art print you'd see in a high-end spa or boutique hotel.
+Calm. Quiet. Premium. Modern. Intentional.
 
 TECHNICAL:
-- Edge-to-edge design filling entire canvas
+- Edge-to-edge design, no paper edges visible
 - 4:5 aspect ratio
-- Premium quality like Rifle Paper Co or Anthropologie wall art
 - Ultra high resolution`;
 }
 
-function getRandomBackground(): string {
-  const backgrounds = [
-    "warm cream/ivory (#FAF6F1)",
-    "soft blush pink (#F9F1EE)",
-    "pale sage green (#F2F5F0)",
-    "light warm taupe (#F5F2ED)",
-    "soft pearl white (#FAFAFA)",
-    "muted sand (#F6F3EB)",
-    "whisper gray (#F4F4F2)",
-    "antique linen (#FAF8F3)",
-    "soft clay (#F8F4EF)",
-    "dusty rose undertone (#F7F2F0)"
-  ];
-  return backgrounds[Math.floor(Math.random() * backgrounds.length)];
-}
-
-function getRandomPalette(): string {
-  const palettes = [
-    "deep navy, terracotta, cream",
-    "forest green, warm gold, ivory",
-    "dusty rose, charcoal, soft white",
-    "burnt sienna, sage, cream",
-    "indigo, coral, warm white",
-    "olive, rust, sand",
-    "burgundy, gold, pearl",
-    "teal, copper, ivory",
-    "plum, sage green, cream",
-    "slate blue, terracotta, linen",
-    "chocolate brown, dusty pink, cream",
-    "emerald, gold, soft white",
-    "muted coral, navy, sand",
-    "warm gray, blush, cream",
-    "ochre, deep teal, ivory"
-  ];
-  return palettes[Math.floor(Math.random() * palettes.length)];
-}
-
 function getRandomTypography(): string {
-  const styles = [
-    "elegant serif headlines with delicate sans-serif accents",
-    "bold condensed sans-serif with flowing script details",
-    "classic roman capitals with italic flourishes",
-    "modern geometric sans with hand-lettered touches",
-    "vintage slab serif with refined thin weights",
-    "art deco inspired with ornamental capitals",
-    "editorial serif mix with condensed secondary text",
-    "organic hand-drawn lettering with clean sans support",
-    "refined transitional serif with modern spacing",
-    "bold display type with whisper-thin accent text"
+  const options = [
+    "refined modern serif (like Canela or GT Sectra)",
+    "elegant thin serif (like Didot Light or Philosophy)",
+    "sophisticated transitional serif (like Miller or Austin)",
+    "clean editorial serif with subtle warmth",
+    "contemporary luxury serif with balanced weight",
+    "graceful serif with gentle curves",
+    "premium editorial typeface with quiet presence",
+    "minimal modern serif - refined and understated"
   ];
-  return styles[Math.floor(Math.random() * styles.length)];
+  return options[Math.floor(Math.random() * options.length)];
 }
 
 function getRandomLayout(): string {
-  const layouts = [
-    "centered symmetrical with radiating phrases",
-    "asymmetric balance with left-weighted main text",
-    "circular arrangement with centered focal point",
-    "diagonal flow from top-left to bottom-right",
-    "stacked horizontal bands of varying weight",
-    "organic scattered placement with clear hierarchy",
-    "right-aligned main with floating accents left",
-    "vertical emphasis with cascading phrases",
-    "diamond-shaped composition",
-    "wave-like curved text arrangement"
+  const options = [
+    "centered with main text at optical center, whisper phrases floating at far corners",
+    "asymmetric - main text offset left with generous right margin",
+    "vertical breathing - text in lower third with expansive space above",
+    "minimal grid with maximum negative space",
+    "elegant center alignment with whisper accents at top and bottom edges",
+    "main text slightly above center, supporting text barely visible below",
+    "clean left alignment with 40% right margin",
+    "floating composition - text appears suspended in calm space"
   ];
-  return layouts[Math.floor(Math.random() * layouts.length)];
+  return options[Math.floor(Math.random() * options.length)];
 }
 
-function getRandomElements(): string {
-  const elementSets = [
-    "roses, peonies, olive branches, ferns, small birds, butterflies",
-    "sun and moon motifs, stars, celestial orbs, cosmic swirls",
-    "laurel wreaths, botanical sprigs, wildflowers, seed pods",
-    "geometric diamonds, circles, triangles, decorative borders",
-    "hearts, arrows, ribbons, banners, ornamental frames",
-    "feathers, leaves, vines, delicate florals, nature icons",
-    "mountains, clouds, waves, trees, natural landscapes",
-    "abstract watercolor washes, brush strokes, ink splatters",
-    "vintage ornaments, filigree, decorative corners, flourishes",
-    "mushrooms, crystals, moths, woodland creatures, organic shapes"
+function getRandomBackground(): string {
+  const options = [
+    "warm cream (#FAF6F1) with subtle paper grain",
+    "soft linen (#F8F5F0) barely textured",
+    "gentle beige (#F6F3ED) smooth and quiet",
+    "warm white (#FAFAF8) with whisper of warmth",
+    "soft blush undertone (#F9F6F4) very subtle",
+    "pale sage-cream (#F5F7F3) barely perceptible",
+    "natural cotton (#FAF9F6) soft matte finish",
+    "warm pearl (#F8F7F4) gallery-quality surface"
   ];
-  return elementSets[Math.floor(Math.random() * elementSets.length)];
-}
-
-function getRandomDensity(): string {
-  const densities = [
-    "Rich and layered - fill 70-80% of the canvas with text and decorative elements",
-    "Balanced abundance - main affirmation with 8-10 supporting phrases woven throughout",
-    "Lush and detailed - every corner has purpose with botanical accents and text",
-    "Collected and curated - like a vintage poster with many typographic elements",
-    "Thoughtfully dense - supporting phrases orbit the main text in varied sizes"
-  ];
-  return densities[Math.floor(Math.random() * densities.length)];
+  return options[Math.floor(Math.random() * options.length)];
 }
