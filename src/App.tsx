@@ -24,6 +24,7 @@ import Terms from "./pages/Terms";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import NotFound from "./pages/NotFound";
 import AdminImageGen from "./pages/AdminImageGen";
+import AdminAffirmationGen from "./pages/AdminAffirmationGen";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const AnimatedRoutes = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
         <Route path="/admin/imagegen" element={<AdminImageGen />} />
+        <Route path="/admin/affirmations" element={<AdminAffirmationGen />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
