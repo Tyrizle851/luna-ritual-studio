@@ -24,9 +24,10 @@ import {
 import { fashionProducts, FashionProduct } from "@/data/fashion";
 import { candles } from "@/data/candles";
 import { supplements } from "@/data/supplements";
-import { affirmations } from "@/data/affirmations";
+import { affirmations, Affirmation } from "@/data/affirmations";
 import { books } from "@/data/books";
 import { ProductCard } from "@/components/ProductCard";
+import { AffirmationProductCard } from "@/components/AffirmationProductCard";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
@@ -760,95 +761,20 @@ const Shop = () => {
                 <ProductGridSkeleton />
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
-                    <ProductCard 
+                  {getPaginatedItems(affirmations, affirmationsPage).map((affirmation: Affirmation) => (
+                    <AffirmationProductCard
                       key={affirmation.id}
-                      onClick={() => {
+                      affirmation={affirmation}
+                      onCardClick={() => {
                         setSelectedProduct(affirmation);
                         setIsModalOpen(true);
                       }}
-                    >
-                      <WishlistButton productId={affirmation.id} />
-                      {affirmation.badge && (
-                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                          affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
-                          affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
-                          affirmation.badge === 'Staff Pick' ? 'bg-accent text-accent-foreground' :
-                          affirmation.badge === 'Most Popular' ? 'bg-primary text-primary-foreground' :
-                          'bg-secondary text-foreground'
-                        }`}>
-                          {affirmation.badge}
-                        </div>
-                      )}
-                      <div className="overflow-hidden aspect-[4/5] bg-secondary">
-                        <img
-                          src={affirmation.image}
-                          alt={affirmation.title}
-                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
-                        
-                        {affirmation.rating && (
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="flex items-center gap-0.5">
-                              {[...Array(5)].map((_, i) => (
-                                <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
-                              ))}
-                            </div>
-                            <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
-                            {affirmation.reviewCount && (
-                              <span className="text-xs text-text-muted">
-                                ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount} reviews)
-                              </span>
-                            )}
-                          </div>
-                        )}
-                        
-                        {affirmation.socialProof && (
-                          <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
-                        )}
-                        
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
-                        
-                        {affirmation.certifications && affirmation.certifications.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-3">
-                            {affirmation.certifications.slice(0, 3).map((cert, idx) => (
-                              <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
-                                {cert}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
-                            {affirmation.originalPrice && (
-                              <>
-                                <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                                  -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
-                                </span>
-                              </>
-                            )}
-                            <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleAddToCart(affirmation, "affirmation");
-                            }}
-                          >
-                            Add to Cart
-                          </Button>
-                        </div>
-                      </div>
-                    </ProductCard>
+                      onAddToCart={(e) => {
+                        e.stopPropagation();
+                        setSelectedProduct(affirmation);
+                        setIsModalOpen(true);
+                      }}
+                    />
                   ))}
                 </div>
               )}
