@@ -26,6 +26,7 @@ import { candles } from "@/data/candles";
 import { supplements } from "@/data/supplements";
 import { affirmations } from "@/data/affirmations";
 import { books } from "@/data/books";
+import { ProductCard } from "@/components/ProductCard";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
@@ -449,9 +450,8 @@ const Shop = () => {
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
-                      <div 
-                        key={product.id} 
-                        className="group relative cursor-pointer"
+                      <ProductCard 
+                        key={product.id}
                         onClick={() => {
                           setSelectedFashionProduct(product);
                           setIsFashionModalOpen(true);
@@ -468,65 +468,65 @@ const Shop = () => {
                             {product.badge}
                           </div>
                         )}
-                        <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
-                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-                  
-                  {/* Rating if available */}
-                  {product.rating && (
-                    <div className="flex items-center gap-1 mb-3 text-xs">
-                      <span className="text-primary">★</span>
-                      <span className="font-semibold">{product.rating}</span>
-                      {product.reviewCount && (
-                        <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
-                      )}
-                    </div>
-                  )}
-                  
-                  <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
-                  
-                  {/* Certifications badges */}
-                  {product.certifications && product.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {product.certifications.slice(0, 2).map((cert, index) => (
-                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
-                          {cert}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      {product.originalPrice && (
-                        <>
-                          <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                          </span>
-                        </>
-                      )}
-                      <span className="text-base font-semibold text-text-primary">${product.price}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(product.affiliateUrl, '_blank');
-                      }}
-                    >
-                      Shop Now <ExternalLink className="w-3 h-3 ml-1" />
-                    </Button>
+                        <div className="overflow-hidden aspect-[4/5] bg-secondary">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                          />
                         </div>
-                      </div>
+                        <div className="p-4">
+                          <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
+                          <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
+                          
+                          {product.rating && (
+                            <div className="flex items-center gap-1 mb-3 text-xs">
+                              <span className="text-primary">★</span>
+                              <span className="font-semibold">{product.rating}</span>
+                              {product.reviewCount && (
+                                <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
+                              )}
+                            </div>
+                          )}
+                          
+                          <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
+                          
+                          {product.certifications && product.certifications.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mb-4">
+                              {product.certifications.slice(0, 2).map((cert, index) => (
+                                <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                                  {cert}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          
+                          <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                            <div className="flex items-center gap-2">
+                              {product.originalPrice && (
+                                <>
+                                  <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                    -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                                  </span>
+                                </>
+                              )}
+                              <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(product.affiliateUrl, '_blank');
+                              }}
+                            >
+                              Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                            </Button>
+                          </div>
+                        </div>
+                      </ProductCard>
                     ))}
                   </div>
                 )}
@@ -552,9 +552,8 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
-                    <div 
-                      key={candle.id} 
-                      className="group relative cursor-pointer"
+                    <ProductCard 
+                      key={candle.id}
                       onClick={() => {
                         setSelectedCandle(candle);
                         setIsCandleModalOpen(true);
@@ -571,65 +570,65 @@ const Shop = () => {
                           {candle.badge}
                         </div>
                       )}
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
-                    <img
-                      src={candle.image}
-                      alt={candle.name}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
-                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
-                  
-                  {/* Rating if available */}
-                  {candle.rating && (
-                    <div className="flex items-center gap-1 mb-3 text-xs">
-                      <span className="text-primary">★</span>
-                      <span className="font-semibold">{candle.rating}</span>
-                      {candle.reviewCount && (
-                        <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
-                      )}
-                    </div>
-                  )}
-                  
-                  <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
-                  
-                  {/* Certifications badges */}
-                  {candle.certifications && candle.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {candle.certifications.slice(0, 2).map((cert, index) => (
-                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
-                          {cert}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      {candle.originalPrice && (
-                        <>
-                          <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                            -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
-                          </span>
-                        </>
-                      )}
-                      <span className="text-base font-semibold text-text-primary">${candle.price}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(candle.affiliateUrl, '_blank');
-                      }}
-                    >
-                      Shop Now <ExternalLink className="w-3 h-3 ml-1" />
-                    </Button>
+                      <div className="overflow-hidden aspect-[4/5] bg-secondary">
+                        <img
+                          src={candle.image}
+                          alt={candle.name}
+                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        />
                       </div>
-                    </div>
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
+                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
+                        
+                        {candle.rating && (
+                          <div className="flex items-center gap-1 mb-3 text-xs">
+                            <span className="text-primary">★</span>
+                            <span className="font-semibold">{candle.rating}</span>
+                            {candle.reviewCount && (
+                              <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
+                            )}
+                          </div>
+                        )}
+                        
+                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
+                        
+                        {candle.certifications && candle.certifications.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-4">
+                            {candle.certifications.slice(0, 2).map((cert, index) => (
+                              <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                                {cert}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                          <div className="flex items-center gap-2">
+                            {candle.originalPrice && (
+                              <>
+                                <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
+                                </span>
+                              </>
+                            )}
+                            <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(candle.affiliateUrl, '_blank');
+                            }}
+                          >
+                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                          </Button>
+                        </div>
+                      </div>
+                    </ProductCard>
                   ))}
                 </div>
               )}
@@ -655,9 +654,8 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
-                    <div 
-                      key={supplement.id} 
-                      className="group relative cursor-pointer"
+                    <ProductCard 
+                      key={supplement.id}
                       onClick={() => {
                         setSelectedSupplement(supplement);
                         setIsSupplementModalOpen(true);
@@ -674,69 +672,70 @@ const Shop = () => {
                           {supplement.badge}
                         </div>
                       )}
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-white transition-all duration-300 group-hover:shadow-xl">
-                    <img
-                      src={supplement.image}
-                      alt={supplement.name}
-                      className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
-                  <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
-                  
-                  {/* Rating if available */}
-                  {supplement.rating && (
-                    <div className="flex items-center gap-1 mb-3 text-xs">
-                      <span className="text-primary">★</span>
-                      <span className="font-semibold">{supplement.rating}</span>
-                      {supplement.reviewCount && (
-                        <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
-                      )}
-                    </div>
-                  )}
-                  
-                  <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
-                  <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
-                  
-                  {/* Certifications badges */}
-                  {supplement.certifications && supplement.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {supplement.certifications.slice(0, 2).map((cert, index) => (
-                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
-                          {cert}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      {supplement.originalPrice && (
-                        <>
-                          <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                            -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
-                          </span>
-                        </>
-                      )}
-                      <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
-                      }}
-                    >
-                      {supplement.affiliateUrl ? (
-                        <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
-                      ) : (
-                        <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
-                      )}
-                    </Button>
+                      <div className="overflow-hidden aspect-[4/5] bg-white">
+                        <img
+                          src={supplement.image}
+                          alt={supplement.name}
+                          className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
+                        />
                       </div>
-                    </div>
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
+                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
+                        
+                        {supplement.rating && (
+                          <div className="flex items-center gap-1 mb-3 text-xs">
+                            <span className="text-primary">★</span>
+                            <span className="font-semibold">{supplement.rating}</span>
+                            {supplement.reviewCount && (
+                              <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
+                            )}
+                          </div>
+                        )}
+                        
+                        <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
+                        <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
+                        
+                        {supplement.certifications && supplement.certifications.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-4">
+                            {supplement.certifications.slice(0, 2).map((cert, index) => (
+                              <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                                {cert}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                          <div className="flex items-center gap-2">
+                            {supplement.originalPrice && (
+                              <>
+                                <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
+                                </span>
+                              </>
+                            )}
+                            <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
+                            }}
+                          >
+                            {supplement.affiliateUrl ? (
+                              <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
+                            ) : (
+                              <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    </ProductCard>
                   ))}
                 </div>
               )}
@@ -762,9 +761,8 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(affirmations, affirmationsPage).map((affirmation) => (
-                    <div 
-                      key={affirmation.id} 
-                      className="group relative cursor-pointer"
+                    <ProductCard 
+                      key={affirmation.id}
                       onClick={() => {
                         setSelectedProduct(affirmation);
                         setIsModalOpen(true);
@@ -782,73 +780,75 @@ const Shop = () => {
                           {affirmation.badge}
                         </div>
                       )}
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[4/5] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                      <div className="overflow-hidden aspect-[4/5] bg-secondary">
                         <img
                           src={affirmation.image}
                           alt={affirmation.title}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-                      <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
-                      
-                      {affirmation.rating && (
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="flex items-center gap-0.5">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
+                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
+                        
+                        {affirmation.rating && (
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="flex items-center gap-0.5">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
+                              ))}
+                            </div>
+                            <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
+                            {affirmation.reviewCount && (
+                              <span className="text-xs text-text-muted">
+                                ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount} reviews)
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        
+                        {affirmation.socialProof && (
+                          <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
+                        )}
+                        
+                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
+                        
+                        {affirmation.certifications && affirmation.certifications.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-3">
+                            {affirmation.certifications.slice(0, 3).map((cert, idx) => (
+                              <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
+                                {cert}
+                              </span>
                             ))}
                           </div>
-                          <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
-                          {affirmation.reviewCount && (
-                            <span className="text-xs text-text-muted">
-                              ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount} reviews)
-                            </span>
-                          )}
+                        )}
+                        
+                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                          <div className="flex items-center gap-2">
+                            {affirmation.originalPrice && (
+                              <>
+                                <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
+                                </span>
+                              </>
+                            )}
+                            <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(affirmation, "affirmation");
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
                         </div>
-                      )}
-                      
-                      {affirmation.socialProof && (
-                        <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
-                      )}
-                      
-                      <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
-                      
-                      {affirmation.certifications && affirmation.certifications.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mb-3">
-                          {affirmation.certifications.slice(0, 3).map((cert, idx) => (
-                            <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
-                              {cert}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          {affirmation.originalPrice && (
-                            <>
-                              <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                                -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
-                              </span>
-                            </>
-                          )}
-                          <span className="text-base font-semibold text-text-primary">${affirmation.price}</span>
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(affirmation, "affirmation");
-                          }}
-                        >
-                          Add to Cart
-                        </Button>
                       </div>
-                    </div>
+                    </ProductCard>
                   ))}
                 </div>
               )}
@@ -874,9 +874,8 @@ const Shop = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(books, booksPage).map((book) => (
-                    <div 
-                      key={book.id} 
-                      className="group relative cursor-pointer"
+                    <ProductCard 
+                      key={book.id}
                       onClick={() => {
                         setSelectedBook(book);
                         setIsBookModalOpen(true);
@@ -895,64 +894,66 @@ const Shop = () => {
                           {book.badge}
                         </div>
                       )}
-                      <div className="mb-4 overflow-hidden rounded-lg aspect-[3/4] bg-secondary transition-all duration-300 group-hover:shadow-xl">
+                      <div className="overflow-hidden aspect-[3/4] bg-secondary">
                         <img
                           src={book.image}
                           alt={book.title}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
-                      <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
-                      <p className="text-xs text-text-muted mb-2">by {book.author}</p>
-                      
-                      {book.rating && (
-                        <div className="flex items-center gap-1 mb-2 text-xs">
-                          <span className="text-primary">★</span>
-                          <span className="font-semibold">{book.rating}</span>
-                          {book.reviewCount && (
-                            <span className="text-muted-foreground">({book.reviewCount.toLocaleString()})</span>
-                          )}
-                        </div>
-                      )}
-                      
-                      <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
-                      
-                      {book.awards && book.awards.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mb-3">
-                          {book.awards.slice(0, 2).map((award, index) => (
-                            <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
-                              {award}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          {book.originalPrice && (
-                            <>
-                              <span className="text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
-                                -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
+                        <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
+                        <p className="text-xs text-text-muted mb-2">by {book.author}</p>
+                        
+                        {book.rating && (
+                          <div className="flex items-center gap-1 mb-2 text-xs">
+                            <span className="text-primary">★</span>
+                            <span className="font-semibold">{book.rating}</span>
+                            {book.reviewCount && (
+                              <span className="text-muted-foreground">({book.reviewCount.toLocaleString()})</span>
+                            )}
+                          </div>
+                        )}
+                        
+                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
+                        
+                        {book.awards && book.awards.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-3">
+                            {book.awards.slice(0, 2).map((award, index) => (
+                              <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                                {award}
                               </span>
-                            </>
-                          )}
-                          <span className="text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                          <div className="flex items-center gap-2">
+                            {book.originalPrice && (
+                              <>
+                                <span className="text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
+                                </span>
+                              </>
+                            )}
+                            <span className="text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(book.affiliateUrl, '_blank');
+                            }}
+                          >
+                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                          </Button>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(book.affiliateUrl, '_blank');
-                          }}
-                        >
-                          Shop Now <ExternalLink className="w-3 h-3 ml-1" />
-                        </Button>
                       </div>
-                    </div>
+                    </ProductCard>
                   ))}
                 </div>
               )}

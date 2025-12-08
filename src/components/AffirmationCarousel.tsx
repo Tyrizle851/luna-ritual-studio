@@ -106,7 +106,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
             className="flex-none w-[260px] sm:w-[280px] md:w-[320px] animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="relative h-full bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300 mx-[-6px]">
+            <div className="relative h-full bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300">
               <WishlistButton productId={affirmation.id} />
               
               {affirmation.badge && (
@@ -129,62 +129,56 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
                 />
               </div>
               
-              <div className="p-4 flex flex-col">
-                <div className="flex-grow">
-                  {affirmation.rating && (
-                    <div className="flex items-center gap-1 mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                      ))}
-                      <span className="text-xs text-text-muted ml-1">
-                        ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K reviews
-                      </span>
-                    </div>
-                  )}
-                  
-                  {affirmation.socialProof && (
-                    <span className="text-xs text-text-muted mb-2 block">{affirmation.socialProof}</span>
-                  )}
-                  
-                  {affirmation.category && (
-                    <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
-                      {affirmation.category}
-                    </span>
-                  )}
-                  
-                  <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                  
-                  {affirmation.description && (
-                    <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}...</p>
-                  )}
-                  
-                  {affirmation.certifications && affirmation.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {affirmation.certifications.map((cert, idx) => (
-                        <span key={idx} className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
-                          {cert}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
+              <div className="p-4">
+                {affirmation.category && (
+                  <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
+                    {affirmation.category}
+                  </span>
+                )}
                 
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
-                  <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-display text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
+                
+                {affirmation.rating && (
+                  <div className="flex items-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-gold text-gold" />
+                    ))}
+                    <span className="text-xs text-text-muted ml-1">
+                      ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K
+                    </span>
+                  </div>
+                )}
+                
+                {affirmation.description && (
+                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+                )}
+                
+                {affirmation.certifications && affirmation.certifications.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {affirmation.certifications.slice(0, 2).map((cert, idx) => (
+                      <span key={idx} className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+                        {cert}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     {affirmation.originalPrice && (
                       <>
-                        <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
-                        <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        <span className="text-xs text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
+                        <span className="text-[10px] bg-foreground text-background px-1 py-0.5 rounded font-medium">
                           -{Math.round(((affirmation.originalPrice - affirmation.price) / affirmation.originalPrice) * 100)}%
                         </span>
                       </>
                     )}
-                    <span className="font-semibold">${affirmation.price.toFixed(2)}</span>
+                    <span className="font-semibold text-sm">${affirmation.price.toFixed(2)}</span>
                   </div>
                   <Button 
                     size="sm" 
                     variant="outline" 
-                    className="border-clay text-clay hover:bg-clay/10"
+                    className="border-clay text-clay hover:bg-clay/10 text-xs px-2"
                     onClick={() => {
                       setSelectedProduct(affirmation);
                       setModalOpen(true);
