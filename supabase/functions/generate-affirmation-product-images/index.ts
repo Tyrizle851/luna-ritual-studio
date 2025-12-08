@@ -8,10 +8,15 @@ const corsHeaders = {
 
 interface AffirmationImageRequest {
   affirmationId: string;
-  title: string;
+  affirmationText: string;
   category: string;
   description: string;
   tags?: string[];
+  forceRegenerate?: boolean;
+}
+
+interface AffirmationData extends AffirmationImageRequest {
+  title: string;
 }
 
 // Theme-based design configurations inspired by affirmation builder
@@ -44,7 +49,7 @@ const THEME_PALETTES: Record<string, { colors: string; style: string; accents: s
 };
 
 // Generate prompts for each variation type
-function generatePrompts(affirmation: AffirmationImageRequest) {
+function generatePrompts(affirmation: AffirmationData) {
   const theme = THEME_PALETTES[affirmation.category] || THEME_PALETTES["Self-Love"];
   
   // Whether to include human interaction (50% chance for canvas/poster/framed)
@@ -328,18 +333,25 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const body: AffirmationImageRequest = await req.json();
+    
+    // Map affirmationText to title for internal use
+    const affirmationData = {
+      ...body,
+      title: body.affirmationText
+    };
 
-    console.log(`Generating images for affirmation: ${body.affirmationId} - "${body.title}"`);
+    console.log(`Generating images for affirmation: ${affirmationData.affirmationId} - "${affirmationData.title}"`);
 
     // Check if images already exist
     const { data: existingImages } = await supabase
       .from("product_images")
       .select("*")
-      .eq("product_id", body.affirmationId)
+      .eq("product_id", affirmationData.affirmationId)
       .eq("product_category", "affirmations");
 
-    if (existingImages && existingImages.length >= 4) {
-      console.log("Images already exist for this affirmation");
+    // Skip if images exist and not forcing regeneration
+    if (existingImages && existingImages.length >= 4 && !body.forceRegenerate) {
+      console.log("Images already exist for this affirmation (use forceRegenerate to override)");
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -350,23 +362,24 @@ serve(async (req) => {
       );
     }
 
-    // Delete any partial existing images
+    // Delete any existing images before regenerating
     if (existingImages && existingImages.length > 0) {
+      console.log(`Deleting ${existingImages.length} existing images for regeneration`);
       await supabase
         .from("product_images")
         .delete()
-        .eq("product_id", body.affirmationId)
+        .eq("product_id", affirmationData.affirmationId)
         .eq("product_category", "affirmations");
     }
 
     // Generate prompts
-    const prompts = generatePrompts(body);
+    const prompts = generatePrompts(affirmationData as any);
     const variationTypes = ["digital", "canvas", "unframed", "framed"] as const;
     const generatedImages: { variation: string; url: string }[] = [];
 
     // Generate each variation
     for (const variation of variationTypes) {
-      console.log(`Generating ${variation} image for ${body.affirmationId}...`);
+      console.log(`Generating ${variation} image for ${affirmationData.affirmationId}...`);
       
       const imageBase64 = await generateImage(prompts[variation], LOVABLE_API_KEY);
       
@@ -376,7 +389,7 @@ serve(async (req) => {
       }
 
       // Upload to storage
-      const publicUrl = await uploadToStorage(supabase, imageBase64, body.affirmationId, variation);
+      const publicUrl = await uploadToStorage(supabase, imageBase64, affirmationData.affirmationId, variation);
       
       if (!publicUrl) {
         console.error(`Failed to upload ${variation} image`);
@@ -387,7 +400,7 @@ serve(async (req) => {
       const { error: insertError } = await supabase
         .from("product_images")
         .insert({
-          product_id: body.affirmationId,
+          product_id: affirmationData.affirmationId,
           product_category: "affirmations",
           variation_type: variation,
           image_url: publicUrl,
@@ -405,8 +418,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        affirmationId: body.affirmationId,
-        title: body.title,
+        affirmationId: affirmationData.affirmationId,
+        title: affirmationData.title,
         imagesGenerated: generatedImages.length,
         images: generatedImages
       }),

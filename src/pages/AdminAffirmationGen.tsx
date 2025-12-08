@@ -24,7 +24,7 @@ const AdminAffirmationGen = () => {
     setStatuses(prev => prev.map(s => s.id === id ? { ...s, status, error } : s));
   };
 
-  const generateForAffirmation = async (affirmation: typeof affirmations[0]) => {
+  const generateForAffirmation = async (affirmation: typeof affirmations[0], forceRegenerate = true) => {
     try {
       updateStatus(affirmation.id, "generating");
       
@@ -35,6 +35,7 @@ const AdminAffirmationGen = () => {
           category: affirmation.category,
           tags: affirmation.tags || [],
           description: affirmation.description,
+          forceRegenerate,
         },
       });
 
