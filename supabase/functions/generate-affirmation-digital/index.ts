@@ -102,64 +102,125 @@ serve(async (req) => {
 });
 
 function buildPrompt(title: string, category: string, supportingPhrases: string[]): string {
-  const phrasesText = supportingPhrases.join('", "');
+  // Limit to 5-7 phrases for cleaner design
+  const phraseCount = 5 + Math.floor(Math.random() * 3);
+  const shuffledPhrases = supportingPhrases.sort(() => Math.random() - 0.5).slice(0, phraseCount);
+  const phrasesText = shuffledPhrases.join('", "');
   
-  // Get category-specific styling
-  const categoryStyles = getCategoryStyle(category);
+  // Get randomized styling
+  const background = getRandomBackground();
+  const palette = getRandomPalette();
+  const typography = getRandomTypography();
+  const layout = getRandomLayout();
+  const elements = getRandomElements(category);
   
-  return `Create a premium typography poster design for a motivational affirmation print.
+  return `Create a clean, minimal typography poster for an affirmation print.
 
 MAIN AFFIRMATION: "${title}"
+SUPPORTING PHRASES (arrange ${phraseCount} of these artistically): "${phrasesText}"
 
-SUPPORTING PHRASES to include around the main text: "${phrasesText}"
+CRITICAL DESIGN RULES:
+- ${background}
+- Clean, breathable design with generous whitespace (30-40% negative space)
+- Main affirmation is the clear focal point, large and centered
+- Supporting phrases are SUBTLE and SECONDARY, much smaller
+- NO clutter, NO busy compositions, NO overwhelming detail
 
-DESIGN REQUIREMENTS:
-- Edge-to-edge design filling the entire canvas (no borders, no paper edges visible)
-- Warm cream/ivory background
-- Main affirmation prominently centered with mixed typography (combine bold serif, elegant script, condensed sans-serif)
-- 8-12 supporting phrases arranged artistically around the main text in varied fonts and sizes
-- Include delicate decorative elements: ${categoryStyles.elements}
-- Color palette: ${categoryStyles.colors}
-- Typography should feel hand-curated like a vintage letterpress poster
-- Include subtle decorative elements (small geometric shapes, dots, lines between phrases)
-- Professional print-ready quality
+SPECIFIC STYLE FOR THIS DESIGN:
+- Background: ${background}
+- Color palette: ${palette}
+- Typography approach: ${typography}
+- Layout style: ${layout}
+- Decorative accents (use sparingly): ${elements}
+
+QUALITY:
+- Edge-to-edge design, no paper edges visible
 - 4:5 aspect ratio
-- Ultra high resolution
-
-STYLE REFERENCE: Premium minimal art print, like Rifle Paper Co or Anthropologie wall art, editorial typography poster, warm bohemian aesthetic`;
+- Premium minimal aesthetic like Kinfolk magazine or Cereal magazine
+- Ultra high resolution`;
 }
 
-function getCategoryStyle(category: string): { colors: string; elements: string } {
-  const styles: Record<string, { colors: string; elements: string }> = {
-    "self-love": {
-      colors: "dusty rose, terracotta, navy, cream",
-      elements: "roses, peonies, hearts, diamond shapes"
-    },
-    "peace": {
-      colors: "sage green, muted navy, warm cream, soft gold",
-      elements: "olive branches, sun rays, laurel wreaths, gentle leaves"
-    },
-    "growth": {
-      colors: "terracotta, sage, warm cream, burnt orange",
-      elements: "mountains, winding paths, ferns, seedlings, clouds"
-    },
-    "calm": {
-      colors: "deep teal, sage green, cream, soft navy",
-      elements: "ocean waves, moon phases, olive branches, water ripples"
-    },
-    "rest": {
-      colors: "sage green, navy, warm cream, muted gold",
-      elements: "olive branches, feathers, small leaves, gentle dots"
-    },
-    "abundance": {
-      colors: "gold, terracotta, cream, forest green",
-      elements: "florals, sunbursts, botanical sprigs, stars"
-    },
-    "confidence": {
-      colors: "navy, gold, cream, terracotta",
-      elements: "stars, geometric shapes, bold lines, laurel wreaths"
-    }
-  };
+function getRandomBackground(): string {
+  const backgrounds = [
+    "warm cream/ivory (#FAF6F1)",
+    "soft blush pink (#F9F1EE)",
+    "pale sage green (#F2F5F0)",
+    "light warm taupe (#F5F2ED)",
+    "soft pearl white (#FAFAFA)",
+    "muted sand (#F6F3EB)",
+    "whisper gray (#F4F4F2)",
+    "antique linen (#FAF8F3)",
+    "soft clay (#F8F4EF)",
+    "dusty rose undertone (#F7F2F0)"
+  ];
+  return backgrounds[Math.floor(Math.random() * backgrounds.length)];
+}
 
-  return styles[category] || styles["peace"];
+function getRandomPalette(): string {
+  const palettes = [
+    "deep navy, terracotta, cream",
+    "forest green, warm gold, ivory",
+    "dusty rose, charcoal, soft white",
+    "burnt sienna, sage, cream",
+    "indigo, coral, warm white",
+    "olive, rust, sand",
+    "burgundy, gold, pearl",
+    "teal, copper, ivory",
+    "plum, sage green, cream",
+    "slate blue, terracotta, linen",
+    "chocolate brown, dusty pink, cream",
+    "emerald, gold, soft white",
+    "muted coral, navy, sand",
+    "warm gray, blush, cream",
+    "ochre, deep teal, ivory"
+  ];
+  return palettes[Math.floor(Math.random() * palettes.length)];
+}
+
+function getRandomTypography(): string {
+  const styles = [
+    "elegant serif headlines with delicate sans-serif accents",
+    "bold condensed sans-serif with flowing script details",
+    "classic roman capitals with italic flourishes",
+    "modern geometric sans with hand-lettered touches",
+    "vintage slab serif with refined thin weights",
+    "art deco inspired with ornamental capitals",
+    "editorial serif mix with condensed secondary text",
+    "organic hand-drawn lettering with clean sans support",
+    "refined transitional serif with modern spacing",
+    "bold display type with whisper-thin accent text"
+  ];
+  return styles[Math.floor(Math.random() * styles.length)];
+}
+
+function getRandomLayout(): string {
+  const layouts = [
+    "centered symmetrical with radiating phrases",
+    "asymmetric balance with left-weighted main text",
+    "circular arrangement with centered focal point",
+    "diagonal flow from top-left to bottom-right",
+    "stacked horizontal bands of varying weight",
+    "organic scattered placement with clear hierarchy",
+    "right-aligned main with floating accents left",
+    "vertical emphasis with cascading phrases",
+    "diamond-shaped composition",
+    "wave-like curved text arrangement"
+  ];
+  return layouts[Math.floor(Math.random() * layouts.length)];
+}
+
+function getRandomElements(category: string): string {
+  const elementSets = [
+    "tiny botanical sprigs, single leaf accents",
+    "minimal geometric dots, thin line dividers",
+    "delicate star bursts, subtle sparkles",
+    "small moon crescents, celestial dots",
+    "fine laurel branches, simple wreaths",
+    "abstract brush strokes, ink splatters",
+    "tiny hearts, diamond shapes",
+    "subtle sun rays, organic curves",
+    "minimal floral buds, stem lines",
+    "simple arrows, compass points"
+  ];
+  return elementSets[Math.floor(Math.random() * elementSets.length)];
 }
