@@ -156,6 +156,24 @@ const THEME_REGISTRY: Record<string, ThemeDefinition> = {
 };
 
 // ============================================================================
+// GLOBAL AESTHETIC RULESET - ChatGPT's premium brand standards
+// ============================================================================
+
+const GLOBAL_AESTHETIC_RULESET = `
+BRAND AESTHETIC STANDARDS (ALWAYS APPLY):
+1. All outputs must align with a premium, editorial, quiet-luxury brand standard.
+2. Lighting should always be warm, soft, and natural—never flat or digital.
+3. Colors must stay within a muted, earthy palette: sand, cream, clay, eucalyptus, warm linen.
+4. Artwork backgrounds must always include subtle texture (paper, linen, grain). Never smooth digital gradients.
+5. Typography must always look like high-end magazine or boutique packaging.
+6. Composition must use generous negative space and off-center layouts.
+7. The brand feeling must remain emotionally warm, human, calm, and design-first.
+8. No clutter, no sparkles, no bold gradients, no bright pastels, no template look.
+9. Everything should look like it belongs inside a $600 interior design photoshoot.
+10. Always prioritize emotional warmth, texture, natural lighting, and editorial sophistication.
+`;
+
+// ============================================================================
 // AESTHETIC VARIATION SYSTEM - Controlled randomness for premium feel
 // ============================================================================
 
@@ -219,95 +237,64 @@ function buildAestheticVariations(): string {
 }
 
 // ============================================================================
-// PREMIUM DIGITAL ARTWORK PROMPT
+// PREMIUM DIGITAL ARTWORK PROMPT - ChatGPT's Premium Template
 // ============================================================================
 
 function generateDigitalPrompt(affirmation: AffirmationData): string {
   const theme = THEME_REGISTRY[affirmation.category] || THEME_REGISTRY["Self-Love"];
   const aestheticVariations = buildAestheticVariations();
-  
-  // Select random layout from theme defaults
-  const layout = theme.defaultLayouts[Math.floor(Math.random() * theme.defaultLayouts.length)];
-  
-  // Typography guidance based on theme
-  const typographyGuide = theme.typography.headline === "serif" 
-    ? "elegant serif typeface (like Canela, Freight Display, Tiempos) paired with refined script or serif supporting text"
-    : theme.typography.headline === "display"
-    ? "distinctive display typeface with character paired with clean sans-serif supporting text"
-    : "refined sans-serif (like Founders Grotesk, Basis Grotesque, Söhne) with geometric precision";
 
   return `
-You are an award-winning editorial art director creating a premium wall art print for a luxury wellness brand. This design should feel like it costs $200+ in a curated boutique.
+Create a premium affirmation wall-art print that looks like a $200+ boutique gallery piece.
 
 THE AFFIRMATION: "${affirmation.title}"
 
-VISUAL REFERENCE POINTS (study and channel these aesthetics):
-${theme.brandAnchors.map(b => `- ${b}`).join('\n')}
-- Apple's meditation wallpapers: serene, modern, breathable negative space
-- High-end Japanese stationery: refined restraint, beautiful emptiness
-- Kinfolk magazine layouts: curated simplicity, natural materials feel
+${GLOBAL_AESTHETIC_RULESET}
 
-EMOTIONAL DIRECTION:
+REQUIRED AESTHETIC:
+- Warm, editorial, quiet-luxury styling
+- ${theme.palette.description}
+- Real paper or linen texture with subtle grain (not smooth digital gradients)
+- Light film softness to avoid a harsh digital look
+- Asymmetrical, magazine-style composition (no perfect centering)
+- Generous negative space around the text (minimum 20% margins)
+- Organic, handmade imperfections: tiny grain, soft analog noise, natural paper feel
+
+TYPOGRAPHY RULES:
+- Hero typeface: elegant serif (like Canela, Freight, Tiempos) or refined display
+- Support type (optional): minimal, clean, non-decorative
+- Max 2 fonts total
+- Increased letter-spacing + tall line height for a luxury feel
+- The affirmation text is the emotional focal point, not decorative elements
+- Absolutely avoid generic script fonts, Canva fonts, and centered box layouts
+
+MOOD & EMOTION:
 - ${theme.emotionalTone}
-- Energy level: ${theme.energyLevel}
-- Layout archetype: ${layout}
+- Serene, warm, contemplative, interior-designer quality
+- Soft directional lighting like a morning room
+- Zero clutter, zero bright colors, zero bold contrasts
+- This should evoke the feeling of a calm, styled home
 
-COLOR WORLD:
-${theme.palette.description}
-Palette: ${theme.palette.hex.join(', ')}
-- Colors should feel like they've been mixed by hand, not picked from a digital color picker
-- Add warmth and depth to avoid flat digital colors
-- Consider very soft, almost invisible noise or texture overlay
-
-TYPOGRAPHY REQUIREMENTS (CRITICAL FOR PREMIUM FEEL):
-- The affirmation text is the hero - give it visual weight and generous breathing room
-- Use ${typographyGuide}
-- NO MORE than 2 typefaces total
-- Generous letter-spacing (tracking) - this is what separates premium from amateur
-- Line heights that feel meditative, never cramped
-- Consider hierarchy: perhaps a smaller decorative element or flourish above/below the main text
-- Text color should contrast beautifully with background while remaining refined
-
-COMPOSITION RULES:
-- Portrait orientation (3:4 aspect ratio suitable for 18x24 print)
-- Minimum 20% margins on all sides - the text should feel like it's floating in space
-- Asymmetrical balance is more premium than dead center
-- Let negative space do the heavy lifting - less is more
-- If using decorative elements, they should feel hand-drawn or organic, NEVER clipart
-
-SURFACE & TEXTURE:
-- Background should have subtle material quality: handmade paper, soft linen texture, subtle grain
-- Avoid flat digital colors - add warmth, depth, natural imperfection
-- Consider very soft, almost invisible noise overlay
-
-AESTHETIC VARIATIONS FOR THIS PIECE:
+AESTHETIC VARIATIONS:
 ${aestheticVariations}
 
-BASELINE AESTHETIC (ALWAYS APPLY):
-Premium minimal natural aesthetic, modern editorial calm, clean negative space, organic texture subtle, light film softness, botanical shadow whisper, no harsh gradients, no clutter, no graphic filters, no obvious patterns, quiet luxury feel.
-
-ABSOLUTELY AVOID (CRITICAL - these destroy premium feel):
+ABSOLUTELY AVOID (these destroy the premium feel):
 ${theme.avoid.map(a => `- ${a}`).join('\n')}
-- Anything that looks like a Canva template or Pinterest quote graphic
-- Generic script fonts that look like free downloads
-- Watercolor blob backgrounds (extremely overdone)
-- Sparkle effects, glitter, or obvious shine
-- Harsh drop shadows or beveled effects
-- Centered text in a box layout
-- Any elements that feel mass-produced or template-like
-- Text touching or near edges
-- Cluttered compositions
-- Instagram-filter effects
+- Watercolor blobs or gradient meshes
+- Clipart, fake botanicals, decorative flourishes
+- Harsh shadows or perfect symmetry
+- Flat beige backgrounds without visible texture
+- Pinterest-quote aesthetic or Canva template look
+- Text that feels cramped or touches edges
+- Anything that looks mass-produced
 
-FINAL PRINT SPECIFICATIONS:
-- Pure artwork only - NO frame, NO canvas texture, NO mockup elements
-- Clean edges suitable for any framing option
-- Printable at 18x24 inches at high resolution
-- Portrait orientation (3:4 ratio)
+FRAMING & OUTPUT:
+- Pure artwork only (NO frame, NO canvas texture, NO mockup)
+- Portrait orientation, 3:4 ratio (suitable for 18x24 print)
+- Clean edges, print-ready quality
 - This should look like it belongs in a curated boutique, not a big box store
-- The kind of piece an interior designer would specify for a client
 
-Create something museum-quality that would make someone pause and feel something.
+Create something that makes someone pause, feel something, and want it on their wall.
 `;
 }
 
@@ -332,118 +319,145 @@ CRITICAL DIMENSIONAL ACCURACY (18x24 inches / 45.7 x 61 cm):
 
   const humanScenarios = {
     canvas: [
-      "A person with elegant hands gently adjusting the canvas on a minimalist gallery wall, soft cashmere sweater visible, the canvas clearly visible as 18x24 medium-large statement piece",
-      "Someone in a cozy knit sweater admiring the canvas in their bright, airy Scandinavian-style living room, canvas shown at realistic 18x24 scale relative to furniture",
-      "A woman's silhouette hanging the canvas in a sunlit bedroom with linen bedding, canvas proportioned correctly as portrait 3:4 ratio",
+      "Someone in a cozy cashmere sweater gently adjusting the canvas, warm afternoon light streaming through sheer linen curtains, styled coffee table with ceramics in foreground, canvas as 18x24 statement piece",
+      "A woman with elegant hands arranging the canvas in her bright Scandinavian living room, linen sofa visible, trailing pothos plant nearby, soft golden hour light, canvas at realistic 18x24 scale",
+      "Someone in a chunky knit cardigan stepping back to admire the canvas in their serene bedroom, unmade linen bedding, warm wood floors, morning light filtering through curtains",
     ],
     unframed: [
-      "Elegant hands holding the unrolled 18x24 poster (the poster extends well beyond hand width), revealing the design against a clean marble surface",
-      "Someone in a minimalist space positioning the 18x24 poster against a textured plaster wall, poster shown at correct scale",
-      "A person carefully unrolling the poster on a clean oak table in natural light, poster dimensions clearly 18 inches wide by 24 inches tall",
+      "Elegant hands holding the unrolled 18x24 poster (extending well beyond hand width), against a styled marble surface with a small ceramic vase and dried eucalyptus, warm natural light",
+      "Someone in minimalist linen clothing positioning the poster against a textured cream plaster wall, a cozy throw blanket draped nearby, late afternoon sunlight casting gentle shadows",
+      "A person carefully unrolling the poster on a worn oak farmhouse table, a steaming cup of tea nearby, soft window light with plant shadows, poster clearly 18x24 inches",
     ],
     framed: [
-      "Someone in a cashmere sweater adjusting the framed 18x24 piece on a gallery wall, frame sized appropriately for the print",
-      "A person admiring the framed artwork from their reading nook with afternoon light, frame proportions clearly 3:4 portrait ratio",
-      "Elegant hands placing the framed 18x24 poster on a minimalist floating shelf display, frame scaled correctly",
+      "Someone in a cashmere sweater adjusting the framed piece on a gallery wall, styled with a small bench and throw pillow below, warm afternoon light casting soft shadows, frame at 18x24 scale",
+      "A person admiring the framed artwork from their cozy reading nook, worn leather armchair visible, stack of books nearby, golden hour light through sheer curtains, frame proportions 3:4 portrait",
+      "Elegant hands placing the framed poster on a floating oak shelf, next to a handmade ceramic vase with dried lavender, warm natural light, styled with intention",
     ]
   };
 
   const styledScenarios = {
     canvas: [
-      "on a clean white gallery wall with soft natural lighting and subtle shadow, minimal styling",
-      "in a bright, airy Scandinavian-style living room with linen sofa and trailing plant",
-      "in a serene bedroom with warm morning light streaming through sheer linen curtains",
+      "on a warm-toned wall in a bright, airy living room with linen sofa, trailing plants, a cozy throw blanket, and soft afternoon sunlight streaming through sheer curtains",
+      "in a serene Scandinavian bedroom with unmade linen bedding, warm wood floors, a small reading chair, and morning light filtering through soft curtains",
+      "above a styled credenza with handmade ceramics, a small potted plant, and books, in a room with warm natural light and visible wood textures",
     ],
     unframed: [
-      "laid flat on a clean Carrara marble surface with soft window light shadows",
-      "slightly curled at edges, leaning against a textured cream plaster wall",
-      "placed on a light oak desk with a single stem vase and minimal styling",
+      "laid on a styled marble surface with a ceramic vase of dried eucalyptus, soft window light creating gentle shadows, warm and inviting atmosphere",
+      "slightly curled at edges, leaning against a textured plaster wall in a sunlit corner, with a cozy throw blanket and potted plant nearby",
+      "placed on a worn oak table with a cup of tea, a small candle, and soft morning light filtering through linen curtains",
     ],
     framed: [
-      "hung on a warm-toned wall in a cozy reading corner with afternoon light",
-      "displayed on a minimalist floating oak shelf with a small ceramic vase",
-      "in a sunlit hallway with clean architectural details and warm wood floors",
+      "hung in a cozy reading corner with a worn leather armchair, a stack of design books, warm wood floors, and late afternoon golden light",
+      "displayed on a floating oak shelf with handmade ceramics, dried botanicals, and soft natural light creating a gallery-like atmosphere",
+      "in a sunlit hallway with warm terracotta or wood floors, architectural details visible, soft shadows from nearby plants",
     ]
   };
 
   const randomFrom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
 
   const photographyStyle = `
-PHOTOGRAPHY STYLE (CRITICAL):
-- Editorial interior photography, shot on medium format camera
-- Soft diffused natural light, golden hour warmth preferred
-- Curated, aspirational but achievable home setting
-- The vibe of Architectural Digest meets Kinfolk magazine
-- No harsh flash, no artificial lighting look
-- Depth of field that draws focus to the artwork
+REQUIRED MOOD (CRITICAL - this is what makes it premium):
+- Soft, warm sunlight (late afternoon or morning warmth)
+- Subtle film grain for analog warmth
+- Real interior textures: linen, wood, ceramics, matte surfaces
+- Quiet luxury aesthetic (Kinfolk, Cereal Magazine, Aesop store energy)
+- Natural shadows from plants or window blinds, very soft and diffused
+- No bright white overexposure, no sterile minimalism
+- Include foreground elements (plants, ceramics, fabric) with soft blur
+- Shallow depth of field that draws focus to the artwork
+- This should look like a professional home-interior photoshoot with emotional warmth, NOT a product render
+
+${GLOBAL_AESTHETIC_RULESET}
+
+WHAT THE MODEL MUST NOT DO:
+- No fake 3D-rendered furniture
+- No digital "studio backdrop"
+- No blank beige wall with no shadows or context
+- No centered floating frame with no environment
+- No Canva-style room mockups or template look
+- No harsh contrast or HDR lighting
+- No sterile, empty, lifeless spaces
 `;
 
   return {
     canvas: (includeHuman() ? `
-Take THIS EXACT affirmation artwork shown in the image and place it on a stretched canvas print.
+Create a lifestyle interior mockup showcasing the printed affirmation artwork on a stretched canvas print in a realistic, editorial home setting.
 
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-Scene: ${randomFrom(humanScenarios.canvas)}
-${dimensionalGuidance}
-${photographyStyle}
-CANVAS SPECIFICATIONS:
-- Premium gallery-wrapped canvas with visible edge wrap
-- Canvas dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
-- The canvas should appear as a medium-large statement piece on the wall
-- Show the texture of quality canvas material
-- The text on the canvas must be fully visible and not cut off
-- Warm, inviting, aspirational home atmosphere
-` : `
-Take THIS EXACT affirmation artwork shown in the image and place it on a stretched canvas print.
+SCENE: ${randomFrom(humanScenarios.canvas)}
 
-CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
-
-Show the canvas displayed ${randomFrom(styledScenarios.canvas)}
 ${dimensionalGuidance}
+
 ${photographyStyle}
+
 CANVAS SPECIFICATIONS:
 - Premium gallery-wrapped canvas with visible edge wrap texture
 - Canvas dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
-- The canvas should appear as a medium-large statement piece
+- Show the texture of quality canvas material
+- The text on the canvas must be fully visible and not cut off
+
+STYLE GOAL: This should look like a professional home-interior photoshoot from Kinfolk or Cereal Magazine with emotional warmth, not a product render.
+` : `
+Create a lifestyle interior mockup showcasing the printed affirmation artwork on a stretched canvas print in a realistic, editorial home setting.
+
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
+
+SCENE: The canvas displayed ${randomFrom(styledScenarios.canvas)}
+
+${dimensionalGuidance}
+
+${photographyStyle}
+
+CANVAS SPECIFICATIONS:
+- Premium gallery-wrapped canvas with visible edge wrap texture
+- Canvas dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
 - The text on the canvas must be fully visible and readable
-- Interior design photography style - editorial quality
+
+STYLE GOAL: Editorial catalog photography, not a mockup. Should feel like Anthropologie Home or Kinfolk styling.
 `),
 
     unframed: (includeHuman() ? `
-Take THIS EXACT affirmation artwork shown in the image and show it as an unframed 18x24 poster print.
+Create a lifestyle interior mockup showcasing the affirmation artwork as an unframed 18x24 poster print in a realistic, editorial home setting.
 
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-Scene: ${randomFrom(humanScenarios.unframed)}
+SCENE: ${randomFrom(humanScenarios.unframed)}
+
 ${dimensionalGuidance}
+
 ${photographyStyle}
+
 POSTER SPECIFICATIONS:
 - Premium matte archival paper finish
 - Poster dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
-- The poster should appear approximately movie-poster sized when held
-- Natural slight curl at edges is authentic
+- Natural slight curl at edges is authentic and adds realism
 - Show the quality weight of museum-grade paper stock
 - The text must be fully visible and not cut off at any edge
+
+STYLE GOAL: This should look like editorial product photography with warm, natural lighting and styled surfaces, not a flat mockup.
 ` : `
-Take THIS EXACT affirmation artwork shown in the image and show it as an unframed 18x24 poster print.
+Create a lifestyle interior mockup showcasing the affirmation artwork as an unframed 18x24 poster print in a realistic, editorial home setting.
 
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-Show the poster ${randomFrom(styledScenarios.unframed)}
+SCENE: The poster ${randomFrom(styledScenarios.unframed)}
+
 ${dimensionalGuidance}
+
 ${photographyStyle}
+
 POSTER SPECIFICATIONS:
 - Premium matte archival paper finish
 - Poster dimensions: EXACTLY 18 inches wide x 24 inches tall (3:4 portrait ratio)
-- The poster should appear as a medium-large print
 - Subtle paper curl is acceptable for authenticity
 - The text must be completely visible and readable
-- Premium paper quality should be evident in the image
+
+STYLE GOAL: Editorial product photography with atmospheric warmth and styled context, like a high-end interior design catalog.
 `),
 
     framed: (includeHuman() ? `
-Take THIS EXACT affirmation artwork shown in the image and show it in an 18x24 Red Oak wood frame.
+Create a lifestyle interior mockup showcasing the affirmation artwork in an 18x24 Red Oak wood frame in a realistic, editorial home setting.
 
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
@@ -452,18 +466,21 @@ FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or simi
 - Natural wood grain visible
 - Premium quality appearance like a custom frame shop
 
-Scene: ${randomFrom(humanScenarios.framed)}
+SCENE: ${randomFrom(humanScenarios.framed)}
+
 ${dimensionalGuidance}
+
 ${photographyStyle}
+
 FRAME SPECIFICATIONS:
-- Frame holds an 18x24 inch print (the print inside is 18" wide x 24" tall, 3:4 portrait ratio)
+- Frame holds an 18x24 inch print (3:4 portrait ratio)
 - The overall framed piece will be slightly larger due to frame width and optional mat
-- Warm, inviting natural lighting
-- Frame casts subtle, soft shadows
+- Frame casts subtle, soft shadows on the wall
 - The text on the poster must be fully visible within the frame
-- Cozy, aspirational home atmosphere
+
+STYLE GOAL: This should look like a professional interior design photoshoot with warm, emotional atmosphere, not a template frame mockup.
 ` : `
-Take THIS EXACT affirmation artwork shown in the image and show it in an 18x24 Red Oak wood frame.
+Create a lifestyle interior mockup showcasing the affirmation artwork in an 18x24 Red Oak wood frame in a realistic, editorial home setting.
 
 CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
@@ -472,16 +489,18 @@ FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or simi
 - Natural wood grain visible
 - Premium quality like a custom frame shop
 
-Show the framed poster ${randomFrom(styledScenarios.framed)}
+SCENE: The framed poster ${randomFrom(styledScenarios.framed)}
+
 ${dimensionalGuidance}
+
 ${photographyStyle}
+
 FRAME SPECIFICATIONS:
-- Frame holds an 18x24 inch print (the print inside is 18" wide x 24" tall, 3:4 portrait ratio)
-- The overall framed piece will be slightly larger due to frame width
-- Soft, warm natural lighting
+- Frame holds an 18x24 inch print (3:4 portrait ratio)
 - Frame casts gentle, realistic shadows
 - The text must be completely visible and not cut off
-- Premium home decor aesthetic - interior design photography quality
+
+STYLE GOAL: Editorial interior catalog photography - the framed artwork should feel like it belongs in Apartment Therapy or Architectural Digest, not a Canva mockup.
 `)
   };
 }
