@@ -48,14 +48,13 @@ const THEME_PALETTES: Record<string, { colors: string; style: string; accents: s
   }
 };
 
-// Generate prompts for each variation type
-function generatePrompts(affirmation: AffirmationData) {
+// Generate the digital artwork prompt (base design)
+function generateDigitalPrompt(affirmation: AffirmationData): string {
   const theme = THEME_PALETTES[affirmation.category] || THEME_PALETTES["Self-Love"];
   
-  // Whether to include human interaction (50% chance for canvas/poster/framed)
-  const includeHuman = () => Math.random() < 0.5;
-  
-  const baseDesignPrompt = `
+  return `
+Create a high-quality, printable affirmation poster design.
+
 CRITICAL DESIGN REQUIREMENTS:
 - The affirmation text "${affirmation.title}" must be the central focus
 - Portrait orientation (18:24 aspect ratio for posters)
@@ -68,8 +67,22 @@ CRITICAL DESIGN REQUIREMENTS:
 - Decorative accents: ${theme.accents}
 - The design should feel like high-end wall art, not a social media graphic
 - Ensure excellent contrast and readability
-`;
 
+SPECIFIC REQUIREMENTS FOR DIGITAL ARTWORK:
+- This is the RAW ARTWORK ONLY - no frame, no canvas, no mockup
+- Pure design on a clean background (white, cream, or soft neutral)
+- The artwork itself with no physical product representation
+- Print-ready quality at 300 DPI
+- Perfect for customers to print at home or at a print shop
+- Portrait orientation (2:3 or 3:4 aspect ratio)
+`;
+}
+
+// Generate mockup prompts that reference the input image
+function generateMockupPrompts(affirmation: AffirmationData) {
+  // Whether to include human interaction (50% chance)
+  const includeHuman = () => Math.random() < 0.5;
+  
   const humanScenarios = {
     canvas: [
       "A person with elegant hands gently adjusting the canvas on a minimalist gallery wall",
@@ -106,34 +119,18 @@ CRITICAL DESIGN REQUIREMENTS:
     ]
   };
 
-  // Random selection helper
   const randomFrom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
 
   return {
-    digital: `
-Create a high-quality, printable affirmation poster design.
-
-${baseDesignPrompt}
-
-SPECIFIC REQUIREMENTS FOR DIGITAL DOWNLOAD:
-- This is the RAW ARTWORK ONLY - no frame, no canvas, no mockup
-- Pure design on a clean background (white, cream, or soft neutral)
-- The artwork itself with no physical product representation
-- Print-ready quality at 300 DPI
-- Perfect for customers to print at home or at a print shop
-- Portrait orientation (2:3 or 3:4 aspect ratio)
-`,
-
     canvas: includeHuman() ? `
-Create a lifestyle photo of a stretched canvas print displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and place it on a stretched canvas print.
 
-The canvas shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the canvas art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-SCENE: ${randomFrom(humanScenarios.canvas)}
+Show the canvas in this scene: ${randomFrom(humanScenarios.canvas)}
 
 PHOTO REQUIREMENTS:
+- The artwork on the canvas must be IDENTICAL to the input image
 - Warm, natural lighting with soft shadows
 - The canvas should have visible edge wrap texture
 - Canvas dimensions appear as 18x24 inches
@@ -141,15 +138,14 @@ PHOTO REQUIREMENTS:
 - The text on the canvas must be fully visible and not cut off
 - Show the premium quality of the stretched canvas material
 ` : `
-Create a product photo of a stretched canvas print displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and place it on a stretched canvas print.
 
-The canvas shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the canvas art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-SCENE: Canvas displayed ${randomFrom(styledScenarios.canvas)}
+Show the canvas displayed ${randomFrom(styledScenarios.canvas)}
 
 PHOTO REQUIREMENTS:
+- The artwork on the canvas must be IDENTICAL to the input image
 - Soft, natural lighting with gentle shadows
 - Canvas has visible edge wrap and texture
 - Canvas dimensions appear as 18x24 inches
@@ -159,15 +155,14 @@ PHOTO REQUIREMENTS:
 `,
 
     unframed: includeHuman() ? `
-Create a lifestyle photo of an unframed 18x24 poster print displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and show it as an unframed 18x24 poster print.
 
-The poster shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the poster art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-SCENE: ${randomFrom(humanScenarios.unframed)}
+Show the poster in this scene: ${randomFrom(humanScenarios.unframed)}
 
 PHOTO REQUIREMENTS:
+- The poster artwork must be IDENTICAL to the input image
 - Soft natural lighting
 - The poster has a subtle matte paper finish
 - Poster dimensions are 18x24 inches
@@ -176,15 +171,14 @@ PHOTO REQUIREMENTS:
 - The text must be fully visible and not cut off at any edge
 - Show the quality of the paper stock
 ` : `
-Create a product photo of an unframed 18x24 poster print displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and show it as an unframed 18x24 poster print.
 
-The poster shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the poster art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
-SCENE: Poster ${randomFrom(styledScenarios.unframed)}
+Show the poster ${randomFrom(styledScenarios.unframed)}
 
 PHOTO REQUIREMENTS:
+- The poster artwork must be IDENTICAL to the input image
 - Clean, soft natural lighting
 - Poster has a quality matte paper finish
 - Poster dimensions are 18x24 inches
@@ -195,20 +189,19 @@ PHOTO REQUIREMENTS:
 `,
 
     framed: includeHuman() ? `
-Create a lifestyle photo of an 18x24 framed poster displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and show it in an 18x24 Red Oak wood frame.
 
-The framed poster shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the poster art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or similar warm oak tone)
 - Simple, elegant profile
 - Natural wood grain visible
 - Premium quality appearance
 
-SCENE: ${randomFrom(humanScenarios.framed)}
+Show the framed piece in this scene: ${randomFrom(humanScenarios.framed)}
 
 PHOTO REQUIREMENTS:
+- The artwork in the frame must be IDENTICAL to the input image
 - Warm, inviting natural lighting
 - The frame should cast subtle, soft shadows
 - Frame dimensions hold an 18x24 print
@@ -216,20 +209,19 @@ PHOTO REQUIREMENTS:
 - Interior lifestyle photography style
 - Cozy, aspirational home atmosphere
 ` : `
-Create a product photo of an 18x24 framed poster displaying this affirmation design.
+Take THIS EXACT affirmation artwork shown in the image and show it in an 18x24 Red Oak wood frame.
 
-The framed poster shows: "${affirmation.title}" in an elegant, minimal design style.
-Color palette for the poster art: ${theme.colors}
-Design aesthetic: ${theme.style}
+CRITICAL: You MUST use the EXACT design from the input image - same text, same colors, same layout, same typography. Do NOT create a new design or alter the artwork in any way.
 
 FRAME: Red Oak wood frame (warm honey-brown color, approximately #D4A489 or similar warm oak tone)
 - Simple, elegant profile
 - Natural wood grain visible
 - Premium quality appearance
 
-SCENE: Framed poster ${randomFrom(styledScenarios.framed)}
+Show the framed poster ${randomFrom(styledScenarios.framed)}
 
 PHOTO REQUIREMENTS:
+- The artwork in the frame must be IDENTICAL to the input image
 - Soft, warm natural lighting
 - Frame casts gentle, realistic shadows
 - Frame holds an 18x24 print
@@ -240,6 +232,7 @@ PHOTO REQUIREMENTS:
   };
 }
 
+// Generate image without input reference (for digital artwork)
 async function generateImage(prompt: string, apiKey: string): Promise<string | null> {
   try {
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -249,7 +242,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string | n
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image-preview",
+        model: "google/gemini-3-pro-image-preview",
         messages: [
           {
             role: "user",
@@ -277,6 +270,59 @@ async function generateImage(prompt: string, apiKey: string): Promise<string | n
     return imageUrl;
   } catch (error) {
     console.error("Error generating image:", error);
+    return null;
+  }
+}
+
+// Generate mockup image using the digital artwork as input reference
+async function generateMockupImage(prompt: string, inputImageBase64: string, apiKey: string): Promise<string | null> {
+  try {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-3-pro-image-preview",
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: prompt
+              },
+              {
+                type: "image_url",
+                image_url: {
+                  url: inputImageBase64
+                }
+              }
+            ]
+          }
+        ],
+        modalities: ["image", "text"]
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Mockup image generation failed:", response.status, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+    const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    
+    if (!imageUrl) {
+      console.error("No image URL in mockup response:", JSON.stringify(data));
+      return null;
+    }
+
+    return imageUrl;
+  } catch (error) {
+    console.error("Error generating mockup image:", error);
     return null;
   }
 }
@@ -335,7 +381,7 @@ serve(async (req) => {
     const body: AffirmationImageRequest = await req.json();
     
     // Map affirmationText to title for internal use
-    const affirmationData = {
+    const affirmationData: AffirmationData = {
       ...body,
       title: body.affirmationText
     };
@@ -372,27 +418,56 @@ serve(async (req) => {
         .eq("product_category", "affirmations");
     }
 
-    // Generate prompts
-    const prompts = generatePrompts(affirmationData as any);
-    const variationTypes = ["digital", "canvas", "unframed", "framed"] as const;
     const generatedImages: { variation: string; url: string }[] = [];
 
-    // Generate each variation
-    for (const variation of variationTypes) {
-      console.log(`Generating ${variation} image for ${affirmationData.affirmationId}...`);
+    // STEP 1: Generate the digital artwork FIRST
+    console.log(`Generating digital artwork for ${affirmationData.affirmationId}...`);
+    const digitalPrompt = generateDigitalPrompt(affirmationData);
+    const digitalImageBase64 = await generateImage(digitalPrompt, LOVABLE_API_KEY);
+    
+    if (!digitalImageBase64) {
+      console.error("Failed to generate digital artwork - cannot proceed with mockups");
+      throw new Error("Failed to generate base digital artwork");
+    }
+
+    // Upload digital image
+    const digitalPublicUrl = await uploadToStorage(supabase, digitalImageBase64, affirmationData.affirmationId, "digital");
+    
+    if (digitalPublicUrl) {
+      await supabase.from("product_images").insert({
+        product_id: affirmationData.affirmationId,
+        product_category: "affirmations",
+        variation_type: "digital",
+        image_url: digitalPublicUrl,
+      });
+      generatedImages.push({ variation: "digital", url: digitalPublicUrl });
+      console.log("Successfully generated and stored digital artwork");
+    }
+
+    // STEP 2: Generate mockup variations using the digital artwork as input
+    const mockupPrompts = generateMockupPrompts(affirmationData);
+    const mockupVariations = ["canvas", "unframed", "framed"] as const;
+
+    for (const variation of mockupVariations) {
+      console.log(`Generating ${variation} mockup for ${affirmationData.affirmationId}...`);
       
-      const imageBase64 = await generateImage(prompts[variation], LOVABLE_API_KEY);
+      // Use the digital artwork as input for image-to-image generation
+      const mockupImageBase64 = await generateMockupImage(
+        mockupPrompts[variation], 
+        digitalImageBase64, 
+        LOVABLE_API_KEY
+      );
       
-      if (!imageBase64) {
-        console.error(`Failed to generate ${variation} image`);
+      if (!mockupImageBase64) {
+        console.error(`Failed to generate ${variation} mockup`);
         continue;
       }
 
       // Upload to storage
-      const publicUrl = await uploadToStorage(supabase, imageBase64, affirmationData.affirmationId, variation);
+      const publicUrl = await uploadToStorage(supabase, mockupImageBase64, affirmationData.affirmationId, variation);
       
       if (!publicUrl) {
-        console.error(`Failed to upload ${variation} image`);
+        console.error(`Failed to upload ${variation} mockup`);
         continue;
       }
 
@@ -407,12 +482,12 @@ serve(async (req) => {
         });
 
       if (insertError) {
-        console.error(`Failed to insert ${variation} image record:`, insertError);
+        console.error(`Failed to insert ${variation} mockup record:`, insertError);
         continue;
       }
 
       generatedImages.push({ variation, url: publicUrl });
-      console.log(`Successfully generated and stored ${variation} image`);
+      console.log(`Successfully generated and stored ${variation} mockup`);
     }
 
     return new Response(
