@@ -6,292 +6,156 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Complete design variable sets for all 24 affirmations
-// Aesthetic: Soft watercolor washes, delicate botanicals (ferns, leaves, branches),
-// flowing organic waves, elegant script/serif typography, warm muted tones
-const AFFIRMATION_DESIGNS: Record<string, {
-  title: string;
-  background: string;
-  textColor: string;
-  typography: string;
-  textPosition: string;
-  visualElements: string;
-  layout: string;
-  mood: string;
-}> = {
-  "aff-001": {
-    title: "I am worthy of rest",
-    background: "Soft cream to ivory wash with subtle warm grey watercolor clouds at edges, handmade paper texture",
-    textColor: "Warm taupe-brown (#8B7355)",
-    typography: "Elegant flowing script, like calligraphy with graceful flourishes",
-    textPosition: "Center-left, flowing diagonally with natural rhythm",
-    visualElements: "Delicate fern fronds in muted sage, soft flowing ribbon-like waves, tiny botanical sprigs",
-    layout: "Organic diagonal flow with botanicals framing edges",
-    mood: "Peaceful surrender, soft and dreamy"
-  },
-  "aff-002": {
-    title: "I am worthy of peace",
-    background: "Ethereal blue-grey watercolor wash with soft cream center, like moonlit mist clearing",
-    textColor: "Warm golden-brown (#9A7B4F) with subtle shimmer",
-    typography: "Romantic flowing script, elegant italic calligraphy with swashes",
-    textPosition: "Center-left, stacked vertically with graceful line breaks",
-    visualElements: "Glowing soft moon/sun orb behind text, delicate fern silhouettes, flowing leaf branches, subtle botanical shadows",
-    layout: "Luminous center with watercolor edges darkening at corners, botanicals frame the glow",
-    mood: "Tranquil, worthy of stillness, moonlit calm"
-  },
-  "aff-003": {
-    title: "Growth is a journey, not a destination",
-    background: "Warm cream parchment with soft watercolor earth tones at edges, torn paper texture",
-    textColor: "Rich golden-brown (#A67C52) like aged leather",
-    typography: "Bold elegant serif with slight curve, commanding yet warm",
-    textPosition: "Upper portion, left-aligned with generous leading",
-    visualElements: "Zen stepping stones winding through still water, botanical silhouettes framing (ferns, leaves), soft ripples",
-    layout: "Text at top, illustrated path/stones below leading into distance",
-    mood: "Patient growth, journey metaphor made visual"
-  },
-  "aff-004": {
-    title: "I trust my journey",
-    background: "Soft warm cream with subtle blush undertones, handmade paper texture with visible fibers",
-    textColor: "Deep warm brown (#6B5344) with golden undertone",
-    typography: "Flowing italic script, romantic calligraphy with elegant flourishes",
-    textPosition: "Center, slightly elevated, flowing horizontally",
-    visualElements: "Winding abstract path/ribbon, delicate fern fronds, small wildflowers, soft flowing waves",
-    layout: "Soft flowing elements create movement around centered text",
-    mood: "Quiet confidence, gentle forward motion"
-  },
-  "aff-005": {
-    title: "I am always enough",
-    background: "Minimal warm cream (#F5F0E8) with subtle arch shape, soft sandy dune at bottom horizon",
-    textColor: "Rich near-black (#1A1A1A) for maximum contrast",
-    typography: "Modern editorial serif, bold and confident, stacked vertically",
-    textPosition: "Dead center with perfect balance",
-    visualElements: "Single thin arch outline above text, minimal horizon line, vast negative space",
-    layout: "Ultra-minimal, text is the art, breath-giving whitespace",
-    mood: "Absolute self-acceptance, quiet power, modern zen"
-  },
-  "aff-006": {
-    title: "My calm is my power",
-    background: "Soft blue-grey watercolor wash fading to warm cream center",
-    textColor: "Deep charcoal (#2D2D2D)",
-    typography: "Steady modern serif, clean and grounded",
-    textPosition: "Center, perfectly balanced",
-    visualElements: "Gentle flowing waves/ribbons in muted tones, soft botanical shadows",
-    layout: "Symmetric calm, elements flow around text without disruption",
-    mood: "Intentional peace, strength in stillness"
-  },
-  "aff-007": {
-    title: "I receive what I desire",
-    background: "Soft blush pink watercolor fading to warm cream",
-    textColor: "Deep rose-brown (#7A5C58)",
-    typography: "Elegant serif with open, receptive letterforms",
-    textPosition: "Lower third, grounded yet reaching",
-    visualElements: "Soft flowing ribbon waves, delicate botanical sprigs, gentle abstract shapes",
-    layout: "Elements flow downward toward text as if arriving",
-    mood: "Openness, worthiness to receive"
-  },
-  "aff-008": {
-    title: "Today, I honor myself",
-    background: "Warm nude to soft mauve watercolor, organic texture",
-    textColor: "Deep burgundy-brown (#5A3A3A)",
-    typography: "Nurturing serif, gentle weight, self-caring presence",
-    textPosition: "Lower center, grounded",
-    visualElements: "Soft flowing waves, delicate botanicals, warm organic shapes",
-    layout: "Embracing composition, elements curve protectively",
-    mood: "Self-priority, gentle self-love"
-  },
-  "aff-009": {
-    title: "I release what no longer serves",
-    background: "Airy light cream with soft grey-beige flowing waves, like morning mist",
-    textColor: "Warm taupe (#9A8B7A) soft and releasing",
-    typography: "Light elegant serif, airy letter-spacing, graceful and floating",
-    textPosition: "Center-left, text floats peacefully",
-    visualElements: "Delicate flowing organic waves/ribbons, soft fern fronds, whisper-light botanicals",
-    layout: "Diagonal flowing movement, elements drift and release",
-    mood: "Letting go, liberation, lightness"
-  },
-  "aff-010": {
-    title: "Joy is my natural state",
-    background: "Soft buttercream yellow with warm golden watercolor washes",
-    textColor: "Warm brown (#5C4033)",
-    typography: "Cheerful serif with dancing baseline",
-    textPosition: "Center, radiating outward",
-    visualElements: "Soft sun rays, delicate wildflowers, gentle flowing elements",
-    layout: "Joyful scattered composition, elements celebrating",
-    mood: "Natural happiness, simple joy"
-  },
-  "aff-011": {
-    title: "I am safe in my body",
-    background: "Soft blush pink fading to warm cream, comforting wash",
-    textColor: "Warm terracotta (#C17C60)",
-    typography: "Rounded serif, nurturing and protective",
-    textPosition: "Center, grounded",
-    visualElements: "Protective flowing curves, soft organic shapes, grounding botanicals",
-    layout: "Embracing composition, elements create safety",
-    mood: "Security, embodiment, being held"
-  },
-  "aff-012": {
-    title: "My voice matters",
-    background: "Warm taupe-grey (#C5B8A8) with layered flowing waves in cream, gold, and muted colors",
-    textColor: "Deep near-black (#1E1E1E) for bold impact",
-    typography: "Bold modern serif, confident and powerful, strong presence",
-    textPosition: "Center-left, bold statement positioning",
-    visualElements: "Layered flowing wave ribbons with fine line details, organic curves suggesting sound/movement",
-    layout: "Bold geometric-organic hybrid, waves create dynamic backdrop",
-    mood: "Empowerment, being heard, confident expression"
-  },
-  "aff-013": {
-    title: "I am worthy of my dreams",
-    background: "Soft cloudy cream to pale blue-grey watercolor",
-    textColor: "Deep navy-grey (#3A4A5A)",
-    typography: "Dreamy serif, floating and aspirational",
-    textPosition: "Center, among soft cloud forms",
-    visualElements: "Soft watercolor clouds, distant stars, gentle flowing elements",
-    layout: "Ethereal floating composition",
-    mood: "Dream permission, aspiration"
-  },
-  "aff-014": {
-    title: "I choose peace over perfection",
-    background: "Soft sage green with subtle linen texture",
-    textColor: "Charcoal grey (#2C2C2C)",
-    typography: "Slightly imperfect hand-drawn serif feeling",
-    textPosition: "Off-center, organic placement",
-    visualElements: "Organic dots, gentle wave patterns, botanical suggestions",
-    layout: "Deliberately imperfect, embracing organic flow",
-    mood: "Acceptance, letting go of perfect"
-  },
-  "aff-015": {
-    title: "I celebrate my progress",
-    background: "Soft gradient from warm amber to gentle sage",
-    textColor: "Rich plum-brown (#5B3256)",
-    typography: "Evolving serif, elegant transformation",
-    textPosition: "Center, in motion",
-    visualElements: "Butterfly suggestions, blooming forms, growth spirals",
-    layout: "Transformation narrative, evolution visible",
-    mood: "Becoming, celebrating growth"
-  },
-  "aff-016": {
-    title: "My intuition guides me",
-    background: "Deep indigo fading to soft violet at edges",
-    textColor: "Soft silver-white (#E8E4E0)",
-    typography: "Mystical serif with ethereal presence",
-    textPosition: "Center, emanating",
-    visualElements: "Constellation dots, inner glow, cosmic subtle elements",
-    layout: "Radial composition, energy from center",
-    mood: "Inner knowing, cosmic connection"
-  },
-  "aff-017": {
-    title: "I am open to miracles",
-    background: "Dawn sky gradient—soft pink to blue to warm gold",
-    textColor: "Deep teal (#2A5B5E)",
-    typography: "Optimistic serif, forward-leaning",
-    textPosition: "Upper area, looking to horizon",
-    visualElements: "Sunrise rays, seeds in flight, new growth",
-    layout: "Expansive horizon, openness ahead",
-    mood: "Anticipation, new beginnings"
-  },
-  "aff-018": {
-    title: "I give myself permission to feel",
-    background: "Warm parchment cream with subtle texture",
-    textColor: "Rich ink brown (#2D2416)",
-    typography: "Literary serif, book-title elegance",
-    textPosition: "Centered, classic layout",
-    visualElements: "Subtle page suggestions, gentle organic elements",
-    layout: "Classic centered hierarchy",
-    mood: "Permission, emotional openness"
-  },
-  "aff-019": {
-    title: "I am creating the life I desire",
-    background: "Rich honey gold gradient to warm amber",
-    textColor: "Deep burgundy brown (#4A2C2A)",
-    typography: "Sophisticated serif, confident",
-    textPosition: "Center-left, grounded",
-    visualElements: "Warm light rays, organic flowing shapes",
-    layout: "Elements converge toward center",
-    mood: "Creative power, manifestation"
-  },
-  "aff-020": {
-    title: "Today is full of possibility",
-    background: "Soft gradient shifting warm amber to cool sage",
-    textColor: "Deep bronze (#5D4E37)",
-    typography: "Flowing transitional serif",
-    textPosition: "Center, in motion",
-    visualElements: "Flowing leaves, gentle transition elements",
-    layout: "Dynamic flow, graceful movement",
-    mood: "Possibility, openness"
-  },
-  "aff-021": {
-    title: "I am allowed to change my mind",
-    background: "Cool grey-blue with soft watercolor texture",
-    textColor: "Warm charcoal (#333333)",
-    typography: "Clear modern serif, structured",
-    textPosition: "Right side, structured stack",
-    visualElements: "Clean flowing lines, subtle doorway suggestion",
-    layout: "Strong but soft structure",
-    mood: "Permission, flexibility"
-  },
-  "aff-022": {
-    title: "My rest is productive",
-    background: "Soft sepia tones fading to warm neutral",
-    textColor: "Aged warm brown (#6B5344)",
-    typography: "Timeless serif, restful weight",
-    textPosition: "Lower portion, grounded",
-    visualElements: "Soft botanical shadows, peaceful elements",
-    layout: "Restful composition, gentle grounding",
-    mood: "Rest as value, peaceful productivity"
-  },
-  "aff-023": {
-    title: "I attract what I embody",
-    background: "Deep rose to soft blush gradient, petal-like",
-    textColor: "Deep wine (#5C1A33)",
-    typography: "Romantic serif, loving curves",
-    textPosition: "Center, heart-centered",
-    visualElements: "Soft petal suggestions, warm organic glow",
-    layout: "Heart-centered, radiating outward",
-    mood: "Self-love, magnetic presence"
-  },
-  "aff-024": {
-    title: "I am both the storm and the calm",
-    background: "Soft gradient warm gold to cream with subtle movement",
-    textColor: "Rich bronze (#6B4423)",
-    typography: "Balanced serif, dual nature",
-    textPosition: "Center, in balance",
-    visualElements: "Flowing waves suggesting both energy and stillness",
-    layout: "Balanced duality, yin-yang flow",
-    mood: "Embracing complexity, wholeness"
-  }
+// 24 unique prompts inspired by the reference images
+// Each design is completely unique - no two are the same
+const AFFIRMATION_PROMPTS: Record<string, string> = {
+  "aff-001": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of rest"
+
+DESIGN STYLE: Soft flowing waves in muted cream and warm grey watercolor. Delicate fern fronds frame the edges. Typography is elegant script with flowing flourishes. The text flows diagonally from center-left. Background has handmade paper texture with subtle warm tones.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Premium gallery quality like a $1,000 art print. Matte finish aesthetic.`,
+
+  "aff-002": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of peace"
+
+DESIGN STYLE: Ethereal blue-grey watercolor wash with luminous cream center. A soft glowing orb (like moonlight) sits behind the text. Delicate botanical silhouettes (leaves, branches) frame the glow. Typography is romantic flowing script with elegant swashes. Stacked vertically center-left.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Premium matte gallery quality.`,
+
+  "aff-003": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Growth is a journey, not a destination"
+
+DESIGN STYLE: Warm cream parchment background with soft earthy watercolor tones at edges. Zen stepping stones winding through still water illustrated below text. Fern and leaf silhouettes frame the composition. Bold elegant serif typography, left-aligned in upper portion. Soft ripples in the water.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Like a $1,000 gallery print.`,
+
+  "aff-004": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I trust my journey"
+
+DESIGN STYLE: Soft warm cream with blush undertones, handmade paper texture with visible fibers. A winding abstract path/ribbon flows through the composition. Delicate fern fronds and small wildflowers scattered. Flowing italic script typography with romantic flourishes. Text centered and flowing horizontally.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling entire canvas. Premium matte quality.`,
+
+  "aff-005": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am always enough"
+
+DESIGN STYLE: Ultra-minimal. Warm cream (#F5F0E8) background with a single thin arch outline above the text. Soft sandy dune at bottom horizon. Modern editorial serif, bold and confident, stacked vertically. Dead center placement with vast negative space. The text IS the art.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Modern zen aesthetic. Gallery quality.`,
+
+  "aff-006": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My calm is my power"
+
+DESIGN STYLE: Soft blue-grey watercolor wash fading to warm cream center. Gentle flowing waves/ribbons in muted tones. Soft botanical shadows frame edges. Steady modern serif typography, clean and grounded. Perfectly centered and balanced. Elements flow around text without disruption.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte finish. Strength in stillness mood.`,
+
+  "aff-007": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I receive what I desire"
+
+DESIGN STYLE: Soft blush pink watercolor fading to warm cream. Flowing ribbon waves and delicate botanical sprigs flow downward toward text. Elegant serif with open letterforms. Text positioned in lower third, grounded yet reaching upward. Elements arriving like blessings.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
+
+  "aff-008": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Today, I honor myself"
+
+DESIGN STYLE: Warm nude to soft mauve watercolor with organic texture. Flowing waves and delicate botanicals curve protectively around text. Nurturing serif typography with gentle weight. Lower center placement, grounded. Warm organic shapes embrace the composition.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Self-loving energy. Premium quality.`,
+
+  "aff-009": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I release what no longer serves"
+
+DESIGN STYLE: Airy light cream with soft grey-beige flowing waves like morning mist. Delicate organic wave ribbons create diagonal movement. Whisper-light fern fronds and botanicals float freely. Light elegant serif with airy letter-spacing. Text center-left, floating peacefully. Liberation mood.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte gallery print.`,
+
+  "aff-010": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Joy is my natural state"
+
+DESIGN STYLE: Soft buttercream yellow with warm golden watercolor washes. Soft sun rays emanate outward. Delicate wildflowers scattered. Cheerful serif with dancing baseline. Center placement, radiating outward energy. Joyful scattered composition celebrating natural happiness.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Uplifting premium quality.`,
+
+  "aff-011": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am safe in my body"
+
+DESIGN STYLE: Soft blush pink fading to warm cream, comforting wash. Protective flowing curves and soft organic shapes. Grounding botanical elements. Rounded serif typography, nurturing and protective. Center placement, grounded. Elements create sense of safety and being held.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Embodied security mood.`,
+
+  "aff-012": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My voice matters"
+
+DESIGN STYLE: Warm taupe-grey (#C5B8A8) background with layered flowing waves in cream, gold, and muted colors. Bold modern serif, powerful presence. Center-left bold statement positioning. Wave ribbons with fine line details suggest sound/movement. Geometric-organic hybrid.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Empowered expression. Premium gallery.`,
+
+  "aff-013": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of my dreams"
+
+DESIGN STYLE: Soft cloudy cream to pale blue-grey watercolor. Soft ethereal clouds and distant stars. Gentle flowing elements float around text. Dreamy serif typography, aspirational. Center placement among soft cloud forms. Ethereal floating composition.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Dream permission aesthetic.`,
+
+  "aff-014": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I choose peace over perfection"
+
+DESIGN STYLE: Soft sage green with subtle linen texture. Organic dots and gentle wave patterns. Botanical suggestions scattered naturally. Slightly imperfect hand-drawn serif feeling. Off-center organic placement. Deliberately imperfect, embracing organic flow.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Acceptance and letting go mood.`,
+
+  "aff-015": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I celebrate my progress"
+
+DESIGN STYLE: Soft gradient from warm amber to gentle sage. Butterfly suggestions and blooming forms. Growth spirals and transformation elements. Evolving serif typography showing elegant transformation. Center placement with sense of motion. Evolution visible.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Celebrating growth. Premium quality.`,
+
+  "aff-016": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My intuition guides me"
+
+DESIGN STYLE: Deep indigo fading to soft violet at edges. Constellation dots and inner glow. Cosmic subtle elements. Mystical serif with ethereal presence. Center placement, emanating outward. Radial composition with energy from center. Inner knowing mood.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Cosmic connection aesthetic.`,
+
+  "aff-017": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am open to miracles"
+
+DESIGN STYLE: Dawn sky gradient—soft pink to blue to warm gold. Sunrise rays and seeds in flight. New growth emerging. Optimistic serif typography, forward-leaning. Upper area placement looking to horizon. Expansive openness ahead.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. New beginnings energy.`,
+
+  "aff-018": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I give myself permission to feel"
+
+DESIGN STYLE: Warm parchment cream with subtle texture. Subtle page suggestions and gentle organic elements. Literary serif like elegant book title. Classic centered layout. Permission and emotional openness mood. Gentle and inviting.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Gallery quality.`,
+
+  "aff-019": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am creating the life I desire"
+
+DESIGN STYLE: Rich honey gold gradient to warm amber. Warm light rays streaming. Organic flowing shapes converging toward center. Sophisticated serif, confident. Center-left placement, grounded. Creative power and manifestation energy.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
+
+  "aff-020": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Today is full of possibility"
+
+DESIGN STYLE: Soft gradient shifting warm amber to cool sage. Flowing leaves in graceful transition. Flowing transitional serif typography. Center placement with sense of motion. Dynamic flow showing graceful movement. Possibility and openness.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte quality.`,
+
+  "aff-021": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am allowed to change my mind"
+
+DESIGN STYLE: Cool grey-blue with soft watercolor texture. Clean flowing lines and subtle doorway suggestion. Clear modern serif, structured but soft. Right side placement with structured stack. Strong but soft structure. Permission and flexibility.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Gallery quality.`,
+
+  "aff-022": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My rest is productive"
+
+DESIGN STYLE: Soft sepia tones fading to warm neutral. Soft botanical shadows. Peaceful elements grounding the composition. Timeless serif with restful weight. Lower portion placement, grounded. Restful composition valuing rest.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Peaceful productivity mood.`,
+
+  "aff-023": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I attract what I embody"
+
+DESIGN STYLE: Deep rose to soft blush gradient, petal-like quality. Soft petal suggestions and warm organic glow. Romantic serif with loving curves. Heart-centered placement radiating outward. Self-love and magnetic presence.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
+
+  "aff-024": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am both the storm and the calm"
+
+DESIGN STYLE: Soft gradient warm gold to cream with subtle movement. Flowing waves suggesting both energy and stillness. Balanced serif showing dual nature. Center placement in perfect balance. Yin-yang flow embracing complexity. Wholeness.
+
+CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte gallery quality.`
 };
-
-// Build the complete prompt with quality override
-function buildPrompt(design: typeof AFFIRMATION_DESIGNS[string]): string {
-  return `Create a $1,000 gallery-quality art print design for the affirmation: "${design.title}"
-
-DESIGN DIRECTION:
-- Background: ${design.background}
-- Text Color: ${design.textColor}
-- Typography: ${design.typography}
-- Text Position: ${design.textPosition}
-- Visual Elements: ${design.visualElements}
-- Layout: ${design.layout}
-- Mood: ${design.mood}
-
-BRAND REQUIREMENTS:
-- Warm, feminine, editorial aesthetic (Kinfolk/Aesop/The Poster Club energy)
-- Premium matte finish quality—no glossy or digital artifacts
-- Edge-to-edge design filling the entire canvas—no visible paper edges, borders, or backgrounds
-- 4:5 aspect ratio optimized for 18x24 inch printing
-- The affirmation text must be clearly legible and beautifully integrated
-- Subtle organic textures welcome (linen, cotton paper, handmade feel)
-- No watercolor blobs, no Canva templates, no clip-art, no stock imagery
-
-QUALITY OVERRIDE CLAUSE:
-If ANY of the design directions above would compromise the $1,000 gallery-quality standard, you have FULL PERMISSION to change, modify, or completely reimagine those aspects. The specifications are creative direction, not rigid constraints. Gallery quality is the non-negotiable standard—everything else is flexible. Trust your artistic judgment to deliver a piece worthy of a premium art gallery.
-
-Generate the complete artwork now.`;
-}
 
 // Convert base64 to Uint8Array for upload
 function base64ToUint8Array(base64: string): Uint8Array {
-  // Remove data URL prefix if present
   const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
   const binaryString = atob(base64Data);
   const bytes = new Uint8Array(binaryString.length);
@@ -307,27 +171,25 @@ serve(async (req) => {
   }
 
   try {
-    const { affirmationId, title, category } = await req.json();
+    const { affirmationId, title } = await req.json();
     
     console.log(`Generating digital design for: ${title} (${affirmationId})`);
 
-    // Get design variables for this affirmation
-    const design = AFFIRMATION_DESIGNS[affirmationId];
+    // Get prompt for this affirmation
+    const prompt = AFFIRMATION_PROMPTS[affirmationId];
     
-    if (!design) {
-      console.error(`No design found for affirmation ID: ${affirmationId}`);
+    if (!prompt) {
+      console.error(`No prompt found for affirmation ID: ${affirmationId}`);
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: `No design configuration found for: ${affirmationId}` 
+          error: `No prompt configuration found for: ${affirmationId}` 
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Build the complete prompt
-    const prompt = buildPrompt(design);
-    console.log(`Built prompt for: ${design.title}`);
+    console.log(`Using prompt for: ${title}`);
 
     // Get API key
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -414,7 +276,7 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      console.error("Upload error:", uploadError);
+      console.error("Storage upload error:", uploadError);
       throw new Error(`Failed to upload image: ${uploadError.message}`);
     }
 
@@ -423,24 +285,26 @@ serve(async (req) => {
       .from("product-images")
       .getPublicUrl(fileName);
 
-    const publicUrl = publicUrlData.publicUrl;
-    console.log(`Successfully uploaded to: ${publicUrl}`);
+    const imageUrl = publicUrlData.publicUrl;
+    console.log(`Image uploaded successfully: ${imageUrl}`);
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        imageUrl: publicUrl,
+      JSON.stringify({
+        success: true,
+        imageUrl,
         affirmationId,
-        title: design.title
+        title
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    console.error("Error generating affirmation:", message);
+  } catch (error) {
+    console.error("Error generating affirmation digital:", error);
     return new Response(
-      JSON.stringify({ success: false, error: message }),
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error occurred"
+      }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
