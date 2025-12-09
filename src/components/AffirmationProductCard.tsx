@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
 import { Affirmation, AFFIRMATION_FORMAT_PRICING } from "@/data/affirmations";
-import { useAffirmationDisplayImage } from "@/hooks/useAffirmationDisplayImage";
+import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface AffirmationProductCardProps {
@@ -17,36 +17,10 @@ export const AffirmationProductCard = ({
   onCardClick, 
   onAddToCart 
 }: AffirmationProductCardProps) => {
-  const { imageUrl, isLoading, variationType } = useAffirmationDisplayImage(affirmation.id);
-  
-  // Use database image if available, otherwise fall back to static image
+  // Use generated digital image from storage, fallback to static image
+  const { imageUrl, isLoading } = useAffirmationDigitalImage(affirmation.id);
   const displayImage = imageUrl || affirmation.image;
   
-  // Get price label based on displayed variation
-  const getPriceLabel = () => {
-    if (!variationType) return null;
-    switch (variationType) {
-      case "canvas": return "Canvas";
-      case "unframed": return "Poster";
-      case "framed": return "Framed";
-      default: return null;
-    }
-  };
-
-  // Get price based on displayed variation
-  const getDisplayPrice = () => {
-    if (!variationType) return affirmation.price;
-    switch (variationType) {
-      case "canvas": return AFFIRMATION_FORMAT_PRICING["Canvas Print"];
-      case "unframed": return AFFIRMATION_FORMAT_PRICING["Unframed Poster"];
-      case "framed": return AFFIRMATION_FORMAT_PRICING["Framed Poster"];
-      default: return affirmation.price;
-    }
-  };
-
-  const priceLabel = getPriceLabel();
-  const displayPrice = getDisplayPrice();
-
   return (
     <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
@@ -59,13 +33,6 @@ export const AffirmationProductCard = ({
           'bg-secondary text-foreground'
         }`}>
           {affirmation.badge}
-        </div>
-      )}
-      
-      {/* Format indicator badge */}
-      {priceLabel && (
-        <div className="absolute top-3 right-10 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium bg-background/80 backdrop-blur-sm text-foreground border border-border/50">
-          {priceLabel}
         </div>
       )}
       
@@ -119,12 +86,10 @@ export const AffirmationProductCard = ({
         
         <div className="flex items-center justify-between pt-3 border-t border-border/50">
           <div className="flex flex-col">
-            <span className="text-base font-semibold text-text-primary">${displayPrice.toFixed(2)}</span>
-            {priceLabel && (
-              <span className="text-[10px] text-text-muted">
-                From ${AFFIRMATION_FORMAT_PRICING["Digital Download"].toFixed(2)}
-              </span>
-            )}
+            <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
+            <span className="text-[10px] text-text-muted">
+              Digital Download
+            </span>
           </div>
           <Button
             size="sm"
