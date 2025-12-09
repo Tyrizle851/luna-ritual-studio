@@ -27,11 +27,9 @@ serve(async (req) => {
     
     console.log(`Generating image for affirmation: ${title} (${category})`);
 
-    // Build the simplified prompt
-    const prompt = buildPrompt(title, category);
+    const prompt = buildPrompt(title, category, supportingPhrases);
     console.log("Prompt:", prompt);
 
-    // Call Gemini 3 Pro Image via Lovable AI Gateway
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -73,7 +71,6 @@ serve(async (req) => {
     const data = await response.json();
     console.log("Gemini response received");
 
-    // Extract the image from the response
     const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
     
     if (!imageUrl) {
@@ -100,28 +97,96 @@ serve(async (req) => {
   }
 });
 
-function buildPrompt(title: string, category: string): string {
-  return `Create a premium fine art affirmation print.
+// Theme-specific visual elements for each category
+function getThemeContext(category: string): { accents: string[], palette: string, mood: string } {
+  const themes: Record<string, { accents: string[], palette: string, mood: string }> = {
+    'rest': {
+      accents: ['soft crescent moon', 'gentle cloud wisps', 'sleep whisper marks'],
+      palette: 'warm cream, soft lavender, muted blush, charcoal text',
+      mood: 'sleepy, quiet, nurturing stillness'
+    },
+    'peace': {
+      accents: ['olive branch', 'still water ripples', 'dove silhouette'],
+      palette: 'sage green, warm cream, soft white, deep charcoal',
+      mood: 'serene, still water, deep tranquility'
+    },
+    'growth': {
+      accents: ['winding path', 'unfurling fern', 'distant mountains', 'tiny seedling'],
+      palette: 'dusty sage, warm terracotta, soft cream, forest green',
+      mood: 'patient hope, gentle becoming, journey forward'
+    },
+    'self-love': {
+      accents: ['full moon', 'blooming flower', 'soft heart outline', 'gentle crown'],
+      palette: 'dusty rose, warm cream, soft mauve, rose gold accents',
+      mood: 'tender acceptance, warm self-regard, completeness'
+    },
+    'calm': {
+      accents: ['breath symbol', 'horizontal horizon line', 'still water circles', 'soft clouds'],
+      palette: 'soft blue-grey, warm cream, pale sage, charcoal',
+      mood: 'centered, grounded, quiet inner strength'
+    }
+  };
 
-SUBJECT: An elegant typographic art piece featuring the text "${title}"
+  return themes[category] || themes['peace'];
+}
 
-COMPOSITION: 
-- The affirmation text is the hero element, designed with artistic typography that has subtle hand-crafted character
-- Delicate botanical line drawings and organic abstract shapes are thoughtfully integrated around the text
-- Generous white space (50-60% of canvas) creates breathing room
-- Balanced, intentional placement that feels gallery-curated
+function buildPrompt(title: string, category: string, supportingPhrases: string[]): string {
+  const theme = getThemeContext(category);
+  const phrasesText = supportingPhrases?.slice(0, 8).join('", "') || '';
+  const randomAccent = theme.accents[Math.floor(Math.random() * theme.accents.length)];
+  
+  // Random typography for variety
+  const typography = getRandomTypography();
+  const background = getRandomBackground();
 
-STYLE: 
-- Fine art print aesthetic, the kind sold in high-end design shops for $1,000+
-- Warm muted palette: soft cream, linen white, sage green, dusty rose, warm terracotta, charcoal
-- Typography that feels refined and artistic — elegant serifs or modern display fonts, NOT basic sans-serif
-- Subtle organic textures (paper grain, soft gradients, gentle shadows)
-- Illustrations are sophisticated line art or abstract organic forms, NOT cartoon-style or clip-art
+  return `Create a $1,000 gallery-quality affirmation art print.
 
-THEME: ${category} — incorporate visual motifs that evoke this feeling through the illustration elements
+THE ARTWORK IS THE ENTIRE IMAGE. There is NO frame, NO paper edges, NO background surface, NO shadows beneath paper. The design itself IS the complete canvas, filling every pixel edge-to-edge.
 
-TECHNICAL: 
-- Design fills entire canvas edge-to-edge, no borders or margins visible
-- 4:5 aspect ratio
-- This is museum-quality art, not a social media graphic`;
+AFFIRMATION TEXT: "${title}"
+${phrasesText ? `SUPPORTING PHRASES (scattered small around design): "${phrasesText}"` : ''}
+
+VISUAL SCENE:
+A premium fine art print with ${typography}. The main affirmation "${title}" is the hero element, rendered in elegant artistic typography. Delicate ${randomAccent} illustrations are thoughtfully integrated around the text. The composition uses ${background} as the base with ${theme.palette} color harmony. The mood evokes ${theme.mood}.
+
+COMPOSITION:
+- 50% generous negative space, 50% visual content (text + decorative elements)
+- Main text is the focal point with hand-crafted artistic character
+- 2-3 sophisticated botanical line drawings or organic abstract shapes complement the text
+- Supporting phrases (if any) are small but readable, placed with intention
+
+AESTHETIC REFERENCE:
+Kinfolk magazine editorial, Aesop store posters, Apple meditation wallpapers, The Poster Club prints. Modern editorial calm, NOT vintage, NOT letterpress, NOT cottage-core, NOT folk-art.
+
+CRITICAL - EDGE-TO-EDGE REQUIREMENT:
+The artwork MUST fill the ENTIRE canvas with absolutely NO:
+- Picture frames or frame edges
+- Paper edges or torn paper effects
+- Visible margins or borders
+- Background surfaces the paper sits on
+- Shadows beneath the design
+
+4:5 aspect ratio. Museum-quality, $1,000+ gallery art.`;
+}
+
+function getRandomTypography(): string {
+  const options = [
+    'elegant thin serif typography (like Didot or Philosophy)',
+    'refined modern serif with artistic flair',
+    'sophisticated transitional serif with warmth',
+    'clean editorial serif with subtle hand-crafted character',
+    'contemporary luxury serif, perfectly balanced'
+  ];
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+function getRandomBackground(): string {
+  const options = [
+    'soft warm linen (#F8F5F0)',
+    'warm pearl cream (#F8F7F4)',
+    'pale sage-cream (#F5F7F3)',
+    'soft blush undertone (#F9F6F4)',
+    'natural warm cream (#FAF8F5)'
+  ];
+  return options[Math.floor(Math.random() * options.length)];
 }
