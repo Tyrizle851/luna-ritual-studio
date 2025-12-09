@@ -86,14 +86,16 @@ export default function AdminAffirmationDigital() {
 
       if (error) throw error;
       
-      if (data?.imageBase64) {
+      if (data?.success && data?.imageUrl) {
         setGeneratedImages(prev => ({
           ...prev,
-          [affirmation.id]: data.imageBase64
+          [affirmation.id]: data.imageUrl
         }));
         toast.success(`Generated image for "${affirmation.title}"`);
       } else if (data?.error) {
         throw new Error(data.error);
+      } else {
+        throw new Error("No image returned from generator");
       }
     } catch (err) {
       console.error("Error generating image:", err);
