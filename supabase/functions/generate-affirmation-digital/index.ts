@@ -100,61 +100,61 @@ serve(async (req) => {
   }
 });
 
-// Theme-specific elements that MATCH the affirmation meaning
-function getThemeContext(category: string): { accent: string; palette: string; mood: string } {
-  const themes: Record<string, { accent: string; palette: string; mood: string }> = {
+// Theme-specific elements - multiple accents per category for 2-3 element selection
+function getThemeContext(category: string): { accents: string[]; palette: string; mood: string } {
+  const themes: Record<string, { accents: string[]; palette: string; mood: string }> = {
     rest: {
-      accent: "a single soft crescent moon OR a gentle cloud wisp OR a delicate feather",
+      accents: ["soft crescent moon", "gentle cloud wisps", "evening stars", "delicate feather", "cozy blanket texture", "sleep whisper marks"],
       palette: "warm cream, soft lavender, muted blush",
       mood: "sleepy, quiet, nurturing stillness"
     },
     peace: {
-      accent: "a minimal olive branch OR single lotus silhouette OR gentle ripple",
+      accents: ["minimal olive branch", "lotus flower silhouette", "still water ripples", "dove silhouette", "zen stones", "gentle wave line"],
       palette: "sage green, warm cream, soft white",
       mood: "serene, still water, deep tranquility"
     },
     growth: {
-      accent: "a tiny seedling OR unfurling fern frond OR gentle sunrise glow",
+      accents: ["tiny seedling", "unfurling fern frond", "winding path", "distant mountain silhouette", "compass rose", "sunrise rays", "gentle root system"],
       palette: "dusty sage, warm terracotta, soft cream",
       mood: "patient hope, gentle becoming"
     },
     "self-love": {
-      accent: "a simple soft heart OR gentle embrace silhouette",
+      accents: ["soft heart outline", "embracing arms silhouette", "blooming flower", "full moon (completeness)", "gentle crown", "mirror reflection"],
       palette: "dusty rose, warm cream, soft mauve",
       mood: "tender acceptance, warm self-regard"
     },
     calm: {
-      accent: "a breath symbol OR still water circle OR minimal horizon line",
+      accents: ["breath symbol", "wind swirl", "horizontal horizon line", "soft clouds", "still water circles", "gentle breeze marks"],
       palette: "soft blue-grey, warm cream, pale sage",
       mood: "centered, grounded, quiet inner strength"
     },
     abundance: {
-      accent: "an open palm OR soft golden ray",
+      accents: ["open palm", "soft golden rays", "overflowing vessel", "fruit silhouette", "scattered seeds", "harvest moon"],
       palette: "warm honey, soft cream, dusty gold",
       mood: "grateful, receptive, gentle fullness"
     },
     trust: {
-      accent: "a simple compass OR gentle guiding star",
+      accents: ["simple compass", "guiding star", "anchor silhouette", "steady flame", "tree with deep roots", "lighthouse beam"],
       palette: "warm taupe, soft cream, dusty blue",
       mood: "secure, anchored, faithful"
     },
     joy: {
-      accent: "a single ray of light OR soft sparkle OR gentle bloom",
+      accents: ["ray of light", "soft sparkles", "gentle bloom", "dancing leaves", "butterfly silhouette", "sun ray burst"],
       palette: "warm peach, soft cream, gentle coral",
       mood: "light, uplifted, quiet happiness"
     }
   };
 
   return themes[category.toLowerCase()] || {
-    accent: "a single botanical sprig OR gentle curved line",
+    accents: ["botanical sprig", "gentle curved line", "soft dot pattern", "minimal leaf"],
     palette: "warm cream, soft beige, muted sage",
     mood: "calm, intentional, quietly beautiful"
   };
 }
 
 function buildPrompt(title: string, category: string, supportingPhrases: string[]): string {
-  // Only 3-4 supporting phrases, whisper-quiet
-  const phraseCount = 3 + Math.floor(Math.random() * 2);
+  // 8-10 supporting phrases for richer context
+  const phraseCount = 8 + Math.floor(Math.random() * 3);
   const shuffledPhrases = supportingPhrases.sort(() => Math.random() - 0.5).slice(0, Math.min(phraseCount, supportingPhrases.length));
   const phrasesText = shuffledPhrases.join('", "');
   
@@ -164,21 +164,26 @@ function buildPrompt(title: string, category: string, supportingPhrases: string[
   const layout = getRandomLayout();
   const background = getRandomBackground();
   
-  return `Create a premium minimal typography print for a modern wellness brand.
+  // Select 2-3 random accents from the theme
+  const shuffledAccents = theme.accents.sort(() => Math.random() - 0.5);
+  const accentCount = 2 + Math.floor(Math.random() * 2); // 2 or 3
+  const selectedAccents = shuffledAccents.slice(0, accentCount).join(", ");
+  
+  return `Create a premium typography print for a modern wellness brand.
 
 MAIN AFFIRMATION: "${title}"
-WHISPER PHRASES (barely visible, very small, at edges): "${phrasesText}"
+SUPPORTING PHRASES (small, scattered thoughtfully around design): "${phrasesText}"
 
 BRAND DIRECTION - "QUIET LUXURY WELLNESS":
 Reference aesthetic: Kinfolk magazine, Cereal magazine, Aesop packaging, Apple meditation wallpapers
 This is NOT vintage. NOT letterpress. NOT cottage-core. NOT folk-art. NOT Victorian.
-This is: modern, clean, editorial, airy, premium, minimal, calm.
+This is: modern, clean, editorial, premium, calm, layered with meaning.
 
 CRITICAL DESIGN RULES:
-1. 60-70% NEGATIVE SPACE - generous breathing room is the priority
-2. Main affirmation in ${typography} - elegant, refined, the singular hero
-3. Supporting phrases are WHISPERS - tiny, faded, almost invisible at far edges
-4. Only ONE minimal accent element (optional): ${theme.accent}
+1. 50% NEGATIVE SPACE, 50% VISUAL CONTENT (text and decorative elements) - balanced composition
+2. Main affirmation in ${typography} - elegant, refined, the focal hero
+3. Supporting phrases scattered thoughtfully - small but readable, placed with intention
+4. Include 2-3 complementary accent elements that reinforce the affirmation's meaning: ${selectedAccents}
 5. Emotional mood: ${theme.mood}
 
 VISUAL STYLE:
@@ -186,23 +191,22 @@ VISUAL STYLE:
 - Color palette: ${theme.palette}
 - Layout: ${layout}
 - Typography: clean, modern serif - think premium editorial
+- Decorative accents should feel integrated, not decorative for decoration's sake
 
 AVOID COMPLETELY:
-- Dense compositions (this should feel AIRY and SPACIOUS)
 - Heavy decorations, flourishes, ornaments
 - Vintage/rustic/folk/apothecary aesthetics
-- Woodland creatures, mushrooms, busy botanicals
+- Woodland creatures, mushrooms, busy random botanicals
 - Hand-inked or letterpress textures
 - Motivational poster energy
-- Multiple decorative elements (ONE accent max, or none)
-- Filled canvas - we want SPACE
+- Paper edges, borders, margins visible
 
 THE DESIGN SHOULD FEEL LIKE:
-A gallery art print you'd see in a high-end spa or boutique hotel.
-Calm. Quiet. Premium. Modern. Intentional.
+A gallery art print with intentional layers of meaning.
+Balanced. Intentional. Premium. Modern. Layered with meaning.
 
 TECHNICAL:
-- Edge-to-edge design, no paper edges visible
+- The design must fill the ENTIRE image canvas edge-to-edge - no visible paper edges, no borders, no margins
 - 4:5 aspect ratio
 - Ultra high resolution`;
 }
@@ -223,14 +227,14 @@ function getRandomTypography(): string {
 
 function getRandomLayout(): string {
   const options = [
-    "centered with main text at optical center, whisper phrases floating at far corners",
-    "asymmetric - main text offset left with generous right margin",
-    "vertical breathing - text in lower third with expansive space above",
-    "minimal grid with maximum negative space",
-    "elegant center alignment with whisper accents at top and bottom edges",
-    "main text slightly above center, supporting text barely visible below",
-    "clean left alignment with 40% right margin",
-    "floating composition - text appears suspended in calm space"
+    "centered with main text at optical center, supporting phrases floating around",
+    "asymmetric - main text offset left with accents balancing right",
+    "vertical flow - text and elements creating gentle downward rhythm",
+    "balanced grid with intentional element placement",
+    "elegant center alignment with supporting phrases at top and bottom",
+    "main text above center, supporting elements creating visual interest below",
+    "dynamic composition with text and accents in conversation",
+    "floating composition - elements suspended in harmonious balance"
   ];
   return options[Math.floor(Math.random() * options.length)];
 }
