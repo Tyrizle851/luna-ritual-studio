@@ -1,11 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Complete design variable sets for all 24 affirmations - keyed by actual IDs (aff-001, etc.)
+// Complete design variable sets for all 24 affirmations
 const AFFIRMATION_DESIGNS: Record<string, {
   title: string;
   background: string;
@@ -16,7 +17,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
   layout: string;
   mood: string;
 }> = {
-  // aff-001: I am worthy of rest
   "aff-001": {
     title: "I am worthy of rest",
     background: "Deep midnight blue gradient fading to soft charcoal, like the quiet hour before dawn",
@@ -27,8 +27,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Asymmetric balance with moon as counterweight to text",
     mood: "Peaceful surrender, permission to pause"
   },
-
-  // aff-002: I am worthy of peace
   "aff-002": {
     title: "I am worthy of peace",
     background: "Soft lavender fading to misty grey-blue",
@@ -39,8 +37,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Reflective symmetry, water-like calm",
     mood: "Tranquility, deserving stillness"
   },
-
-  // aff-003: Growth is a journey, not a destination
   "aff-003": {
     title: "Growth is a journey, not a destination",
     background: "Forest green gradient to soft moss",
@@ -51,8 +47,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Horizontal journey flow, left to right progression",
     mood: "Patient growth, embracing the process"
   },
-
-  // aff-004: I trust my journey
   "aff-004": {
     title: "I trust my journey",
     background: "Warm terracotta fading to dusty rose, like desert sunset",
@@ -63,8 +57,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Path leads eye from corner toward text",
     mood: "Quiet confidence, forward momentum"
   },
-
-  // aff-005: I am always enough
   "aff-005": {
     title: "I am always enough",
     background: "Creamy off-white (#F5F0E8) with subtle paper grain texture",
@@ -75,8 +67,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Centered symmetry, maximum negative space",
     mood: "Absolute self-acceptance, quiet power"
   },
-
-  // aff-006: My calm is my power
   "aff-006": {
     title: "My calm is my power",
     background: "Soft blue-grey, like still lake at dawn",
@@ -87,8 +77,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Perfect stillness, centered calm",
     mood: "Intentional peace, chosen serenity"
   },
-
-  // aff-007: I receive what I desire
   "aff-007": {
     title: "I receive what I desire",
     background: "Soft coral pink to warm peach gradient",
@@ -99,8 +87,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Receiving gesture, elements flowing downward toward text",
     mood: "Openness, worthiness to receive"
   },
-
-  // aff-008: Today, I honor myself
   "aff-008": {
     title: "Today, I honor myself",
     background: "Warm nude to soft mauve gradient",
@@ -111,8 +97,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Inward-focused, self-honoring composition",
     mood: "Self-priority, healthy boundaries"
   },
-
-  // aff-009: I release what no longer serves
   "aff-009": {
     title: "I release what no longer serves",
     background: "Gradient from soft grey to warm white, like morning fog lifting",
@@ -123,8 +107,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Upward movement, elements dispersing toward top",
     mood: "Letting go, liberation, lightness"
   },
-
-  // aff-010: Joy is my natural state
   "aff-010": {
     title: "Joy is my natural state",
     background: "Soft buttercream yellow with warm golden undertones",
@@ -135,8 +117,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Scattered moments, delightful discovery",
     mood: "Everyday magic, present-moment joy"
   },
-
-  // aff-011: I am safe in my body
   "aff-011": {
     title: "I am safe in my body",
     background: "Soft blush pink fading to warm cream",
@@ -147,8 +127,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Embracing composition, elements curve around text",
     mood: "Security, embodiment, groundedness"
   },
-
-  // aff-012: My voice matters
   "aff-012": {
     title: "My voice matters",
     background: "Bold warm coral to soft terracotta",
@@ -159,8 +137,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Outward projection, voice rippling out",
     mood: "Empowerment, being heard"
   },
-
-  // aff-013: I am worthy of my dreams
   "aff-013": {
     title: "I am worthy of my dreams",
     background: "Soft cloudy gradient—white to pale blue to soft grey",
@@ -171,8 +147,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Floating composition, dreamlike atmosphere",
     mood: "Validation, aspiration, dream permission"
   },
-
-  // aff-014: I choose peace over perfection
   "aff-014": {
     title: "I choose peace over perfection",
     background: "Soft sage green with subtle linen texture overlay",
@@ -183,8 +157,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Scattered organic elements create visual rhythm",
     mood: "Emotional openness, vulnerability as strength"
   },
-
-  // aff-015: I celebrate my progress
   "aff-015": {
     title: "I celebrate my progress",
     background: "Gradient from cocoon brown to butterfly wing iridescence",
@@ -195,8 +167,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Transformation narrative, before to after flow",
     mood: "Becoming, evolution, self-actualization"
   },
-
-  // aff-016: My intuition guides me
   "aff-016": {
     title: "My intuition guides me",
     background: "Deep indigo to soft violet gradient, cosmic depth",
@@ -207,8 +177,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Radial composition, energy emanating from center",
     mood: "Inner knowing, cosmic connection"
   },
-
-  // aff-017: I am open to miracles
   "aff-017": {
     title: "I am open to miracles",
     background: "Dawn sky gradient—soft pink to light blue to warm gold",
@@ -219,8 +187,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Expansive horizon, openness ahead",
     mood: "Anticipation, openness, new beginnings"
   },
-
-  // aff-018: I give myself permission to feel
   "aff-018": {
     title: "I give myself permission to feel",
     background: "Warm parchment cream with subtle aged texture",
@@ -231,8 +197,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Classic book layout, centered hierarchy",
     mood: "Authorship, creative power, narrative control"
   },
-
-  // aff-019: I am creating the life I desire
   "aff-019": {
     title: "I am creating the life I desire",
     background: "Rich honey gold gradient to warm amber",
@@ -243,8 +207,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Elements flowing toward center, convergence",
     mood: "Magnetic confidence, worthiness"
   },
-
-  // aff-020: Today is full of possibility
   "aff-020": {
     title: "Today is full of possibility",
     background: "Gradient shifting through seasons—warm amber to cool sage",
@@ -255,8 +217,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Dynamic flow, elements in graceful transition",
     mood: "Graceful adaptation, flowing with life"
   },
-
-  // aff-021: I am allowed to change my mind
   "aff-021": {
     title: "I am allowed to change my mind",
     background: "Cool grey-blue with architectural texture",
@@ -267,8 +227,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Strong vertical lines creating visual boundaries",
     mood: "Self-respect, clarity, protection"
   },
-
-  // aff-022: My rest is productive
   "aff-022": {
     title: "My rest is productive",
     background: "Soft sepia tones fading to warm neutral",
@@ -279,8 +237,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Retrospective composition, looking back with peace",
     mood: "Acceptance, healing, closure"
   },
-
-  // aff-023: I attract what I embody
   "aff-023": {
     title: "I attract what I embody",
     background: "Deep rose to soft blush gradient, like rose petals",
@@ -291,8 +247,6 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Heart-centered composition, love radiating outward",
     mood: "Self-love, deserving love, heart opening"
   },
-
-  // aff-024: I am both the storm and the calm
   "aff-024": {
     title: "I am both the storm and the calm",
     background: "Soft gradient suggesting clock face—warm gold to soft cream",
@@ -333,6 +287,18 @@ If ANY of the design directions above would compromise the $1,000 gallery-qualit
 Generate the complete artwork now.`;
 }
 
+// Convert base64 to Uint8Array for upload
+function base64ToUint8Array(base64: string): Uint8Array {
+  // Remove data URL prefix if present
+  const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
+  const binaryString = atob(base64Data);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -351,7 +317,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: `No design configuration found for: ${affirmationId}. Available IDs: ${Object.keys(AFFIRMATION_DESIGNS).join(", ")}` 
+          error: `No design configuration found for: ${affirmationId}` 
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
@@ -368,6 +334,7 @@ serve(async (req) => {
     }
 
     // Call Gemini 3 Pro Image Preview via Lovable AI Gateway
+    console.log("Calling AI Gateway...");
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -419,19 +386,48 @@ serve(async (req) => {
     console.log("Received response from AI Gateway");
 
     // Extract the generated image
-    const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    const imageDataUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-    if (!imageUrl) {
-      console.error("No image in response:", JSON.stringify(data, null, 2));
+    if (!imageDataUrl) {
+      console.error("No image in response");
       throw new Error("No image generated in response");
     }
 
-    console.log(`Successfully generated image for: ${design.title}`);
+    console.log(`Image generated, uploading to storage...`);
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Convert base64 to bytes and upload to storage
+    const imageBytes = base64ToUint8Array(imageDataUrl);
+    const fileName = `affirmations/digital/${affirmationId}-${Date.now()}.png`;
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("product-images")
+      .upload(fileName, imageBytes, {
+        contentType: "image/png",
+        upsert: true
+      });
+
+    if (uploadError) {
+      console.error("Upload error:", uploadError);
+      throw new Error(`Failed to upload image: ${uploadError.message}`);
+    }
+
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from("product-images")
+      .getPublicUrl(fileName);
+
+    const publicUrl = publicUrlData.publicUrl;
+    console.log(`Successfully uploaded to: ${publicUrl}`);
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        imageUrl,
+        imageUrl: publicUrl,
         affirmationId,
         title: design.title
       }),
