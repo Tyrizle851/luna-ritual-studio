@@ -6,6 +6,8 @@ import { WishlistButton } from "@/components/WishlistButton";
 import { ProductModal } from "@/components/ProductModal";
 import { toast } from "sonner";
 import { Affirmation } from "@/data/affirmations";
+import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AffirmationCarouselProps {
   affirmations: Affirmation[];
@@ -19,8 +21,9 @@ const CarouselCard = ({
   affirmation: Affirmation; 
   onCardClick: () => void;
 }) => {
-  // Always use local affirmation.image assets for carousel display
-  const displayImage = affirmation.image;
+  // Use generated digital image from storage, fallback to local asset
+  const { imageUrl, isLoading } = useAffirmationDigitalImage(affirmation.id);
+  const displayImage = imageUrl || affirmation.image;
   
   return (
     <div className="relative h-full bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300">
@@ -36,11 +39,15 @@ const CarouselCard = ({
         className="overflow-hidden aspect-[4/5] bg-secondary cursor-pointer"
         onClick={onCardClick}
       >
-        <img
-          src={displayImage}
-          alt={affirmation.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        {isLoading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <img
+            src={displayImage}
+            alt={affirmation.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        )}
       </div>
       
       <div className="p-4">
