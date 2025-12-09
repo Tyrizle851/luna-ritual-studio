@@ -1,12 +1,8 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
-
 // Complete design variable sets for all 24 affirmations
-const AFFIRMATION_DESIGNS: Record<string, {
+// Used by generate-affirmation-digital edge function
+
+export interface AffirmationDesign {
+  id: string;
   title: string;
   background: string;
   textColor: string;
@@ -15,8 +11,12 @@ const AFFIRMATION_DESIGNS: Record<string, {
   visualElements: string;
   layout: string;
   mood: string;
-}> = {
+}
+
+export const AFFIRMATION_DESIGNS: Record<string, AffirmationDesign> = {
+  // 1. I am worthy of rest
   "worthy-of-rest": {
+    id: "worthy-of-rest",
     title: "I am worthy of rest",
     background: "Deep midnight blue gradient fading to soft charcoal, like the quiet hour before dawn",
     textColor: "Warm ivory (#FAF8F5) with subtle cream undertones",
@@ -26,7 +26,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Asymmetric balance with moon as counterweight to text",
     mood: "Peaceful surrender, permission to pause"
   },
+
+  // 2. I trust my path
   "trust-my-path": {
+    id: "trust-my-path",
     title: "I trust my path",
     background: "Warm terracotta fading to dusty rose, like desert sunset",
     textColor: "Deep espresso brown (#3D2B1F)",
@@ -36,7 +39,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Path leads eye from corner toward text",
     mood: "Quiet confidence, forward momentum"
   },
+
+  // 3. I choose to feel
   "choose-to-feel": {
+    id: "choose-to-feel",
     title: "I choose to feel",
     background: "Soft sage green with subtle linen texture overlay",
     textColor: "Charcoal grey (#2C2C2C)",
@@ -46,7 +52,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Scattered organic elements create visual rhythm",
     mood: "Emotional openness, vulnerability as strength"
   },
+
+  // 4. I am always enough
   "always-enough": {
+    id: "always-enough",
     title: "I am always enough",
     background: "Creamy off-white (#F5F0E8) with subtle paper grain texture",
     textColor: "Soft black (#1A1A1A)",
@@ -56,7 +65,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Centered symmetry, maximum negative space",
     mood: "Absolute self-acceptance, quiet power"
   },
+
+  // 5. I release what no longer serves me
   "release-what-no-longer-serves": {
+    id: "release-what-no-longer-serves",
     title: "I release what no longer serves me",
     background: "Gradient from soft grey to warm white, like morning fog lifting",
     textColor: "Deep slate (#4A4A4A)",
@@ -66,7 +78,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Upward movement, elements dispersing toward top",
     mood: "Letting go, liberation, lightness"
   },
+
+  // 6. I attract what I deserve
   "attract-what-i-deserve": {
+    id: "attract-what-i-deserve",
     title: "I attract what I deserve",
     background: "Rich honey gold gradient to warm amber",
     textColor: "Deep burgundy brown (#4A2C2A)",
@@ -76,7 +91,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Elements flowing toward center, convergence",
     mood: "Magnetic confidence, worthiness"
   },
+
+  // 7. I am safe in my body
   "safe-in-my-body": {
+    id: "safe-in-my-body",
     title: "I am safe in my body",
     background: "Soft blush pink fading to warm cream",
     textColor: "Warm terracotta (#C17C60)",
@@ -86,7 +104,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Embracing composition, elements curve around text",
     mood: "Security, embodiment, groundedness"
   },
+
+  // 8. I honor my boundaries
   "honor-my-boundaries": {
+    id: "honor-my-boundaries",
     title: "I honor my boundaries",
     background: "Cool grey-blue with architectural texture",
     textColor: "Warm charcoal (#333333)",
@@ -96,7 +117,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Strong vertical lines creating visual boundaries",
     mood: "Self-respect, clarity, protection"
   },
+
+  // 9. I am creating my story
   "creating-my-story": {
+    id: "creating-my-story",
     title: "I am creating my story",
     background: "Warm parchment cream with subtle aged texture",
     textColor: "Rich ink brown (#2D2416)",
@@ -106,7 +130,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Classic book layout, centered hierarchy",
     mood: "Authorship, creative power, narrative control"
   },
+
+  // 10. Growth is a journey, not a destination
   "growth-is-journey": {
+    id: "growth-is-journey",
     title: "Growth is a journey, not a destination",
     background: "Forest green gradient to soft moss",
     textColor: "Warm cream (#F8F4E8)",
@@ -116,7 +143,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Horizontal journey flow, left to right progression",
     mood: "Patient growth, embracing the process"
   },
+
+  // 11. I am worthy of peace
   "worthy-of-peace": {
+    id: "worthy-of-peace",
     title: "I am worthy of peace",
     background: "Soft lavender fading to misty grey-blue",
     textColor: "Deep plum (#4A3B4D)",
@@ -126,7 +156,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Reflective symmetry, water-like calm",
     mood: "Tranquility, deserving stillness"
   },
+
+  // 12. I trust my intuition
   "trust-my-intuition": {
+    id: "trust-my-intuition",
     title: "I trust my intuition",
     background: "Deep indigo to soft violet gradient, cosmic depth",
     textColor: "Soft silver-white (#E8E4E0)",
@@ -136,7 +169,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Radial composition, energy emanating from center",
     mood: "Inner knowing, cosmic connection"
   },
+
+  // 13. I allow myself to receive
   "allow-myself-to-receive": {
+    id: "allow-myself-to-receive",
     title: "I allow myself to receive",
     background: "Soft coral pink to warm peach gradient",
     textColor: "Deep rose (#8B4557)",
@@ -146,7 +182,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Receiving gesture, elements flowing downward toward text",
     mood: "Openness, worthiness to receive"
   },
+
+  // 14. I embrace change with grace
   "embrace-change": {
+    id: "embrace-change",
     title: "I embrace change with grace",
     background: "Gradient shifting through seasons—warm amber to cool sage",
     textColor: "Deep bronze (#5D4E37)",
@@ -156,7 +195,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Dynamic flow, elements in graceful transition",
     mood: "Graceful adaptation, flowing with life"
   },
+
+  // 15. My voice matters
   "voice-matters": {
+    id: "voice-matters",
     title: "My voice matters",
     background: "Bold warm coral to soft terracotta",
     textColor: "Deep cocoa (#3E2C23)",
@@ -166,7 +208,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Outward projection, voice rippling out",
     mood: "Empowerment, being heard"
   },
+
+  // 16. I find joy in small moments
   "joy-in-small-moments": {
+    id: "joy-in-small-moments",
     title: "I find joy in small moments",
     background: "Soft buttercream yellow with warm golden undertones",
     textColor: "Warm brown (#5C4033)",
@@ -176,7 +221,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Scattered moments, delightful discovery",
     mood: "Everyday magic, present-moment joy"
   },
+
+  // 17. I am at peace with my past
   "peace-with-past": {
+    id: "peace-with-past",
     title: "I am at peace with my past",
     background: "Soft sepia tones fading to warm neutral",
     textColor: "Aged brown (#6B5344)",
@@ -186,7 +234,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Retrospective composition, looking back with peace",
     mood: "Acceptance, healing, closure"
   },
+
+  // 18. I am open to new possibilities
   "open-to-possibilities": {
+    id: "open-to-possibilities",
     title: "I am open to new possibilities",
     background: "Dawn sky gradient—soft pink to light blue to warm gold",
     textColor: "Deep teal (#2A5B5E)",
@@ -196,7 +247,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Expansive horizon, openness ahead",
     mood: "Anticipation, openness, new beginnings"
   },
+
+  // 19. My dreams are valid
   "dreams-are-valid": {
+    id: "dreams-are-valid",
     title: "My dreams are valid",
     background: "Soft cloudy gradient—white to pale blue to soft grey",
     textColor: "Deep navy (#1E3A5F)",
@@ -206,7 +260,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Floating composition, dreamlike atmosphere",
     mood: "Validation, aspiration, dream permission"
   },
+
+  // 20. I am becoming who I'm meant to be
   "becoming-who-meant-to-be": {
+    id: "becoming-who-meant-to-be",
     title: "I am becoming who I'm meant to be",
     background: "Gradient from cocoon brown to butterfly wing iridescence",
     textColor: "Rich plum (#5B3256)",
@@ -216,7 +273,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Transformation narrative, before to after flow",
     mood: "Becoming, evolution, self-actualization"
   },
+
+  // 21. I choose calm over chaos
   "calm-over-chaos": {
+    id: "calm-over-chaos",
     title: "I choose calm over chaos",
     background: "Soft blue-grey, like still lake at dawn",
     textColor: "Deep charcoal (#2D2D2D)",
@@ -226,7 +286,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Perfect stillness, centered calm",
     mood: "Intentional peace, chosen serenity"
   },
+
+  // 22. I honor my needs
   "honor-my-needs": {
+    id: "honor-my-needs",
     title: "I honor my needs",
     background: "Warm nude to soft mauve gradient",
     textColor: "Deep burgundy (#722F37)",
@@ -236,7 +299,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Inward-focused, self-honoring composition",
     mood: "Self-priority, healthy boundaries"
   },
+
+  // 23. I trust the timing of my life
   "trust-timing": {
+    id: "trust-timing",
     title: "I trust the timing of my life",
     background: "Soft gradient suggesting clock face—warm gold to soft cream",
     textColor: "Rich bronze (#6B4423)",
@@ -246,7 +312,10 @@ const AFFIRMATION_DESIGNS: Record<string, {
     layout: "Circular time composition, cyclical flow",
     mood: "Divine timing, patience, trust"
   },
+
+  // 24. I am worthy of love
   "worthy-of-love": {
+    id: "worthy-of-love",
     title: "I am worthy of love",
     background: "Deep rose to soft blush gradient, like rose petals",
     textColor: "Deep wine (#5C1A33)",
@@ -258,145 +327,12 @@ const AFFIRMATION_DESIGNS: Record<string, {
   }
 };
 
-// Build the complete prompt with quality override
-function buildPrompt(design: typeof AFFIRMATION_DESIGNS[string]): string {
-  return `Create a $1,000 gallery-quality art print design for the affirmation: "${design.title}"
-
-DESIGN DIRECTION:
-- Background: ${design.background}
-- Text Color: ${design.textColor}
-- Typography: ${design.typography}
-- Text Position: ${design.textPosition}
-- Visual Elements: ${design.visualElements}
-- Layout: ${design.layout}
-- Mood: ${design.mood}
-
-BRAND REQUIREMENTS:
-- Warm, feminine, editorial aesthetic (Kinfolk/Aesop/The Poster Club energy)
-- Premium matte finish quality—no glossy or digital artifacts
-- Edge-to-edge design filling the entire canvas—no visible paper edges, borders, or backgrounds
-- 4:5 aspect ratio optimized for 18x24 inch printing
-- The affirmation text must be clearly legible and beautifully integrated
-- Subtle organic textures welcome (linen, cotton paper, handmade feel)
-- No watercolor blobs, no Canva templates, no clip-art, no stock imagery
-
-QUALITY OVERRIDE CLAUSE:
-If ANY of the design directions above would compromise the $1,000 gallery-quality standard, you have FULL PERMISSION to change, modify, or completely reimagine those aspects. The specifications are creative direction, not rigid constraints. Gallery quality is the non-negotiable standard—everything else is flexible. Trust your artistic judgment to deliver a piece worthy of a premium art gallery.
-
-Generate the complete artwork now.`;
+// Helper to get design by affirmation ID
+export function getAffirmationDesign(id: string): AffirmationDesign | undefined {
+  return AFFIRMATION_DESIGNS[id];
 }
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
-
-  try {
-    const { affirmationId, title, category } = await req.json();
-    
-    console.log(`Generating digital design for: ${title} (${affirmationId})`);
-
-    // Get design variables for this affirmation
-    const design = AFFIRMATION_DESIGNS[affirmationId];
-    
-    if (!design) {
-      console.error(`No design found for affirmation ID: ${affirmationId}`);
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: `No design configuration found for: ${affirmationId}` 
-        }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Build the complete prompt
-    const prompt = buildPrompt(design);
-    console.log(`Built prompt for: ${design.title}`);
-
-    // Get API key
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
-    }
-
-    // Call Gemini 3 Pro Image Preview via Lovable AI Gateway
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-3-pro-image-preview",
-        messages: [
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        modalities: ["image", "text"]
-      }),
-    });
-
-    // Handle rate limiting and payment errors
-    if (response.status === 429) {
-      console.error("Rate limit exceeded");
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: "Rate limit exceeded. Please try again later." 
-        }),
-        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    if (response.status === 402) {
-      console.error("Payment required");
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: "Payment required. Please add credits to continue." 
-        }),
-        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`AI Gateway error: ${response.status} - ${errorText}`);
-      throw new Error(`AI Gateway error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("Received response from AI Gateway");
-
-    // Extract the generated image
-    const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-
-    if (!imageUrl) {
-      console.error("No image in response:", JSON.stringify(data, null, 2));
-      throw new Error("No image generated in response");
-    }
-
-    console.log(`Successfully generated image for: ${design.title}`);
-
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        imageUrl,
-        affirmationId,
-        title: design.title
-      }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
-
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    console.error("Error generating affirmation:", message);
-    return new Response(
-      JSON.stringify({ success: false, error: message }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
-  }
-});
+// Get all design IDs
+export function getAllDesignIds(): string[] {
+  return Object.keys(AFFIRMATION_DESIGNS);
+}
