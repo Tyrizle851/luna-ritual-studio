@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import AdminImageGen from "./pages/AdminImageGen";
 import AdminAffirmationGen from "./pages/AdminAffirmationGen";
 import AdminAffirmationDigital from "./pages/AdminAffirmationDigital";
+import AdminImageReview from "./pages/AdminImageReview";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const AnimatedRoutes = () => {
         <Route path="/admin/imagegen" element={<AdminImageGen />} />
         <Route path="/admin/affirmations" element={<AdminAffirmationGen />} />
         <Route path="/admin/affirmation-digital" element={<AdminAffirmationDigital />} />
+        <Route path="/admin/image-review" element={<AdminImageReview />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
