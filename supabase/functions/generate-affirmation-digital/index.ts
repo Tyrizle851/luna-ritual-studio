@@ -7,6 +7,8 @@ const corsHeaders = {
 };
 
 // Complete design variable sets for all 24 affirmations
+// Aesthetic: Soft watercolor washes, delicate botanicals (ferns, leaves, branches),
+// flowing organic waves, elegant script/serif typography, warm muted tones
 const AFFIRMATION_DESIGNS: Record<string, {
   title: string;
   background: string;
@@ -19,243 +21,243 @@ const AFFIRMATION_DESIGNS: Record<string, {
 }> = {
   "aff-001": {
     title: "I am worthy of rest",
-    background: "Deep midnight blue gradient fading to soft charcoal, like the quiet hour before dawn",
-    textColor: "Warm ivory (#FAF8F5) with subtle cream undertones",
-    typography: "Elegant thin serif, generous letter-spacing, lowercase except first letter",
-    textPosition: "Lower third, left-aligned with breathing room from edges",
-    visualElements: "Single crescent moon, delicate constellation dots, whisper of clouds",
-    layout: "Asymmetric balance with moon as counterweight to text",
-    mood: "Peaceful surrender, permission to pause"
+    background: "Soft cream to ivory wash with subtle warm grey watercolor clouds at edges, handmade paper texture",
+    textColor: "Warm taupe-brown (#8B7355)",
+    typography: "Elegant flowing script, like calligraphy with graceful flourishes",
+    textPosition: "Center-left, flowing diagonally with natural rhythm",
+    visualElements: "Delicate fern fronds in muted sage, soft flowing ribbon-like waves, tiny botanical sprigs",
+    layout: "Organic diagonal flow with botanicals framing edges",
+    mood: "Peaceful surrender, soft and dreamy"
   },
   "aff-002": {
     title: "I am worthy of peace",
-    background: "Soft lavender fading to misty grey-blue",
-    textColor: "Deep plum (#4A3B4D)",
-    typography: "Serene serif, light weight, whisper-quiet presence",
-    textPosition: "Upper portion, floating peacefully",
-    visualElements: "Still water reflection, single lotus, gentle ripples",
-    layout: "Reflective symmetry, water-like calm",
-    mood: "Tranquility, deserving stillness"
+    background: "Ethereal blue-grey watercolor wash with soft cream center, like moonlit mist clearing",
+    textColor: "Warm golden-brown (#9A7B4F) with subtle shimmer",
+    typography: "Romantic flowing script, elegant italic calligraphy with swashes",
+    textPosition: "Center-left, stacked vertically with graceful line breaks",
+    visualElements: "Glowing soft moon/sun orb behind text, delicate fern silhouettes, flowing leaf branches, subtle botanical shadows",
+    layout: "Luminous center with watercolor edges darkening at corners, botanicals frame the glow",
+    mood: "Tranquil, worthy of stillness, moonlit calm"
   },
   "aff-003": {
     title: "Growth is a journey, not a destination",
-    background: "Forest green gradient to soft moss",
-    textColor: "Warm cream (#F8F4E8)",
-    typography: "Organic serif, natural flow, varied baseline",
-    textPosition: "Across middle, following gentle curve",
-    visualElements: "Winding forest path, unfurling fern fronds, distant horizon",
-    layout: "Horizontal journey flow, left to right progression",
-    mood: "Patient growth, embracing the process"
+    background: "Warm cream parchment with soft watercolor earth tones at edges, torn paper texture",
+    textColor: "Rich golden-brown (#A67C52) like aged leather",
+    typography: "Bold elegant serif with slight curve, commanding yet warm",
+    textPosition: "Upper portion, left-aligned with generous leading",
+    visualElements: "Zen stepping stones winding through still water, botanical silhouettes framing (ferns, leaves), soft ripples",
+    layout: "Text at top, illustrated path/stones below leading into distance",
+    mood: "Patient growth, journey metaphor made visual"
   },
   "aff-004": {
     title: "I trust my journey",
-    background: "Warm terracotta fading to dusty rose, like desert sunset",
-    textColor: "Deep espresso brown (#3D2B1F)",
-    typography: "Modern serif with slight italic lean, medium weight",
-    textPosition: "Center-right, vertical orientation reading downward",
-    visualElements: "Winding abstract path, distant mountains silhouette, single guiding star",
-    layout: "Path leads eye from corner toward text",
-    mood: "Quiet confidence, forward momentum"
+    background: "Soft warm cream with subtle blush undertones, handmade paper texture with visible fibers",
+    textColor: "Deep warm brown (#6B5344) with golden undertone",
+    typography: "Flowing italic script, romantic calligraphy with elegant flourishes",
+    textPosition: "Center, slightly elevated, flowing horizontally",
+    visualElements: "Winding abstract path/ribbon, delicate fern fronds, small wildflowers, soft flowing waves",
+    layout: "Soft flowing elements create movement around centered text",
+    mood: "Quiet confidence, gentle forward motion"
   },
   "aff-005": {
     title: "I am always enough",
-    background: "Creamy off-white (#F5F0E8) with subtle paper grain texture",
-    textColor: "Soft black (#1A1A1A)",
-    typography: "Bold modern serif, statement weight, tight tracking",
-    textPosition: "Dead center, commanding presence",
-    visualElements: "Minimalist—single thin circle embracing text, nothing more",
-    layout: "Centered symmetry, maximum negative space",
-    mood: "Absolute self-acceptance, quiet power"
+    background: "Minimal warm cream (#F5F0E8) with subtle arch shape, soft sandy dune at bottom horizon",
+    textColor: "Rich near-black (#1A1A1A) for maximum contrast",
+    typography: "Modern editorial serif, bold and confident, stacked vertically",
+    textPosition: "Dead center with perfect balance",
+    visualElements: "Single thin arch outline above text, minimal horizon line, vast negative space",
+    layout: "Ultra-minimal, text is the art, breath-giving whitespace",
+    mood: "Absolute self-acceptance, quiet power, modern zen"
   },
   "aff-006": {
     title: "My calm is my power",
-    background: "Soft blue-grey, like still lake at dawn",
+    background: "Soft blue-grey watercolor wash fading to warm cream center",
     textColor: "Deep charcoal (#2D2D2D)",
-    typography: "Steady serif, unwavering weight, anchored presence",
-    textPosition: "Center, perfectly still",
-    visualElements: "Still water surface, single ripple, zen stones, breath symbol",
-    layout: "Perfect stillness, centered calm",
-    mood: "Intentional peace, chosen serenity"
+    typography: "Steady modern serif, clean and grounded",
+    textPosition: "Center, perfectly balanced",
+    visualElements: "Gentle flowing waves/ribbons in muted tones, soft botanical shadows",
+    layout: "Symmetric calm, elements flow around text without disruption",
+    mood: "Intentional peace, strength in stillness"
   },
   "aff-007": {
     title: "I receive what I desire",
-    background: "Soft coral pink to warm peach gradient",
-    textColor: "Deep rose (#8B4557)",
-    typography: "Graceful serif, open letter forms, receptive curves",
-    textPosition: "Lower third, arms-open positioning",
-    visualElements: "Open palms, flowing abundance, gentle rain of blessings",
-    layout: "Receiving gesture, elements flowing downward toward text",
+    background: "Soft blush pink watercolor fading to warm cream",
+    textColor: "Deep rose-brown (#7A5C58)",
+    typography: "Elegant serif with open, receptive letterforms",
+    textPosition: "Lower third, grounded yet reaching",
+    visualElements: "Soft flowing ribbon waves, delicate botanical sprigs, gentle abstract shapes",
+    layout: "Elements flow downward toward text as if arriving",
     mood: "Openness, worthiness to receive"
   },
   "aff-008": {
     title: "Today, I honor myself",
-    background: "Warm nude to soft mauve gradient",
-    textColor: "Deep burgundy (#722F37)",
-    typography: "Nurturing serif, self-caring weight, gentle authority",
-    textPosition: "Lower center, grounded self-care",
-    visualElements: "Self-embrace gesture, nourishing elements, heart center glow",
-    layout: "Inward-focused, self-honoring composition",
-    mood: "Self-priority, healthy boundaries"
+    background: "Warm nude to soft mauve watercolor, organic texture",
+    textColor: "Deep burgundy-brown (#5A3A3A)",
+    typography: "Nurturing serif, gentle weight, self-caring presence",
+    textPosition: "Lower center, grounded",
+    visualElements: "Soft flowing waves, delicate botanicals, warm organic shapes",
+    layout: "Embracing composition, elements curve protectively",
+    mood: "Self-priority, gentle self-love"
   },
   "aff-009": {
     title: "I release what no longer serves",
-    background: "Gradient from soft grey to warm white, like morning fog lifting",
-    textColor: "Deep slate (#4A4A4A)",
-    typography: "Light weight serif, airy letter-spacing, graceful ascenders",
-    textPosition: "Upper portion, text appears to float upward",
-    visualElements: "Feathers drifting, abstract smoke wisps, open hands releasing",
-    layout: "Upward movement, elements dispersing toward top",
+    background: "Airy light cream with soft grey-beige flowing waves, like morning mist",
+    textColor: "Warm taupe (#9A8B7A) soft and releasing",
+    typography: "Light elegant serif, airy letter-spacing, graceful and floating",
+    textPosition: "Center-left, text floats peacefully",
+    visualElements: "Delicate flowing organic waves/ribbons, soft fern fronds, whisper-light botanicals",
+    layout: "Diagonal flowing movement, elements drift and release",
     mood: "Letting go, liberation, lightness"
   },
   "aff-010": {
     title: "Joy is my natural state",
-    background: "Soft buttercream yellow with warm golden undertones",
+    background: "Soft buttercream yellow with warm golden watercolor washes",
     textColor: "Warm brown (#5C4033)",
-    typography: "Cheerful serif, dancing baseline, lighthearted weight",
-    textPosition: "Scattered across canvas, playful placement",
-    visualElements: "Tiny flowers, coffee cup steam, sun rays, small treasures",
-    layout: "Scattered moments, delightful discovery",
-    mood: "Everyday magic, present-moment joy"
+    typography: "Cheerful serif with dancing baseline",
+    textPosition: "Center, radiating outward",
+    visualElements: "Soft sun rays, delicate wildflowers, gentle flowing elements",
+    layout: "Joyful scattered composition, elements celebrating",
+    mood: "Natural happiness, simple joy"
   },
   "aff-011": {
     title: "I am safe in my body",
-    background: "Soft blush pink fading to warm cream",
+    background: "Soft blush pink fading to warm cream, comforting wash",
     textColor: "Warm terracotta (#C17C60)",
-    typography: "Rounded serif, nurturing weight, generous curves",
-    textPosition: "Lower center, grounded and rooted",
-    visualElements: "Abstract body silhouette, protective circle, grounding roots",
-    layout: "Embracing composition, elements curve around text",
-    mood: "Security, embodiment, groundedness"
+    typography: "Rounded serif, nurturing and protective",
+    textPosition: "Center, grounded",
+    visualElements: "Protective flowing curves, soft organic shapes, grounding botanicals",
+    layout: "Embracing composition, elements create safety",
+    mood: "Security, embodiment, being held"
   },
   "aff-012": {
     title: "My voice matters",
-    background: "Bold warm coral to soft terracotta",
-    textColor: "Deep cocoa (#3E2C23)",
-    typography: "Confident serif, medium-bold, clear articulation",
-    textPosition: "Center-left, projecting outward",
-    visualElements: "Sound waves radiating, megaphone suggestion, resonance circles",
-    layout: "Outward projection, voice rippling out",
-    mood: "Empowerment, being heard"
+    background: "Warm taupe-grey (#C5B8A8) with layered flowing waves in cream, gold, and muted colors",
+    textColor: "Deep near-black (#1E1E1E) for bold impact",
+    typography: "Bold modern serif, confident and powerful, strong presence",
+    textPosition: "Center-left, bold statement positioning",
+    visualElements: "Layered flowing wave ribbons with fine line details, organic curves suggesting sound/movement",
+    layout: "Bold geometric-organic hybrid, waves create dynamic backdrop",
+    mood: "Empowerment, being heard, confident expression"
   },
   "aff-013": {
     title: "I am worthy of my dreams",
-    background: "Soft cloudy gradient—white to pale blue to soft grey",
-    textColor: "Deep navy (#1E3A5F)",
-    typography: "Dreamy serif, floating weight, aspirational presence",
-    textPosition: "Center, among the clouds",
-    visualElements: "Soft clouds, distant stars, sleeping moon, dream bubbles",
-    layout: "Floating composition, dreamlike atmosphere",
-    mood: "Validation, aspiration, dream permission"
+    background: "Soft cloudy cream to pale blue-grey watercolor",
+    textColor: "Deep navy-grey (#3A4A5A)",
+    typography: "Dreamy serif, floating and aspirational",
+    textPosition: "Center, among soft cloud forms",
+    visualElements: "Soft watercolor clouds, distant stars, gentle flowing elements",
+    layout: "Ethereal floating composition",
+    mood: "Dream permission, aspiration"
   },
   "aff-014": {
     title: "I choose peace over perfection",
-    background: "Soft sage green with subtle linen texture overlay",
+    background: "Soft sage green with subtle linen texture",
     textColor: "Charcoal grey (#2C2C2C)",
-    typography: "Hand-drawn serif feeling, slightly imperfect baseline",
-    textPosition: "Upper left quadrant, diagonal flow",
-    visualElements: "Abstract heart outline, gentle wave patterns, organic dots",
-    layout: "Scattered organic elements create visual rhythm",
-    mood: "Emotional openness, vulnerability as strength"
+    typography: "Slightly imperfect hand-drawn serif feeling",
+    textPosition: "Off-center, organic placement",
+    visualElements: "Organic dots, gentle wave patterns, botanical suggestions",
+    layout: "Deliberately imperfect, embracing organic flow",
+    mood: "Acceptance, letting go of perfect"
   },
   "aff-015": {
     title: "I celebrate my progress",
-    background: "Gradient from cocoon brown to butterfly wing iridescence",
-    textColor: "Rich plum (#5B3256)",
-    typography: "Transformational serif, evolving presence, emerging boldness",
-    textPosition: "Center, in transformation",
-    visualElements: "Chrysalis to butterfly, blooming flower stages, evolution spiral",
-    layout: "Transformation narrative, before to after flow",
-    mood: "Becoming, evolution, self-actualization"
+    background: "Soft gradient from warm amber to gentle sage",
+    textColor: "Rich plum-brown (#5B3256)",
+    typography: "Evolving serif, elegant transformation",
+    textPosition: "Center, in motion",
+    visualElements: "Butterfly suggestions, blooming forms, growth spirals",
+    layout: "Transformation narrative, evolution visible",
+    mood: "Becoming, celebrating growth"
   },
   "aff-016": {
     title: "My intuition guides me",
-    background: "Deep indigo to soft violet gradient, cosmic depth",
+    background: "Deep indigo fading to soft violet at edges",
     textColor: "Soft silver-white (#E8E4E0)",
-    typography: "Mystical serif, slight glow effect, ethereal weight",
-    textPosition: "Center, emanating outward",
-    visualElements: "Third eye suggestion, constellation map, inner light glow",
-    layout: "Radial composition, energy emanating from center",
+    typography: "Mystical serif with ethereal presence",
+    textPosition: "Center, emanating",
+    visualElements: "Constellation dots, inner glow, cosmic subtle elements",
+    layout: "Radial composition, energy from center",
     mood: "Inner knowing, cosmic connection"
   },
   "aff-017": {
     title: "I am open to miracles",
-    background: "Dawn sky gradient—soft pink to light blue to warm gold",
+    background: "Dawn sky gradient—soft pink to blue to warm gold",
     textColor: "Deep teal (#2A5B5E)",
-    typography: "Forward-leaning serif, optimistic angle, bright presence",
-    textPosition: "Upper right, looking toward horizon",
-    visualElements: "Open door, sunrise rays, seeds taking flight, new sprouts",
+    typography: "Optimistic serif, forward-leaning",
+    textPosition: "Upper area, looking to horizon",
+    visualElements: "Sunrise rays, seeds in flight, new growth",
     layout: "Expansive horizon, openness ahead",
-    mood: "Anticipation, openness, new beginnings"
+    mood: "Anticipation, new beginnings"
   },
   "aff-018": {
     title: "I give myself permission to feel",
-    background: "Warm parchment cream with subtle aged texture",
+    background: "Warm parchment cream with subtle texture",
     textColor: "Rich ink brown (#2D2416)",
-    typography: "Literary serif, book-title elegance, balanced weight",
-    textPosition: "Center, like a book title page",
-    visualElements: "Quill suggestion, ink drops, page corner curl, subtle chapter marks",
-    layout: "Classic book layout, centered hierarchy",
-    mood: "Authorship, creative power, narrative control"
+    typography: "Literary serif, book-title elegance",
+    textPosition: "Centered, classic layout",
+    visualElements: "Subtle page suggestions, gentle organic elements",
+    layout: "Classic centered hierarchy",
+    mood: "Permission, emotional openness"
   },
   "aff-019": {
     title: "I am creating the life I desire",
     background: "Rich honey gold gradient to warm amber",
     textColor: "Deep burgundy brown (#4A2C2A)",
-    typography: "Sophisticated serif, medium-bold, classic proportions",
-    textPosition: "Center-left, grounded placement",
-    visualElements: "Magnetic abstract shapes, golden ratio spiral, warm light rays",
-    layout: "Elements flowing toward center, convergence",
-    mood: "Magnetic confidence, worthiness"
+    typography: "Sophisticated serif, confident",
+    textPosition: "Center-left, grounded",
+    visualElements: "Warm light rays, organic flowing shapes",
+    layout: "Elements converge toward center",
+    mood: "Creative power, manifestation"
   },
   "aff-020": {
     title: "Today is full of possibility",
-    background: "Gradient shifting through seasons—warm amber to cool sage",
+    background: "Soft gradient shifting warm amber to cool sage",
     textColor: "Deep bronze (#5D4E37)",
-    typography: "Transitional serif, flowing curves, elegant movement",
-    textPosition: "Center-right, in motion",
-    visualElements: "Butterfly transformation, flowing leaves, metamorphosis symbols",
-    layout: "Dynamic flow, elements in graceful transition",
-    mood: "Graceful adaptation, flowing with life"
+    typography: "Flowing transitional serif",
+    textPosition: "Center, in motion",
+    visualElements: "Flowing leaves, gentle transition elements",
+    layout: "Dynamic flow, graceful movement",
+    mood: "Possibility, openness"
   },
   "aff-021": {
     title: "I am allowed to change my mind",
-    background: "Cool grey-blue with architectural texture",
+    background: "Cool grey-blue with soft watercolor texture",
     textColor: "Warm charcoal (#333333)",
-    typography: "Strong serif, defined edges, clear structure",
-    textPosition: "Right side, vertical stack, structured",
-    visualElements: "Clean geometric lines, subtle doorway frame, protective threshold",
-    layout: "Strong vertical lines creating visual boundaries",
-    mood: "Self-respect, clarity, protection"
+    typography: "Clear modern serif, structured",
+    textPosition: "Right side, structured stack",
+    visualElements: "Clean flowing lines, subtle doorway suggestion",
+    layout: "Strong but soft structure",
+    mood: "Permission, flexibility"
   },
   "aff-022": {
     title: "My rest is productive",
     background: "Soft sepia tones fading to warm neutral",
-    textColor: "Aged brown (#6B5344)",
-    typography: "Timeless serif, dignified weight, classic grace",
-    textPosition: "Lower portion, grounded in acceptance",
-    visualElements: "Faded photographs suggestion, healing light, closed book",
-    layout: "Retrospective composition, looking back with peace",
-    mood: "Acceptance, healing, closure"
+    textColor: "Aged warm brown (#6B5344)",
+    typography: "Timeless serif, restful weight",
+    textPosition: "Lower portion, grounded",
+    visualElements: "Soft botanical shadows, peaceful elements",
+    layout: "Restful composition, gentle grounding",
+    mood: "Rest as value, peaceful productivity"
   },
   "aff-023": {
     title: "I attract what I embody",
-    background: "Deep rose to soft blush gradient, like rose petals",
+    background: "Deep rose to soft blush gradient, petal-like",
     textColor: "Deep wine (#5C1A33)",
-    typography: "Romantic serif, loving weight, heartfelt curves",
-    textPosition: "Center, heart-centered placement",
-    visualElements: "Rose petals, gentle heart shapes, warm embrace, soft glow",
-    layout: "Heart-centered composition, love radiating outward",
-    mood: "Self-love, deserving love, heart opening"
+    typography: "Romantic serif, loving curves",
+    textPosition: "Center, heart-centered",
+    visualElements: "Soft petal suggestions, warm organic glow",
+    layout: "Heart-centered, radiating outward",
+    mood: "Self-love, magnetic presence"
   },
   "aff-024": {
     title: "I am both the storm and the calm",
-    background: "Soft gradient suggesting clock face—warm gold to soft cream",
+    background: "Soft gradient warm gold to cream with subtle movement",
     textColor: "Rich bronze (#6B4423)",
-    typography: "Timeless serif, patient weight, enduring presence",
-    textPosition: "Center, in perfect time",
-    visualElements: "Clock hands, celestial cycles, seasonal wheel, hourglass",
-    layout: "Circular time composition, cyclical flow",
-    mood: "Divine timing, patience, trust"
+    typography: "Balanced serif, dual nature",
+    textPosition: "Center, in balance",
+    visualElements: "Flowing waves suggesting both energy and stillness",
+    layout: "Balanced duality, yin-yang flow",
+    mood: "Embracing complexity, wholeness"
   }
 };
 
