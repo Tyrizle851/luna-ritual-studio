@@ -101,11 +101,27 @@ serve(async (req) => {
 });
 
 function buildPrompt(title: string, category: string): string {
-  return `Create a beautiful affirmation poster design.
+  return `Create a premium fine art affirmation print.
 
-Main text: "${title}"
-Theme: ${category}
+SUBJECT: An elegant typographic art piece featuring the text "${title}"
 
-The design must fill the entire canvas edge-to-edge with no borders.
-4:5 aspect ratio.`;
+COMPOSITION: 
+- The affirmation text is the hero element, designed with artistic typography that has subtle hand-crafted character
+- Delicate botanical line drawings and organic abstract shapes are thoughtfully integrated around the text
+- Generous white space (50-60% of canvas) creates breathing room
+- Balanced, intentional placement that feels gallery-curated
+
+STYLE: 
+- Fine art print aesthetic, the kind sold in high-end design shops for $1,000+
+- Warm muted palette: soft cream, linen white, sage green, dusty rose, warm terracotta, charcoal
+- Typography that feels refined and artistic — elegant serifs or modern display fonts, NOT basic sans-serif
+- Subtle organic textures (paper grain, soft gradients, gentle shadows)
+- Illustrations are sophisticated line art or abstract organic forms, NOT cartoon-style or clip-art
+
+THEME: ${category} — incorporate visual motifs that evoke this feeling through the illustration elements
+
+TECHNICAL: 
+- Design fills entire canvas edge-to-edge, no borders or margins visible
+- 4:5 aspect ratio
+- This is museum-quality art, not a social media graphic`;
 }
