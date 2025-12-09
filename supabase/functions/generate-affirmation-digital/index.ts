@@ -986,59 +986,57 @@ function buildDesignSpec(
 function buildPrompt(spec: DesignSpec): string {
   const layoutDesc = LAYOUT_DESCRIPTIONS[spec.layout];
   const accentDescs = spec.accents.map(a => ACCENT_DESCRIPTIONS[a]).join(', ');
-  const typographyDesc = getTypographyDescription(spec.typography, spec.variants.styleVariant);
-  const energyDesc = getEnergyDescription(spec.energyLevel);
-  const paletteHex = spec.palette.hex.slice(0, 3).join(', ');
   const themeData = THEME_REGISTRY[spec.theme];
+  const paletteHex = spec.palette.hex.slice(0, 3).join(', ');
   
   const gradientInstruction = spec.useGradient 
-    ? `Apply a subtle gradient to the headline text using 2-3 harmonious colors from the palette (${spec.palette.hex[0]} to ${spec.palette.hex[1]}). Gradient flows left-to-right or top-to-bottom. Keep subtle and sophisticated.`
-    : 'Use solid colors for all text. No gradients on text.';
+    ? `\nApply a subtle gradient to the headline text using 2-3 harmonious colors from the palette (${spec.palette.hex[0]} to ${spec.palette.hex[1]}). Gradient flows left-to-right or top-to-bottom. Keep subtle and sophisticated.`
+    : `\nUse solid colors for all text. No gradients on text.`;
 
   const phrasesText = spec.phrases.slice(0, 8).join('", "');
 
-  return `Create a $1,000 gallery-quality affirmation art print.
+  return `Create a hand-lettered typographic affirmation art print worth $1,000.
 
-THE ARTWORK IS THE ENTIRE IMAGE. There is NO frame, NO paper edges, NO background surface, NO shadows beneath paper. The design itself IS the complete canvas, filling every pixel edge-to-edge.
+THE ARTWORK IS THE ENTIRE IMAGE. No frame, no paper edges, no background surface beneath the design. The art fills every pixel edge-to-edge.
 
 AFFIRMATION TEXT: "${spec.headline}"
-${phrasesText ? `SUPPORTING PHRASES (scattered small around design): "${phrasesText}"` : ''}
+SUPPORTING PHRASES (scatter organically around main text in varying sizes, angles, orientations): "${phrasesText}"
 
-LAYOUT COMPOSITION:
-${layoutDesc}. The energy is ${spec.energyLevel}: ${energyDesc}.
+STYLE - HAND-LETTERED TYPOGRAPHIC ART:
+The main affirmation is rendered in BOLD, expressive HAND-DRAWN lettering with organic brush strokes and artistic personality. NOT computer fonts. Each letter has subtle variation and hand-crafted character. Supporting phrases scattered around in smaller hand-lettered text at various angles (some curved, some tilted, some vertical).
 
-TYPOGRAPHY:
-${typographyDesc}. The main affirmation "${spec.headline}" is the hero element, rendered in elegant artistic typography.
+DECORATIVE ELEMENTS:
+Delicate botanical line drawings: leaves, branches, vines, small flowers, ferns, simple nature sketches. Hand-drawn style, thin organic lines. Elements frame and complement the typography without overwhelming. ${accentDescs}
 
-DECORATIVE ACCENTS:
-${accentDescs}. 2-3 sophisticated elements complement the text with intention.
+LAYOUT:
+${layoutDesc}. Energy: ${getEnergyDescription(spec.energyLevel)}.
 
 COLOR PALETTE:
-Primary colors: ${paletteHex}. Palette: ${spec.palette.description}. Contrast level: ${spec.palette.contrast}. 
-Background uses the lightest tone, text uses the darkest.
-
+${paletteHex}. Warm, earthy, muted tones. Soft cream/beige background. Text in warm browns, sage greens, terracotta, or muted gold. Cohesive and harmonious.
 ${gradientInstruction}
 
-MOOD: ${spec.mood.toUpperCase()}
-EMOTIONAL TONE: ${themeData.emotionalTone}
+WHITESPACE & COMPOSITION:
+- 55% generous negative space / breathing room, 45% visual content
+- Airy, open composition - NOT dense or crowded
+- Supporting phrases have room to breathe, not packed tight
+- Botanical accents are sparse and delicate, not filling every corner
+- Modern editorial balance with generous margins within the design
 
-COMPOSITION BALANCE:
-- 50% generous negative space, 50% visual content (text + decorative elements)
-- Main text is the focal point with hand-crafted artistic character
-- Supporting phrases are small but readable, placed with intention
+AESTHETIC DIRECTION:
+Hand-lettered art poster meets modern editorial. Organic and artisanal but CLEAN and CONTEMPORARY - not overly vintage, not weathered, not letterpress. Think Rifle Paper Co meets Kinfolk magazine. Warm and inviting but sophisticated with plenty of breathing room.
 
-AESTHETIC REFERENCE:
-Kinfolk magazine editorial, Aesop store posters, Apple meditation wallpapers, The Poster Club prints. Modern editorial calm, NOT vintage, NOT letterpress, NOT cottage-core, NOT folk-art.
+AVOID:
+- Overly dense/crowded compositions
+- Heavy vintage distressing or weathering
+- Letterpress or printmaking textures
+- Dark or moody backgrounds
+- Clip-art style illustrations
+- Computer-generated looking fonts
 
-CRITICAL - EDGE-TO-EDGE REQUIREMENT:
-The artwork MUST fill the ENTIRE canvas with absolutely NO:
-- Picture frames or frame edges
-- Paper edges or torn paper effects
-- Visible margins or borders
-- Background surfaces the paper sits on
-- Shadows beneath the design
+EDGE-TO-EDGE REQUIREMENT:
+The artwork fills the ENTIRE canvas with NO visible paper edges, frames, borders, or surfaces beneath.
 
-4:5 aspect ratio. Museum-quality, $1,000+ gallery art.`;
+4:5 aspect ratio. Gallery-quality art print.`;
 }
 
 // ============================================================
