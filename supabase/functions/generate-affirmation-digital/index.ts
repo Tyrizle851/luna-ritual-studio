@@ -6,152 +6,170 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// 24 unique prompts inspired by the reference images
-// Each design is completely unique - no two are the same
+// ============================================================
+// PRINT PRODUCTION KNOWLEDGE (Critical for quality output)
+// ============================================================
+// - FULL BLEED: Ink/texture must go edge-to-edge (no paper sitting on background)
+// - NO MOCKUP BACKDROP: The AI must act like a scanner, not a photographer
+// - DECKLE EDGE TRAP: Cannot have visible torn edges AND full bleed simultaneously
+// - MATTE PAPER: Best for fake texture illusion - no glare conflicts with shadows
+// - THE GOLD PROBLEM: Digital gold prints as mustard on matte - use contrast/lighting for shine
+// - ASPECT RATIO: 4:5 portrait for 18x24 prints
+// - TEXT SIZE: 40-50% canvas width with 20% margin buffer from edges
+// - COLORS: Warm earth tones + cool dusty blues work well on matte paper
+
+// 15 prompts for AI generation (other 9 use user-provided images)
+// User-provided images: aff-002, aff-003, aff-004, aff-005, aff-007, aff-009, aff-012, aff-017, aff-024
 const AFFIRMATION_PROMPTS: Record<string, string> = {
-  "aff-001": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of rest"
+  "aff-001": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with warm cream handmade paper texture. NO background surface, NO borders, NO margins, NO mockup backdrop, NO visible paper edges.
 
-DESIGN STYLE: Soft flowing waves in muted cream and warm grey watercolor. Delicate fern fronds frame the edges. Typography is elegant script with flowing flourishes. The text flows diagonally from center-left. Background has handmade paper texture with subtle warm tones.
+TEXT EXACT AND LARGE: "I am worthy of rest"
+Text occupies 40-50% of canvas width, centered with generous 20% margin buffer from all edges. Elegant flowing script in deep warm brown (#3D2B1F). Text positioned center-left with flowing diagonal movement.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Premium gallery quality like a $1,000 art print. Matte finish aesthetic.`,
+DESIGN ELEMENTS: Soft indigo and sage watercolor wash at edges. Delicate fern frond silhouettes frame the composition. Gentle flowing waves in muted cream and warm grey. Handmade paper texture visible throughout.
 
-  "aff-002": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of peace"
+AESTHETIC: Premium gallery-quality art print worth $1,000. Matte finish optimized - warm earth tones that look velvety, not plastic. NO metallic gold (use warm amber with shadow/highlight contrast for any shine effect). Kinfolk magazine editorial calm.`,
 
-DESIGN STYLE: Ethereal blue-grey watercolor wash with luminous cream center. A soft glowing orb (like moonlight) sits behind the text. Delicate botanical silhouettes (leaves, branches) frame the glow. Typography is romantic flowing script with elegant swashes. Stacked vertically center-left.
+  "aff-006": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft dusty blue-grey gradient. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Premium matte gallery quality.`,
+TEXT EXACT AND LARGE: "My calm is my power"
+Text occupies 40-50% of canvas width, centered with generous 20% margin buffer. Steady modern serif in deep charcoal (#2C2C2C), perfectly centered and balanced. Clean, grounded typography.
 
-  "aff-003": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Growth is a journey, not a destination"
+DESIGN ELEMENTS: Soft blue-grey watercolor wash fading to warm cream center. Gentle flowing wave ribbons in muted tones. Soft botanical shadows frame edges. Elements flow around text without disruption.
 
-DESIGN STYLE: Warm cream parchment background with soft earthy watercolor tones at edges. Zen stepping stones winding through still water illustrated below text. Fern and leaf silhouettes frame the composition. Bold elegant serif typography, left-aligned in upper portion. Soft ripples in the water.
+AESTHETIC: Premium matte gallery print. Strength in stillness mood. Cool dusty blue palette with warm cream accents. Modern editorial minimalism.`,
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling the entire canvas. Like a $1,000 gallery print.`,
+  "aff-008": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with warm nude to soft mauve watercolor texture. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-  "aff-004": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I trust my journey"
+TEXT EXACT AND LARGE: "Today, I honor myself"
+Text occupies 40-50% of canvas width, positioned lower center, grounded. Nurturing serif typography in deep terracotta (#8B4513) with gentle weight.
 
-DESIGN STYLE: Soft warm cream with blush undertones, handmade paper texture with visible fibers. A winding abstract path/ribbon flows through the composition. Delicate fern fronds and small wildflowers scattered. Flowing italic script typography with romantic flourishes. Text centered and flowing horizontally.
+DESIGN ELEMENTS: Organic flowing waves and delicate botanicals curve protectively around text. Warm organic shapes embrace the composition. Soft watercolor texture with visible paper grain.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Just the artwork filling entire canvas. Premium matte quality.`,
+AESTHETIC: Self-loving energy. Premium matte quality. Warm blush and mauve tones. The design feels like a gentle embrace.`,
 
-  "aff-005": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am always enough"
+  "aff-010": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft buttercream yellow watercolor. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-DESIGN STYLE: Ultra-minimal. Warm cream (#F5F0E8) background with a single thin arch outline above the text. Soft sandy dune at bottom horizon. Modern editorial serif, bold and confident, stacked vertically. Dead center placement with vast negative space. The text IS the art.
+TEXT EXACT AND LARGE: "Joy is my natural state"
+Text occupies 40-50% of canvas width, center placement radiating outward energy. Cheerful serif in warm amber (#B8860B) with dancing baseline.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Modern zen aesthetic. Gallery quality.`,
+DESIGN ELEMENTS: Warm golden watercolor washes. Soft sun rays emanating outward from behind text. Delicate wildflower silhouettes scattered naturally. Joyful, uplifting scattered composition.
 
-  "aff-006": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My calm is my power"
+AESTHETIC: Celebrating natural happiness. Premium matte - warm amber that looks rich, not plastic. Uplifting energy radiating from center.`,
 
-DESIGN STYLE: Soft blue-grey watercolor wash fading to warm cream center. Gentle flowing waves/ribbons in muted tones. Soft botanical shadows frame edges. Steady modern serif typography, clean and grounded. Perfectly centered and balanced. Elements flow around text without disruption.
+  "aff-011": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft blush pink fading to warm cream. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte finish. Strength in stillness mood.`,
+TEXT EXACT AND LARGE: "I am safe in my body"
+Text occupies 40-50% of canvas width, center placement, grounded. Rounded serif typography in dusty rose (#BC8F8F), nurturing and protective.
 
-  "aff-007": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I receive what I desire"
+DESIGN ELEMENTS: Protective flowing curves and soft organic shapes. Grounding botanical elements at base. Elements create sense of safety and being held. Comforting wash texture throughout.
 
-DESIGN STYLE: Soft blush pink watercolor fading to warm cream. Flowing ribbon waves and delicate botanical sprigs flow downward toward text. Elegant serif with open letterforms. Text positioned in lower third, grounded yet reaching upward. Elements arriving like blessings.
+AESTHETIC: Embodied security mood. Premium matte quality. Soft blush and cream palette. The design feels like a protective embrace.`,
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
+  "aff-013": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft cloudy cream to pale blue-grey watercolor. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-  "aff-008": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Today, I honor myself"
+TEXT EXACT AND LARGE: "I am worthy of my dreams"
+Text occupies 40-50% of canvas width, center placement among soft cloud forms. Dreamy serif typography in soft indigo (#4B5D78), aspirational.
 
-DESIGN STYLE: Warm nude to soft mauve watercolor with organic texture. Flowing waves and delicate botanicals curve protectively around text. Nurturing serif typography with gentle weight. Lower center placement, grounded. Warm organic shapes embrace the composition.
+DESIGN ELEMENTS: Soft ethereal clouds and distant star suggestions. Gentle flowing elements float around text. Pale blue gradient fading to cream. Ethereal floating composition.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Self-loving energy. Premium quality.`,
+AESTHETIC: Dream permission aesthetic. Premium gallery quality. Cool dusty blue with warm cream balance. The design feels light and aspirational.`,
 
-  "aff-009": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I release what no longer serves"
+  "aff-014": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft sage green linen texture. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-DESIGN STYLE: Airy light cream with soft grey-beige flowing waves like morning mist. Delicate organic wave ribbons create diagonal movement. Whisper-light fern fronds and botanicals float freely. Light elegant serif with airy letter-spacing. Text center-left, floating peacefully. Liberation mood.
+TEXT EXACT AND LARGE: "I choose peace over perfection"
+Text occupies 40-50% of canvas width, off-center organic placement. Slightly imperfect hand-drawn serif feeling in deep forest green (#2F4F4F).
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte gallery print.`,
+DESIGN ELEMENTS: Organic dots and gentle wave patterns. Botanical suggestions scattered naturally. Deliberately imperfect, embracing organic flow. Subtle linen texture visible.
 
-  "aff-010": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Joy is my natural state"
+AESTHETIC: Acceptance and letting go mood. Premium matte quality. Sage green palette with natural imperfection. Wabi-sabi inspired editorial calm.`,
 
-DESIGN STYLE: Soft buttercream yellow with warm golden watercolor washes. Soft sun rays emanate outward. Delicate wildflowers scattered. Cheerful serif with dancing baseline. Center placement, radiating outward energy. Joyful scattered composition celebrating natural happiness.
+  "aff-015": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft gradient from warm amber to gentle sage. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Uplifting premium quality.`,
+TEXT EXACT AND LARGE: "I celebrate my progress"
+Text occupies 40-50% of canvas width, center placement with sense of motion. Evolving serif typography in rich amber (#CD853F) showing elegant transformation.
 
-  "aff-011": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am safe in my body"
+DESIGN ELEMENTS: Butterfly silhouette suggestions and blooming forms. Growth spirals and transformation elements. Evolution visible in flowing organic shapes. Warm to cool gradient transition.
 
-DESIGN STYLE: Soft blush pink fading to warm cream, comforting wash. Protective flowing curves and soft organic shapes. Grounding botanical elements. Rounded serif typography, nurturing and protective. Center placement, grounded. Elements create sense of safety and being held.
+AESTHETIC: Celebrating growth. Premium matte quality. Warm amber and sage palette. The design shows transformation in progress.`,
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Embodied security mood.`,
+  "aff-016": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with deep indigo fading to soft violet at edges. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-  "aff-012": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My voice matters"
+TEXT EXACT AND LARGE: "My intuition guides me"
+Text occupies 40-50% of canvas width, center placement emanating outward. Mystical serif typography in soft cream (#F5F5DC) with ethereal presence.
 
-DESIGN STYLE: Warm taupe-grey (#C5B8A8) background with layered flowing waves in cream, gold, and muted colors. Bold modern serif, powerful presence. Center-left bold statement positioning. Wave ribbons with fine line details suggest sound/movement. Geometric-organic hybrid.
+DESIGN ELEMENTS: Constellation dot suggestions and inner glow from center. Cosmic subtle elements. Radial composition with energy radiating from center. Deep indigo with violet edge glow.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Empowered expression. Premium gallery.`,
+AESTHETIC: Cosmic connection aesthetic. Inner knowing mood. Premium matte - deep indigo that looks velvety. Light text on dark for dramatic contrast.`,
 
-  "aff-013": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am worthy of my dreams"
+  "aff-018": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with warm parchment cream with subtle texture. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-DESIGN STYLE: Soft cloudy cream to pale blue-grey watercolor. Soft ethereal clouds and distant stars. Gentle flowing elements float around text. Dreamy serif typography, aspirational. Center placement among soft cloud forms. Ethereal floating composition.
+TEXT EXACT AND LARGE: "I give myself permission to feel"
+Text occupies 40-50% of canvas width, classic centered layout. Literary serif typography in warm sepia (#5D4E37) like an elegant book title.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Dream permission aesthetic.`,
+DESIGN ELEMENTS: Subtle page-like organic elements. Gentle botanical accents at corners. Permission and emotional openness mood. Warm parchment texture visible.
 
-  "aff-014": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I choose peace over perfection"
+AESTHETIC: Gentle and inviting. Premium gallery quality. Warm cream and sepia tones. The design feels like opening a treasured book.`,
 
-DESIGN STYLE: Soft sage green with subtle linen texture. Organic dots and gentle wave patterns. Botanical suggestions scattered naturally. Slightly imperfect hand-drawn serif feeling. Off-center organic placement. Deliberately imperfect, embracing organic flow.
+  "aff-019": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with rich honey gold gradient to warm amber. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Acceptance and letting go mood.`,
+TEXT EXACT AND LARGE: "I am creating the life I desire"
+Text occupies 40-50% of canvas width, center-left placement, grounded. Sophisticated serif in deep brown (#4A3728), confident.
 
-  "aff-015": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I celebrate my progress"
+DESIGN ELEMENTS: Warm light rays streaming from upper area. Organic flowing shapes converging toward center. Rich amber tones with contrast for shine effect (not metallic gold). Creative power energy.
 
-DESIGN STYLE: Soft gradient from warm amber to gentle sage. Butterfly suggestions and blooming forms. Growth spirals and transformation elements. Evolving serif typography showing elegant transformation. Center placement with sense of motion. Evolution visible.
+AESTHETIC: Manifestation energy. Premium matte - honey gold using shadow/highlight for depth, not metallic sheen. Warm and abundant.`,
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Celebrating growth. Premium quality.`,
+  "aff-020": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft gradient shifting warm amber to cool sage. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-  "aff-016": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My intuition guides me"
+TEXT EXACT AND LARGE: "Today is full of possibility"
+Text occupies 40-50% of canvas width, center placement with sense of motion. Flowing transitional serif typography in warm brown (#6B4423).
 
-DESIGN STYLE: Deep indigo fading to soft violet at edges. Constellation dots and inner glow. Cosmic subtle elements. Mystical serif with ethereal presence. Center placement, emanating outward. Radial composition with energy from center. Inner knowing mood.
+DESIGN ELEMENTS: Flowing leaves in graceful transition. Dynamic flow showing graceful movement. Warm to cool gradient transition. Possibility and openness mood.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Cosmic connection aesthetic.`,
+AESTHETIC: Premium matte quality. Amber to sage transition. The design shows movement from present to future possibilities.`,
 
-  "aff-017": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am open to miracles"
+  "aff-021": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with cool grey-blue watercolor texture. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-DESIGN STYLE: Dawn sky gradient—soft pink to blue to warm gold. Sunrise rays and seeds in flight. New growth emerging. Optimistic serif typography, forward-leaning. Upper area placement looking to horizon. Expansive openness ahead.
+TEXT EXACT AND LARGE: "I am allowed to change my mind"
+Text occupies 40-50% of canvas width, right side placement with structured stack. Clear modern serif in deep slate (#4A5568), structured but soft.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. New beginnings energy.`,
+DESIGN ELEMENTS: Clean flowing lines and subtle doorway suggestion. Strong but soft structure. Cool grey-blue palette with clean lines. Permission and flexibility mood.
 
-  "aff-018": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I give myself permission to feel"
+AESTHETIC: Gallery quality. Cool dusty blue palette. The design feels structured yet flexible - permission to pivot.`,
 
-DESIGN STYLE: Warm parchment cream with subtle texture. Subtle page suggestions and gentle organic elements. Literary serif like elegant book title. Classic centered layout. Permission and emotional openness mood. Gentle and inviting.
+  "aff-022": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with soft sepia tones fading to warm neutral. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Gallery quality.`,
+TEXT EXACT AND LARGE: "My rest is productive"
+Text occupies 40-50% of canvas width, lower portion placement, grounded. Timeless serif in warm brown (#5D4E37) with restful weight.
 
-  "aff-019": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am creating the life I desire"
+DESIGN ELEMENTS: Soft botanical shadows grounding the composition. Peaceful elements. Restful composition that values rest. Sepia and warm neutral tones.
 
-DESIGN STYLE: Rich honey gold gradient to warm amber. Warm light rays streaming. Organic flowing shapes converging toward center. Sophisticated serif, confident. Center-left placement, grounded. Creative power and manifestation energy.
+AESTHETIC: Peaceful productivity mood. Premium matte quality. Warm sepia palette. The design feels restful yet purposeful.`,
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
+  "aff-023": `DIGITAL ART SOURCE FILE - FULL BLEED TEXTURE. 4:5 portrait aspect ratio.
+The entire canvas is filled edge-to-edge with deep rose to soft blush gradient, petal-like quality. NO background surface, NO borders, NO margins, NO mockup backdrop.
 
-  "aff-020": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "Today is full of possibility"
+TEXT EXACT AND LARGE: "I attract what I embody"
+Text occupies 40-50% of canvas width, heart-centered placement radiating outward. Romantic serif in deep rose (#8B3A5D) with loving curves.
 
-DESIGN STYLE: Soft gradient shifting warm amber to cool sage. Flowing leaves in graceful transition. Flowing transitional serif typography. Center placement with sense of motion. Dynamic flow showing graceful movement. Possibility and openness.
+DESIGN ELEMENTS: Soft petal suggestions and warm organic glow. Self-love and magnetic presence. Rose gradient with natural petal quality. Radiating from center.
 
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte quality.`,
-
-  "aff-021": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am allowed to change my mind"
-
-DESIGN STYLE: Cool grey-blue with soft watercolor texture. Clean flowing lines and subtle doorway suggestion. Clear modern serif, structured but soft. Right side placement with structured stack. Strong but soft structure. Permission and flexibility.
-
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Gallery quality.`,
-
-  "aff-022": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "My rest is productive"
-
-DESIGN STYLE: Soft sepia tones fading to warm neutral. Soft botanical shadows. Peaceful elements grounding the composition. Timeless serif with restful weight. Lower portion placement, grounded. Restful composition valuing rest.
-
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Peaceful productivity mood.`,
-
-  "aff-023": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I attract what I embody"
-
-DESIGN STYLE: Deep rose to soft blush gradient, petal-like quality. Soft petal suggestions and warm organic glow. Romantic serif with loving curves. Heart-centered placement radiating outward. Self-love and magnetic presence.
-
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium gallery aesthetic.`,
-
-  "aff-024": `Create a full-canvas premium affirmation art print. TEXT MUST BE LARGE AND EXACT: "I am both the storm and the calm"
-
-DESIGN STYLE: Soft gradient warm gold to cream with subtle movement. Flowing waves suggesting both energy and stillness. Balanced serif showing dual nature. Center placement in perfect balance. Yin-yang flow embracing complexity. Wholeness.
-
-CRITICAL: Edge-to-edge design. NO paper edges, NO frames, NO borders. Premium matte gallery quality.`
+AESTHETIC: Premium gallery aesthetic. Deep rose to blush palette. The design embodies self-love and attraction energy.`
 };
 
 // Convert base64 to Uint8Array for upload
@@ -174,6 +192,20 @@ serve(async (req) => {
     const { affirmationId, title } = await req.json();
     
     console.log(`Generating digital design for: ${title} (${affirmationId})`);
+
+    // Check if this affirmation has a user-provided image
+    const userProvidedIds = ["aff-002", "aff-003", "aff-004", "aff-005", "aff-007", "aff-009", "aff-012", "aff-017", "aff-024"];
+    if (userProvidedIds.includes(affirmationId)) {
+      console.log(`Skipping ${affirmationId} - uses user-provided image`);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: `${affirmationId} uses a user-provided image and should not be regenerated.`,
+          skipped: true
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Get prompt for this affirmation
     const prompt = AFFIRMATION_PROMPTS[affirmationId];

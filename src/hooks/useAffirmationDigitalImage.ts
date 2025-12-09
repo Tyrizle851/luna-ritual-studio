@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { hasLocalDigitalImage, getLocalDigitalImage } from "@/lib/localDigitalImages";
 
 interface DigitalImageResult {
   imageUrl: string | null;
@@ -19,7 +20,16 @@ export function useAffirmationDigitalImage(productId: string | null): DigitalIma
       return;
     }
 
-    // Check cache first
+    // Check for local user-provided image first (highest priority)
+    if (hasLocalDigitalImage(productId)) {
+      const localImage = getLocalDigitalImage(productId);
+      if (localImage) {
+        setImageUrl(localImage);
+        return;
+      }
+    }
+
+    // Check cache second
     if (digitalImageCache.has(productId)) {
       setImageUrl(digitalImageCache.get(productId)!);
       return;
