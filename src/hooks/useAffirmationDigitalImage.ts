@@ -19,7 +19,13 @@ export function clearDigitalImageCache() {
 }
 
 export function useAffirmationDigitalImage(productId: string | null): DigitalImageResult {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  // Initialize synchronously with local image if available - prevents flash
+  const [imageUrl, setImageUrl] = useState<string | null>(() => {
+    if (productId && hasLocalDigitalImage(productId)) {
+      return getLocalDigitalImage(productId);
+    }
+    return null;
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,58 +38,17 @@ export function useAffirmationDigitalImage(productId: string | null): DigitalIma
     if (hasLocalDigitalImage(productId)) {
       const localImage = getLocalDigitalImage(productId);
       if (localImage) {
-        // Immediately set local image - no async needed
+        // Set local image immediately
         setImageUrl(localImage);
         setIsLoading(false);
         return;
       }
     }
 
-    // PRIORITY 2: Check Supabase cache for non-local images
-    const cacheKey = `${productId}-${cacheBuster}`;
-    if (digitalImageCache.has(cacheKey)) {
-      setImageUrl(digitalImageCache.get(cacheKey)!);
-      return;
-    }
+    // PRIORITY 2: No Supabase fetch needed for affirmations - all have local images
+    // If we reach here, there's no image available
+    setImageUrl(null);
 
-    const fetchDigitalImage = async () => {
-      setIsLoading(true);
-      try {
-        // List files in the digital folder matching this product ID
-        const { data: files, error } = await supabase.storage
-          .from("product-images")
-          .list("affirmations/digital", {
-            search: productId,
-            sortBy: { column: "created_at", order: "desc" },
-            limit: 1,
-          });
-
-        if (error || !files || files.length === 0) {
-          setImageUrl(null);
-          return;
-        }
-
-        // Get the public URL for the most recent file
-        const fileName = files[0].name;
-        const { data: urlData } = supabase.storage
-          .from("product-images")
-          .getPublicUrl(`affirmations/digital/${fileName}`);
-
-        if (urlData?.publicUrl) {
-          // Add cache buster to URL to prevent browser caching
-          const urlWithBuster = `${urlData.publicUrl}?v=${cacheBuster}`;
-          digitalImageCache.set(cacheKey, urlWithBuster);
-          setImageUrl(urlWithBuster);
-        }
-      } catch (err) {
-        console.error("Error fetching affirmation digital image:", err);
-        setImageUrl(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchDigitalImage();
   }, [productId]);
 
   return { imageUrl, isLoading };

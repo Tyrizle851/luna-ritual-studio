@@ -1,27 +1,31 @@
-import affirmationRest from "@/assets/affirmation-rest.jpg";
-import affirmationJoy from "@/assets/affirmation-joy.jpg";
-import affirmationAbundance from "@/assets/affirmation-abundance.jpg";
-import affirmationTrust from "@/assets/affirmation-trust.jpg";
-import affirmationEnough from "@/assets/affirmation-enough.jpg";
-import affirmationCalm from "@/assets/affirmation-calm.jpg";
-import affirmationReceive from "@/assets/affirmation-receive.jpg";
-import affirmationHonor from "@/assets/affirmation-honor.jpg";
-import affirmationRelease from "@/assets/affirmation-release.jpg";
-import affirmationNaturalJoy from "@/assets/affirmation-natural-joy.jpg";
-import affirmationSafe from "@/assets/affirmation-safe.jpg";
-import affirmationVoice from "@/assets/affirmation-voice.jpg";
-import affirmationDreams from "@/assets/affirmation-dreams.jpg";
-import affirmationPeace from "@/assets/affirmation-peace.jpg";
-import affirmationProgress from "@/assets/affirmation-progress.jpg";
-import affirmationIntuition from "@/assets/affirmation-intuition.jpg";
-import affirmationMiracles from "@/assets/affirmation-miracles.jpg";
-import affirmationFeel from "@/assets/affirmation-feel.jpg";
-import affirmationCreating from "@/assets/affirmation-creating.jpg";
-import affirmationPossibility from "@/assets/affirmation-possibility.jpg";
-import affirmationChange from "@/assets/affirmation-change.jpg";
-import affirmationProductiveRest from "@/assets/affirmation-productive-rest.jpg";
-import affirmationAttract from "@/assets/affirmation-attract.jpg";
-import affirmationDuality from "@/assets/affirmation-duality.jpg";
+// Import all affirmation images from the curated PNG files
+import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+
+// Get images directly from the local digital images map
+const affirmationRest = LOCAL_DIGITAL_IMAGES["aff-001"];
+const affirmationJoy = LOCAL_DIGITAL_IMAGES["aff-002"];
+const affirmationAbundance = LOCAL_DIGITAL_IMAGES["aff-003"];
+const affirmationTrust = LOCAL_DIGITAL_IMAGES["aff-004"];
+const affirmationEnough = LOCAL_DIGITAL_IMAGES["aff-005"];
+const affirmationCalm = LOCAL_DIGITAL_IMAGES["aff-006"];
+const affirmationReceive = LOCAL_DIGITAL_IMAGES["aff-007"];
+const affirmationHonor = LOCAL_DIGITAL_IMAGES["aff-008"];
+const affirmationRelease = LOCAL_DIGITAL_IMAGES["aff-009"];
+const affirmationNaturalJoy = LOCAL_DIGITAL_IMAGES["aff-010"];
+const affirmationSafe = LOCAL_DIGITAL_IMAGES["aff-011"];
+const affirmationVoice = LOCAL_DIGITAL_IMAGES["aff-012"];
+const affirmationDreams = LOCAL_DIGITAL_IMAGES["aff-013"];
+const affirmationPeace = LOCAL_DIGITAL_IMAGES["aff-014"];
+const affirmationProgress = LOCAL_DIGITAL_IMAGES["aff-015"];
+const affirmationIntuition = LOCAL_DIGITAL_IMAGES["aff-016"];
+const affirmationMiracles = LOCAL_DIGITAL_IMAGES["aff-017"];
+const affirmationFeel = LOCAL_DIGITAL_IMAGES["aff-018"];
+const affirmationCreating = LOCAL_DIGITAL_IMAGES["aff-019"];
+const affirmationPossibility = LOCAL_DIGITAL_IMAGES["aff-020"];
+const affirmationChange = LOCAL_DIGITAL_IMAGES["aff-021"];
+const affirmationProductiveRest = LOCAL_DIGITAL_IMAGES["aff-022"];
+const affirmationAttract = LOCAL_DIGITAL_IMAGES["aff-023"];
+const affirmationDuality = LOCAL_DIGITAL_IMAGES["aff-024"];
 
 // Format pricing constants
 export const AFFIRMATION_FORMAT_PRICING = {
