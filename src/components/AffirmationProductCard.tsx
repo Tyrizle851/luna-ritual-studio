@@ -43,7 +43,8 @@ export const AffirmationProductCard = ({
           <img
             src={displayImage}
             alt={affirmation.title}
-            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 scale-[1.06]"
+            style={{ clipPath: 'inset(3%)' }}
           />
         )}
       </div>
