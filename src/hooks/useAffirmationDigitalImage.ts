@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { hasLocalDigitalImage, getLocalDigitalImage, LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
 
 interface DigitalImageResult {
@@ -11,27 +10,10 @@ export function clearDigitalImageCache() {
 }
 
 export function useAffirmationDigitalImage(productId: string | null): DigitalImageResult {
-  // Initialize synchronously with local image - prevents flash
-  const [imageUrl, setImageUrl] = useState<string | null>(() => {
-    if (productId && hasLocalDigitalImage(productId)) {
-      return getLocalDigitalImage(productId);
-    }
-    return null;
-  });
-
-  useEffect(() => {
-    if (!productId) {
-      setImageUrl(null);
-      return;
-    }
-
-    // All affirmations have local images - set immediately
-    if (hasLocalDigitalImage(productId)) {
-      setImageUrl(getLocalDigitalImage(productId));
-    } else {
-      setImageUrl(null);
-    }
-  }, [productId]);
+  // Synchronous lookup - no state or effects needed since all images are local
+  const imageUrl = productId && hasLocalDigitalImage(productId) 
+    ? getLocalDigitalImage(productId) 
+    : null;
 
   return { imageUrl, isLoading: false };
 }
