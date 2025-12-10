@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/logo.png";
-import affirmationJoy from "@/assets/affirmation-joy.jpg";
+import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+
+const affirmationJoy = LOCAL_DIGITAL_IMAGES["aff-002"];
 
 interface SubscriptionPopupProps {
   open: boolean;
