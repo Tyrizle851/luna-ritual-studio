@@ -12,8 +12,9 @@ import affirmationDigitalAff008 from "@/assets/affirmation-digital-aff-008.png";
 import affirmationDigitalAff009 from "@/assets/affirmation-digital-aff-009.png";
 import affirmationDigitalAff010 from "@/assets/affirmation-digital-aff-010.png";
 import affirmationDigitalAff011 from "@/assets/affirmation-digital-aff-011.png";
-// aff-012 pending - needs re-upload with simple filename
+import affirmationDigitalAff012 from "@/assets/affirmation-digital-aff-012.png";
 import affirmationDigitalAff013 from "@/assets/affirmation-digital-aff-013.png";
+import affirmationDigitalAff014 from "@/assets/affirmation-digital-aff-014.png";
 import affirmationDigitalAff015 from "@/assets/affirmation-digital-aff-015.png";
 import affirmationDigitalAff016 from "@/assets/affirmation-digital-aff-016.png";
 import affirmationDigitalAff017 from "@/assets/affirmation-digital-aff-017.png";
@@ -46,8 +47,9 @@ export const LOCAL_DIGITAL_IMAGES: Record<string, string> = {
   "aff-009": affirmationDigitalAff009, // I release what no longer serves
   "aff-010": affirmationDigitalAff010, // Joy is my natural state
   "aff-011": affirmationDigitalAff011, // I am safe in my body
-  // "aff-012" pending - needs re-upload with simple filename (My voice matters)
+  "aff-012": affirmationDigitalAff012, // My voice matters
   "aff-013": affirmationDigitalAff013, // I am worthy of the life I desire
+  "aff-014": affirmationDigitalAff014, // I choose peace over perfection
   "aff-015": affirmationDigitalAff015, // I celebrate every small win
   "aff-016": affirmationDigitalAff016, // My intuition guides me
   "aff-017": affirmationDigitalAff017, // I am open to miracles
@@ -73,8 +75,9 @@ export const USER_PROVIDED_IDS = [
   "aff-009", // I release what no longer serves
   "aff-010", // Joy is my natural state
   "aff-011", // I am safe in my body
-  // aff-012 pending re-upload (My voice matters)
+  "aff-012", // My voice matters
   "aff-013", // I am worthy of the life I desire
+  "aff-014", // I choose peace over perfection
   "aff-015", // I celebrate every small win
   "aff-016", // My intuition guides me
   "aff-017", // I am open to miracles
