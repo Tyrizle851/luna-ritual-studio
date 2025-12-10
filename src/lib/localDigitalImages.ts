@@ -3,7 +3,7 @@
 
 import affirmationDigitalAff001 from "@/assets/affirmation-digital-aff-001.png";
 import affirmationDigitalAff002 from "@/assets/affirmation-digital-aff-002.png";
-// aff-003 pending - filename has special characters
+import affirmationDigitalAff003 from "@/assets/affirmation-digital-aff-003.png";
 import affirmationDigitalAff004 from "@/assets/affirmation-digital-aff-004.png";
 import affirmationDigitalAff005 from "@/assets/affirmation-digital-aff-005.png";
 import affirmationDigitalAff006 from "@/assets/affirmation-digital-aff-006.png";
@@ -36,7 +36,7 @@ import affirmationDigitalAff024 from "@/assets/affirmation-digital-aff-024.png";
 export const LOCAL_DIGITAL_IMAGES: Record<string, string> = {
   "aff-001": affirmationDigitalAff001, // I am worthy of rest
   "aff-002": affirmationDigitalAff002, // I am worthy of peace
-  // "aff-003" pending - needs re-upload with simple filename
+  "aff-003": affirmationDigitalAff003, // Growth is a journey, not a destination
   "aff-004": affirmationDigitalAff004, // I trust my journey
   "aff-005": affirmationDigitalAff005, // I am always enough
   "aff-006": affirmationDigitalAff006, // My calmness is my power
@@ -62,7 +62,7 @@ export const LOCAL_DIGITAL_IMAGES: Record<string, string> = {
 export const USER_PROVIDED_IDS = [
   "aff-001", // I am worthy of rest
   "aff-002", // I am worthy of peace
-  // aff-003 pending re-upload
+  "aff-003", // Growth is a journey, not a destination
   "aff-004", // I trust my journey
   "aff-005", // I am always enough
   "aff-006", // My calmness is my power
