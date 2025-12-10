@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { DisplayVariation } from "@/data/affirmations";
+import { hasLocalDigitalImage, getLocalDigitalImage } from "@/lib/localDigitalImages";
 
 interface DisplayImageResult {
   imageUrl: string | null;
@@ -8,11 +9,20 @@ interface DisplayImageResult {
   variationType: DisplayVariation | null;
 }
 
-// Cache for display images to avoid refetching
+// Cache for display images to avoid refetching (only for Supabase images)
 const displayImageCache = new Map<string, { url: string; variation: DisplayVariation }>();
 
 // Random variation assignment per session (stable during page view)
 const sessionVariations = new Map<string, DisplayVariation>();
+
+// Cache buster to force refresh
+let cacheBuster = Date.now();
+
+export function clearDisplayImageCache() {
+  displayImageCache.clear();
+  sessionVariations.clear();
+  cacheBuster = Date.now();
+}
 
 function getSessionVariation(productId: string): DisplayVariation {
   if (!sessionVariations.has(productId)) {
@@ -41,8 +51,20 @@ export function useAffirmationDisplayImage(productId: string | null): DisplayIma
       return;
     }
 
-    // Check cache first
-    const cacheKey = `${productId}-${targetVariation}`;
+    // PRIORITY 1: Check for local user-provided image FIRST
+    // Local images always win - they're the "digital" variation for display
+    if (hasLocalDigitalImage(productId)) {
+      const localImage = getLocalDigitalImage(productId);
+      if (localImage) {
+        setImageUrl(localImage);
+        setVariationType("canvas"); // Display as canvas variation for local images
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    // PRIORITY 2: Check Supabase cache
+    const cacheKey = `${productId}-${targetVariation}-${cacheBuster}`;
     if (displayImageCache.has(cacheKey)) {
       const cached = displayImageCache.get(cacheKey)!;
       setImageUrl(cached.url);
@@ -74,8 +96,9 @@ export function useAffirmationDisplayImage(productId: string | null): DisplayIma
 
           if (fallbackData) {
             const variation = fallbackData.variation_type as DisplayVariation;
-            displayImageCache.set(cacheKey, { url: fallbackData.image_url, variation });
-            setImageUrl(fallbackData.image_url);
+            const urlWithBuster = `${fallbackData.image_url}?v=${cacheBuster}`;
+            displayImageCache.set(cacheKey, { url: urlWithBuster, variation });
+            setImageUrl(urlWithBuster);
             setVariationType(variation);
           } else {
             setImageUrl(null);
@@ -83,8 +106,9 @@ export function useAffirmationDisplayImage(productId: string | null): DisplayIma
           }
         } else {
           const variation = data.variation_type as DisplayVariation;
-          displayImageCache.set(cacheKey, { url: data.image_url, variation });
-          setImageUrl(data.image_url);
+          const urlWithBuster = `${data.image_url}?v=${cacheBuster}`;
+          displayImageCache.set(cacheKey, { url: urlWithBuster, variation });
+          setImageUrl(urlWithBuster);
           setVariationType(variation);
         }
       } catch (err) {

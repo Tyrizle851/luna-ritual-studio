@@ -7,8 +7,16 @@ interface DigitalImageResult {
   isLoading: boolean;
 }
 
-// Cache for digital images
+// Cache for digital images from Supabase ONLY (not local images)
 const digitalImageCache = new Map<string, string>();
+
+// Cache buster to force refresh
+let cacheBuster = Date.now();
+
+export function clearDigitalImageCache() {
+  digitalImageCache.clear();
+  cacheBuster = Date.now();
+}
 
 export function useAffirmationDigitalImage(productId: string | null): DigitalImageResult {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -20,18 +28,21 @@ export function useAffirmationDigitalImage(productId: string | null): DigitalIma
       return;
     }
 
-    // Check for local user-provided image first (highest priority)
+    // PRIORITY 1: Check for local user-provided image FIRST (always wins)
     if (hasLocalDigitalImage(productId)) {
       const localImage = getLocalDigitalImage(productId);
       if (localImage) {
+        // Immediately set local image - no async needed
         setImageUrl(localImage);
+        setIsLoading(false);
         return;
       }
     }
 
-    // Check cache second
-    if (digitalImageCache.has(productId)) {
-      setImageUrl(digitalImageCache.get(productId)!);
+    // PRIORITY 2: Check Supabase cache for non-local images
+    const cacheKey = `${productId}-${cacheBuster}`;
+    if (digitalImageCache.has(cacheKey)) {
+      setImageUrl(digitalImageCache.get(cacheKey)!);
       return;
     }
 
@@ -59,8 +70,10 @@ export function useAffirmationDigitalImage(productId: string | null): DigitalIma
           .getPublicUrl(`affirmations/digital/${fileName}`);
 
         if (urlData?.publicUrl) {
-          digitalImageCache.set(productId, urlData.publicUrl);
-          setImageUrl(urlData.publicUrl);
+          // Add cache buster to URL to prevent browser caching
+          const urlWithBuster = `${urlData.publicUrl}?v=${cacheBuster}`;
+          digitalImageCache.set(cacheKey, urlWithBuster);
+          setImageUrl(urlWithBuster);
         }
       } catch (err) {
         console.error("Error fetching affirmation digital image:", err);
@@ -76,7 +89,7 @@ export function useAffirmationDigitalImage(productId: string | null): DigitalIma
   return { imageUrl, isLoading };
 }
 
-// Bulk fetch for performance - get all digital images at once
+// Bulk fetch for performance - get all digital images at once (only for non-local images)
 export async function fetchAllDigitalImages(): Promise<Map<string, string>> {
   const cache = new Map<string, string>();
   
@@ -97,6 +110,9 @@ export async function fetchAllDigitalImages(): Promise<Map<string, string>> {
       const match = file.name.match(/^(aff-\d{3})-/);
       if (match) {
         const productId = match[1];
+        // Skip if we have a local image for this product
+        if (hasLocalDigitalImage(productId)) continue;
+        
         if (!latestByProduct.has(productId)) {
           latestByProduct.set(productId, file.name);
         }
@@ -110,8 +126,9 @@ export async function fetchAllDigitalImages(): Promise<Map<string, string>> {
         .getPublicUrl(`affirmations/digital/${fileName}`);
 
       if (urlData?.publicUrl) {
-        cache.set(productId, urlData.publicUrl);
-        digitalImageCache.set(productId, urlData.publicUrl);
+        const urlWithBuster = `${urlData.publicUrl}?v=${cacheBuster}`;
+        cache.set(productId, urlWithBuster);
+        digitalImageCache.set(`${productId}-${cacheBuster}`, urlWithBuster);
       }
     }
   } catch (err) {
