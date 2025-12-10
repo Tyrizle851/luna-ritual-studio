@@ -10,8 +10,10 @@ import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon, Users } fr
 import { PageTransition } from "@/components/PageTransition";
 import { affirmations } from "@/data/affirmations";
 
-import morningRitualImg from "@/assets/affirmation-peace.jpg";
-import powerHourImg from "@/assets/affirmation-progress.jpg";
+import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+
+const morningRitualImg = LOCAL_DIGITAL_IMAGES["aff-014"];
+const powerHourImg = LOCAL_DIGITAL_IMAGES["aff-015"];
 
 // Get featured affirmations from the data source (first 4 featured items)
 const featuredAffirmations = affirmations

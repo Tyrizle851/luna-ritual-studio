@@ -10,10 +10,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown, Wand2, Shield, Award, Zap } from "lucide-react";
-import morningRitualImg from "@/assets/affirmation-peace.jpg";
-import powerHourImg from "@/assets/affirmation-progress.jpg";
-import gratitudeGardenImg from "@/assets/affirmation-joy.jpg";
-import focusFlowImg from "@/assets/affirmation-trust.jpg";
+import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+
+const morningRitualImg = LOCAL_DIGITAL_IMAGES["aff-014"];
+const powerHourImg = LOCAL_DIGITAL_IMAGES["aff-015"];
+const gratitudeGardenImg = LOCAL_DIGITAL_IMAGES["aff-002"];
+const focusFlowImg = LOCAL_DIGITAL_IMAGES["aff-004"];
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
