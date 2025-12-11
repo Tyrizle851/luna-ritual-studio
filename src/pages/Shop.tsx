@@ -484,6 +484,9 @@ const Shop = () => {
                             <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
+                              <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                                {product.rating >= 4.5 ? 'Top Rated' : product.rating >= 4.0 ? 'Popular' : 'Verified'}
+                              </span>
                               {product.reviewCount && (
                                 <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
                               )}
@@ -504,13 +507,17 @@ const Shop = () => {
 
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                             <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                              {product.originalPrice && (
+                              {product.originalPrice ? (
                                 <>
                                   <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${product.originalPrice}</span>
                                   <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                     -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                   </span>
                                 </>
+                              ) : (
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                                  Great Deal
+                                </span>
                               )}
                               <span className="text-sm sm:text-base font-semibold text-text-primary">${product.price}</span>
                             </div>
@@ -588,6 +595,9 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
+                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                              {candle.rating >= 4.5 ? 'Top Rated' : candle.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
                             {candle.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
                             )}
@@ -608,13 +618,17 @@ const Shop = () => {
 
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                           <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                            {candle.originalPrice && (
+                            {candle.originalPrice ? (
                               <>
                                 <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${candle.originalPrice}</span>
                                 <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
                                 </span>
                               </>
+                            ) : (
+                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                                Great Deal
+                              </span>
                             )}
                             <span className="text-sm sm:text-base font-semibold text-text-primary">${candle.price}</span>
                           </div>
@@ -692,6 +706,9 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
+                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                              {supplement.rating >= 4.5 ? 'Top Rated' : supplement.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
                             {supplement.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
                             )}
@@ -713,13 +730,17 @@ const Shop = () => {
 
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                           <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                            {supplement.originalPrice && (
+                            {supplement.originalPrice ? (
                               <>
                                 <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${supplement.originalPrice}</span>
                                 <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
                                 </span>
                               </>
+                            ) : (
+                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                                Great Deal
+                              </span>
                             )}
                             <span className="text-sm sm:text-base font-semibold text-text-primary">${supplement.price}</span>
                           </div>
@@ -840,6 +861,9 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{book.rating}</span>
+                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                              {book.rating >= 4.5 ? 'Top Rated' : book.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
                             {book.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({book.reviewCount.toLocaleString()})</span>
                             )}
@@ -860,13 +884,17 @@ const Shop = () => {
 
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                           <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                            {book.originalPrice && (
+                            {book.originalPrice ? (
                               <>
                                 <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
                                 <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
                                 </span>
                               </>
+                            ) : (
+                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                                Great Deal
+                              </span>
                             )}
                             <span className="text-sm sm:text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
                           </div>

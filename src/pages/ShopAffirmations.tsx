@@ -148,14 +148,17 @@ const ShopAffirmations = () => {
                   />
                 </div>
                 <div className="p-2 sm:p-3 lg:p-4">
-                  <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2">
+                  <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2 flex-wrap items-center">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-gold text-gold" />
                     ))}
                     <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
                       ({affirmation.rating || 4.9})
-                      {affirmation.reviewCount && <span className="hidden sm:inline"> · {(affirmation.reviewCount / 1000).toFixed(1)}K reviews</span>}
                     </span>
+                    <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                      {(affirmation.rating || 4.9) >= 4.5 ? 'Top Rated' : (affirmation.rating || 4.9) >= 4.0 ? 'Popular' : 'Verified'}
+                    </span>
+                    {affirmation.reviewCount && <span className="hidden sm:inline text-[10px] sm:text-xs text-text-muted"> · {(affirmation.reviewCount / 1000).toFixed(1)}K reviews</span>}
                   </div>
                   <h3 className="font-display text-sm sm:text-lg lg:text-xl mb-1 sm:mb-2 line-clamp-2">{affirmation.title}</h3>
                   <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{affirmation.description}</p>
@@ -175,15 +178,19 @@ const ShopAffirmations = () => {
 
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                     <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                      {affirmation.originalPrice && (
-                        <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
-                      )}
-                      <span className="text-sm sm:text-base font-semibold">${affirmation.price}</span>
-                      {affirmation.originalPrice && (
-                        <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded">
-                          Save ${affirmation.originalPrice - affirmation.price}
+                      {affirmation.originalPrice ? (
+                        <>
+                          <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                          <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded">
+                            Save ${affirmation.originalPrice - affirmation.price}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                          Great Deal
                         </span>
                       )}
+                      <span className="text-sm sm:text-base font-semibold">${affirmation.price}</span>
                     </div>
                     <div className="flex gap-1 sm:gap-2">
                       <Button

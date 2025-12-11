@@ -55,13 +55,16 @@ export const AffirmationProductCard = ({
         <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{affirmation.title}</h3>
 
         {affirmation.rating && (
-          <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+          <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
             <div className="flex items-center gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
               ))}
             </div>
             <span className="text-[10px] sm:text-xs font-medium text-text-primary">{affirmation.rating}</span>
+            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+              {affirmation.rating >= 4.5 ? 'Top Rated' : affirmation.rating >= 4.0 ? 'Popular' : 'Verified'}
+            </span>
             {affirmation.reviewCount && (
               <span className="text-[10px] sm:text-xs text-text-muted hidden sm:inline">
                 ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount})
