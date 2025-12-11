@@ -208,28 +208,16 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <div className="flex items-center gap-2">
-                  {featuredFashion.originalPrice && (
-                    <>
-                      <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                        -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
-                      </span>
-                    </>
-                  )}
-                  <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
-                </div>
-                
+              <div className="card-footer">
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  variant="solid"
+                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
                   </a>
                 </Button>
               </div>
@@ -270,18 +258,16 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
-                
+              <div className="card-footer">
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  variant="solid"
+                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
                   </a>
                 </Button>
               </div>
@@ -327,28 +313,16 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <div className="flex items-center gap-2">
-                  {featuredBook.originalPrice && (
-                    <>
-                      <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
-                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                        -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
-                      </span>
-                    </>
-                  )}
-                  <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
-                </div>
-                
+              <div className="card-footer">
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  variant="solid"
+                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
                   </a>
                 </Button>
               </div>

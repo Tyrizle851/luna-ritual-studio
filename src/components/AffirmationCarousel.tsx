@@ -86,14 +86,11 @@ const CarouselCard = ({
           </div>
         )}
         
-        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm">${affirmation.price.toFixed(2)}</span>
-          </div>
+        <div className="card-footer">
           <Button 
             size="sm" 
-            variant="outline" 
-            className="border-clay text-clay hover:bg-clay/10 text-xs px-2"
+            variant="solid" 
+            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200 text-sm"
             onClick={onCardClick}
           >
             View Options

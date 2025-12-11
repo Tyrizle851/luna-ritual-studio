@@ -86,17 +86,11 @@ export const AffirmationProductCard = ({
           </div>
         )}
         
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-border/50 gap-3">
-          <div className="flex flex-col">
-            <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
-            <span className="text-[10px] text-text-muted">
-              Digital Download
-            </span>
-          </div>
+        <div className="card-footer">
           <Button
             size="sm"
-            variant="outline"
-            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full sm:w-auto h-11"
+            variant="solid"
+            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
             onClick={onAddToCart}
           >
             View Options

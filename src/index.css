@@ -183,19 +183,23 @@ All colors MUST be HSL.
   
   /* Compact card body for denser mobile layouts */
   .card-body {
-    @apply p-2 sm:p-4;
+    @apply p-1 sm:p-3;
   }
   /* Compact responsive title helper */
   .card-title {
-    @apply font-medium mb-2 text-sm sm:text-base;
+    @apply font-medium mb-1 text-sm sm:text-base;
   }
   /* Compact description helper */
   .card-desc {
-    @apply text-sm sm:text-sm leading-snug mb-3 line-clamp-2;
+    @apply text-sm sm:text-sm leading-snug mb-2 line-clamp-2;
   }
   /* Full-width mobile CTA */
   .btn-full-mobile {
     @apply w-full sm:w-auto h-11;
+  }
+  /* Compact card footer */
+  .card-footer {
+    @apply pt-2 border-t border-border/50;
   }
 }
 
