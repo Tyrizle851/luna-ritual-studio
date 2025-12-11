@@ -476,24 +476,24 @@ const Shop = () => {
                             className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                           />
                         </div>
-                        <div className="p-4">
-                          <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
-                          <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
-                          
+                        <div className="p-2 sm:p-3 lg:p-4">
+                          <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">{product.brand}</p>
+                          <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{product.name}</h3>
+
                           {product.rating && (
-                            <div className="flex items-center gap-1 mb-3 text-xs">
+                            <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
                               {product.reviewCount && (
-                                <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
+                                <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
                               )}
                             </div>
                           )}
-                          
-                          <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
-                          
+
+                          <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{product.description}</p>
+
                           {product.certifications && product.certifications.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5 mb-4">
+                            <div className="hidden lg:flex flex-wrap gap-1.5 mb-4">
                               {product.certifications.slice(0, 2).map((cert, index) => (
                                 <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                   {cert}
@@ -501,29 +501,31 @@ const Shop = () => {
                               ))}
                             </div>
                           )}
-                          
-                          <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                            <div className="flex items-center gap-2">
+
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                            <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                               {product.originalPrice && (
                                 <>
-                                  <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
-                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${product.originalPrice}</span>
+                                  <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                     -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                   </span>
                                 </>
                               )}
-                              <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                              <span className="text-sm sm:text-base font-semibold text-text-primary">${product.price}</span>
                             </div>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 window.open(product.affiliateUrl, '_blank');
                               }}
                             >
-                              Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                              <span className="hidden sm:inline">Shop Now</span>
+                              <span className="sm:hidden">Shop</span>
+                              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                             </Button>
                           </div>
                         </div>
@@ -578,24 +580,24 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
-                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
-                        
+                      <div className="p-2 sm:p-3 lg:p-4">
+                        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">{candle.brand}</p>
+                        <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{candle.name}</h3>
+
                         {candle.rating && (
-                          <div className="flex items-center gap-1 mb-3 text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
                             {candle.reviewCount && (
-                              <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
-                        
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
-                        
+
+                        <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{candle.description}</p>
+
                         {candle.certifications && candle.certifications.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-4">
+                          <div className="hidden lg:flex flex-wrap gap-1.5 mb-4">
                             {candle.certifications.slice(0, 2).map((cert, index) => (
                               <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                 {cert}
@@ -603,29 +605,31 @@ const Shop = () => {
                             ))}
                           </div>
                         )}
-                        
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
+
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                             {candle.originalPrice && (
                               <>
-                                <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
                                 </span>
                               </>
                             )}
-                            <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                            <span className="text-sm sm:text-base font-semibold text-text-primary">${candle.price}</span>
                           </div>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(candle.affiliateUrl, '_blank');
                             }}
                           >
-                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                            <span className="hidden sm:inline">Shop Now</span>
+                            <span className="sm:hidden">Shop</span>
+                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                           </Button>
                         </div>
                       </div>
@@ -680,25 +684,25 @@ const Shop = () => {
                           className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
-                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
-                        
+                      <div className="p-2 sm:p-3 lg:p-4">
+                        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">{supplement.category}</p>
+                        <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{supplement.name}</h3>
+
                         {supplement.rating && (
-                          <div className="flex items-center gap-1 mb-3 text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
                             {supplement.reviewCount && (
-                              <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
-                        
-                        <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
-                        <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
-                        
+
+                        <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary leading-relaxed mb-1 sm:mb-2 line-clamp-2 hidden sm:block">{supplement.description}</p>
+                        <p className="text-[10px] sm:text-xs text-text-muted mb-2 sm:mb-3 hidden sm:block">{supplement.servings}</p>
+
                         {supplement.certifications && supplement.certifications.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-4">
+                          <div className="hidden lg:flex flex-wrap gap-1.5 mb-4">
                             {supplement.certifications.slice(0, 2).map((cert, index) => (
                               <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                 {cert}
@@ -706,32 +710,32 @@ const Shop = () => {
                             ))}
                           </div>
                         )}
-                        
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
+
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                             {supplement.originalPrice && (
                               <>
-                                <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
                                 </span>
                               </>
                             )}
-                            <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                            <span className="text-sm sm:text-base font-semibold text-text-primary">${supplement.price}</span>
                           </div>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
                             }}
                           >
                             {supplement.affiliateUrl ? (
-                              <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
+                              <><span className="hidden sm:inline">Shop Now</span><span className="sm:hidden">Shop</span> <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" /></>
                             ) : (
-                              <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
+                              <><span className="hidden sm:inline">Add to Cart</span><span className="sm:hidden">Add</span> <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" /></>
                             )}
                           </Button>
                         </div>
@@ -827,25 +831,25 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
-                        <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
-                        <p className="text-xs text-text-muted mb-2">by {book.author}</p>
-                        
+                      <div className="p-2 sm:p-3 lg:p-4">
+                        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">{book.category}</p>
+                        <h3 className="font-medium mb-1 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{book.title}</h3>
+                        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 truncate">by {book.author}</p>
+
                         {book.rating && (
-                          <div className="flex items-center gap-1 mb-2 text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2 text-[10px] sm:text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{book.rating}</span>
                             {book.reviewCount && (
-                              <span className="text-muted-foreground">({book.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground hidden sm:inline">({book.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
-                        
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
-                        
+
+                        <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{book.description}</p>
+
                         {book.awards && book.awards.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-3">
+                          <div className="hidden lg:flex flex-wrap gap-1.5 mb-3">
                             {book.awards.slice(0, 2).map((award, index) => (
                               <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                 {award}
@@ -853,29 +857,31 @@ const Shop = () => {
                             ))}
                           </div>
                         )}
-                        
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
+
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                             {book.originalPrice && (
                               <>
-                                <span className="text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
                                 </span>
                               </>
                             )}
-                            <span className="text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
+                            <span className="text-sm sm:text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
                           </div>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(book.affiliateUrl, '_blank');
                             }}
                           >
-                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                            <span className="hidden sm:inline">Shop Now</span>
+                            <span className="sm:hidden">Shop</span>
+                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                           </Button>
                         </div>
                       </div>

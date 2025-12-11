@@ -147,23 +147,23 @@ const ShopAffirmations = () => {
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
-                <div className="p-4">
-                  <div className="flex gap-1 mb-2">
+                <div className="p-2 sm:p-3 lg:p-4">
+                  <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                      <Star key={i} className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-gold text-gold" />
                     ))}
-                    <span className="text-xs text-text-muted ml-1">
+                    <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
                       ({affirmation.rating || 4.9})
-                      {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
+                      {affirmation.reviewCount && <span className="hidden sm:inline"> · {(affirmation.reviewCount / 1000).toFixed(1)}K reviews</span>}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
-                  
+                  <h3 className="font-display text-sm sm:text-lg lg:text-xl mb-1 sm:mb-2 line-clamp-2">{affirmation.title}</h3>
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{affirmation.description}</p>
+
                   {affirmation.certifications && affirmation.certifications.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="hidden lg:flex flex-wrap gap-1.5 mb-3">
                       {affirmation.certifications.map((cert, idx) => (
-                        <span 
+                        <span
                           key={idx}
                           className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border"
                         >
@@ -173,41 +173,43 @@ const ShopAffirmations = () => {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                    <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                    <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                       {affirmation.originalPrice && (
-                        <span className="text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                        <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
                       )}
-                      <span className="font-semibold">${affirmation.price}</span>
+                      <span className="text-sm sm:text-base font-semibold">${affirmation.price}</span>
                       {affirmation.originalPrice && (
-                        <span className="text-xs bg-destructive/10 text-destructive px-1.5 py-0.5 rounded">
+                        <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded">
                           Save ${affirmation.originalPrice - affirmation.price}
                         </span>
                       )}
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 sm:gap-2">
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-clay text-clay hover:bg-clay/10"
+                        className="border-clay text-clay hover:bg-clay/10 text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedProduct(affirmation);
                           setModalOpen(true);
                         }}
                       >
-                        Preview
+                        <span className="hidden sm:inline">Preview</span>
+                        <span className="sm:hidden">View</span>
                       </Button>
                       <Button
                         size="sm"
-                        className="bg-clay hover:bg-clay-dark text-white"
+                        className="bg-clay hover:bg-clay-dark text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedProduct(affirmation);
                           setModalOpen(true);
                         }}
                       >
-                        Add to Cart
+                        <span className="hidden sm:inline">Add to Cart</span>
+                        <span className="sm:hidden">Add</span>
                       </Button>
                     </div>
                   </div>
