@@ -36,30 +36,10 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-// Haptic feedback utility
-const triggerHaptic = () => {
-  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-    navigator.vibrate(10);
-  }
-};
-
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      triggerHaptic();
-      onClick?.(e);
-    };
-    
-    return (
-      <Comp 
-        className={cn(buttonVariants({ variant, size, className }))} 
-        ref={ref} 
-        onClick={asChild ? undefined : handleClick}
-        {...props} 
-      />
-    );
+    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
   },
 );
 Button.displayName = "Button";

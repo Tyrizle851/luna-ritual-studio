@@ -175,16 +175,16 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
         </Button>
       </div>
 
-      {/* Scroll Container - fixed vertical scroll */}
+      {/* Scroll Container */}
       <div
         ref={containerRef}
-        className="flex gap-4 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-4 md:px-20 snap-x snap-mandatory"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
+        className="flex gap-6 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-16 md:px-20 snap-x snap-mandatory touch-pan-x"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
       >
         {affirmations.map((affirmation, index) => (
           <div 
             key={affirmation.id} 
-            className="flex-none w-[45vw] sm:w-[220px] md:w-[280px] animate-fade-up snap-center"
+            className="flex-none w-[260px] sm:w-[280px] md:w-[320px] animate-fade-up snap-center"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <CarouselCard 

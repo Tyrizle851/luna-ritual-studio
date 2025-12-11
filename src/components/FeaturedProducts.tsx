@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { ExternalLink, ShoppingBag, Sparkles, Star } from "lucide-react";
+import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { FashionProductModal } from "@/components/FashionProductModal";
 import { CandleModal } from "@/components/CandleModal";
 import { BookModal } from "@/components/BookModal";
-import { ProductModal } from "@/components/ProductModal";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
 import { FashionProduct } from "@/data/fashion";
 import { Candle } from "@/data/candles";
 import { Book } from "@/data/books";
-import { affirmations, Affirmation } from "@/data/affirmations";
-import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
 
 import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
 import productCandleWoodwickVanilla from "@/assets/product-candle-vanilla-bean.jpg";
@@ -132,96 +129,13 @@ const featuredBook: Book = {
   similarReads: ["A Court of Thorns and Roses", "Fourth Wing", "The Cruel Prince"]
 };
 
-// Get first featured affirmation
-const featuredAffirmation = affirmations.find(a => a.featured) || affirmations[0];
-
-// Affirmation card component with image loading
-const AffirmationCard = ({ 
-  affirmation, 
-  onClick,
-  calculateDiscount 
-}: { 
-  affirmation: Affirmation; 
-  onClick: () => void;
-  calculateDiscount: (original: number, current: number) => number;
-}) => {
-  const { imageUrl } = useAffirmationDigitalImage(affirmation.id);
-  const displayImage = imageUrl || affirmation.image;
-  
-  return (
-    <ProductCard onClick={onClick} className="animate-fade-up">
-      {affirmation.badge && (
-        <span className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs px-3 py-1 rounded-full font-medium">
-          {affirmation.badge}
-        </span>
-      )}
-      <WishlistButton productId={affirmation.id} />
-      <div className="overflow-hidden aspect-[4/5] bg-secondary">
-        <img
-          src={displayImage}
-          alt={affirmation.title}
-          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-        />
-      </div>
-      <div className="p-4">
-        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
-        
-        {affirmation.rating && (
-          <div className="flex items-center gap-1 mb-3">
-            <span className="text-primary text-xs">★</span>
-            <span className="text-xs font-medium">{affirmation.rating}</span>
-            <span className="text-xs text-text-muted">({affirmation.reviewCount?.toLocaleString()})</span>
-          </div>
-        )}
-        
-        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
-        
-        {affirmation.certifications && affirmation.certifications.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {affirmation.certifications.slice(0, 2).map((cert, idx) => (
-              <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                {cert}
-              </span>
-            ))}
-          </div>
-        )}
-        
-        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-          <div className="flex items-center gap-2">
-            {affirmation.originalPrice && (
-              <>
-                <span className="text-sm text-text-muted line-through">${affirmation.originalPrice.toFixed(2)}</span>
-                <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                  -{calculateDiscount(affirmation.originalPrice, affirmation.price)}%
-                </span>
-              </>
-            )}
-            <span className="font-semibold text-foreground">${affirmation.price.toFixed(2)}</span>
-          </div>
-          
-          <Button
-            size="sm"
-            variant="outline"
-            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-          >
-            View Options
-          </Button>
-        </div>
-      </div>
-    </ProductCard>
-  );
-};
-
 export const FeaturedProducts = () => {
   const [selectedFashion, setSelectedFashion] = useState<FashionProduct | null>(null);
   const [selectedCandle, setSelectedCandle] = useState<Candle | null>(null);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const [selectedAffirmation, setSelectedAffirmation] = useState<Affirmation | null>(null);
   const [isFashionModalOpen, setIsFashionModalOpen] = useState(false);
   const [isCandleModalOpen, setIsCandleModalOpen] = useState(false);
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
-  const [isAffirmationModalOpen, setIsAffirmationModalOpen] = useState(false);
 
   const handleFashionClick = () => {
     setSelectedFashion(featuredFashion);
@@ -238,11 +152,6 @@ export const FeaturedProducts = () => {
     setIsBookModalOpen(true);
   };
 
-  const handleAffirmationClick = () => {
-    setSelectedAffirmation(featuredAffirmation);
-    setIsAffirmationModalOpen(true);
-  };
-
   const calculateDiscount = (original: number, current: number) => {
     return Math.round(((original - current) / original) * 100);
   };
@@ -250,16 +159,16 @@ export const FeaturedProducts = () => {
   return (
     <section className="section-padding bg-secondary">
       <div className="container-custom">
-        <div className="text-center mb-8 sm:mb-12">
+        <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-clay" />
+            <Sparkles className="h-6 w-6 text-clay" />
             <h2 className="mb-0">The Ritual Edit</h2>
-            <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-clay" />
+            <Sparkles className="h-6 w-6 text-clay" />
           </div>
-          <p className="text-sm sm:text-lg text-text-secondary">Curated finds for intentional living</p>
+          <p className="text-lg text-text-secondary">Curated finds for intentional living</p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Fashion Product Card */}
           <ProductCard onClick={handleFashionClick} className="animate-fade-up">
             {featuredFashion.badge && (
@@ -445,13 +354,6 @@ export const FeaturedProducts = () => {
               </div>
             </div>
           </ProductCard>
-
-          {/* Affirmation Product Card - 4th item */}
-          <AffirmationCard 
-            affirmation={featuredAffirmation}
-            onClick={handleAffirmationClick}
-            calculateDiscount={calculateDiscount}
-          />
         </div>
 
         <div className="text-center mt-8">
@@ -479,11 +381,6 @@ export const FeaturedProducts = () => {
         product={selectedBook}
         open={isBookModalOpen}
         onOpenChange={setIsBookModalOpen}
-      />
-      <ProductModal
-        product={selectedAffirmation}
-        open={isAffirmationModalOpen}
-        onOpenChange={setIsAffirmationModalOpen}
       />
     </section>
   );
