@@ -184,9 +184,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="card-body">
+            <div className="p-4">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
-              <h3 className="card-title group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
               
               {featuredFashion.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -196,7 +196,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="card-desc text-text-secondary">{featuredFashion.description}</p>
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
               
               {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -208,44 +208,30 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="card-footer">
-                <div className="hidden sm:flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2">
-                    {featuredFashion.originalPrice && (
-                      <>
-                        <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                        <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
-                          -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
-                        </span>
-                      </>
-                    )}
-                    <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-                    asChild
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                      Shop Now <ExternalLink className="ml-1 h-3 w-3" />
-                    </a>
-                  </Button>
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <div className="flex items-center gap-2">
+                  {featuredFashion.originalPrice && (
+                    <>
+                      <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
+                      </span>
+                    </>
+                  )}
+                  <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
                 </div>
-                <div className="sm:hidden">
-                  <Button
-                    size="sm"
-                    variant="solid"
-                    className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                    asChild
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                      Shop Now <ExternalLink className="ml-2 h-3 w-3" />
-                    </a>
-                  </Button>
-                </div>
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  asChild
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                  </a>
+                </Button>
               </div>
             </div>
           </ProductCard>
@@ -260,9 +246,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="card-body">
+            <div className="p-4">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
-              <h3 className="card-title group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
               
               {featuredCandle.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -272,7 +258,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="card-desc text-text-secondary">{featuredCandle.description}</p>
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
               
               {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -284,16 +270,18 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="card-footer">
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
+                
                 <Button
                   size="sm"
-                  variant="solid"
-                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
                 </Button>
               </div>
@@ -315,9 +303,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="card-body">
+            <div className="p-4">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredBook.author}</p>
-              <h3 className="card-title group-hover:text-clay transition-colors">{featuredBook.title}</h3>
+              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
               
               {featuredBook.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -327,7 +315,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="card-desc text-text-secondary">{featuredBook.description}</p>
+              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
               
               {featuredBook.awards && featuredBook.awards.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -339,16 +327,28 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="card-footer">
+              <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                <div className="flex items-center gap-2">
+                  {featuredBook.originalPrice && (
+                    <>
+                      <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                        -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
+                      </span>
+                    </>
+                  )}
+                  <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
+                </div>
+                
                 <Button
                   size="sm"
-                  variant="solid"
-                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                  variant="outline"
+                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
+                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
                 </Button>
               </div>

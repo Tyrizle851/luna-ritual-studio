@@ -52,14 +52,14 @@ const CarouselCard = ({
         )}
       </div>
       
-      <div className="card-body">
+      <div className="p-4">
         {affirmation.category && (
           <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
             {affirmation.category}
           </span>
         )}
         
-        <h3 className="font-display text-base sm:text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
+        <h3 className="font-display text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
         
         {affirmation.rating && (
           <div className="flex items-center gap-1 mb-2">
@@ -73,7 +73,7 @@ const CarouselCard = ({
         )}
         
         {affirmation.description && (
-          <p className="card-desc text-text-secondary">{affirmation.description}</p>
+          <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
         )}
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
@@ -86,11 +86,14 @@ const CarouselCard = ({
           </div>
         )}
         
-        <div className="card-footer">
+        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">${affirmation.price.toFixed(2)}</span>
+          </div>
           <Button 
             size="sm" 
-            variant="solid" 
-            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200 text-sm"
+            variant="outline" 
+            className="border-clay text-clay hover:bg-clay/10 text-xs px-2"
             onClick={onCardClick}
           >
             View Options

@@ -50,9 +50,9 @@ export const AffirmationProductCard = ({
         )}
       </div>
       
-      <div className="card-body">
+      <div className="p-4">
         <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-        <h3 className="card-title group-hover:text-clay transition-colors">{affirmation.title}</h3>
+        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
         
         {affirmation.rating && (
           <div className="flex items-center gap-2 mb-2">
@@ -74,7 +74,7 @@ export const AffirmationProductCard = ({
           <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
         )}
         
-        <p className="card-desc text-text-secondary">{affirmation.description}</p>
+        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
@@ -86,31 +86,21 @@ export const AffirmationProductCard = ({
           </div>
         )}
         
-        <div className="card-footer">
-          <div className="hidden sm:flex items-center justify-between w-full">
-            <div className="flex flex-col">
-              <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
-              <span className="text-[10px] text-text-muted">Digital Download</span>
-            </div>
-            <Button
-              size="sm"
-              variant="outline"
-              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
-              onClick={onAddToCart}
-            >
-              View Options
-            </Button>
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-border/50 gap-3">
+          <div className="flex flex-col">
+            <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
+            <span className="text-[10px] text-text-muted">
+              Digital Download
+            </span>
           </div>
-          <div className="sm:hidden">
-            <Button
-              size="sm"
-              variant="solid"
-              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-              onClick={onAddToCart}
-            >
-              View Options
-            </Button>
-          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full sm:w-auto h-11"
+            onClick={onAddToCart}
+          >
+            View Options
+          </Button>
         </div>
       </div>
     </ProductCard>
