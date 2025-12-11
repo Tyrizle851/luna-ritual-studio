@@ -25,7 +25,7 @@ export const AffirmationProductCard = ({
     <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
       {affirmation.badge && (
-        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+        <div className={`absolute top-2 left-2 z-10 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
           affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
           affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
           affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :
@@ -50,34 +50,28 @@ export const AffirmationProductCard = ({
         )}
       </div>
       
-      <div className="p-4">
-        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
+      <div className="p-2 sm:p-4">
+        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">{affirmation.category}</p>
+        <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-base group-hover:text-clay transition-colors line-clamp-1">{affirmation.title}</h3>
         
         {affirmation.rating && (
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
             <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
-              ))}
+              <Star className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
             </div>
-            <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
+            <span className="text-[10px] sm:text-xs font-medium text-text-primary">{affirmation.rating}</span>
             {affirmation.reviewCount && (
-              <span className="text-xs text-text-muted">
+              <span className="text-[10px] sm:text-xs text-text-muted">
                 ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount})
               </span>
             )}
           </div>
         )}
         
-        {affirmation.socialProof && (
-          <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
-        )}
-        
-        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
+        <p className="hidden sm:block text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
+          <div className="hidden sm:flex flex-wrap gap-1.5 mb-3">
             {affirmation.certifications.slice(0, 3).map((cert, idx) => (
               <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
                 {cert}
@@ -86,20 +80,18 @@ export const AffirmationProductCard = ({
           </div>
         )}
         
-        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
           <div className="flex flex-col">
-            <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
-            <span className="text-[10px] text-text-muted">
-              Digital Download
-            </span>
+            <span className="text-xs sm:text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
           </div>
           <Button
             size="sm"
             variant="outline"
-            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs h-7 sm:h-9 px-2 sm:px-3"
             onClick={onAddToCart}
           >
-            View Options
+            <span className="hidden sm:inline">View Options</span>
+            <span className="sm:hidden">View</span>
           </Button>
         </div>
       </div>

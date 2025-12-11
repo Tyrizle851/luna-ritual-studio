@@ -44,14 +44,16 @@ const Index = () => {
         <meta name="keywords" content="affirmations, digital affirmations, affirmation wallpaper, self-love affirmations, manifestation wallpaper, intentional living, mindfulness, wellness, self-care" />
       </Helmet>
       <div className="min-h-screen">
-      {/* Hero Section - reduced height by 15% */}
-      <section className="relative h-[72vh] flex items-center justify-center text-center overflow-hidden py-16">
+      {/* Hero Section - reduced 20% for mobile */}
+      <section className="relative h-[55vh] sm:h-[65vh] md:h-[72vh] flex items-center justify-center text-center overflow-hidden py-10 sm:py-16">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center scale-125 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
+          preload="auto"
+          poster="/hero-video.mp4#t=0.1"
+          className="absolute inset-0 w-full h-full object-cover object-center scale-125"
           style={{ filter: 'brightness(0.6) blur(4px) saturate(0.85)' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
