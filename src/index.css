@@ -180,7 +180,6 @@ All colors MUST be HSL.
   .tab-transition[data-state="active"]::after {
     transform: scaleX(1);
   }
-}
 
   /* Compact card body for denser mobile layouts */
   .card-body {
@@ -201,12 +200,5 @@ All colors MUST be HSL.
   /* Compact card footer */
   .card-footer {
     @apply pt-2 border-t border-border/50;
-  }
-}
-
-@layer utilities {
-  /* Mobile-first full-width CTA helper for product cards */
-  .btn-full-mobile {
-    @apply w-full sm:w-auto h-11;
   }
 }
