@@ -449,7 +449,7 @@ const Shop = () => {
                 {isLoading ? (
                   <ProductGridSkeleton />
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -551,7 +551,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
                     <ProductCard 
                       key={candle.id}
@@ -653,7 +653,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                     <ProductCard 
                       key={supplement.id}
@@ -760,7 +760,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {getPaginatedItems(affirmations, affirmationsPage).map((affirmation: Affirmation) => (
                     <AffirmationProductCard
                       key={affirmation.id}
@@ -798,7 +798,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {getPaginatedItems(books, booksPage).map((book) => (
                     <ProductCard 
                       key={book.id}
