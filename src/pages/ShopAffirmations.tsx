@@ -125,7 +125,7 @@ const ShopAffirmations = () => {
         {isLoading ? (
           <ProductGridSkeleton />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
             {filteredAffirmations.map((affirmation) => (
               <ProductCard 
                 key={affirmation.id}
@@ -140,15 +140,15 @@ const ShopAffirmations = () => {
                     {affirmation.badge}
                   </div>
                 )}
-                <div className="overflow-hidden aspect-[4/5] bg-secondary">
+                <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
                   <img
                     src={affirmation.image}
                     alt={affirmation.title}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
-                <div className="p-4">
-                  <div className="flex gap-1 mb-2">
+                <div className="card-body">
+                  <div className="flex gap-1 mb-1">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
                     ))}
@@ -157,8 +157,8 @@ const ShopAffirmations = () => {
                       {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+                  <h3 className="card-title">{affirmation.title}</h3>
+                  <p className="card-desc text-text-secondary">{affirmation.description}</p>
                   
                   {affirmation.certifications && affirmation.certifications.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mb-3">

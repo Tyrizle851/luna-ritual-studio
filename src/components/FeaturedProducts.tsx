@@ -177,7 +177,7 @@ export const FeaturedProducts = () => {
               </span>
             )}
             <WishlistButton productId={featuredFashion.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
+            <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
               <img
                 src={featuredFashion.image}
                 alt={featuredFashion.name}
@@ -196,7 +196,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
+              <p className="card-desc text-text-secondary">{featuredFashion.description}</p>
               
               {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -239,7 +239,7 @@ export const FeaturedProducts = () => {
           {/* Candle Product Card */}
           <ProductCard onClick={handleCandleClick} className="animate-fade-up">
             <WishlistButton productId={featuredCandle.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
+            <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
               <img
                 src={featuredCandle.image}
                 alt={featuredCandle.name}
@@ -258,7 +258,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
+              <p className="card-desc text-text-secondary">{featuredCandle.description}</p>
               
               {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -296,7 +296,7 @@ export const FeaturedProducts = () => {
               </span>
             )}
             <WishlistButton productId={featuredBook.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
+            <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
               <img
                 src={featuredBook.image}
                 alt={featuredBook.title}
@@ -315,7 +315,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
+              <p className="card-desc text-text-secondary">{featuredBook.description}</p>
               
               {featuredBook.awards && featuredBook.awards.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">

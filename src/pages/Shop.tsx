@@ -449,7 +449,7 @@ const Shop = () => {
                 {isLoading ? (
                   <ProductGridSkeleton />
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -469,19 +469,19 @@ const Shop = () => {
                             {product.badge}
                           </div>
                         )}
-                        <div className="overflow-hidden aspect-[4/5] bg-secondary">
+                        <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
                           <img
                             src={product.image}
                             alt={product.name}
                             className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                           />
                         </div>
-                        <div className="p-4">
-                          <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
-                          <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
+                        <div className="card-body">
+                          <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{product.brand}</p>
+                          <h3 className="card-title group-hover:text-clay transition-colors">{product.name}</h3>
                           
                           {product.rating && (
-                            <div className="flex items-center gap-1 mb-3 text-xs">
+                            <div className="flex items-center gap-1 mb-2 text-xs">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
                               {product.reviewCount && (
@@ -490,7 +490,7 @@ const Shop = () => {
                             </div>
                           )}
                           
-                          <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
+                          <p className="card-desc text-text-secondary">{product.description}</p>
                           
                           {product.certifications && product.certifications.length > 0 && (
                             <div className="flex flex-wrap gap-1.5 mb-4">
@@ -578,12 +578,12 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
-                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
+                      <div className="card-body">
+                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{candle.brand}</p>
+                        <h3 className="card-title group-hover:text-clay transition-colors">{candle.name}</h3>
                         
                         {candle.rating && (
-                          <div className="flex items-center gap-1 mb-3 text-xs">
+                          <div className="flex items-center gap-1 mb-2 text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
                             {candle.reviewCount && (
@@ -592,7 +592,7 @@ const Shop = () => {
                           </div>
                         )}
                         
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
+                        <p className="card-desc text-text-secondary">{candle.description}</p>
                         
                         {candle.certifications && candle.certifications.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-4">
@@ -673,19 +673,19 @@ const Shop = () => {
                           {supplement.badge}
                         </div>
                       )}
-                      <div className="overflow-hidden aspect-[4/5] bg-white">
+                      <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-white">
                         <img
                           src={supplement.image}
                           alt={supplement.name}
                           className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
-                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
+                      <div className="card-body">
+                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{supplement.category}</p>
+                        <h3 className="card-title group-hover:text-clay transition-colors">{supplement.name}</h3>
                         
                         {supplement.rating && (
-                          <div className="flex items-center gap-1 mb-3 text-xs">
+                          <div className="flex items-center gap-1 mb-2 text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
                             {supplement.reviewCount && (
@@ -694,7 +694,7 @@ const Shop = () => {
                           </div>
                         )}
                         
-                        <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
+                        <p className="card-desc text-text-secondary">{supplement.description}</p>
                         <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
                         
                         {supplement.certifications && supplement.certifications.length > 0 && (
@@ -827,10 +827,10 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4">
-                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
-                        <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
-                        <p className="text-xs text-text-muted mb-2">by {book.author}</p>
+                      <div className="card-body">
+                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{book.category}</p>
+                        <h3 className="card-title group-hover:text-clay transition-colors">{book.title}</h3>
+                        <p className="text-xs text-text-muted mb-1">by {book.author}</p>
                         
                         {book.rating && (
                           <div className="flex items-center gap-1 mb-2 text-xs">
@@ -842,7 +842,7 @@ const Shop = () => {
                           </div>
                         )}
                         
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
+                        <p className="card-desc text-text-secondary">{book.description}</p>
                         
                         {book.awards && book.awards.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-3">

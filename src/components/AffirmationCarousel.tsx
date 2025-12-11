@@ -36,7 +36,7 @@ const CarouselCard = ({
       )}
       
       <div 
-        className="overflow-hidden aspect-[4/5] bg-secondary cursor-pointer"
+        className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary cursor-pointer"
         onClick={onCardClick}
       >
         {isLoading ? (
@@ -73,7 +73,7 @@ const CarouselCard = ({
         )}
         
         {affirmation.description && (
-          <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+          <p className="card-desc text-text-secondary">{affirmation.description}</p>
         )}
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
