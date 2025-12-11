@@ -13,6 +13,7 @@ interface AffirmationImageRequest {
   description: string;
   tags?: string[];
   forceRegenerate?: boolean;
+  inputImageBase64?: string; // User's curated digital artwork as base64
 }
 
 interface AffirmationData extends AffirmationImageRequest {
@@ -20,138 +21,45 @@ interface AffirmationData extends AffirmationImageRequest {
 }
 
 // ============================================================================
-// THEME VISUAL ELEMENTS - Vivid, specific visual descriptions per theme
-// ============================================================================
-
-interface ThemeVisuals {
-  colors: string;
-  botanicals: string;
-  texture: string;
-  mood: string;
-}
-
-const THEME_VISUALS: Record<string, ThemeVisuals> = {
-  "Self-Love": {
-    colors: "soft blush pink, warm terracotta, creamy ivory, dusty rose",
-    botanicals: "delicate heart-shaped leaves, soft peony petals, gentle eucalyptus sprigs",
-    texture: "handmade cotton paper with visible fibers, soft pressed edges",
-    mood: "tender embrace, morning light through sheer curtains, gentle self-compassion"
-  },
-  "Abundance": {
-    colors: "warm honey gold, rich terracotta, olive green, antique brass",
-    botanicals: "flowing wheat stalks, olive branches, scattered seeds, harvest grain",
-    texture: "aged parchment with golden flecks, Mediterranean warmth",
-    mood: "prosperous overflow, sunlit abundance, generous warmth"
-  },
-  "Rest": {
-    colors: "soft lavender grey, muted sage, warm cream, gentle fog",
-    botanicals: "soft fern fronds, lavender sprigs, peaceful eucalyptus",
-    texture: "smooth linen weave, cloud-soft paper, gentle grain",
-    mood: "sanctuary stillness, evening calm, restorative quiet"
-  },
-  "Joy": {
-    colors: "warm peach, soft coral, honey yellow, cream with golden warmth",
-    botanicals: "dancing wildflowers, cheerful daisy petals, sun-kissed blooms",
-    texture: "textured watercolor paper, joyful brushstroke edges",
-    mood: "sunlit delight, golden hour warmth, playful radiance"
-  },
-  "Strength": {
-    colors: "deep charcoal, warm bronze, forest green, grounded earth",
-    botanicals: "strong oak leaves, sturdy branches, architectural ferns",
-    texture: "substantial cotton rag, confident brushstrokes, solid foundation",
-    mood: "quiet power, mountain stillness, unshakeable presence"
-  },
-  "Peace": {
-    colors: "soft sky blue, gentle sage, warm white, whisper grey",
-    botanicals: "peaceful olive branches, gentle moon shapes, soft clouds",
-    texture: "smooth as still water, quiet linen, gentle paper grain",
-    mood: "tranquil waters, morning meditation, centered calm"
-  },
-  "Gratitude": {
-    colors: "warm amber, harvest gold, soft terracotta, grateful cream",
-    botanicals: "autumn leaves, dried wheat, thankful florals, harvest elements",
-    texture: "warm handmade paper, golden hour glow, artisan quality",
-    mood: "heartfelt appreciation, golden warmth, abundant thanks"
-  },
-  "Healing": {
-    colors: "soft peach, gentle sage green, warm cream, nurturing clay",
-    botanicals: "healing herbs, soft chamomile, restorative lavender",
-    texture: "gentle watercolor washes, soft edges, nurturing warmth",
-    mood: "tender recovery, gentle restoration, compassionate care"
-  },
-  "Growth": {
-    colors: "fresh sage green, new leaf green, warm earth, hopeful cream",
-    botanicals: "unfurling fern fronds, new seedlings, growing vines, fresh leaves",
-    texture: "organic paper with natural inclusions, living texture",
-    mood: "spring awakening, patient growth, natural unfolding"
-  }
-};
-
-// ============================================================================
-// PREMIUM DIGITAL ARTWORK PROMPT - Vivid scene descriptions
-// ============================================================================
-
-function generateDigitalPrompt(affirmation: AffirmationData): string {
-  const theme = THEME_VISUALS[affirmation.category] || THEME_VISUALS["Self-Love"];
-
-  return `Create a beautiful affirmation artwork with the text "${affirmation.title}".
-
-CRITICAL: The design must fill the ENTIRE image canvas edge-to-edge. No visible paper edges, no torn edges, no paper sitting on surfaces, no shadows beneath paper. The artwork IS the entire image.
-
-DESIGN:
-- Solid warm background in ${theme.colors} that extends to all edges
-- The affirmation text "${affirmation.title}" as the centerpiece in elegant serif typography
-- Delicate hand-drawn ${theme.botanicals} as decorative accents around the text
-- The feeling of ${theme.mood}
-
-TYPOGRAPHY:
-- Elegant serif font (like the example "Peace of Mind" with varied word sizes)
-- Some words larger, some smaller - arranged asymmetrically like a typography collage
-- Generous letter-spacing for a luxury feel
-- The text is the emotional focal point
-
-STYLE:
-- Clean, flat design that fills the entire canvas
-- No 3D effects, no paper texture as a physical object
-- Warm, minimal, boutique art print aesthetic
-- Like something you'd see at a high-end stationery shop
-
-OUTPUT: Portrait 3:4 ratio. The design must extend fully to all four edges of the image. No borders, no paper edges, no surface beneath.`;
-}
-
-// ============================================================================
-// SIMPLE MOCKUP PROMPTS - Vivid lifestyle scenes
+// MOCKUP PROMPTS - Vivid lifestyle scenes with human connection
 // ============================================================================
 
 function generateMockupPrompts(affirmation: AffirmationData) {
   
   return {
-    canvas: `Show the EXACT artwork from the input image printed on a gallery-wrapped canvas (18x24 inches, portrait orientation) in an elegant, warm home setting.
+    canvas: `Show the EXACT artwork from the input image printed on a gallery-wrapped canvas (18x24 inches, portrait orientation) with a hyperrealistic beautiful woman gently interacting with it.
 
-The scene: A bright Scandinavian living room with soft afternoon sunlight streaming through sheer linen curtains. The canvas hangs on a warm-toned wall above a styled credenza with handmade ceramics, a small potted trailing plant, and a stack of design books. A cozy linen throw is draped nearby.
+The scene: A warm Scandinavian living room bathed in soft afternoon light. A beautiful woman in a cozy cream sweater is gently adjusting the canvas on the wall with delicate hands, or standing back with her hand resting softly on the wall beside it, admiring her new art. The space includes a beautiful credenza with ceramics, a trailing plant, and design books. The moment feels intimate and contemplative.
 
-Photography style: Kinfolk magazine editorial, warm natural light, shallow depth of field, film grain warmth. The scene should feel luxurious, cozy, and aspirational - like a professional interior design photoshoot.
+NO TOOLS of any kind - no hammers, no levels, no hardware visible. Just soft, graceful interaction.
+
+CRITICAL PRINT ACCURACY: The canvas shows the artwork as a FLAT MATTE PRINT on canvas material. Any painterly or watercolor textures from the original are PRINTED - they do not pop out, do not have raised 3D texture, do not catch light as real paint would. The surface is smooth matte canvas. This accurately represents what the customer will receive.
+
+Photography style: Kinfolk magazine editorial, hyperrealistic, warm natural light, shallow depth of field.
 
 CRITICAL: Use the EXACT artwork from the input image. Do not change the design, text, or colors. The canvas should show the complete artwork with nothing cut off.`,
 
-    unframed: `Show the EXACT artwork from the input image as an unframed poster print (18x24 inches, portrait orientation) in a warm, styled setting.
+    unframed: `Show the EXACT artwork from the input image as an 18x24 unframed poster in a stunning editorial flat-lay arrangement.
 
-The scene: Elegant hands holding the unrolled poster against a beautiful marble surface. Nearby: a ceramic vase with dried eucalyptus, a warm cup of tea, soft morning light creating gentle shadows. The poster has a natural slight curl at the edges - authentic and artisanal.
+The scene: A luxurious styled flat-lay on a warm cream linen surface. The poster is laid out beautifully alongside curated lifestyle objects — dried eucalyptus sprigs, a handmade ceramic mug with tea, a stack of Kinfolk magazines, a small brass candle holder, scattered dried flowers, a beautiful leather journal. Soft diffused natural light from a window creates gentle shadows.
 
-Photography style: Editorial product photography with emotional warmth. Soft natural lighting, film grain, shallow depth of field. This should feel like a lifestyle catalog from Anthropologie or a Kinfolk spread.
+CRITICAL PRINT ACCURACY: The poster is printed on MATTE paper. The artwork appears as a FLAT PRINT - no raised texture, no 3D paint effects, no glossy reflections. The watercolor and painterly textures from the original artwork are PRINTED onto the paper, appearing smooth and matte. This is what the customer will actually receive.
 
-CRITICAL: Use the EXACT artwork from the input image. Do not change the design, text, or colors. The poster must be fully visible.`,
+Photography style: Kinfolk/Anthropologie catalog editorial. Warm tones, impeccable styling, like a magazine cover shoot. The poster is the hero but surrounded by a lifestyle story.
 
-    framed: `Show the EXACT artwork from the input image in a simple Red Oak wood frame (warm honey-brown, #D4A489) holding an 18x24 inch print (portrait orientation).
+CRITICAL: Use the EXACT artwork from the input image. Do not change the design, text, or colors. The poster must be fully visible and readable.`,
 
-CRITICAL FRAME REQUIREMENTS:
-- Simple wood frame ONLY - NO white mat, NO white border, NO matting between frame and artwork
-- The artwork should go edge-to-edge inside the frame, touching the frame directly
-- Just Red Oak wood frame with visible grain directly surrounding the artwork
+    framed: `Show the EXACT artwork from the input image in a simple Red Oak wood frame (warm honey-brown #D4A489) with an 18x24 inch MATTE print, being hung on a wall by a beautiful woman.
 
-The scene: A cozy reading corner with a worn leather armchair, a stack of beautiful books, warm wood floors, and late afternoon golden light streaming in. The framed artwork hangs on a textured cream plaster wall, casting a soft shadow. A trailing pothos plant is visible nearby.
+CRITICAL FRAME: Simple Red Oak frame only — NO white mat, NO border. Artwork edge-to-edge inside frame.
 
-Photography style: Architectural Digest or Apartment Therapy quality. Warm, inviting, editorial. Soft diffused light, visible textures (leather, wood, linen), film grain warmth.
+The scene: A hyperrealistic beautiful woman in cozy neutral clothing (cream sweater, soft linen) gently hanging the framed artwork on a warm-toned wall. She holds the frame with both hands, positioning it carefully, or steps back with one hand raised gracefully to check alignment. Beautiful warm afternoon light streaming through nearby windows. The room has warm wood floors, a linen sofa, a trailing pothos plant. The moment captures the quiet joy of creating a beautiful home.
+
+NO TOOLS - no hammers, no nails visible, no levels. Just soft, graceful human interaction with the frame.
+
+CRITICAL PRINT ACCURACY: The framed print is on MATTE paper with NO GLARE. Any watercolor, painterly, or textured elements in the original artwork appear as FLAT PRINTED texture - smooth, matte, no raised surfaces, no 3D paint effects popping out. The print accurately represents what the customer will receive: a beautiful matte print where artistic textures are printed, not physical.
+
+Photography style: Architectural Digest meets lifestyle editorial. Hyperrealistic, warm, emotionally resonant. Premium product positioning.
 
 CRITICAL: Use the EXACT artwork from the input image. Do NOT add any white mat or border inside the frame. The artwork must touch the frame edges directly.`
   };
@@ -160,49 +68,6 @@ CRITICAL: Use the EXACT artwork from the input image. Do NOT add any white mat o
 // ============================================================================
 // IMAGE GENERATION FUNCTIONS
 // ============================================================================
-
-async function generateImage(prompt: string, apiKey: string): Promise<string | null> {
-  try {
-    console.log("Generating digital artwork with Gemini 3 Pro Image...");
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-3-pro-image-preview",
-        messages: [
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        modalities: ["image", "text"]
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Image generation failed:", response.status, errorText);
-      return null;
-    }
-
-    const data = await response.json();
-    const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-    
-    if (!imageUrl) {
-      console.error("No image URL in response:", JSON.stringify(data));
-      return null;
-    }
-
-    console.log("Digital artwork generated successfully");
-    return imageUrl;
-  } catch (error) {
-    console.error("Error generating image:", error);
-    return null;
-  }
-}
 
 async function generateMockupImage(prompt: string, inputImageBase64: string, apiKey: string): Promise<string | null> {
   try {
@@ -323,67 +188,52 @@ serve(async (req) => {
       title: body.affirmationText
     };
 
-    console.log(`=== PREMIUM IMAGE GENERATION ===`);
+    console.log(`=== MOCKUP IMAGE GENERATION ===`);
     console.log(`Affirmation: ${affirmationData.affirmationId} - "${affirmationData.title}"`);
     console.log(`Category: ${affirmationData.category}`);
+    console.log(`Has input image: ${!!body.inputImageBase64}`);
 
-    // Check if images already exist
+    // Check if mockup images already exist (canvas, unframed, framed)
     const { data: existingImages } = await supabase
       .from("product_images")
       .select("*")
       .eq("product_id", affirmationData.affirmationId)
-      .eq("product_category", "affirmations");
+      .eq("product_category", "affirmations")
+      .in("variation_type", ["canvas", "unframed", "framed"]);
 
-    if (existingImages && existingImages.length >= 4 && !body.forceRegenerate) {
-      console.log("Images already exist (use forceRegenerate to override)");
+    if (existingImages && existingImages.length >= 3 && !body.forceRegenerate) {
+      console.log("Mockup images already exist (use forceRegenerate to override)");
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: "Images already exist",
+          message: "Mockup images already exist",
           images: existingImages 
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Delete existing images before regenerating
+    // Require inputImageBase64 - we use the user's curated digital artwork
+    if (!body.inputImageBase64) {
+      throw new Error("inputImageBase64 is required - provide the curated digital artwork");
+    }
+
+    // Delete existing mockup images before regenerating
     if (existingImages && existingImages.length > 0) {
-      console.log(`Deleting ${existingImages.length} existing images for regeneration`);
+      console.log(`Deleting ${existingImages.length} existing mockup images for regeneration`);
       await supabase
         .from("product_images")
         .delete()
         .eq("product_id", affirmationData.affirmationId)
-        .eq("product_category", "affirmations");
+        .eq("product_category", "affirmations")
+        .in("variation_type", ["canvas", "unframed", "framed"]);
     }
 
     const generatedImages: { variation: string; url: string }[] = [];
+    const inputImage = body.inputImageBase64;
 
-    // STEP 1: Generate premium digital artwork
-    console.log("STEP 1: Generating premium digital artwork...");
-    const digitalPrompt = generateDigitalPrompt(affirmationData);
-    const digitalImageBase64 = await generateImage(digitalPrompt, LOVABLE_API_KEY);
-    
-    if (!digitalImageBase64) {
-      console.error("Failed to generate digital artwork");
-      throw new Error("Failed to generate base digital artwork");
-    }
-
-    // Upload digital image
-    const digitalPublicUrl = await uploadToStorage(supabase, digitalImageBase64, affirmationData.affirmationId, "digital");
-    
-    if (digitalPublicUrl) {
-      await supabase.from("product_images").insert({
-        product_id: affirmationData.affirmationId,
-        product_category: "affirmations",
-        variation_type: "digital",
-        image_url: digitalPublicUrl,
-      });
-      generatedImages.push({ variation: "digital", url: digitalPublicUrl });
-      console.log("✓ Digital artwork stored successfully");
-    }
-
-    // STEP 2: Generate mockup variations
-    console.log("STEP 2: Generating mockup variations...");
+    // Generate mockup variations using the curated digital artwork
+    console.log("Generating mockup variations from curated artwork...");
     const mockupPrompts = generateMockupPrompts(affirmationData);
     const mockupVariations = ["canvas", "unframed", "framed"] as const;
 
@@ -392,7 +242,7 @@ serve(async (req) => {
       
       const mockupImageBase64 = await generateMockupImage(
         mockupPrompts[variation], 
-        digitalImageBase64, 
+        inputImage, 
         LOVABLE_API_KEY
       );
       
@@ -427,14 +277,14 @@ serve(async (req) => {
     }
 
     console.log(`=== GENERATION COMPLETE ===`);
-    console.log(`Generated ${generatedImages.length} images for ${affirmationData.affirmationId}`);
+    console.log(`Generated ${generatedImages.length} mockups for ${affirmationData.affirmationId}`);
 
     return new Response(
       JSON.stringify({
         success: true,
         affirmationId: affirmationData.affirmationId,
         images: generatedImages,
-        message: `Generated ${generatedImages.length} premium images`
+        message: `Generated ${generatedImages.length} mockup images`
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

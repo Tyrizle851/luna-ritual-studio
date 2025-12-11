@@ -24,25 +24,51 @@ export function useProductImages(productId: string | null, productCategory: stri
     const fetchImages = async () => {
       setIsLoading(true);
       
-      // For affirmations, ONLY use local images - no Supabase at all
+      // For affirmations, use HYBRID approach:
+      // - Digital: local curated image (instant)
+      // - Canvas/Unframed/Framed: fetch from Supabase
       if (productCategory === "affirmations") {
+        const imageResults: ProductImage[] = [];
+        
+        // 1. Add local digital image first (instant, no network)
         if (hasLocalDigitalImage(productId)) {
           const localUrl = getLocalDigitalImage(productId);
           if (localUrl) {
-            setImages([{
+            imageResults.push({
               id: `local-${productId}-digital`,
               product_id: productId,
               product_category: "affirmations",
               variation_type: "digital",
               image_url: localUrl,
               created_at: new Date().toISOString()
-            }]);
-          } else {
-            setImages([]);
+            });
           }
-        } else {
-          setImages([]);
         }
+        
+        // 2. Fetch mockup variations from Supabase (canvas, unframed, framed)
+        try {
+          const { data, error } = await supabase
+            .from("product_images")
+            .select("*")
+            .eq("product_id", productId)
+            .eq("product_category", "affirmations")
+            .in("variation_type", ["canvas", "unframed", "framed"]);
+
+          if (!error && data) {
+            // Sort mockups in order: canvas, unframed, framed
+            const mockupOrder = ["canvas", "unframed", "framed"];
+            const sortedMockups = data.sort((a, b) => {
+              const aIndex = mockupOrder.indexOf(a.variation_type);
+              const bIndex = mockupOrder.indexOf(b.variation_type);
+              return aIndex - bIndex;
+            });
+            imageResults.push(...sortedMockups);
+          }
+        } catch (err) {
+          console.error("Error fetching affirmation mockups:", err);
+        }
+        
+        setImages(imageResults);
         setIsLoading(false);
         return;
       }
