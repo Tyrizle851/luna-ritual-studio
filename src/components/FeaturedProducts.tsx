@@ -172,7 +172,7 @@ export const FeaturedProducts = () => {
           {/* Fashion Product Card */}
           <ProductCard onClick={handleFashionClick} className="animate-fade-up">
             {featuredFashion.badge && (
-              <span className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs px-3 py-1 rounded-full font-medium">
+              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-accent text-accent-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
                 {featuredFashion.badge}
               </span>
             )}
@@ -184,52 +184,54 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
-              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
+            <div className="card-body">
+              <p className="card-brand">{featuredFashion.brand}</p>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
               
               {featuredFashion.rating && (
-                <div className="flex items-center gap-1 mb-3">
-                  <span className="text-primary text-xs">★</span>
-                  <span className="text-xs font-medium">{featuredFashion.rating}</span>
-                  <span className="text-xs text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
+                <div className="card-rating">
+                  <span className="text-primary">★</span>
+                  <span className="font-medium">{featuredFashion.rating}</span>
+                  <span className="text-text-muted hidden sm:inline">({featuredFashion.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
               <p className="card-desc text-text-secondary">{featuredFashion.description}</p>
               
               {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                   {featuredFashion.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span key={idx} className="card-cert">
                       {cert}
                     </span>
                   ))}
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <div className="flex items-center gap-2">
+              <div className="card-footer flex items-center justify-between">
+                <div className="flex items-center gap-1 sm:gap-2">
                   {featuredFashion.originalPrice && (
                     <>
-                      <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                      <span className="card-price-original hidden sm:inline">${featuredFashion.originalPrice.toFixed(2)}</span>
+                      <span className="card-discount">
                         -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
                       </span>
                     </>
                   )}
-                  <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
+                  <span className="card-price text-foreground">${featuredFashion.price.toFixed(2)}</span>
                 </div>
                 
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    <span className="sm:hidden">Shop</span>
+                    <span className="hidden sm:inline">Shop Now</span>
+                    <ExternalLink className="ml-1 h-3 w-3 hidden sm:inline" />
                   </a>
                 </Button>
               </div>
@@ -246,42 +248,44 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
-              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
+            <div className="card-body">
+              <p className="card-brand">{featuredCandle.brand}</p>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
               
               {featuredCandle.rating && (
-                <div className="flex items-center gap-1 mb-3">
-                  <span className="text-primary text-xs">★</span>
-                  <span className="text-xs font-medium">{featuredCandle.rating}</span>
-                  <span className="text-xs text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
+                <div className="card-rating">
+                  <span className="text-primary">★</span>
+                  <span className="font-medium">{featuredCandle.rating}</span>
+                  <span className="text-text-muted hidden sm:inline">({featuredCandle.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
               <p className="card-desc text-text-secondary">{featuredCandle.description}</p>
               
               {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                   {featuredCandle.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span key={idx} className="card-cert">
                       {cert}
                     </span>
                   ))}
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <span className="font-semibold text-foreground">${featuredCandle.price.toFixed(2)}</span>
+              <div className="card-footer flex items-center justify-between">
+                <span className="card-price text-foreground">${featuredCandle.price.toFixed(2)}</span>
                 
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    <span className="sm:hidden">Shop</span>
+                    <span className="hidden sm:inline">Shop Now</span>
+                    <ExternalLink className="ml-1 h-3 w-3 hidden sm:inline" />
                   </a>
                 </Button>
               </div>
@@ -291,7 +295,7 @@ export const FeaturedProducts = () => {
           {/* Book Product Card */}
           <ProductCard onClick={handleBookClick} className="animate-fade-up">
             {featuredBook.badge && (
-              <span className="absolute top-3 left-3 z-10 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
+              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-primary text-primary-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
                 {featuredBook.badge}
               </span>
             )}
@@ -303,52 +307,54 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
-              <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredBook.author}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
+            <div className="card-body">
+              <p className="card-brand">{featuredBook.author}</p>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredBook.title}</h3>
               
               {featuredBook.rating && (
-                <div className="flex items-center gap-1 mb-3">
-                  <span className="text-primary text-xs">★</span>
-                  <span className="text-xs font-medium">{featuredBook.rating}</span>
-                  <span className="text-xs text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
+                <div className="card-rating">
+                  <span className="text-primary">★</span>
+                  <span className="font-medium">{featuredBook.rating}</span>
+                  <span className="text-text-muted hidden sm:inline">({featuredBook.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
               <p className="card-desc text-text-secondary">{featuredBook.description}</p>
               
               {featuredBook.awards && featuredBook.awards.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                   {featuredBook.awards.slice(0, 2).map((award, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span key={idx} className="card-cert">
                       {award}
                     </span>
                   ))}
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                <div className="flex items-center gap-2">
+              <div className="card-footer flex items-center justify-between">
+                <div className="flex items-center gap-1 sm:gap-2">
                   {featuredBook.originalPrice && (
                     <>
-                      <span className="text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
-                      <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                      <span className="card-price-original hidden sm:inline">${featuredBook.originalPrice.toFixed(2)}</span>
+                      <span className="card-discount">
                         -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
                       </span>
                     </>
                   )}
-                  <span className="font-semibold text-foreground">${featuredBook.price.toFixed(2)}</span>
+                  <span className="card-price text-foreground">${featuredBook.price.toFixed(2)}</span>
                 </div>
                 
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                  className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
                   <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    <span className="sm:hidden">Shop</span>
+                    <span className="hidden sm:inline">Shop Now</span>
+                    <ExternalLink className="ml-1 h-3 w-3 hidden sm:inline" />
                   </a>
                 </Button>
               </div>
