@@ -25,7 +25,7 @@ export const AffirmationProductCard = ({
     <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
       {affirmation.badge && (
-        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+        <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
           affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
           affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
           affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :
@@ -51,19 +51,19 @@ export const AffirmationProductCard = ({
       </div>
       
       <div className="card-body">
-        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{affirmation.category}</p>
+        <p className="card-brand">{affirmation.category}</p>
         <h3 className="card-title group-hover:text-clay transition-colors">{affirmation.title}</h3>
         
         {affirmation.rating && (
-          <div className="flex items-center gap-2 mb-2">
+          <div className="card-rating">
             <div className="flex items-center gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
+                <Star key={i} className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
               ))}
             </div>
-            <span className="text-xs font-medium text-text-primary">{affirmation.rating}</span>
+            <span className="font-medium text-text-primary">{affirmation.rating}</span>
             {affirmation.reviewCount && (
-              <span className="text-xs text-text-muted">
+              <span className="text-text-muted hidden sm:inline">
                 ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount})
               </span>
             )}
@@ -71,32 +71,32 @@ export const AffirmationProductCard = ({
         )}
         
         {affirmation.socialProof && (
-          <p className="text-xs text-text-muted mb-1">{affirmation.socialProof}</p>
+          <p className="hidden sm:block text-xs text-text-muted mb-1">{affirmation.socialProof}</p>
         )}
         
         <p className="card-desc text-text-secondary">{affirmation.description}</p>
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
+          <div className="hidden sm:flex flex-wrap gap-1.5 mb-3">
             {affirmation.certifications.slice(0, 3).map((cert, idx) => (
-              <span key={idx} className="px-2 py-0.5 bg-secondary/50 rounded-full text-xs text-text-muted">
+              <span key={idx} className="card-cert">
                 {cert}
               </span>
             ))}
           </div>
         )}
         
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-border/50 gap-3">
+        <div className="card-footer flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
           <div className="flex flex-col">
-            <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
-            <span className="text-[10px] text-text-muted">
+            <span className="card-price text-text-primary">${affirmation.price.toFixed(2)}</span>
+            <span className="text-[8px] sm:text-[10px] text-text-muted">
               Digital Download
             </span>
           </div>
           <Button
             size="sm"
             variant="outline"
-            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 w-full sm:w-auto h-11"
+            className="btn-card-mobile w-full sm:w-auto border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
             onClick={onAddToCart}
           >
             View Options

@@ -44,8 +44,8 @@ const Index = () => {
         <meta name="keywords" content="affirmations, digital affirmations, affirmation wallpaper, self-love affirmations, manifestation wallpaper, intentional living, mindfulness, wellness, self-care" />
       </Helmet>
       <div className="min-h-screen">
-      {/* Hero Section - reduced height by 15% */}
-      <section className="relative h-[72vh] flex items-center justify-center text-center overflow-hidden py-16">
+      {/* Hero Section - mobile optimized */}
+      <section className="relative h-[55vh] sm:h-[65vh] md:h-[72vh] flex items-center justify-center text-center overflow-hidden py-8 sm:py-16">
         <video
           autoPlay
           loop
@@ -60,36 +60,36 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)]" />
         <div className="relative z-10 container-custom max-w-4xl px-4">
-          <h1 className="mb-10 text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
+          <h1 className="mb-6 sm:mb-10 text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-balance text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] font-normal tracking-tight">
             Affirmations for women building calm, beautiful lives
           </h1>
-          <p className="text-xl md:text-2xl mb-14 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] font-normal" style={{ fontWeight: 400 }}>
+          <p className="text-base sm:text-xl md:text-2xl mb-8 sm:mb-14 text-balance text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] font-normal" style={{ fontWeight: 400 }}>
             Digital art and curated goods for intentional living
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center items-center">
             {/* Primary CTA */}
-            <Button asChild className="h-[37px] px-8 bg-[#A97E63] hover:bg-[#8B6950] text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <Button asChild className="h-9 sm:h-[37px] px-5 sm:px-8 text-sm sm:text-base bg-[#A97E63] hover:bg-[#8B6950] text-white font-semibold rounded-md shadow-[0_3px_12px_rgba(169,126,99,0.35)] hover:shadow-[0_6px_20px_rgba(169,126,99,0.45)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <Link to="/shop?tab=affirmations" className="inline-flex items-center gap-2">
-                <Sparkles className="h-4 w-4" />
+                <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Shop Affirmations
               </Link>
             </Button>
             
             {/* Secondary CTA */}
-            <Button asChild variant="outline" className="h-[37px] px-8 border border-white/80 bg-white/5 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/15 hover:border-white transition-all duration-300 ease-out">
+            <Button asChild variant="outline" className="h-9 sm:h-[37px] px-5 sm:px-8 text-sm sm:text-base border border-white/80 bg-white/5 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/15 hover:border-white transition-all duration-300 ease-out">
               <Link to="/affirmation-builder" className="inline-flex items-center gap-2">
-                <Moon className="h-4 w-4" />
+                <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Create Your Own
               </Link>
             </Button>
           </div>
           
           {/* Tertiary CTA - Text Link */}
-          <div className="mt-10">
+          <div className="mt-6 sm:mt-10">
             <Link 
               to="/journal" 
-              className="inline-flex items-center gap-2 text-white/85 hover:text-white text-base group transition-colors drop-shadow-sm"
+              className="inline-flex items-center gap-2 text-white/85 hover:text-white text-sm sm:text-base group transition-colors drop-shadow-sm"
               style={{ fontWeight: 400 }}
             >
               <span className="relative">

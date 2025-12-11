@@ -460,7 +460,7 @@ const Shop = () => {
                       >
                         <WishlistButton productId={product.id} />
                         {product.badge && (
-                          <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                          <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
                             product.badge === 'Sale' ? 'bg-foreground text-background' :
                             product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                             product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -477,15 +477,15 @@ const Shop = () => {
                           />
                         </div>
                         <div className="card-body">
-                          <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{product.brand}</p>
+                          <p className="card-brand">{product.brand}</p>
                           <h3 className="card-title group-hover:text-clay transition-colors">{product.name}</h3>
                           
                           {product.rating && (
-                            <div className="flex items-center gap-1 mb-2 text-xs">
+                            <div className="card-rating">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
                               {product.reviewCount && (
-                                <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
+                                <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
                               )}
                             </div>
                           )}
@@ -493,37 +493,39 @@ const Shop = () => {
                           <p className="card-desc text-text-secondary">{product.description}</p>
                           
                           {product.certifications && product.certifications.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5 mb-4">
+                            <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                               {product.certifications.slice(0, 2).map((cert, index) => (
-                                <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                                <span key={index} className="card-cert">
                                   {cert}
                                 </span>
                               ))}
                             </div>
                           )}
                           
-                          <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                            <div className="flex items-center gap-2">
+                          <div className="card-footer flex items-center justify-between">
+                            <div className="flex items-center gap-1 sm:gap-2">
                               {product.originalPrice && (
                                 <>
-                                  <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
-                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                  <span className="card-price-original hidden sm:inline">${product.originalPrice}</span>
+                                  <span className="card-discount">
                                     -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                   </span>
                                 </>
                               )}
-                              <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                              <span className="card-price text-text-primary">${product.price}</span>
                             </div>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 window.open(product.affiliateUrl, '_blank');
                               }}
                             >
-                              Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                              <span className="sm:hidden">Shop</span>
+                              <span className="hidden sm:inline">Shop Now</span>
+                              <ExternalLink className="w-3 h-3 ml-1 hidden sm:inline" />
                             </Button>
                           </div>
                         </div>
@@ -562,7 +564,7 @@ const Shop = () => {
                     >
                       <WishlistButton productId={candle.id} />
                       {candle.badge && (
-                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                        <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
                           candle.badge === 'Sale' ? 'bg-foreground text-background' :
                           candle.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                           candle.badge === 'Best Value' ? 'bg-accent text-accent-foreground' :
@@ -579,15 +581,15 @@ const Shop = () => {
                         />
                       </div>
                       <div className="card-body">
-                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{candle.brand}</p>
+                        <p className="card-brand">{candle.brand}</p>
                         <h3 className="card-title group-hover:text-clay transition-colors">{candle.name}</h3>
                         
                         {candle.rating && (
-                          <div className="flex items-center gap-1 mb-2 text-xs">
+                          <div className="card-rating">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
                             {candle.reviewCount && (
-                              <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
@@ -595,37 +597,39 @@ const Shop = () => {
                         <p className="card-desc text-text-secondary">{candle.description}</p>
                         
                         {candle.certifications && candle.certifications.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-4">
+                          <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                             {candle.certifications.slice(0, 2).map((cert, index) => (
-                              <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                              <span key={index} className="card-cert">
                                 {cert}
                               </span>
                             ))}
                           </div>
                         )}
                         
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
+                        <div className="card-footer flex items-center justify-between">
+                          <div className="flex items-center gap-1 sm:gap-2">
                             {candle.originalPrice && (
                               <>
-                                <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                <span className="card-price-original hidden sm:inline">${candle.originalPrice}</span>
+                                <span className="card-discount">
                                   -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
                                 </span>
                               </>
                             )}
-                            <span className="text-base font-semibold text-text-primary">${candle.price}</span>
+                            <span className="card-price text-text-primary">${candle.price}</span>
                           </div>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(candle.affiliateUrl, '_blank');
                             }}
                           >
-                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                            <span className="sm:hidden">Shop</span>
+                            <span className="hidden sm:inline">Shop Now</span>
+                            <ExternalLink className="w-3 h-3 ml-1 hidden sm:inline" />
                           </Button>
                         </div>
                       </div>
@@ -664,7 +668,7 @@ const Shop = () => {
                     >
                       <WishlistButton productId={supplement.id} />
                       {supplement.badge && (
-                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+                        <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
                           supplement.badge === 'Sale' ? 'bg-foreground text-background' :
                           supplement.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
                           supplement.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -681,21 +685,21 @@ const Shop = () => {
                         />
                       </div>
                       <div className="card-body">
-                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{supplement.category}</p>
+                        <p className="card-brand">{supplement.category}</p>
                         <h3 className="card-title group-hover:text-clay transition-colors">{supplement.name}</h3>
                         
                         {supplement.rating && (
-                          <div className="flex items-center gap-1 mb-2 text-xs">
+                          <div className="card-rating">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
                             {supplement.reviewCount && (
-                              <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
                         
                         <p className="card-desc text-text-secondary">{supplement.description}</p>
-                        <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
+                        <p className="hidden sm:block text-xs text-text-muted mb-3">{supplement.servings}</p>
                         
                         {supplement.certifications && supplement.certifications.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-4">
