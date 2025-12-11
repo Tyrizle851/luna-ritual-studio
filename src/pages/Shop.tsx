@@ -449,7 +449,7 @@ const Shop = () => {
                 {isLoading ? (
                   <ProductGridSkeleton />
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {getPaginatedItems(fashionProducts, fashionPage).map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -460,7 +460,7 @@ const Shop = () => {
                       >
                         <WishlistButton productId={product.id} />
                         {product.badge && (
-                          <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
+                          <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
                             product.badge === 'Sale' ? 'bg-foreground text-background' :
                             product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                             product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -469,63 +469,61 @@ const Shop = () => {
                             {product.badge}
                           </div>
                         )}
-                        <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-secondary">
+                        <div className="overflow-hidden aspect-[4/5] bg-secondary">
                           <img
                             src={product.image}
                             alt={product.name}
                             className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                           />
                         </div>
-                        <div className="card-body">
-                          <p className="card-brand">{product.brand}</p>
-                          <h3 className="card-title group-hover:text-clay transition-colors">{product.name}</h3>
+                        <div className="p-4">
+                          <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{product.brand}</p>
+                          <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{product.name}</h3>
                           
                           {product.rating && (
-                            <div className="card-rating">
+                            <div className="flex items-center gap-1 mb-3 text-xs">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
                               {product.reviewCount && (
-                                <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
+                                <span className="text-muted-foreground">({product.reviewCount.toLocaleString()})</span>
                               )}
                             </div>
                           )}
                           
-                          <p className="card-desc text-text-secondary">{product.description}</p>
+                          <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{product.description}</p>
                           
                           {product.certifications && product.certifications.length > 0 && (
-                            <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
+                            <div className="flex flex-wrap gap-1.5 mb-4">
                               {product.certifications.slice(0, 2).map((cert, index) => (
-                                <span key={index} className="card-cert">
+                                <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                   {cert}
                                 </span>
                               ))}
                             </div>
                           )}
                           
-                          <div className="card-footer flex items-center justify-between">
-                            <div className="flex items-center gap-1 sm:gap-2">
+                          <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                            <div className="flex items-center gap-2">
                               {product.originalPrice && (
                                 <>
-                                  <span className="card-price-original hidden sm:inline">${product.originalPrice}</span>
-                                  <span className="card-discount">
+                                  <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
                                     -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                   </span>
                                 </>
                               )}
-                              <span className="card-price text-text-primary">${product.price}</span>
+                              <span className="text-base font-semibold text-text-primary">${product.price}</span>
                             </div>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 window.open(product.affiliateUrl, '_blank');
                               }}
                             >
-                              <span className="sm:hidden">Shop</span>
-                              <span className="hidden sm:inline">Shop Now</span>
-                              <ExternalLink className="w-3 h-3 ml-1 hidden sm:inline" />
+                              Shop Now <ExternalLink className="w-3 h-3 ml-1" />
                             </Button>
                           </div>
                         </div>
@@ -552,8 +550,8 @@ const Shop = () => {
               
               {isLoading ? (
                 <ProductGridSkeleton />
-                ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(candles, candlesPage).map((candle) => (
                     <ProductCard 
                       key={candle.id}
@@ -564,7 +562,7 @@ const Shop = () => {
                     >
                       <WishlistButton productId={candle.id} />
                       {candle.badge && (
-                        <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
                           candle.badge === 'Sale' ? 'bg-foreground text-background' :
                           candle.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                           candle.badge === 'Best Value' ? 'bg-accent text-accent-foreground' :
@@ -580,56 +578,54 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="card-body">
-                        <p className="card-brand">{candle.brand}</p>
-                        <h3 className="card-title group-hover:text-clay transition-colors">{candle.name}</h3>
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{candle.brand}</p>
+                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{candle.name}</h3>
                         
                         {candle.rating && (
-                          <div className="card-rating">
+                          <div className="flex items-center gap-1 mb-3 text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
                             {candle.reviewCount && (
-                              <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground">({candle.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
                         
-                        <p className="card-desc text-text-secondary">{candle.description}</p>
+                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{candle.description}</p>
                         
                         {candle.certifications && candle.certifications.length > 0 && (
-                          <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
+                          <div className="flex flex-wrap gap-1.5 mb-4">
                             {candle.certifications.slice(0, 2).map((cert, index) => (
-                              <span key={index} className="card-cert">
+                              <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
                                 {cert}
                               </span>
                             ))}
                           </div>
                         )}
                         
-                        <div className="card-footer flex items-center justify-between">
-                          <div className="flex items-center gap-1 sm:gap-2">
+                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                          <div className="flex items-center gap-2">
                             {candle.originalPrice && (
                               <>
-                                <span className="card-price-original hidden sm:inline">${candle.originalPrice}</span>
-                                <span className="card-discount">
+                                <span className="text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
                                   -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
                                 </span>
                               </>
                             )}
-                            <span className="card-price text-text-primary">${candle.price}</span>
+                            <span className="text-base font-semibold text-text-primary">${candle.price}</span>
                           </div>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="btn-card-mobile border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(candle.affiliateUrl, '_blank');
                             }}
                           >
-                            <span className="sm:hidden">Shop</span>
-                            <span className="hidden sm:inline">Shop Now</span>
-                            <ExternalLink className="w-3 h-3 ml-1 hidden sm:inline" />
+                            Shop Now <ExternalLink className="w-3 h-3 ml-1" />
                           </Button>
                         </div>
                       </div>
@@ -657,7 +653,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(supplements, supplementsPage).map((supplement) => (
                     <ProductCard 
                       key={supplement.id}
@@ -668,7 +664,7 @@ const Shop = () => {
                     >
                       <WishlistButton productId={supplement.id} />
                       {supplement.badge && (
-                        <div className={`absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
+                        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
                           supplement.badge === 'Sale' ? 'bg-foreground text-background' :
                           supplement.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
                           supplement.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -677,29 +673,29 @@ const Shop = () => {
                           {supplement.badge}
                         </div>
                       )}
-                      <div className="overflow-hidden aspect-[3/4] sm:aspect-[4/5] bg-white">
+                      <div className="overflow-hidden aspect-[4/5] bg-white">
                         <img
                           src={supplement.image}
                           alt={supplement.name}
                           className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                         />
                       </div>
-                      <div className="card-body">
-                        <p className="card-brand">{supplement.category}</p>
-                        <h3 className="card-title group-hover:text-clay transition-colors">{supplement.name}</h3>
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{supplement.category}</p>
+                        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{supplement.name}</h3>
                         
                         {supplement.rating && (
-                          <div className="card-rating">
+                          <div className="flex items-center gap-1 mb-3 text-xs">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
                             {supplement.reviewCount && (
-                              <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
+                              <span className="text-muted-foreground">({supplement.reviewCount.toLocaleString()})</span>
                             )}
                           </div>
                         )}
                         
-                        <p className="card-desc text-text-secondary">{supplement.description}</p>
-                        <p className="hidden sm:block text-xs text-text-muted mb-3">{supplement.servings}</p>
+                        <p className="text-sm text-text-secondary leading-relaxed mb-2 line-clamp-2">{supplement.description}</p>
+                        <p className="text-xs text-text-muted mb-3">{supplement.servings}</p>
                         
                         {supplement.certifications && supplement.certifications.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-4">
@@ -802,7 +798,7 @@ const Shop = () => {
               {isLoading ? (
                 <ProductGridSkeleton />
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {getPaginatedItems(books, booksPage).map((book) => (
                     <ProductCard 
                       key={book.id}
@@ -831,10 +827,10 @@ const Shop = () => {
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
                       </div>
-                      <div className="card-body">
-                        <p className="text-xs text-text-muted mb-1 uppercase tracking-wider">{book.category}</p>
-                        <h3 className="card-title group-hover:text-clay transition-colors">{book.title}</h3>
-                        <p className="text-xs text-text-muted mb-1">by {book.author}</p>
+                      <div className="p-4">
+                        <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{book.category}</p>
+                        <h3 className="font-medium mb-1 text-base group-hover:text-clay transition-colors">{book.title}</h3>
+                        <p className="text-xs text-text-muted mb-2">by {book.author}</p>
                         
                         {book.rating && (
                           <div className="flex items-center gap-1 mb-2 text-xs">
@@ -846,7 +842,7 @@ const Shop = () => {
                           </div>
                         )}
                         
-                        <p className="card-desc text-text-secondary">{book.description}</p>
+                        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{book.description}</p>
                         
                         {book.awards && book.awards.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-3">

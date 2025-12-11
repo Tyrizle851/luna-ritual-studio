@@ -10,9 +10,7 @@
     "dev:server": "node server/index.js",
     "dev:full": "concurrently \"npm run dev:server\" \"npm run dev\"",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "printful:upload": "tsx automation/printful/upload-products.ts",
-    "printful:fetch-catalog": "tsx automation/printful/fetch-printful-catalog.ts"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -88,8 +86,6 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
-    "tsx": "^4.19.2",
-    "vite": "^5.4.19",
-    "dotenv": "^16.4.7"
+    "vite": "^5.4.19"
   }
 }

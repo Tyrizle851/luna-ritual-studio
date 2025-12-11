@@ -110,7 +110,7 @@ All colors MUST be HSL.
   }
   
   .container-custom {
-    @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
   .section-padding {
@@ -179,63 +179,5 @@ All colors MUST be HSL.
 
   .tab-transition[data-state="active"]::after {
     transform: scaleX(1);
-  }
-
-  /* Compact card body for denser mobile layouts */
-  .card-body {
-    @apply p-1.5 sm:p-4;
-  }
-  
-  /* Compact responsive title helper */
-  .card-title {
-    @apply font-medium mb-0.5 sm:mb-1 text-xs sm:text-base leading-tight line-clamp-2;
-  }
-  
-  /* Compact description helper - hidden on mobile */
-  .card-desc {
-    @apply hidden sm:block text-sm leading-snug mb-2 line-clamp-2;
-  }
-  
-  /* Brand text - smaller on mobile */
-  .card-brand {
-    @apply text-[10px] sm:text-xs text-text-muted uppercase tracking-wider mb-0.5;
-  }
-  
-  /* Rating row - compact on mobile */
-  .card-rating {
-    @apply text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2;
-  }
-  
-  /* Certification badges - smaller on mobile */
-  .card-cert {
-    @apply text-[8px] sm:text-[10px] px-1 sm:px-2 py-0.5 bg-primary/10 text-primary rounded-full;
-  }
-  
-  /* Price section - smaller on mobile */
-  .card-price {
-    @apply text-xs sm:text-base font-semibold;
-  }
-  
-  .card-price-original {
-    @apply text-[10px] sm:text-sm text-text-muted line-through;
-  }
-  
-  .card-discount {
-    @apply text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded;
-  }
-  
-  /* Compact button for mobile cards */
-  .btn-card-mobile {
-    @apply h-7 sm:h-9 px-1.5 sm:px-3 text-[10px] sm:text-xs;
-  }
-  
-  /* Mobile-first full-width CTA helper for product cards */
-  .btn-full-mobile {
-    @apply w-full sm:w-auto h-11;
-  }
-  
-  /* Compact card footer */
-  .card-footer {
-    @apply pt-1.5 sm:pt-3 border-t border-border/50;
   }
 }
