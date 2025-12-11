@@ -52,14 +52,14 @@ const CarouselCard = ({
         )}
       </div>
       
-      <div className="p-4">
+      <div className="card-body">
         {affirmation.category && (
           <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
             {affirmation.category}
           </span>
         )}
         
-        <h3 className="font-display text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
+        <h3 className="font-display text-base sm:text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
         
         {affirmation.rating && (
           <div className="flex items-center gap-1 mb-2">
@@ -73,7 +73,7 @@ const CarouselCard = ({
         )}
         
         {affirmation.description && (
-          <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+          <p className="card-desc text-text-secondary">{affirmation.description}</p>
         )}
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (

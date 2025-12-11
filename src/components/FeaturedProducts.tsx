@@ -184,9 +184,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
+            <div className="card-body">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredFashion.name}</h3>
               
               {featuredFashion.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -196,7 +196,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredFashion.description}</p>
+              <p className="card-desc text-text-secondary">{featuredFashion.description}</p>
               
               {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -246,9 +246,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
+            <div className="card-body">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredCandle.name}</h3>
               
               {featuredCandle.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -258,7 +258,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredCandle.description}</p>
+              <p className="card-desc text-text-secondary">{featuredCandle.description}</p>
               
               {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -303,9 +303,9 @@ export const FeaturedProducts = () => {
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="p-4">
+            <div className="card-body">
               <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{featuredBook.author}</p>
-              <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{featuredBook.title}</h3>
+              <h3 className="card-title group-hover:text-clay transition-colors">{featuredBook.title}</h3>
               
               {featuredBook.rating && (
                 <div className="flex items-center gap-1 mb-3">
@@ -315,7 +315,7 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{featuredBook.description}</p>
+              <p className="card-desc text-text-secondary">{featuredBook.description}</p>
               
               {featuredBook.awards && featuredBook.awards.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">

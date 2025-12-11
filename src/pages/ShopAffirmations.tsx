@@ -147,7 +147,7 @@ const ShopAffirmations = () => {
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
-                <div className="p-4">
+                <div className="card-body">
                   <div className="flex gap-1 mb-2">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
@@ -157,8 +157,8 @@ const ShopAffirmations = () => {
                       {affirmation.reviewCount && ` · ${(affirmation.reviewCount / 1000).toFixed(1)}K reviews`}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl mb-2">{affirmation.title}</h3>
-                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+                  <h3 className="font-display text-lg sm:text-xl mb-2">{affirmation.title}</h3>
+                  <p className="card-desc text-text-secondary">{affirmation.description}</p>
                   
                   {affirmation.certifications && affirmation.certifications.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mb-3">

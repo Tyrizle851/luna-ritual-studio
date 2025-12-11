@@ -50,9 +50,9 @@ export const AffirmationProductCard = ({
         )}
       </div>
       
-      <div className="p-4">
+      <div className="card-body">
         <p className="text-xs text-text-muted mb-2 uppercase tracking-wider">{affirmation.category}</p>
-        <h3 className="font-medium mb-2 text-base group-hover:text-clay transition-colors">{affirmation.title}</h3>
+        <h3 className="card-title group-hover:text-clay transition-colors">{affirmation.title}</h3>
         
         {affirmation.rating && (
           <div className="flex items-center gap-2 mb-2">
@@ -74,7 +74,7 @@ export const AffirmationProductCard = ({
           <p className="text-xs text-text-muted mb-2">{affirmation.socialProof}</p>
         )}
         
-        <p className="text-sm text-text-secondary leading-relaxed mb-3 line-clamp-2">{affirmation.description}</p>
+        <p className="card-desc text-text-secondary">{affirmation.description}</p>
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
