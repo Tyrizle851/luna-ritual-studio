@@ -158,6 +158,9 @@ const ShopAffirmations = () => {
                     <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
                       {(affirmation.rating || 4.9) >= 4.5 ? 'Top Rated' : (affirmation.rating || 4.9) >= 4.0 ? 'Popular' : 'Verified'}
                     </span>
+                    <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                      {affirmation.badge === 'Most Popular' ? 'Trending' : affirmation.reviewCount && affirmation.reviewCount > 500 ? 'Inspiring' : 'Digital'}
+                    </span>
                     {affirmation.reviewCount && <span className="hidden sm:inline text-[10px] sm:text-xs text-text-muted"> · {(affirmation.reviewCount / 1000).toFixed(1)}K reviews</span>}
                   </div>
                   <h3 className="font-display text-sm sm:text-lg lg:text-xl mb-1 sm:mb-2 line-clamp-2">{affirmation.title}</h3>

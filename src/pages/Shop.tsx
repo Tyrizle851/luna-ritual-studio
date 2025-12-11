@@ -269,26 +269,46 @@ const Shop = () => {
           ]} />
           
           {/* Hero Section */}
-          <div className="text-center mb-6 mt-2">
-            <motion.h1 
+          <div className="text-center mb-12 sm:mb-16 mt-4 sm:mt-6">
+            <motion.h1
               key={selectedTab}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="mb-2 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight flex items-center justify-center gap-3"
+              className="mb-3 sm:mb-4 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight"
             >
-              <span className="text-clay text-2xl sm:text-3xl">✦</span>
               Shop {tabLabels[selectedTab]}
             </motion.h1>
-            <motion.p 
+            <motion.p
               key={`${selectedTab}-subtitle`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-text-secondary text-sm sm:text-base max-w-xl mx-auto"
+              className="text-text-secondary text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-6 sm:mb-8"
             >
               {categorySubtitles[selectedTab]}
             </motion.p>
+
+            {/* Trust Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="flex flex-wrap justify-center gap-3 sm:gap-4"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <span className="text-clay text-sm">✓</span>
+                <span className="text-xs sm:text-sm text-text-secondary font-medium">Curated Selection</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <span className="text-clay text-sm">✓</span>
+                <span className="text-xs sm:text-sm text-text-secondary font-medium">Instant Digital Downloads</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <span className="text-clay text-sm">✓</span>
+                <span className="text-xs sm:text-sm text-text-secondary font-medium">Mindful Brands</span>
+              </div>
+            </motion.div>
           </div>
 
           {/* Tab Navigation with Counts */}
@@ -359,55 +379,55 @@ const Shop = () => {
             </div>
 
             {/* Desktop: Single row layout */}
-            <div className="hidden sm:flex justify-center w-full mb-6">
-              <TabsList className="inline-flex h-auto items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-                <TabsTrigger 
-                  value="fashion" 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            <div className="hidden sm:flex justify-center w-full mb-8">
+              <TabsList className="inline-flex h-auto items-center justify-center rounded-lg bg-white border border-border/40 p-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                <TabsTrigger
+                  value="fashion"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
                 >
                   <Shirt className="h-4 w-4" />
                   <span>Fashion</span>
-                  <span className="text-xs opacity-60">({getCategoryCounts().fashion})</span>
+                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().fashion}</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="candles" 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                <TabsTrigger
+                  value="candles"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
                 >
                   <Flame className="h-4 w-4" />
                   <span>Candles</span>
-                  <span className="text-xs opacity-60">({getCategoryCounts().candles})</span>
+                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().candles}</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="supplements" 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                <TabsTrigger
+                  value="supplements"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
                 >
                   <Pill className="h-4 w-4" />
                   <span>Supplements</span>
-                  <span className="text-xs opacity-60">({getCategoryCounts().supplements})</span>
+                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().supplements}</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="books" 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                <TabsTrigger
+                  value="books"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
                 >
                   <BookOpen className="h-4 w-4" />
                   <span>Books</span>
-                  <span className="text-xs opacity-60">({getCategoryCounts().books})</span>
+                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().books}</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="affirmations" 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                <TabsTrigger
+                  value="affirmations"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
                 >
                   <Sparkles className="h-4 w-4" />
                   <span>Affirmations</span>
-                  <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
+                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().affirmations}</span>
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            {/* Search and Sort Controls - Inline & Minimal */}
-            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between mb-6 mt-4">
-              <div className="flex-1 max-w-xl">
-                <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
+            {/* Search and Sort Controls */}
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-8">
+              <div className="flex-1 max-w-2xl">
+                <SearchBar onSearch={setSearchQuery} placeholder="Search collection..." />
               </div>
               <div className="flex items-center gap-3">
                 <div className="md:hidden">
@@ -426,10 +446,10 @@ const Shop = () => {
             </div>
 
             {/* Decorative Separator */}
-            <div className="flex items-center justify-center mb-8">
-              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent w-full max-w-md"></div>
-              <span className="mx-4 text-clay text-sm">✦</span>
-              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent w-full max-w-md"></div>
+            <div className="flex items-center justify-center mb-10">
+              <div className="h-px bg-gradient-to-r from-transparent via-clay-dark/30 to-clay-dark/30 flex-1 max-w-[160px]"></div>
+              <div className="w-2 h-2 rotate-45 border border-clay-dark/40 bg-background mx-4"></div>
+              <div className="h-px bg-gradient-to-l from-transparent via-clay-dark/30 to-clay-dark/30 flex-1 max-w-[160px]"></div>
             </div>
 
           <AnimatePresence mode="wait">
@@ -441,9 +461,9 @@ const Shop = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
-                <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+                <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                  Showing {getPaginatedItems(fashionProducts, fashionPage).length} of {getFilteredCount(fashionProducts)} items
+                  Showing {getPaginatedItems(fashionProducts, fashionPage).length} of {getFilteredCount(fashionProducts)} curated finds
                 </p>
                 
                 {isLoading ? (
@@ -481,11 +501,14 @@ const Shop = () => {
                           <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{product.name}</h3>
 
                           {product.rating && (
-                            <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
+                            <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
                               <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
                                 {product.rating >= 4.5 ? 'Top Rated' : product.rating >= 4.0 ? 'Popular' : 'Verified'}
+                              </span>
+                              <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                                {product.badge === 'Best Seller' ? 'Trending' : product.reviewCount && product.reviewCount > 500 ? 'Fan Favorite' : 'Quality Pick'}
                               </span>
                               {product.reviewCount && (
                                 <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
@@ -552,9 +575,9 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(candles, candlesPage).length} of {getFilteredCount(candles)} items
+                Showing {getPaginatedItems(candles, candlesPage).length} of {getFilteredCount(candles)} curated finds
               </p>
               
               {isLoading ? (
@@ -592,11 +615,14 @@ const Shop = () => {
                         <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{candle.name}</h3>
 
                         {candle.rating && (
-                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
                             <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
                               {candle.rating >= 4.5 ? 'Top Rated' : candle.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
+                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {candle.badge === 'Best Seller' ? 'Trending' : candle.reviewCount && candle.reviewCount > 500 ? 'Fan Favorite' : 'Artisan'}
                             </span>
                             {candle.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
@@ -663,9 +689,9 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(supplements, supplementsPage).length} of {getFilteredCount(supplements)} items
+                Showing {getPaginatedItems(supplements, supplementsPage).length} of {getFilteredCount(supplements)} curated finds
               </p>
               
               {isLoading ? (
@@ -703,11 +729,14 @@ const Shop = () => {
                         <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{supplement.name}</h3>
 
                         {supplement.rating && (
-                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
                             <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
                               {supplement.rating >= 4.5 ? 'Top Rated' : supplement.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
+                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {supplement.badge === 'Best Value' ? 'Premium' : supplement.reviewCount && supplement.reviewCount > 500 ? 'Trusted' : 'Wellness'}
                             </span>
                             {supplement.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
@@ -777,9 +806,9 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(affirmations, affirmationsPage).length} of {getFilteredCount(affirmations)} items
+                Showing {getPaginatedItems(affirmations, affirmationsPage).length} of {getFilteredCount(affirmations)} curated finds
               </p>
               
               {isLoading ? (
@@ -815,9 +844,9 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2">
+              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(books, booksPage).length} of {getFilteredCount(books)} items
+                Showing {getPaginatedItems(books, booksPage).length} of {getFilteredCount(books)} curated finds
               </p>
               
               {isLoading ? (
@@ -858,11 +887,14 @@ const Shop = () => {
                         <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 truncate">by {book.author}</p>
 
                         {book.rating && (
-                          <div className="flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2 text-[10px] sm:text-xs">
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{book.rating}</span>
                             <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
                               {book.rating >= 4.5 ? 'Top Rated' : book.rating >= 4.0 ? 'Popular' : 'Verified'}
+                            </span>
+                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {book.badge === 'Best Seller' ? 'Bestseller' : book.reviewCount && book.reviewCount > 500 ? 'Must Read' : 'Curated'}
                             </span>
                             {book.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({book.reviewCount.toLocaleString()})</span>
