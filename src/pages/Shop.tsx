@@ -503,17 +503,43 @@ const Shop = () => {
                           )}
                           
                           <div className="card-footer">
-                            <Button
-                              size="sm"
-                              variant="solid"
-                              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                window.open(product.affiliateUrl, '_blank');
-                              }}
-                            >
-                              Shop Now <ExternalLink className="w-3 h-3 ml-2" />
-                            </Button>
+                            <div className="hidden sm:flex items-center justify-between w-full">
+                              <div className="flex items-center gap-2">
+                                {product.originalPrice && (
+                                  <>
+                                    <span className="text-sm text-text-muted line-through">${product.originalPrice}</span>
+                                    <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                      -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                                    </span>
+                                  </>
+                                )}
+                                <span className="text-base font-semibold text-text-primary">${product.price}</span>
+                              </div>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  window.open(product.affiliateUrl, '_blank');
+                                }}
+                              >
+                                Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                              </Button>
+                            </div>
+                            <div className="sm:hidden">
+                              <Button
+                                size="sm"
+                                variant="solid"
+                                className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  window.open(product.affiliateUrl, '_blank');
+                                }}
+                              >
+                                Shop Now <ExternalLink className="w-3 h-3 ml-2" />
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </ProductCard>
@@ -594,17 +620,33 @@ const Shop = () => {
                         )}
                         
                         <div className="card-footer">
-                          <Button
-                            size="sm"
-                            variant="solid"
-                            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              window.open(candle.affiliateUrl, '_blank');
-                            }}
-                          >
-                            Shop Now <ExternalLink className="w-3 h-3 ml-2" />
-                          </Button>
+                          <div className="hidden sm:flex items-center justify-between w-full">
+                            <span className="font-semibold text-foreground">${candle.price.toFixed(2)}</span>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              asChild
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                                Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                              </a>
+                            </Button>
+                          </div>
+                          <div className="sm:hidden">
+                            <Button
+                              size="sm"
+                              variant="solid"
+                              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                              asChild
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                                Shop Now <ExternalLink className="ml-2 h-3 w-3" />
+                              </a>
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </ProductCard>
@@ -686,21 +728,51 @@ const Shop = () => {
                         )}
                         
                         <div className="card-footer">
-                          <Button
-                            size="sm"
-                            variant="solid"
-                            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
-                            }}
-                          >
-                            {supplement.affiliateUrl ? (
-                              <>Shop Now <ExternalLink className="ml-2 h-3 w-3" /></>
-                            ) : (
-                              <>Add to Cart <ShoppingCart className="ml-2 h-3 w-3" /></>
-                            )}
-                          </Button>
+                          <div className="hidden sm:flex items-center justify-between w-full">
+                            <div className="flex items-center gap-2">
+                              {supplement.originalPrice && (
+                                <>
+                                  <span className="text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                    -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
+                                  </span>
+                                </>
+                              )}
+                              <span className="text-base font-semibold text-text-primary">${supplement.price}</span>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
+                              }}
+                            >
+                              {supplement.affiliateUrl ? (
+                                <>Shop Now <ExternalLink className="ml-1 h-3 w-3" /></>
+                              ) : (
+                                <>Add to Cart <ShoppingCart className="ml-1 h-3 w-3" /></>
+                              )}
+                            </Button>
+                          </div>
+                          <div className="sm:hidden">
+                            <Button
+                              size="sm"
+                              variant="solid"
+                              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
+                              }}
+                            >
+                              {supplement.affiliateUrl ? (
+                                <>Shop Now <ExternalLink className="ml-2 h-3 w-3" /></>
+                              ) : (
+                                <>Add to Cart <ShoppingCart className="ml-2 h-3 w-3" /></>
+                              )}
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </ProductCard>
@@ -822,17 +894,43 @@ const Shop = () => {
                         )}
                         
                         <div className="card-footer">
-                          <Button
-                            size="sm"
-                            variant="solid"
-                            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              window.open(book.affiliateUrl, '_blank');
-                            }}
-                          >
-                            Shop Now <ExternalLink className="w-3 h-3 ml-2" />
-                          </Button>
+                          <div className="hidden sm:flex items-center justify-between w-full">
+                            <div className="flex items-center gap-2">
+                              {book.originalPrice && (
+                                <>
+                                  <span className="text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
+                                  <span className="text-[10px] px-1.5 py-0.5 bg-foreground text-background rounded">
+                                    -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
+                                  </span>
+                                </>
+                              )}
+                              <span className="text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(book.affiliateUrl, '_blank');
+                              }}
+                            >
+                              Shop Now <ExternalLink className="w-3 h-3 ml-1" />
+                            </Button>
+                          </div>
+                          <div className="sm:hidden">
+                            <Button
+                              size="sm"
+                              variant="solid"
+                              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(book.affiliateUrl, '_blank');
+                              }}
+                            >
+                              Shop Now <ExternalLink className="w-3 h-3 ml-2" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </ProductCard>

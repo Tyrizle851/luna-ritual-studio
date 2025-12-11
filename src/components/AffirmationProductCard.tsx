@@ -87,14 +87,30 @@ export const AffirmationProductCard = ({
         )}
         
         <div className="card-footer">
-          <Button
-            size="sm"
-            variant="solid"
-            className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-            onClick={onAddToCart}
-          >
-            View Options
-          </Button>
+          <div className="hidden sm:flex items-center justify-between w-full">
+            <div className="flex flex-col">
+              <span className="text-base font-semibold text-text-primary">${affirmation.price.toFixed(2)}</span>
+              <span className="text-[10px] text-text-muted">Digital Download</span>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+              onClick={onAddToCart}
+            >
+              View Options
+            </Button>
+          </div>
+          <div className="sm:hidden">
+            <Button
+              size="sm"
+              variant="solid"
+              className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+              onClick={onAddToCart}
+            >
+              View Options
+            </Button>
+          </div>
         </div>
       </div>
     </ProductCard>

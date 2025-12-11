@@ -209,17 +209,43 @@ export const FeaturedProducts = () => {
               )}
               
               <div className="card-footer">
-                <Button
-                  size="sm"
-                  variant="solid"
-                  className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop Now <ExternalLink className="ml-2 h-3 w-3" />
-                  </a>
-                </Button>
+                <div className="hidden sm:flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    {featuredFashion.originalPrice && (
+                      <>
+                        <span className="text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
+                        <span className="text-xs bg-foreground text-background px-1.5 py-0.5 rounded font-medium">
+                          -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
+                        </span>
+                      </>
+                    )}
+                    <span className="font-semibold text-foreground">${featuredFashion.price.toFixed(2)}</span>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300"
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                      Shop Now <ExternalLink className="ml-1 h-3 w-3" />
+                    </a>
+                  </Button>
+                </div>
+                <div className="sm:hidden">
+                  <Button
+                    size="sm"
+                    variant="solid"
+                    className="btn-full-mobile bg-clay text-white hover:bg-clay-dark transition-all duration-200"
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                      Shop Now <ExternalLink className="ml-2 h-3 w-3" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </ProductCard>
