@@ -28,6 +28,7 @@ import AdminAffirmationGen from "./pages/AdminAffirmationGen";
 import AdminAffirmationDigital from "./pages/AdminAffirmationDigital";
 import AdminImageReview from "./pages/AdminImageReview";
 import AdminAffirmationMockups from "./pages/AdminAffirmationMockups";
+import ImageRandomizer from "./pages/ImageRandomizer";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const AnimatedRoutes = () => {
         <Route path="/admin/affirmation-digital" element={<AdminAffirmationDigital />} />
         <Route path="/admin/image-review" element={<AdminImageReview />} />
         <Route path="/admin/affirmation-mockups" element={<AdminAffirmationMockups />} />
+        <Route path="/admin/image-randomizer" element={<ImageRandomizer />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
