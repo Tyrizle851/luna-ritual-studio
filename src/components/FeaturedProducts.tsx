@@ -8,7 +8,6 @@ import { BookModal } from "@/components/BookModal";
 import { SupplementModal } from "@/components/SupplementModal";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
-import { RandomProductImage } from "@/components/RandomProductImage";
 import { FashionProduct } from "@/data/fashion";
 import { Candle } from "@/data/candles";
 import { Book } from "@/data/books";
@@ -223,10 +222,8 @@ export const FeaturedProducts = () => {
             )}
             <WishlistButton productId={featuredFashion.id} />
             <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <RandomProductImage
-                productId={featuredFashion.id}
-                productCategory="fashion"
-                fallbackImage={featuredFashion.image}
+              <img
+                src={featuredFashion.image}
                 alt={featuredFashion.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
@@ -289,10 +286,8 @@ export const FeaturedProducts = () => {
           <ProductCard onClick={handleCandleClick} className="animate-fade-up">
             <WishlistButton productId={featuredCandle.id} />
             <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <RandomProductImage
-                productId={featuredCandle.id}
-                productCategory="candles"
-                fallbackImage={featuredCandle.image}
+              <img
+                src={featuredCandle.image}
                 alt={featuredCandle.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
@@ -350,10 +345,8 @@ export const FeaturedProducts = () => {
             )}
             <WishlistButton productId={featuredBook.id} />
             <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <RandomProductImage
-                productId={featuredBook.id}
-                productCategory="books"
-                fallbackImage={featuredBook.image}
+              <img
+                src={featuredBook.image}
                 alt={featuredBook.title}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
@@ -421,10 +414,8 @@ export const FeaturedProducts = () => {
             )}
             <WishlistButton productId={featuredSupplement.id} />
             <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <RandomProductImage
-                productId={featuredSupplement.id}
-                productCategory="supplements"
-                fallbackImage={featuredSupplement.image}
+              <img
+                src={featuredSupplement.image}
                 alt={featuredSupplement.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
