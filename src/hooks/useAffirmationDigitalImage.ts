@@ -10,12 +10,9 @@ export function clearDigitalImageCache() {
 }
 
 export function useAffirmationDigitalImage(productId: string | null): DigitalImageResult {
-  // Synchronous lookup - no state or effects needed since all images are local
-  const imageUrl = productId && hasLocalDigitalImage(productId) 
-    ? getLocalDigitalImage(productId) 
-    : null;
-
-  return { imageUrl, isLoading: false };
+  // Return null to force using the randomized images from affirmations.ts
+  // (canvas/unframed/framed variations instead of digital)
+  return { imageUrl: null, isLoading: false };
 }
 
 // Bulk fetch - returns all local images immediately (no async needed)

@@ -502,7 +502,7 @@ export const books: Book[] = [
     author: "Patrick Rothfuss",
     price: 10.99,
     originalPrice: 18.99,
-    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-014/lifestyle-1764877293053.png",
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-014/styled-1764877350879.png",
     description: "This is the riveting first-person narrative of Kvothe, a young man who grows to be one of the most notorious magicians his world has ever seen. From his childhood in a troupe of traveling players, to years spent as a near-feral orphan in a crime-ridden city.",
     category: "Epic Fantasy",
     affiliateUrl: "https://www.amazon.com/dp/0756405890?tag=lunarituals10-20",

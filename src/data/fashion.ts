@@ -337,7 +337,7 @@ export const fashionProducts: FashionProduct[] = [
     category: "Jewelry",
     description: "Elevate your everyday style with this delicate gold plated cross necklace. Featuring sparkling cubic zirconia crystals on a dainty chain, it adds a touch of refined elegance to any outfit. Perfect for layering or wearing alone, this versatile piece transitions seamlessly from day to night.",
     price: 13.95,
-    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-005/lifestyle-1764870352138.png",
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-005/styled-1764870410704.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/PAVOI-Yellow-Necklace-Pendant-Necklaces/dp/B07QTJ1WWL?crid=3TII9MRA1XD3L&dib=eyJ2IjoiMSJ9.xfZVj4M-vgegbZDgsGiLsCqhgYnBg0DhBecyK6qQOSRrGqJp7tHc0Ta5SheU-Xv9TXWmk3QehPU7i-49NC1zdLdbfxYYndq5XwbWJFpi3Zs9w8TkJolrmYuukt2mOSDVZABuV5XyF-mHXdDXRr5bzVG-XjXaoAu1wFV_uJcFA5DSF8jw71t8oKUOyhiiZhqLyvmwkvMLeXpF8W-lmzTXr-yd2Zh8etOigxCZfc6gspBO97xDV8Wp9zb61AOrmQrwxfa08dfuL9EUa5yquboc9jVtg4Rd8LbZm3j6HdN0oVU.IqmgDfpFQ5_vGOCbEViIy1o92SSaCo-G5cm8LnbFWyo&dib_tag=se&keywords=womens%2Bnecklace&qid=1763481278&sprefix=womens%2Bnecklace%2Caps%2C172&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f4a083c9fcaae1f1ffadec7d2691c12&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details

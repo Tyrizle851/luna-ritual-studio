@@ -171,8 +171,8 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
       {/* Scroll Container */}
       <div
         ref={containerRef}
-        className="flex gap-6 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-16 md:px-20 snap-x snap-mandatory touch-pan-x"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+        className="flex gap-6 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-16 md:px-20 snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {affirmations.map((affirmation, index) => (
           <div 
