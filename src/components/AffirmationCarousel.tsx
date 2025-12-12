@@ -7,14 +7,14 @@ import { ProductModal } from "@/components/ProductModal";
 import { ProductCard } from "@/components/ProductCard";
 import { toast } from "sonner";
 import { Affirmation } from "@/data/affirmations";
-import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
+import { useRandomProductImageWithRefresh } from "@/hooks/useRandomProductImage";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface AffirmationCarouselProps {
   affirmations: Affirmation[];
 }
 
-// Individual carousel card with dynamic image loading
+// Individual carousel card with random image
 const CarouselCard = ({ 
   affirmation, 
   onCardClick 
@@ -22,12 +22,21 @@ const CarouselCard = ({
   affirmation: Affirmation; 
   onCardClick: () => void;
 }) => {
-  // Use generated digital image from storage, fallback to local asset
-  const { imageUrl, isLoading } = useAffirmationDigitalImage(affirmation.id);
-  const displayImage = imageUrl || affirmation.image;
+  const { imageUrl, isLoading, refreshImage, hasMultipleImages } = useRandomProductImageWithRefresh(
+    affirmation.id,
+    "affirmations",
+    affirmation.image
+  );
+  
+  const handleClick = () => {
+    if (hasMultipleImages) {
+      refreshImage();
+    }
+    onCardClick();
+  };
   
   return (
-    <ProductCard onClick={onCardClick}>
+    <ProductCard onClick={handleClick}>
       <WishlistButton productId={affirmation.id} />
       
       {affirmation.badge && (
@@ -41,7 +50,7 @@ const CarouselCard = ({
           <Skeleton className="w-full h-full" />
         ) : (
           <img
-            src={displayImage}
+            src={imageUrl}
             alt={affirmation.title}
             loading="lazy"
             decoding="async"

@@ -11,6 +11,7 @@ import { SortFilter, SortOption } from "@/components/SortFilter";
 import { WishlistButton } from "@/components/WishlistButton";
 import { MobileFilterDrawer } from "@/components/MobileFilterDrawer";
 import { ProductGridSkeleton } from "@/components/ProductSkeleton";
+import { RandomProductImage } from "@/components/RandomProductImage";
 import {
   Pagination,
   PaginationContent,
@@ -475,8 +476,10 @@ const Shop = () => {
                           </div>
                         )}
                         <div className="overflow-hidden aspect-[4/5] bg-secondary">
-                          <img
-                            src={product.image}
+                          <RandomProductImage
+                            productId={product.id}
+                            productCategory="fashion"
+                            fallbackImage={product.image}
                             alt={product.name}
                             className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                           />
@@ -587,8 +590,10 @@ const Shop = () => {
                         </div>
                       )}
                       <div className="overflow-hidden aspect-[4/5] bg-secondary">
-                        <img
-                          src={candle.image}
+                        <RandomProductImage
+                          productId={candle.id}
+                          productCategory="candles"
+                          fallbackImage={candle.image}
                           alt={candle.name}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />
@@ -699,8 +704,10 @@ const Shop = () => {
                         </div>
                       )}
                       <div className="overflow-hidden aspect-[4/5] bg-white">
-                        <img
-                          src={supplement.image}
+                        <RandomProductImage
+                          productId={supplement.id}
+                          productCategory="supplements"
+                          fallbackImage={supplement.image}
                           alt={supplement.name}
                           className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
                         />
@@ -852,8 +859,10 @@ const Shop = () => {
                         </div>
                       )}
                       <div className="overflow-hidden aspect-[3/4] bg-secondary">
-                        <img
-                          src={book.image}
+                        <RandomProductImage
+                          productId={book.id}
+                          productCategory="books"
+                          fallbackImage={book.image}
                           alt={book.title}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                         />

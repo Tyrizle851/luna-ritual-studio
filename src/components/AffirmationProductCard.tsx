@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
 import { Affirmation, AFFIRMATION_FORMAT_PRICING } from "@/data/affirmations";
-import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
-import { Skeleton } from "@/components/ui/skeleton";
+import { RandomProductImage } from "@/components/RandomProductImage";
 
 interface AffirmationProductCardProps {
   affirmation: Affirmation;
@@ -17,10 +16,6 @@ export const AffirmationProductCard = ({
   onCardClick, 
   onAddToCart 
 }: AffirmationProductCardProps) => {
-  // Use generated digital image from storage, fallback to static image
-  const { imageUrl, isLoading } = useAffirmationDigitalImage(affirmation.id);
-  const displayImage = imageUrl || affirmation.image;
-  
   return (
     <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
@@ -37,17 +32,13 @@ export const AffirmationProductCard = ({
       )}
       
       <div className="overflow-hidden aspect-[4/5] bg-secondary">
-        {isLoading ? (
-          <Skeleton className="w-full h-full" />
-        ) : (
-          <img
-            src={displayImage}
-            alt={affirmation.title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-          />
-        )}
+        <RandomProductImage
+          productId={affirmation.id}
+          productCategory="affirmations"
+          fallbackImage={affirmation.image}
+          alt={affirmation.title}
+          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+        />
       </div>
       
       <div className="p-2 sm:p-3 lg:p-4">
