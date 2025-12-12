@@ -78,7 +78,7 @@ export const fashionProducts: FashionProduct[] = [
     badge: "#1 Best Seller",
     sizes: ["6", "7", "8", "9", "10", "11"],
     colors: ["Black", "Grey", "Brown"],
-    image: productOverKneeBoots,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-014/lifestyle-1764869961961.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/DREAM-PAIRS-Womens-Laurence-Chunky/dp/B071K971NT?crid=1XC8BGG3LBDI8&dib=eyJ2IjoiMSJ9._WcQbEU6v6HOUhUG_kIJ7ALyxbH9zchjElZTzt_5AUgzY6NtdIQaokzOAEz-bFz4-jCCckdIk4wQta7fz_pCEGhpO7Fk4GctdCnNOhTuJcgbswIggIsDyD9yruVON1ao9u1RRmfoSbpCCLAHvOE5q1iJUG79hCJlMS_tNaxJtUipyegRocVZd4Q3hIBE3s7GP1rcEZrZdD5Z-VNaXjrBl3FcwBvX9Ndbq5ZSu2a1QPQgDHnIyCEmuaChCJTnhKYbxCHJeCwZN1UjH9YWaMhFtP2NZfKxsvqqxE2JuZNmJ4E.Woi_1G3-bocty7p5xUui2whfXYB7wkfm6etB-rl550Q&dib_tag=se&keywords=womens%2Bfall%2Bboots&qid=1763584235&sprefix=womens%2Bfall%2Bboots%2Caps%2C157&sr=8-30&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=27629330f7f08d52e40627ffd9c20288&language=en_US&ref_=as_li_ss_tl&psc=1",
     rating: 4.5,
@@ -130,7 +130,7 @@ export const fashionProducts: FashionProduct[] = [
     badge: "#1 Best Seller",
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Apricot", "Army Green", "Black", "Brown", "Coffee", "Cream", "Grey"],
-    image: productChunkyCardigan,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-002/styled-1764870146743.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/PRETTYGARDEN-Sweater-Classic-Cardigan-Outwear/dp/B0B8D279W3?crid=9SQBFTZV30SO&dib=eyJ2IjoiMSJ9.mRR4D3go6QY88pPzkR6oi5ZGGbsus9B7iY71D4AR8OK_GvjK_7GCsjfAAXCTMtx4HmoKIbacCTaxNzI_4w8iZDMa0mlFmQL3w2S73Bxjls1BUOiAUQsl-r_huttnscab5X0DI7VxYhm2kXwiDVkJ3eB_2MXwDu-Q1975vlrTt0eYB65mQLU6CAiJoEw3eZXtHDVtVQT9ZidGxQuTNKmlX0jl0Wx3IKCBWJqC-ARlzYO953-Zfy0PJ-7sK6FE8Rw3rPpvGmtOS7060ii3J8J_6eTCr6_rmURrgNHEQ2gSUcI.bulsQUjV7Ps6yW2WzM_uErieV-3Es9mXSR6tPo6lPCM&dib_tag=se&keywords=womens%2Bcardigan&qid=1763479312&sprefix=womens%2Bcartigan%2Caps%2C143&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=8da2b55e55dcb08c7bd054687628fdd3&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -184,7 +184,7 @@ export const fashionProducts: FashionProduct[] = [
     badge: "Sale",
     sizes: ["Small", "Medium", "Large", "X-Large", "XX-Large", "3X-Large"],
     colors: ["Khaki", "Black", "Leopard", "Navy", "Cream", "Camel", "White", "Wine Red", "Blue", "Floral", "Burgundy", "Brown", "Pink", "Mint Green", "Yellow"],
-    image: productLaceBlouse,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-001/styled-1764870244533.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/AUTOMET-Business-Fashion-Outfits-Clothes/dp/B0D4ZDZL1P?crid=121K3C56SJU6H&dib=eyJ2IjoiMSJ9.ISVSYm4XBBBIQbD6H-LRPUk0jkQgc6xar8_761hOilhqoOKxWH4LN041XB4KL0jcDYS2ks-mfTx7-aW1ROv6PqO88tHTWIIbH4QSdwWGSynZah7GJ6H8-KXfLamh1AhqHo0Z6kSyjelL1Q5t_ZCNoxko8iLEj5RjHYLdQORC1dPJ566s8cel_JHop28cVlsFKRofWfRJ0WuFIpCjEpOi0GtXHHLb7qJJu5RgYIX-7pIMCl4IG6h3xP25YhZiNPgA3F4o_1-VBntEnOHEpgBodpLCanXHh_LuKrkEnmVSx-0.aAmqdn5Wbw5BRTHSHVMeTOhqIqXcHybDnrcHdtPD--w&dib_tag=se&keywords=womens%2Bfashion%2Bfall&qid=1763477433&sprefix=womens%2Bfashion%2Bfall%2Caps%2C130&sr=8-9&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=0d98f240e02cd39dbb52788c2db9d46d&language=en_US&ref_=as_li_ss_tl&psc=1",
     rating: 4.4,
@@ -234,7 +234,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Timeless elegance meets everyday functionality in this retro-inspired quilted bag. The soft clutch underarm design with gold hardware accents makes it perfect for both casual outings and refined occasions. A versatile piece that elevates any outfit.",
     price: 22.99,
     colors: ["Beige", "Black", "Brown"],
-    image: productQuiltedShoulderBag,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-003/styled-1764870323888.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/KKXIU-Shoulder-Handbags-Underarm-Removable/dp/B0FPC6W3G4?crid=1R95GH428BV72&dib=eyJ2IjoiMSJ9.VagrqrTvO8qHED0uKNmFdNDuN-pKo9LIKtQattDX9HkbTc4wlJvpdzLg6vwaXooGltJcmsXI8RPQaoodFWOqDCRu4OG5Lg9iMk7_M2csS3Y8hCeWKzDjaVB9ybVaLluPXGE28C0xVnwWqQJx-4YsmHDYw-oRVMaJuM1ueP5TU6oGuxBZnz5ihM6z5pl1yuIBm5BETVN8YkU6EP0rMJ2wGwejELz8reN2m_QyPrkquww9n3RLYk5sPtsqtDsMkLUpNk0IVwT4gomT74FdI6jttT_Jl7K7xHQlhQMY1Icq47A.aziBcO8_lO6-gnXPH7qrw3CMEqlU6x7d9Umpyg0rsZw&dib_tag=se&keywords=womens%2Bpurse&qid=1763479663&sprefix=womens%2Bpurse,aps,159&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=4a75c50323de381d60a8bbb08e030aaf&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -288,7 +288,7 @@ export const fashionProducts: FashionProduct[] = [
     badge: "Top Pick",
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: ["Champagne Gold", "Black", "Navy", "Leopard Print"],
-    image: productSilkSleepSet,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-004/styled-1764866641768.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?crid=1YX5CTOPT4Q7O&dib=eyJ2IjoiMSJ9.ndgDJZHyWeBr6KTIE90C54EBFDQ0AReqUP4UJBcuvQUKsr0DfECiC78VKM92bv1vafSHhk-alB8OtmWcvKzSZfv6V_Vr-1p4CG7zuTYyfImjEj7F-4e9Vwxi-9k7x50V1LFfkLy3kA-s4x2YD37Bq9XDnEff72ReNPhWer3fXmLLHLMdy6QeQ3Y_65nkC0y5xo9bbkmwnTgy70cXqu2cLIJJNEsyY6WBZ38JtY1yai4rSHfMP5LVeVKL6POctaCmJS3LllLtSmhzZsg1-eqWvp-AIQgauYgSCoaBP99Iowg.TPoekM7TRMTe9mpt2pGA6uSfLhJLtw-5GW_MnW8lP9g&dib_tag=se&keywords=womens%2Bsilk%2Bpajamas%2Bset&qid=1763480737&sprefix=womens%2Bsilk,aps,151&sr=8-8&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=d0004d1b857c6f4a0d375044662e01c3&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -337,7 +337,7 @@ export const fashionProducts: FashionProduct[] = [
     category: "Jewelry",
     description: "Elevate your everyday style with this delicate gold plated cross necklace. Featuring sparkling cubic zirconia crystals on a dainty chain, it adds a touch of refined elegance to any outfit. Perfect for layering or wearing alone, this versatile piece transitions seamlessly from day to night.",
     price: 13.95,
-    image: productGoldNecklace,
+    image: "/src/assets/product-gold-necklace.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/PAVOI-Yellow-Necklace-Pendant-Necklaces/dp/B07QTJ1WWL?crid=3TII9MRA1XD3L&dib=eyJ2IjoiMSJ9.xfZVj4M-vgegbZDgsGiLsCqhgYnBg0DhBecyK6qQOSRrGqJp7tHc0Ta5SheU-Xv9TXWmk3QehPU7i-49NC1zdLdbfxYYndq5XwbWJFpi3Zs9w8TkJolrmYuukt2mOSDVZABuV5XyF-mHXdDXRr5bzVG-XjXaoAu1wFV_uJcFA5DSF8jw71t8oKUOyhiiZhqLyvmwkvMLeXpF8W-lmzTXr-yd2Zh8etOigxCZfc6gspBO97xDV8Wp9zb61AOrmQrwxfa08dfuL9EUa5yquboc9jVtg4Rd8LbZm3j6HdN0oVU.IqmgDfpFQ5_vGOCbEViIy1o92SSaCo-G5cm8LnbFWyo&dib_tag=se&keywords=womens%2Bnecklace&qid=1763481278&sprefix=womens%2Bnecklace%2Caps%2C172&sr=8-4&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f4a083c9fcaae1f1ffadec7d2691c12&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -390,7 +390,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 21.97,
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     colors: ["Dark Denim", "Blue", "Black Denim"],
-    image: productCottonTee,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-006/lifestyle-1764870441589.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Womens-Stretch-Distressed-Jeggings-Pockets/dp/B079LVFJGD?crid=3NE6PB167JEZC&dib=eyJ2IjoiMSJ9.U8CzB686tvJ3fA0AA7uEZoZ-nDrdED_f8xsZtWAdRnNrj93o1_jX6eBxspEjVbm0H30RbD8ruICI-9bbf3FvrqU8lSeI5rHfe0mJS8wSsozt8Gq5XsXedF2MCYo1XIM9ypwQktJ8N5huniqGYp8RDdTTAJJcRcugV2rC3XKrJ24CI4J75wmIvqcuAlbNgIS42cu247bQgVffbjaUeEsEQvc94Dd-m28X9-fkA3U78xO0ypGO6e150ZuHifrA87ciIOnatVKNSc3rrw2pZIgfm8SQcWTNBB8DCGts-8bd9pg.SodubwEn5Dczd05Dn1UvIJWWCAonVe66EWK7NXQkg8I&dib_tag=se&keywords=womens%2Bdenim%2Bjeans%2Bripped&qid=1763485361&sprefix=womens%2Bdenim%2Bjeans%2Bripped,aps,129&sr=8-7&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=a52bbd990c868da58af5eece4b3404e5&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -443,7 +443,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 29.99,
     sizes: ["S", "M", "L", "XL", "2XL"],
     colors: ["White", "Beige", "Camel", "Dark Gray", "Khaki", "Orange"],
-    image: productLinenPantsNew,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-007/styled-1764870602479.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B09YVFLNVP?tag=lunarituals10-20&th=1&psc=1",
     // Enhanced details
@@ -495,7 +495,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 33.99,
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Army Green", "Beige", "Blue", "Blue Grey", "Grey"],
-    image: productCardiganNew,
+    image: "/src/assets/product-fashion-cardigan-1763573400.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B08DTDPVBL?tag=lunarituals10-20",
     // Enhanced details
@@ -548,7 +548,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 23.99,
     badge: "Best Seller",
     colors: ["Brown", "Beige", "Black"],
-    image: productSaddleBag,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-009/detail-1764870791371.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B07BHC4Q2S?tag=lunarituals10-20",
     // Enhanced details
@@ -599,7 +599,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Premium satin scrunchies softer than silk. Gentle on hair to prevent breakage and frizz. 12-pack of neutral colors perfect for any outfit or sleepwear.",
     price: 6.99,
     colors: ["Neutral", "Black", "Dark"],
-    image: productScrunchiesNew,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-010/styled-1764870908457.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0CHV6QSDQ?tag=lunarituals10-20",
     // Enhanced details
@@ -651,7 +651,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 24.79,
     originalPrice: 30.99,
     colors: ["Camel/Black", "Burgundy/Black", "Grey/Black"],
-    image: productFedoraNew,
+    image: "/src/assets/product-fashion-fedora-1763573400.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B09QRWVFZ3?tag=lunarituals10-20",
     // Enhanced details
@@ -703,7 +703,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 8.99,
     originalPrice: 15.99,
     badge: "Hot Deal",
-    image: productSunglassesNew,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-012/detail-1764871049182.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/dp/B0FBWGSQMM?tag=lunarituals10-20",
     // Enhanced details
@@ -755,7 +755,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 58.99,
     sizes: ["6", "7", "8", "9", "10", "11"],
     colors: ["Black", "Brown", "Taupe"],
-    image: productKneeHighBoots,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-013/lifestyle-1764871130621.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/DREAM-PAIRS-Womens-Black-Weather/dp/B01G990RDK?crid=1XC8BGG3LBDI8&dib=eyJ2IjoiMSJ9._WcQbEU6v6HOUhUG_kIJ7ALyxbH9zchjElZTzt_5AUgzY6NtdIQaokzOAEz-bFz4-jCCckdIk4wQta7fz_pCEGhpO7Fk4GctdCnNOhTuJcgbswIggIsDyD9yruVON1ao9u1RRmfoSbpCCLAHvOE5q1iJUG79hCJlMS_tNaxJtUipyegRocVZd4Q3hIBE3s7GP1rcEZrZdD5Z-VNaXjrBl3FcwBvX9Ndbq5ZSu2a1QPQgDHnIyCEmuaChCJTnhKYbxCHJeCwZN1UjH9YWaMhFtP2NZfKxsvqqxE2JuZNmJ4E.Woi_1G3-bocty7p5xUui2whfXYB7wkfm6etB-rl550Q&dib_tag=se&keywords=womens%2Bfall%2Bboots&qid=1763584235&sprefix=womens%2Bfall%2Bboots%2Caps%2C157&sr=8-10&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=c797c75d3ffa15f7e0a74fe9d4ee7c53&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -808,7 +808,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 27.89,
     badge: "#1 Best Seller",
     colors: ["Black", "Brown", "Cream"],
-    image: productBelts3Pack,
+    image: "/src/assets/product-fashion-belts-3pack.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/XZQTIVE-Dresses-Ladies-Leather-Buckle/dp/B0CLJFZRH2?crid=2T8VDBI5GBCXE&dib=eyJ2IjoiMSJ9.Qw38qq-rL8zDFC-teFmzgcH9rbPy3wbdOniVrY0t-rggQYYRRRG9WPV8lWaUGxeR9b25iXIJudEBQ9obP5jTKXSEpnm9a2SbnilnfJKQoDlxh0s47mX00BFjS2rTQVnwHVAVq70Rk83MuIzFCTJfKSWbCF-uiAlD0QFjzoEQeiNgb2Vy5__jRheOs9EhZY3JQcWwFVFugj55qtE6HKrwUDvg2v-61D1_E58vfBhXhlLXgqy5DAOMh-V7TvhzyMAUm8qmEZ4H_MeDDn4vuvunNxVqG_b9hHu5cHn5obUCTnU.ltN8mmoaPw-O7wzbz8GK1fImNwtToxcSkT6iIznNZvk&dib_tag=se&keywords=womens%2Bbelts&qid=1763584771&sprefix=womens%2Bbelts%2Caps%2C741&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=ec36209f92a9547b848183d477b6441c&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -861,7 +861,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 27.99,
     sizes: ["S", "M", "L", "XL", "1X", "2X", "3X"],
     colors: ["Black", "Olive", "Mustard"],
-    image: productBlackJeans,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-016/detail-1764871355195.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/LOVER-BRAND-FASHION-Waisted-Rise-Distressed/dp/B07B6TT6F3?crid=3NE6PB167JEZC&dib=eyJ2IjoiMSJ9.U8CzB686tvJ3fA0AA7uEZoZ-nDrdED_f8xsZtWAdRnNrj93o1_jX6eBxspEjVbm0H30RbD8ruICI-9bbf3FvrqU8lSeI5rHfe0mJS8wSsozt8Gq5XsXedF2MCYo1XIM9ypwQktJ8N5huniqGYp8RDdTTAJJcRcugV2rC3XKrJ24CI4J75wmIvqcuAlbNgIS42cu247bQgVffbjaUeEsEQvc94Dd-m28X9-fkA3U78xO0ypGO6e150ZuHifrA87ciIOnatVKNSc3rrw2pZIgfm8SQcWTNBB8DCGts-8bd9pg.SodubwEn5Dczd05Dn1UvIJWWCAonVe66EWK7NXQkg8I&dib_tag=se&keywords=womens%2Bdenim%2Bjeans%2Bripped&qid=1763485361&sprefix=womens%2Bdenim%2Bjeans%2Bripped%2Caps%2C129&sr=8-1&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=a1a087e8f4b962b63a80d7f36b6b46b1&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -914,7 +914,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 41.99,
     sizes: ["S", "M", "L", "XL", "1X", "2X"],
     colors: ["Dark Blue", "Black", "Grey"],
-    image: productBlueJeggings,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-017/detail-1764871469042.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/IUGA-Jeggings-Waisted-Stretchy-Leggings/dp/B0CJBHLF3J?crid=SBN85EWB2WDK&dib=eyJ2IjoiMSJ9.pJK3xqDv-fSGyXNZ_WQqI2jpJlByB_5wpWLFoICM1IczSpfiy0KhpsZaTfaSt8GKTtiMifs4RVRxgmRJHHPyoYFJcWgX8Hrwt0pGd-7mA4JeuMTqJkNviFNQ0iv0mq17YwjR9WnFj09ip4NCT3krSgFZk0DBqDu2apefA8PuzVVpfyXTvALkO67A0bbqcaP6xpqnqW-iRWIbfTrjtYdQkAnnYFTWnSNTqcfw9mK1n-LANtGpSKvD0XUVpcRG4TfDhVodFLRynsCZrlfgagkiW8nz5P33JzpHGvKZ3zxndNs.ow19oZLpV0h12yLbvk-RlX-0ZdU5sWSxZjmbpnjObmM&dib_tag=se&keywords=womens%2Bdenim%2Bjeans&qid=1763486015&sprefix=womens%2Bdenim%2Bjeans%2B%2Caps%2C149&sr=8-5-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=3f7c76b5784c9f9c809fa697bbe61467&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -967,7 +967,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 45.00,
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: ["Black", "Dark Brown", "Grey"],
-    image: productYogaPants,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-018/detail-1764871653987.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/OQQ-Pants-Women-Straight-Darkbrown/dp/B0FDKW1SDT?crid=2VU4ZW93T9CGC&dib=eyJ2IjoiMSJ9.Ay3SUOu8xaSZf7Ftiodx3YZkT3bivfOYyiccqnWSjdM9nGSSBYuwISQ162RoxGfkNHrVlib6Io5OMhs2gzQW3kFpAyBdiSZJcty6S2blCO0EzUbm5Je1it1bDLWFeh0WICdTQVWk-ker7aXbpwZBEF9xj-i5614RtEuptGoQV9EegBegZncyGzbR5smtIRqnyruEVIOBHw-8e__LkE94kBP1OD6jMaFh3JB9Hn5ymoFh28kLGftbY66vsIx5aNQzmSNpFspIqBGQNnY_W61P-CJOolZ67vtFXM7igfmhw7I.T755V6EBN5UYdcIOEGXOT_N0Y4rBqYXedV2yw71kk50&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486142&sprefix=womens%2Bfall%2Bsweatshirt,aps,144&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&psc=1&linkCode=sl1&tag=lunarituals10-20&linkId=a18073805ee1b89b10b8c07fd557be4b&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -1020,7 +1020,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 45.89,
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: ["Camel Plaid", "Grey Plaid", "Red Plaid"],
-    image: productPlaidShacket,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-019/lifestyle-1764871715325.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Brushed-Flannel-Pocketed-Shackets-X-Large/dp/B09NRJ8F5R?crid=1BN326ZN8K6V8&dib=eyJ2IjoiMSJ9.Ay3SUOu8xaSZf7Ftiodx3UVmyT90nKOxYX3lhzwuIOoohmR52xw2Ht1wyew74DaE-wTeqDtmZ1cgAPCdQm1ErU0gbT6ec4OCtKETQZ9Ai4EEzUbm5Je1it1bDLWFeh0WICdTQVWk-ker7aXbpwZBEF9xj-i5614RtEuptGoQV9EegBegZncyGzbR5smtIRqnyruEVIOBHw-8e__LkE94kBP1OD6jMaFh3JB9Hn5ymoFh28kLGftbY66vsIx5aNQzmSNpFspIqBGQNnY_W61P-CJOolZ67vtFXM7igfmhw7I.0Cn5AWJDmppZRNdKjyGm6CLIYiBRbtADT-pEb3MiEFA&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486284&sprefix=womens%2Bfall%2Bsweatshirt%2Caps%2C482&sr=8-5-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=5fe5999eeda8edae48c75f6c7c589edc&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -1073,7 +1073,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 36.99,
     sizes: ["S", "M", "L", "XL"],
     colors: ["Nutmeg", "Brown", "Black", "Grey"],
-    image: productBrownSweater,
+    image: "/src/assets/product-brown-sweater.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/LILLUSORY-Sweaters-Crewneck-Oversized-Pullover/dp/B0BFL5MKKC?crid=3NE8IPYLW4A3E&dib=eyJ2IjoiMSJ9.3VXmLjSnGin3FTM1kP_n2y60TtrfVce4iiD-Fa56xijLCgTyyobffrA1XATDk6BWiKYSdWzehoKhYxrpFI4iqMjxYF0Qe7tRs6WmKxZk2JJk0c-iAqckQd88GReYZ2TgnYh8yua7855nJlplNHRXFtWu31uVHCbACM9dY4V-LsZXAUu9TDi3CvKZvYhin_2l8c1lu8Jz-L1HUeVHCLwW6Pa1ssCb2vmvX4oHdXC0MkOI-vqXgUGJIqwC3W_Pl7iHScfp7U-mZE_RqWdFHx0mbOBa3_1zEsmyEMhKCzgmG3M.IRh-qiE2li-Ropnk9OLqpMkwZ_mQKv-dWb3dPUUxwYc&dib_tag=se&keywords=womens%2Bfall%2Bsweatshirt&qid=1763486380&sprefix=womens%2Bfall%2Bsweatshirt%2Caps%2C225&sr=8-3&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=7ad1357daa5942de565280b38bdf203f&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -1125,7 +1125,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 12.34,
     originalPrice: 19.99,
     colors: ["Cream", "Black", "Grey", "Camel", "Burgundy"],
-    image: productPomBeanie,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-021/styled-1764871977376.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Womens-Knitted-Winter-Beanie-bobble/dp/B074TFDM7K?crid=FVUEQBAIL6B9&dib=eyJ2IjoiMSJ9.VGQJmpwr9gVAIxS4F8ejqYMuZ3YFDmhKCQQyC2FBI30psWVxzctoBLHGfzZ5ptG5YSOKvYyHU_IgOwzECWegUNx__iwIRLwLmrfxIhsikbbA8H6jDC_AhLGmRqJeWGf3jDC3c5SYEL-_lWf5XDhWZrhWV6yleh_tjnldC9J5BZvg-WrS4VAQspWSs9qKoO1xV4vKm-3NPmgz5vicxL0NDybiLLJFLpZtphtJtQDFy5sAYxA-V597d0pu806WyBhfCXa-nWpdESyIAa5Uokqtf_I_YZe8kID74j1TbectYAI.xib3eAif2qbUdAjgYHa_bybxCdqFHDqy1ecHkIYFS1I&dib_tag=se&keywords=womens%2Bfall%2Bhat&qid=1763486538&sprefix=womens%2Bfall%2Bhat%2Caps%2C154&sr=8-15&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=544e3990644e3339f9b663850523ca72&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -1176,7 +1176,7 @@ export const fashionProducts: FashionProduct[] = [
     price: 34.99,
     originalPrice: 49.99,
     colors: ["White", "Black", "Army Green", "Grey"],
-    image: productWinterSet,
+    image: "/src/assets/product-winter-set.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/Earmuffs-Touchscreen-Adjustable-Fashionable-Weather-01/dp/B0FHNVC3XF?crid=2PNJGZUJS86F&dib=eyJ2IjoiMSJ9.VGQJmpwr9gVAIxS4F8ejqYMuZ3YFDmhKCQQyC2FBI30psWVxzctoBLHGfzZ5ptG5YSOKvYyHU_IgOwzECWegUNx__iwIRLwLmrfxIhsikbbA8H6jDC_AhLGmRqJeWGf3jDC3c5SYEL-_lWf5XDhWZrhWV6yleh_tjnldC9J5BZvg-WrS4VAQspWSs9qKoO1xV4vKm-3NPmgz5vicxL0NDybiLLJFLpZtphtJtQDFy5sAYxA-V597d0pu806WyBhfCXa-nWpdESyIAa5Uokqtf_I_YZe8kID74j1TbectYAI.xib3eAif2qbUdAjgYHa_bybxCdqFHDqy1ecHkIYFS1I&dib_tag=se&keywords=womens%2Bfall%2Bhat&qid=1763487037&sprefix=womens%2Bfall%2Bhat%2Caps%2C454&sr=8-38&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=c7d3e35830659d977774ca44680ea0bd&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details
@@ -1229,7 +1229,7 @@ export const fashionProducts: FashionProduct[] = [
     originalPrice: 69.99,
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: ["Black", "Dark Grey", "Denim Blue"],
-    image: productPufferCoat,
+    image: "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-023/styled-1764872189408.png",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/MOERDENG-Womens-Thicken-Waterproof-Detachable/dp/B0CDBSGTTH?dib=eyJ2IjoiMSJ9.kckKtKS-XbJV3vWd2j6OxXESA1RkM0NMA17uirHyLhILXrZfIFd001GH1eGJMgrhsU-3BzAg81JfgGt_cPO8vGUMQXEKoGXmqV56DA9NTtDpkUOWFi_y5O0gwahLtnFwK7-zEuq_iUbi77wU4JKxX5ijWGrOXgKxGtvPz0cALpMSF227m9ZSA5fRyYCS6GL1geOMtJdvBUI2NvaeVzgIZrbuoIRGGDINdr8gG5uzIhnLyulalSaH-NKgjt3DAMrDBPkV3WBJ25o6yIQr9FoEYnzoR65Lo6Hf4JzLxYmARKQ.ZbsZ8_3W_rq9mOg02EIrs5MVXWhCLjRQqLpsYzIwTPo&dib_tag=se&keywords=womens%2Bcoats&qid=1763487201&s=apparel&sr=1-6&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=98dd2972af8c1a20d220e304004b0d43&language=en_US&ref_=as_li_ss_tl&psc=1",
     // Enhanced details
@@ -1280,7 +1280,7 @@ export const fashionProducts: FashionProduct[] = [
     description: "Delicate 14K gold plated small chunky hoop earrings perfect for everyday wear. Hypoallergenic and nickel-free for sensitive ears with 95% recycled materials (RCS100 certified). Lightweight huggie hoops comfortable for all-day wear. Set of 3 pairs in varying sizes for versatile styling and multiple piercings.",
     price: 8.54,
     originalPrice: 12.99,
-    image: productHoopEarrings,
+    image: "/src/assets/product-hoop-earrings.jpg",
     inStock: true,
     affiliateUrl: "https://www.amazon.com/LOLIAS-Hypoallergenic-Sensitive-Lightweight-3Pairs-14K/dp/B0DM7H9QWV?crid=BX9K9EQ58Z2Y&dib=eyJ2IjoiMSJ9._1gSn9VgwLkCZvchWKTpjhUq5Q_Us5hGg372EzlXdLrYA4iwVoQApRfV6CVmTdXa4bkwDj9LuJ_BlRtLkGM9GkAWCfOiupnmldPE23UGP6Qzsux6EVy4vrWqzJRAojs9maJBzHFA5uJyq4hHxv87MR_2fOIXBmiUBVZqmXg190xPFjXIWJqyNqgj6zLLxKJeCi2RwVwsj6gvfFeAwFPPLegwprTEnNEgDZGfA4OAaoKbzzcDfGfXvKRfExtdeObt0DELE5SWUVLi-hOA5KE59CId-p1L1uAF0FEGCQTp064.KJLGfGgNgoXflDC1__5qyKT57vxos7hlaXDisCbZNY0&dib_tag=se&keywords=womens%2Bgold%2Bearrings&qid=1763487334&sprefix=womens%2Bgold%2Bearings%2Caps%2C149&sr=8-7&th=1&linkCode=sl1&tag=lunarituals10-20&linkId=dde4f10d23f6d2ec3c913370707757e4&language=en_US&ref_=as_li_ss_tl",
     // Enhanced details

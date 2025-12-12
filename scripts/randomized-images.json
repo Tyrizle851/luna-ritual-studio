@@ -1,0 +1,507 @@
+{
+  "affirmations": {
+    "aff-002": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-002/canvas-1765463878736.png",
+      "variation": "canvas",
+      "totalImages": 3
+    },
+    "aff-001": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-001/canvas-1765464231190.png",
+      "variation": "canvas",
+      "totalImages": 2
+    },
+    "aff-003": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-003/framed-1765464451929.png",
+      "variation": "framed",
+      "totalImages": 3
+    },
+    "aff-004": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-004/unframed-1765464570294.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-006": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-006/unframed-1765464866029.png",
+      "variation": "unframed",
+      "totalImages": 2
+    },
+    "aff-007": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-007/unframed-1765465009168.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-008": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-008/canvas-1765465103997.png",
+      "variation": "canvas",
+      "totalImages": 2
+    },
+    "aff-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-009/framed-1765465352501.png",
+      "variation": "framed",
+      "totalImages": 3
+    },
+    "aff-010": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-010/canvas-1765465466846.png",
+      "variation": "canvas",
+      "totalImages": 2
+    },
+    "aff-011": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-011/unframed-1765465587494.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-012/framed-1765465754465.png",
+      "variation": "framed",
+      "totalImages": 3
+    },
+    "aff-013": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-013/unframed-1765465883907.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-014": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-014/unframed-1765466001724.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-015": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-015/unframed-1765466215286.png",
+      "variation": "unframed",
+      "totalImages": 2
+    },
+    "aff-016": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-016/framed-1765466392712.png",
+      "variation": "framed",
+      "totalImages": 3
+    },
+    "aff-017": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-017/canvas-1765466425062.png",
+      "variation": "canvas",
+      "totalImages": 3
+    },
+    "aff-019": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-019/unframed-1765466764260.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-020": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-020/canvas-1765466864001.png",
+      "variation": "canvas",
+      "totalImages": 3
+    },
+    "aff-018": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-018/unframed-1765468194941.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-005": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-005/unframed-1765468316495.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-021": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-021/unframed-1765468448347.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-022": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-022/framed-1765468827472.png",
+      "variation": "framed",
+      "totalImages": 3
+    },
+    "aff-023": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-023/unframed-1765468960889.png",
+      "variation": "unframed",
+      "totalImages": 3
+    },
+    "aff-024": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-024/unframed-1765469163733.png",
+      "variation": "unframed",
+      "totalImages": 3
+    }
+  },
+  "fashion": {
+    "fsh-004": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-004/styled-1764866641768.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-014": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-014/lifestyle-1764869961961.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-002": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-002/styled-1764870146743.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-001": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-001/styled-1764870244533.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-003": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-003/styled-1764870323888.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-005": {
+      "url": "/src/assets/product-gold-necklace.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-006": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-006/lifestyle-1764870441589.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-007": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-007/styled-1764870602479.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-008": {
+      "url": "/src/assets/product-fashion-cardigan-1763573400.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-009/detail-1764870791371.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "fsh-010": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-010/styled-1764870908457.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-011": {
+      "url": "/src/assets/product-fashion-fedora-1763573400.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-012/detail-1764871049182.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "fsh-013": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-013/lifestyle-1764871130621.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-015": {
+      "url": "/src/assets/product-fashion-belts-3pack.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-016": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-016/detail-1764871355195.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "fsh-017": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-017/detail-1764871469042.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "fsh-018": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-018/detail-1764871653987.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "fsh-019": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-019/lifestyle-1764871715325.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-020": {
+      "url": "/src/assets/product-brown-sweater.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-021": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-021/styled-1764871977376.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-022": {
+      "url": "/src/assets/product-winter-set.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "fsh-023": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-023/styled-1764872189408.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "fsh-024": {
+      "url": "/src/assets/product-hoop-earrings.jpg",
+      "variation": "original",
+      "totalImages": 1
+    }
+  },
+  "candles": {
+    "cnd-002": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-002/detail-1764868890888.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "cnd-001": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-001/lifestyle-1764872243677.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-003": {
+      "url": "/assets/product-candle-vanilla-pumpkin-Bn5_ya7k.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "cnd-004": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-004/lifestyle-1764873303278.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-005": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-005/styled-1764873460149.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "cnd-006": {
+      "url": "/assets/product-candle-chesapeake-bay-TIO6sKVl.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "cnd-007": {
+      "url": "/assets/product-candle-yankee-sparkling-cinnamon-1763493407-BMRN5qGs.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "cnd-008": {
+      "url": "/assets/product-candle-aoovoo-lavender-DhyPifca.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "cnd-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-009/styled-1764873852841.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "cnd-010": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-010/detail-1764873912779.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "cnd-011": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-011/lifestyle-1764873986151.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-012/styled-1764874141663.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "cnd-013": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-013/lifestyle-1764874174123.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-014": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-014/detail-1764874295652.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "cnd-015": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-015/styled-1764874420980.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "cnd-016": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-016/lifestyle-1764874451235.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-017": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-017/styled-1764874598094.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "cnd-018": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-018/detail-1764874657102.png",
+      "variation": "detail",
+      "totalImages": 4
+    }
+  },
+  "supplements": {
+    "sup-001": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-001/styled-1764874771422.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "sup-002": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-002/detail-1764874835627.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "sup-003": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-003/detail-1764874920407.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "sup-004": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-004/styled-1764875043750.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "sup-005": {
+      "url": "/assets/product-supplement-matcha-latte-jade-leaf-1763495350-BxstMQwD.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "sup-006": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-006/lifestyle-1764875172985.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-007": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-007/lifestyle-1764875270173.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-008": {
+      "url": "/assets/product-supplement-garden-probiotic-1763495710-DJRUkE4f.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "sup-009": {
+      "url": "/assets/product-supplement-vitamin-d3-1763495743-TrxPpZIQ.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "sup-010": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-010/lifestyle-1764875531817.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-011": {
+      "url": "/assets/product-supplement-nature-made-prenatal-1763495925-A2jBVHKX.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "sup-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-012/detail-1764875745553.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "sup-013": {
+      "url": "/assets/product-supplement-sleep-tea-traditional-1763495470-BpzIExrN.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "sup-014": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-014/lifestyle-1764875890249.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-015": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-015/styled-1764876058777.png",
+      "variation": "styled",
+      "totalImages": 4
+    }
+  },
+  "books": {
+    "book-000": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-000/lifestyle-1764868892980.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-001": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-001/detail-1764876121422.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "book-002": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-002/styled-1764876244412.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "book-003": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-003/styled-1764876338840.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "book-004": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-004/lifestyle-1764876371953.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-005": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-005/detail-1764876498062.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "book-006": {
+      "url": "/assets/product-book-cruel-prince-1763580000-BgcYhDZR.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "book-007": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-007/detail-1764876679754.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "book-008": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-008/styled-1764876797430.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "book-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-009/detail-1764876853749.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "book-010": {
+      "url": "/assets/product-book-house-earth-1763580000-DSyQwIgf.jpg",
+      "variation": "original",
+      "totalImages": 4
+    },
+    "book-011": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-011/lifestyle-1764877004822.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-012/lifestyle-1764877103129.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-013": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-013/detail-1764877226868.png",
+      "variation": "detail",
+      "totalImages": 4
+    },
+    "book-014": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-014/lifestyle-1764877293053.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-015": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-015/styled-1764877444363.png",
+      "variation": "styled",
+      "totalImages": 4
+    },
+    "book-016": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-016/lifestyle-1764877473510.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-017": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-017/detail-1764877589253.png",
+      "variation": "detail",
+      "totalImages": 4
+    }
+  }
+}
