@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductModal } from "@/components/ProductModal";
+import { ProductCard } from "@/components/ProductCard";
 import { toast } from "sonner";
 import { Affirmation } from "@/data/affirmations";
 import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
@@ -26,19 +27,16 @@ const CarouselCard = ({
   const displayImage = imageUrl || affirmation.image;
   
   return (
-    <div className="relative h-full bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden group hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300">
+    <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
       
       {affirmation.badge && (
-        <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
+        <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-accent text-accent-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
           {affirmation.badge}
-        </div>
+        </span>
       )}
       
-      <div 
-        className="overflow-hidden aspect-[4/5] bg-secondary cursor-pointer"
-        onClick={onCardClick}
-      >
+      <div className="overflow-hidden aspect-[4/5] bg-secondary">
         {isLoading ? (
           <Skeleton className="w-full h-full" />
         ) : (
@@ -52,55 +50,50 @@ const CarouselCard = ({
         )}
       </div>
       
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         {affirmation.category && (
-          <span className="text-xs text-text-muted uppercase tracking-wider mb-1 block">
+          <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">
             {affirmation.category}
-          </span>
+          </p>
         )}
         
-        <h3 className="font-display text-lg mb-2 line-clamp-1">{affirmation.title}</h3>
+        <h3 className="font-medium mb-1 sm:mb-2 text-sm sm:text-base group-hover:text-clay transition-colors line-clamp-2">{affirmation.title}</h3>
         
         {affirmation.rating && (
-          <div className="flex items-center gap-1 mb-2">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-3 w-3 fill-gold text-gold" />
-            ))}
-            <span className="text-xs text-text-muted ml-1">
-              ({affirmation.rating}) · {(affirmation.reviewCount! / 1000).toFixed(1)}K
-            </span>
+          <div className="flex items-center gap-1 mb-2 sm:mb-3">
+            <span className="text-primary text-[10px] sm:text-xs">★</span>
+            <span className="text-[10px] sm:text-xs font-medium">{affirmation.rating}</span>
+            <span className="text-[10px] sm:text-xs text-text-muted">({affirmation.reviewCount?.toLocaleString()})</span>
           </div>
         )}
         
         {affirmation.description && (
-          <p className="text-sm text-text-secondary mb-3 line-clamp-2">{affirmation.description}</p>
+          <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{affirmation.description}</p>
         )}
         
         {affirmation.certifications && affirmation.certifications.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-3">
+          <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
             {affirmation.certifications.slice(0, 2).map((cert, idx) => (
-              <span key={idx} className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+              <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
                 {cert}
               </span>
             ))}
           </div>
         )}
         
-        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm">${affirmation.price.toFixed(2)}</span>
-          </div>
+        <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
+          <span className="font-semibold text-sm sm:text-base text-foreground">${affirmation.price.toFixed(2)}</span>
           <Button 
             size="sm" 
             variant="outline" 
-            className="border-clay text-clay hover:bg-clay/10 text-xs px-2"
+            className="border-clay text-clay hover:bg-clay/10 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
             onClick={onCardClick}
           >
             View Options
           </Button>
         </div>
       </div>
-    </div>
+    </ProductCard>
   );
 };
 
