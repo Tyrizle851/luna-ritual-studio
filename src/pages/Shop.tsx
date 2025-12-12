@@ -27,6 +27,7 @@ import { affirmations, Affirmation } from "@/data/affirmations";
 import { books } from "@/data/books";
 import { ProductCard } from "@/components/ProductCard";
 import { AffirmationProductCard } from "@/components/AffirmationProductCard";
+import { CrossSellCarousel } from "@/components/CrossSellCarousel";
 import { useCartStore } from "@/store/cartStore";
 import { ProductModal } from "@/components/ProductModal";
 import { FashionProductModal } from "@/components/FashionProductModal";
@@ -182,6 +183,38 @@ const Shop = () => {
         </PaginationContent>
       </Pagination>
     );
+  };
+
+  const getCrossSellProducts = (currentTab: string) => {
+    const crossSellMap: { [key: string]: any[] } = {
+      fashion: [
+        ...affirmations.slice(0, 2).map(a => ({ ...a, name: a.title, onClick: () => { setSelectedProduct(a); setIsModalOpen(true); } })),
+        ...candles.slice(0, 2).map(c => ({ ...c, onClick: () => { setSelectedCandle(c); setIsCandleModalOpen(true); } })),
+        ...books.slice(0, 2).map(b => ({ ...b, name: b.title, onClick: () => { setSelectedBook(b); setIsBookModalOpen(true); } })),
+      ],
+      candles: [
+        ...affirmations.slice(0, 2).map(a => ({ ...a, name: a.title, onClick: () => { setSelectedProduct(a); setIsModalOpen(true); } })),
+        ...books.slice(0, 2).map(b => ({ ...b, name: b.title, onClick: () => { setSelectedBook(b); setIsBookModalOpen(true); } })),
+        ...supplements.slice(0, 2).map(s => ({ ...s, onClick: () => { setSelectedSupplement(s); setIsSupplementModalOpen(true); } })),
+      ],
+      affirmations: [
+        ...books.slice(0, 2).map(b => ({ ...b, name: b.title, onClick: () => { setSelectedBook(b); setIsBookModalOpen(true); } })),
+        ...candles.slice(0, 2).map(c => ({ ...c, onClick: () => { setSelectedCandle(c); setIsCandleModalOpen(true); } })),
+        ...fashionProducts.slice(0, 2).map(f => ({ ...f, onClick: () => { setSelectedFashionProduct(f); setIsFashionModalOpen(true); } })),
+      ],
+      supplements: [
+        ...affirmations.slice(0, 2).map(a => ({ ...a, name: a.title, onClick: () => { setSelectedProduct(a); setIsModalOpen(true); } })),
+        ...books.slice(0, 2).map(b => ({ ...b, name: b.title, onClick: () => { setSelectedBook(b); setIsBookModalOpen(true); } })),
+        ...candles.slice(0, 2).map(c => ({ ...c, onClick: () => { setSelectedCandle(c); setIsCandleModalOpen(true); } })),
+      ],
+      books: [
+        ...affirmations.slice(0, 2).map(a => ({ ...a, name: a.title, onClick: () => { setSelectedProduct(a); setIsModalOpen(true); } })),
+        ...candles.slice(0, 2).map(c => ({ ...c, onClick: () => { setSelectedCandle(c); setIsCandleModalOpen(true); } })),
+        ...fashionProducts.slice(0, 2).map(f => ({ ...f, onClick: () => { setSelectedFashionProduct(f); setIsFashionModalOpen(true); } })),
+      ],
+    };
+
+    return crossSellMap[currentTab] || [];
   };
 
   const handleAddToCart = (product: any, type: string) => {
@@ -516,6 +549,7 @@ const Shop = () => {
                   </div>
                 )}
                 {renderPagination(fashionPage, getTotalPages(getFilteredCount(fashionProducts)), setFashionPage)}
+                <CrossSellCarousel products={getCrossSellProducts("fashion")} />
               </motion.div>
             </TabsContent>
 
@@ -627,6 +661,7 @@ const Shop = () => {
                 </div>
               )}
               {renderPagination(candlesPage, getTotalPages(getFilteredCount(candles)), setCandlesPage)}
+              <CrossSellCarousel products={getCrossSellProducts("candles")} />
             </motion.div>
           </TabsContent>
 
@@ -741,6 +776,7 @@ const Shop = () => {
                 </div>
               )}
               {renderPagination(supplementsPage, getTotalPages(getFilteredCount(supplements)), setSupplementsPage)}
+              <CrossSellCarousel products={getCrossSellProducts("supplements")} />
             </motion.div>
           </TabsContent>
 
@@ -776,6 +812,7 @@ const Shop = () => {
                 </div>
               )}
               {renderPagination(affirmationsPage, getTotalPages(getFilteredCount(affirmations)), setAffirmationsPage)}
+              <CrossSellCarousel products={getCrossSellProducts("affirmations")} />
             </motion.div>
           </TabsContent>
 
@@ -890,6 +927,7 @@ const Shop = () => {
                 </div>
               )}
               {renderPagination(booksPage, getTotalPages(getFilteredCount(books)), setBooksPage)}
+              <CrossSellCarousel products={getCrossSellProducts("books")} />
             </motion.div>
           </TabsContent>
           </AnimatePresence>
