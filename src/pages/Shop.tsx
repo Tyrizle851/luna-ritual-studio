@@ -3,10 +3,9 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ShoppingCart, Shirt, Flame, Pill, BookOpen, Sparkles, Star } from "lucide-react";
+import { ExternalLink, ShoppingCart, Shirt, Flame, Pill, BookOpen, Sparkles, Star, Search, Users, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SearchBar } from "@/components/SearchBar";
 import { SortFilter, SortOption } from "@/components/SortFilter";
 import { WishlistButton } from "@/components/WishlistButton";
@@ -261,186 +260,134 @@ const Shop = () => {
         
         <meta name="keywords" content={currentMeta.keywords} />
       </Helmet>
+      {/* Sticky Category Navigation */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+        <div className="container-custom">
+          <div className="flex items-center justify-center gap-6 sm:gap-8 py-4">
+            <button
+              onClick={() => setSelectedTab("fashion")}
+              className={`inline-flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all ${
+                selectedTab === "fashion" ? "text-clay" : "text-text-muted hover:text-clay"
+              }`}
+            >
+              <Shirt className="h-3.5 w-3.5 text-clay" />
+              Fashion
+            </button>
+            <button
+              onClick={() => setSelectedTab("candles")}
+              className={`inline-flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all ${
+                selectedTab === "candles" ? "text-clay" : "text-text-muted hover:text-clay"
+              }`}
+            >
+              <Flame className="h-3.5 w-3.5 text-clay" />
+              Candles
+            </button>
+            <button
+              onClick={() => setSelectedTab("affirmations")}
+              className={`inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-semibold transition-all ${
+                selectedTab === "affirmations" ? "text-clay scale-105" : "text-clay/70 hover:text-clay"
+              }`}
+            >
+              <Moon className="h-4 w-4 text-clay" />
+              Affirmations
+            </button>
+            <button
+              onClick={() => setSelectedTab("supplements")}
+              className={`inline-flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all ${
+                selectedTab === "supplements" ? "text-clay" : "text-text-muted hover:text-clay"
+              }`}
+            >
+              <Pill className="h-3.5 w-3.5 text-clay" />
+              Supplements
+            </button>
+            <button
+              onClick={() => setSelectedTab("books")}
+              className={`inline-flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider font-medium transition-all ${
+                selectedTab === "books" ? "text-clay" : "text-text-muted hover:text-clay"
+              }`}
+            >
+              <BookOpen className="h-3.5 w-3.5 text-clay" />
+              Books
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="min-h-screen section-padding">
         <div className="container-custom">
-          <Breadcrumbs items={[
-            { label: "Shop", href: "/shop" },
-            { label: tabLabels[selectedTab] || "Collection" }
-          ]} />
-          
           {/* Hero Section */}
-          <div className="text-center mb-12 sm:mb-16 mt-4 sm:mt-6">
-            <motion.h1
+          <div className="text-center mb-10 sm:mb-14 mt-6 sm:mt-8">
+            <motion.div
               key={selectedTab}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="mb-3 sm:mb-4 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight"
             >
-              Shop {tabLabels[selectedTab]}
-            </motion.h1>
+              <h1 className="mb-3 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight">
+                Shop {tabLabels[selectedTab]}
+              </h1>
+              <div className="flex items-center justify-center mb-4">
+                <div className="h-[2px] w-24 sm:w-32 bg-gradient-to-r from-transparent via-clay to-transparent"></div>
+              </div>
+            </motion.div>
             <motion.p
               key={`${selectedTab}-subtitle`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-text-secondary text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-6 sm:mb-8"
+              className="text-text-secondary text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-8 sm:mb-10"
             >
               {categorySubtitles[selectedTab]}
             </motion.p>
 
-            {/* Trust Badges */}
+            {/* Stats Bar */}
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="flex flex-wrap justify-center gap-3 sm:gap-4"
+              className="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-text-muted font-medium"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-clay text-sm">✓</span>
-                <span className="text-xs sm:text-sm text-text-secondary font-medium">Curated Selection</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-clay text-sm">✓</span>
-                <span className="text-xs sm:text-sm text-text-secondary font-medium">Instant Digital Downloads</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white border border-border/40 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-clay text-sm">✓</span>
-                <span className="text-xs sm:text-sm text-text-secondary font-medium">Mindful Brands</span>
-              </div>
+              <span className="inline-flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5 text-clay" />
+                12K+ Shoppers
+              </span>
+              <span className="text-clay/30">•</span>
+              <span className="inline-flex items-center gap-1.5">
+                <Star className="h-3.5 w-3.5 text-clay fill-clay" />
+                4.9 Rated
+              </span>
+              <span className="text-clay/30">•</span>
+              <span className="inline-flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-clay" />
+                Instant Delivery
+              </span>
             </motion.div>
           </div>
 
-          {/* Tab Navigation with Counts */}
+          {/* Integrated Search & Filter Bar */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            {/* Mobile: 2x2 Grid Layout */}
-            <div className="sm:hidden mb-6 space-y-2">
-              {/* Row 1: Affirmations (full width) */}
-              <div className="flex justify-center">
-                <TabsList className="w-full max-w-xs">
-                  <TabsTrigger 
-                    value="affirmations" 
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-4 py-2.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                  >
-                    <Sparkles className="h-3.5 w-3.5" />
-                    <span>Affirmations</span>
-                    <span className="text-xs opacity-60">({getCategoryCounts().affirmations})</span>
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              
-              {/* Row 2: Fashion | Candles */}
-              <div className="flex justify-center gap-2">
-                <TabsList className="flex-1">
-                  <TabsTrigger 
-                    value="fashion" 
-                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                  >
-                    <Shirt className="h-3.5 w-3.5" />
-                    <span>Fashion</span>
-                    <span className="text-[10px] opacity-60">({getCategoryCounts().fashion})</span>
-                  </TabsTrigger>
-                </TabsList>
-                <TabsList className="flex-1">
-                  <TabsTrigger 
-                    value="candles" 
-                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                  >
-                    <Flame className="h-3.5 w-3.5" />
-                    <span>Candles</span>
-                    <span className="text-[10px] opacity-60">({getCategoryCounts().candles})</span>
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              
-              {/* Row 3: Supplements | Books */}
-              <div className="flex justify-center gap-2">
-                <TabsList className="flex-1">
-                  <TabsTrigger 
-                    value="supplements" 
-                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                  >
-                    <Pill className="h-3.5 w-3.5" />
-                    <span>Supplements</span>
-                    <span className="text-[10px] opacity-60">({getCategoryCounts().supplements})</span>
-                  </TabsTrigger>
-                </TabsList>
-                <TabsList className="flex-1">
-                  <TabsTrigger 
-                    value="books" 
-                    className="flex-1 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-2.5 text-xs font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                  >
-                    <BookOpen className="h-3.5 w-3.5" />
-                    <span>Books</span>
-                    <span className="text-[10px] opacity-60">({getCategoryCounts().books})</span>
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-            </div>
-
-            {/* Desktop: Single row layout */}
-            <div className="hidden sm:flex justify-center w-full mb-8">
-              <TabsList className="inline-flex h-auto items-center justify-center rounded-lg bg-white border border-border/40 p-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
-                <TabsTrigger
-                  value="fashion"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
-                >
-                  <Shirt className="h-4 w-4" />
-                  <span>Fashion</span>
-                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().fashion}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="candles"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
-                >
-                  <Flame className="h-4 w-4" />
-                  <span>Candles</span>
-                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().candles}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="supplements"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
-                >
-                  <Pill className="h-4 w-4" />
-                  <span>Supplements</span>
-                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().supplements}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="books"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>Books</span>
-                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().books}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="affirmations"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-medium rounded-md transition-all data-[state=active]:bg-clay data-[state=active]:text-white data-[state=active]:shadow-[0_2px_8px_rgba(139,107,84,0.3)] data-[state=inactive]:text-text-secondary data-[state=inactive]:hover:text-clay data-[state=inactive]:hover:bg-clay/5"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  <span>Affirmations</span>
-                  <span className="text-[10px] font-normal opacity-75">{getCategoryCounts().affirmations}</span>
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            {/* Search and Sort Controls */}
-            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-8">
-              <div className="flex-1 max-w-2xl">
-                <SearchBar onSearch={setSearchQuery} placeholder="Search collection..." />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="md:hidden">
-                  <MobileFilterDrawer
-                    sortValue={sortOption}
-                    onSortChange={setSortOption}
-                    categories={[]}
-                    selectedCategory=""
-                    onCategoryChange={() => {}}
+            <div className="mb-10">
+              <div className="relative max-w-4xl mx-auto">
+                <div className="flex items-center gap-3 bg-white border border-border/40 rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-3.5 hover:border-clay/30 transition-all">
+                  <Search className="h-5 w-5 text-clay flex-shrink-0" />
+                  <input
+                    type="text"
+                    placeholder="Search our curated collection..."
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 bg-transparent border-none outline-none text-sm text-text-primary placeholder:text-text-muted font-medium"
                   />
-                </div>
-                <div className="hidden md:block">
-                  <SortFilter value={sortOption} onChange={setSortOption} />
+                  <div className="hidden sm:flex items-center gap-2 pl-4 border-l border-border/40">
+                    <SortFilter value={sortOption} onChange={setSortOption} />
+                  </div>
+                  <div className="sm:hidden">
+                    <MobileFilterDrawer
+                      sortValue={sortOption}
+                      onSortChange={setSortOption}
+                      categories={[]}
+                      selectedCategory=""
+                      onCategoryChange={() => {}}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
