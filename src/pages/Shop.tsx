@@ -120,8 +120,8 @@ const Shop = () => {
   };
 
   const scrollToProducts = () => {
-    // Scroll to top of page to show sticky nav + hero
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Scroll to just below main header (64px) + some breathing room
+    window.scrollTo({ top: 200, behavior: "smooth" });
   };
 
   const handlePageChange = (onPageChange: (page: number) => void) => (page: number) => {
@@ -316,7 +316,10 @@ const Shop = () => {
         <div className="container-custom">
           <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 py-3 overflow-x-auto scrollbar-hide">
             <button
-              onClick={() => setSelectedTab("fashion")}
+              onClick={() => {
+                setSelectedTab("fashion");
+                scrollToProducts();
+              }}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
                 selectedTab === "fashion" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
@@ -325,7 +328,10 @@ const Shop = () => {
               <span>Fashion</span>
             </button>
             <button
-              onClick={() => setSelectedTab("candles")}
+              onClick={() => {
+                setSelectedTab("candles");
+                scrollToProducts();
+              }}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
                 selectedTab === "candles" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
@@ -334,7 +340,10 @@ const Shop = () => {
               <span>Candles</span>
             </button>
             <button
-              onClick={() => setSelectedTab("affirmations")}
+              onClick={() => {
+                setSelectedTab("affirmations");
+                scrollToProducts();
+              }}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold transition-all ${
                 selectedTab === "affirmations" ? "text-clay" : "text-clay/70 hover:text-clay"
               }`}
@@ -344,7 +353,10 @@ const Shop = () => {
               <span className="hidden sm:inline">Affirmations</span>
             </button>
             <button
-              onClick={() => setSelectedTab("supplements")}
+              onClick={() => {
+                setSelectedTab("supplements");
+                scrollToProducts();
+              }}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
                 selectedTab === "supplements" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
@@ -353,7 +365,10 @@ const Shop = () => {
               <span>Supps</span>
             </button>
             <button
-              onClick={() => setSelectedTab("books")}
+              onClick={() => {
+                setSelectedTab("books");
+                scrollToProducts();
+              }}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
                 selectedTab === "books" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}

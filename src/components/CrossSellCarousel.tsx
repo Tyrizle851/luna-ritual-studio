@@ -10,8 +10,14 @@ interface CrossSellProduct {
   title?: string;
   image: string;
   price: number;
+  originalPrice?: number;
   category?: string;
+  brand?: string;
   rating?: number;
+  reviewCount?: number;
+  description?: string;
+  badge?: string;
+  certifications?: string[];
   onClick: () => void;
 }
 
@@ -105,31 +111,97 @@ export const CrossSellCarousel = ({ products }: CrossSellCarouselProps) => {
             >
               <ProductCard onClick={product.onClick}>
                 <WishlistButton productId={product.id} />
+                {product.badge && (
+                  <div className={`absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                    product.badge === 'Sale' ? 'bg-foreground text-background' :
+                    product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                    product.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :
+                    product.badge === 'Staff Pick' ? 'bg-clay text-white' :
+                    product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
+                    'bg-secondary text-foreground'
+                  }`}>
+                    {product.badge}
+                  </div>
+                )}
                 <div className="overflow-hidden aspect-[4/5] bg-secondary">
                   <img
                     src={product.image}
                     alt={product.name || product.title || "Product"}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                   />
                 </div>
-                <div className="p-3 sm:p-4">
-                  {product.category && (
-                    <p className="text-xs text-text-muted uppercase tracking-wider mb-1">{product.category}</p>
+                <div className="p-2 sm:p-3 lg:p-4">
+                  {(product.category || product.brand) && (
+                    <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">
+                      {product.brand || product.category}
+                    </p>
                   )}
-                  <h3 className="font-medium text-sm sm:text-base mb-2 line-clamp-2">{product.name || product.title}</h3>
-                  <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                    <span className="font-semibold text-sm sm:text-base">${product.price.toFixed(2)}</span>
+                  <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">
+                    {product.name || product.title}
+                  </h3>
+
+                  {product.rating && (
+                    <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
+                      <span className="text-primary">★</span>
+                      <span className="font-semibold">{product.rating}</span>
+                      <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+                        {product.rating >= 4.5 ? 'Top Rated' : product.rating >= 4.0 ? 'Popular' : 'Verified'}
+                      </span>
+                      <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                        {product.badge === 'Best Seller' ? 'Trending' : product.badge === 'Most Popular' ? 'Trending' : product.reviewCount && product.reviewCount > 500 ? 'Fan Favorite' : 'Quality Pick'}
+                      </span>
+                      {product.reviewCount && (
+                        <span className="text-muted-foreground hidden sm:inline">
+                          ({product.reviewCount >= 1000 ? `${(product.reviewCount / 1000).toFixed(1)}K` : product.reviewCount.toLocaleString()})
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {product.description && (
+                    <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">
+                      {product.description}
+                    </p>
+                  )}
+
+                  {product.certifications && product.certifications.length > 0 && (
+                    <div className="hidden lg:flex flex-wrap gap-1.5 mb-4">
+                      {product.certifications.slice(0, 2).map((cert, index) => (
+                        <span key={index} className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                    <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+                      {product.originalPrice ? (
+                        <>
+                          <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${product.originalPrice}</span>
+                          <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
+                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                          Great Deal
+                        </span>
+                      )}
+                      <span className="text-sm sm:text-base font-semibold text-text-primary">${product.price.toFixed(2)}</span>
+                    </div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-clay text-clay hover:bg-clay/10 text-xs"
+                      className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         product.onClick();
                       }}
                     >
-                      View
+                      <span className="hidden sm:inline">View Details</span>
+                      <span className="sm:hidden">View</span>
                     </Button>
                   </div>
                 </div>
