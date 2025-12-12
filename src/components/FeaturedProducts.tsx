@@ -8,18 +8,13 @@ import { BookModal } from "@/components/BookModal";
 import { SupplementModal } from "@/components/SupplementModal";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
-import { FashionProduct } from "@/data/fashion";
-import { Candle } from "@/data/candles";
-import { Book } from "@/data/books";
-import { Supplement } from "@/data/supplements";
+import { FashionProduct, fashionProducts } from "@/data/fashion";
+import { Candle, candles } from "@/data/candles";
+import { Book, books } from "@/data/books";
+import { Supplement, supplements } from "@/data/supplements";
 
-import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
-import productCandleWoodwickVanilla from "@/assets/product-candle-vanilla-bean.jpg";
-import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
-import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
-
-// Complete product data matching shop exactly
-const featuredFashion: FashionProduct = {
+// Pull featured products from updated data files
+const featuredFashion: FashionProduct = fashionProducts.find(p => p.id === "fsh-004") || {
   id: "fsh-004",
   name: "Classic Satin Silk Pajama Set",
   brand: "Ekouaer",
@@ -30,37 +25,12 @@ const featuredFashion: FashionProduct = {
   badge: "Top Pick",
   sizes: ["S", "M", "L", "XL", "XXL"],
   colors: ["Champagne Gold", "Black", "Navy", "Leopard Print"],
-  image: productSilkSleepSet,
+  image: "",
   inStock: true,
-  affiliateUrl: "https://www.amazon.com/Ekouaer-Womens-2-Piece-Sleepwear-Loungewear/dp/B097GL24NJ?tag=lunarituals10-20",
-  rating: 4.4,
-  reviewCount: 3300,
-  isPrime: true,
-  styleNotes: "Elevate your sleep routine with this luxurious satin pajama set. The silky-smooth fabric drapes beautifully and feels gentle on skin, while the classic button-down design adds timeless sophistication. Perfect for those who believe that bedtime should feel like a luxury experience.",
-  features: [
-    "Smooth satin silk finish",
-    "Classic button-down top",
-    "Adjustable drawstring pants",
-    "Long sleeves with button cuffs",
-    "ISCC PLUS sustainability certified",
-    "Soft and breathable fabric"
-  ],
-  certifications: ["Silky Smooth", "Breathable"],
-  productDetails: {
-    fabric: "Premium satin polyester blend (softer than traditional silk)",
-    care: "Machine washable - gentle cycle, hang or lay flat to dry",
-    fit: "True to size with relaxed comfortable fit for sleep",
-    origin: "Imported, ISCC PLUS certified for sustainability"
-  },
-  stylingIdeas: [
-    { occasion: "Bedtime Luxury", suggestion: "Pair with fuzzy slippers and a silk sleep mask for ultimate relaxation" },
-    { occasion: "Morning Coffee", suggestion: "Layer a cozy cardigan over the set for a chic loungewear look" },
-    { occasion: "Self-Care Sunday", suggestion: "Wear during your skincare routine and journaling for a spa-like experience" },
-    { occasion: "Lazy Weekend", suggestion: "Stay in the set all day - it's comfortable and polished enough for video calls" }
-  ]
+  affiliateUrl: ""
 };
 
-const featuredCandle: Candle = {
+const featuredCandle: Candle = candles.find(c => c.id === "cnd-002") || {
   id: "cnd-002",
   name: "WoodWick Vanilla Bean Hourglass Candle",
   brand: "WoodWick",
@@ -68,71 +38,24 @@ const featuredCandle: Candle = {
   description: "Holiday candle featuring a distinctive crackling wood wick that mimics a cozy fireplace. Rich, creamy vanilla bean fragrance fills your space. 9.7 oz medium hourglass jar with elegant design. Perfect gift for women and men. 60 hour burn time.",
   price: 17.99,
   burnTime: "60 hours",
-  image: productCandleWoodwickVanilla,
+  image: "",
   inStock: true,
-  affiliateUrl: "https://amzn.to/43EdcRX",
-  rating: 4.6,
-  reviewCount: 9660,
-  socialProof: "2K+ bought in past month",
-  isPrime: true,
-  scentProfile: "Decadent vanilla bean scent infused with notes of pure sugar cane. Creates an enchanting, warm aroma that fills your home with comfort and sweetness. The multi-sensory crackling wick adds auditory relaxation to the olfactory experience.",
-  features: [
-    "Distinctive Pluswick Innovation creates signature crackling sound",
-    "Premium soy-paraffin blend ensures clean, consistent burn",
-    "Iconic hourglass shape with wooden lid enhances home decor",
-    "Made in USA for quality and authenticity",
-    "60 hours of burn time",
-    "Ideal gift for friends or yourself"
-  ],
-  productDetails: {
-    waxType: "Premium soy-paraffin blend",
-    wickType: "Wooden wick (Pluswick Innovation)",
-    jarType: "Hourglass glass jar with wooden lid",
-    madeIn: "Made in USA"
-  },
-  usageIdeas: [
-    "Create a warm, inviting ambiance for cozy evenings at home",
-    "Perfect for aromatherapy and stress relief during bath time",
-    "Gift for holidays, birthdays, or special occasions",
-    "Enhance meditation or yoga practice with calming scent and sound"
-  ],
-  certifications: ["Made in USA", "Wooden Wick"]
+  affiliateUrl: ""
 };
 
-const featuredBook: Book = {
+const featuredBook: Book = books.find(b => b.id === "book-000") || {
   id: "book-000",
   title: "Throne of Glass",
   author: "Sarah J. Maas",
   price: 16.88,
   originalPrice: 22.99,
-  image: throneOfGlassImage,
-  description: "A captivating fantasy epic about Celaena Sardothien, a legendary assassin who must compete for her freedom in a deadly tournament. Perfect for those who crave adventure, romance, and a fierce heroine who will stop at nothing to reclaim her destiny.",
-  category: "Epic Fantasy",
-  affiliateUrl: "https://amzn.to/4hTBnBz",
-  rating: 4.9,
-  reviewCount: 48612,
-  socialProof: "60K+ bought in past month",
-  isPrime: true,
-  badge: "Best Seller",
-  series: "Throne of Glass #1",
-  awards: ["New York Times #1 Bestseller", "Goodreads Choice Finalist"],
-  bookDetails: {
-    publisher: "Bloomsbury YA",
-    pages: 432,
-    format: "Paperback",
-    language: "English"
-  },
-  themes: ["Strong Female Lead", "Political Intrigue", "Slow Burn Romance", "Competitive Tournament"],
-  features: [
-    "New York Times #1 bestselling series",
-    "Perfect for fans of ACOTAR and Fourth Wing",
-    "Epic fantasy with romance and action",
-    "First book in completed 8-book series"
-  ],
-  similarReads: ["A Court of Thorns and Roses", "Fourth Wing", "The Cruel Prince"]
+  image: "",
+  description: "",
+  category: "",
+  affiliateUrl: ""
 };
 
-const featuredSupplement: Supplement = {
+const featuredSupplement: Supplement = supplements.find(s => s.id === "sup-001") || {
   id: "sup-001",
   name: "Vital Proteins Collagen Peptides",
   category: "Beauty & Wellness",
@@ -142,28 +65,9 @@ const featuredSupplement: Supplement = {
   originalPrice: 29.99,
   badge: "Best Seller",
   servings: "28 servings",
-  image: productSupplementCollagen,
+  image: "",
   inStock: true,
-  affiliateUrl: "https://amzn.to/4kRmZPE",
-  rating: 4.6,
-  reviewCount: 112500,
-  socialProof: "100K+ bought in past month",
-  isPrime: true,
-  keyIngredients: ["Bovine Collagen Peptides", "Vitamin C", "Hyaluronic Acid"],
-  dosageInfo: "2 scoops (20g) daily mixed into any beverage",
-  features: [
-    "Clinically proven results for hair, skin & nails",
-    "Unflavored - dissolves in hot or cold liquids",
-    "20g collagen per serving",
-    "Grass-fed, pasture-raised bovine",
-    "No added sugars or sweeteners"
-  ],
-  certifications: ["NSF Certified", "Grass-Fed"],
-  usageIdeas: [
-    "Blend into morning coffee or matcha",
-    "Mix into smoothies or protein shakes",
-    "Stir into oatmeal or yogurt"
-  ]
+  affiliateUrl: ""
 };
 
 export const FeaturedProducts = () => {

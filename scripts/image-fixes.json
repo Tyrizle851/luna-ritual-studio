@@ -1,0 +1,125 @@
+{
+  "fashion": {
+    "fsh-005": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-005/lifestyle-1764870352138.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-008": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-008/lifestyle-1764870637432.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-009/lifestyle-1764870754058.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-011": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-011/lifestyle-1764870939275.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-012": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-012/lifestyle-1764871026020.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-015": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-015/lifestyle-1764871218819.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-016": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-016/lifestyle-1764871325022.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-017": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-017/lifestyle-1764871436184.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-018": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-018/lifestyle-1764871627777.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-020": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-020/lifestyle-1764871816522.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-022": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/fashion/fsh-022/lifestyle-1764872009562.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "fsh-024": {
+      "url": "/src/assets/product-hoop-earrings.jpg",
+      "variation": "original",
+      "totalImages": 1
+    }
+  },
+  "candles": {
+    "cnd-003": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-003/lifestyle-1764873208942.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-006": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-006/lifestyle-1764873496487.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-007": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-007/lifestyle-1764873596898.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "cnd-008": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/candles/cnd-008/lifestyle-1764873701799.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    }
+  },
+  "supplements": {
+    "sup-005": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-005/lifestyle-1764875073343.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-008": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-008/lifestyle-1764875360122.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-009": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-009/lifestyle-1764875445683.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-011": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-011/lifestyle-1764875625797.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "sup-013": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/supplements/sup-013/lifestyle-1764875812749.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    }
+  },
+  "books": {
+    "book-006": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-006/lifestyle-1764876560171.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    },
+    "book-010": {
+      "url": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/books/book-010/lifestyle-1764876914515.png",
+      "variation": "lifestyle",
+      "totalImages": 4
+    }
+  }
+}
