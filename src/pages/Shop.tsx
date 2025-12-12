@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -47,7 +47,6 @@ const Shop = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState<SortOption>("featured");
   const [isLoading, setIsLoading] = useState(false);
-  const productsStartRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -121,7 +120,8 @@ const Shop = () => {
   };
 
   const scrollToProducts = () => {
-    productsStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Scroll to top of page to show sticky nav + hero
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePageChange = (onPageChange: (page: number) => void) => (page: number) => {
@@ -448,7 +448,6 @@ const Shop = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
-                <div ref={productsStartRef} />
                 {renderPagination(fashionPage, getTotalPages(getFilteredCount(fashionProducts)), setFashionPage, "top")}
                 
                 {isLoading ? (
