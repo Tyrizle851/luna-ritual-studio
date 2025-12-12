@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -46,6 +46,7 @@ const Shop = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState<SortOption>("featured");
   const [isLoading, setIsLoading] = useState(false);
+  const productsStartRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -118,26 +119,39 @@ const Shop = () => {
     return Math.ceil(itemsLength / ITEMS_PER_PAGE);
   };
 
-  const renderPagination = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
+  const scrollToProducts = () => {
+    productsStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handlePageChange = (onPageChange: (page: number) => void) => (page: number) => {
+    onPageChange(page);
+    scrollToProducts();
+  };
+
+  const renderPagination = (currentPage: number, totalPages: number, onPageChange: (page: number) => void, position: "top" | "bottom" = "bottom") => {
     if (totalPages <= 1) return null;
 
     return (
-      <Pagination className="mt-12">
+      <Pagination className={position === "top" ? "mb-8" : "mt-12"}>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+            <PaginationPrevious
+              onClick={() => {
+                if (currentPage > 1) {
+                  handlePageChange(onPageChange)(currentPage - 1);
+                }
+              }}
               className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
             />
           </PaginationItem>
-          
+
           {[...Array(totalPages)].map((_, idx) => {
             const pageNum = idx + 1;
             if (pageNum === 1 || pageNum === totalPages || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)) {
               return (
                 <PaginationItem key={pageNum}>
                   <PaginationLink
-                    onClick={() => onPageChange(pageNum)}
+                    onClick={() => handlePageChange(onPageChange)(pageNum)}
                     isActive={currentPage === pageNum}
                     className="cursor-pointer"
                   >
@@ -154,10 +168,14 @@ const Shop = () => {
             }
             return null;
           })}
-          
+
           <PaginationItem>
-            <PaginationNext 
-              onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+            <PaginationNext
+              onClick={() => {
+                if (currentPage < totalPages) {
+                  handlePageChange(onPageChange)(currentPage + 1);
+                }
+              }}
               className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
             />
           </PaginationItem>
@@ -388,13 +406,6 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Decorative Separator */}
-            <div className="flex items-center justify-center mb-10">
-              <div className="h-px bg-gradient-to-r from-transparent via-clay-dark/30 to-clay-dark/30 flex-1 max-w-[160px]"></div>
-              <div className="w-2 h-2 rotate-45 border border-clay-dark/40 bg-background mx-4"></div>
-              <div className="h-px bg-gradient-to-l from-transparent via-clay-dark/30 to-clay-dark/30 flex-1 max-w-[160px]"></div>
-            </div>
-
           <AnimatePresence mode="wait">
             {/* Fashion Tab */}
             <TabsContent value="fashion" key="fashion">
@@ -404,10 +415,8 @@ const Shop = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
-                <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                  Showing {getPaginatedItems(fashionProducts, fashionPage).length} of {getFilteredCount(fashionProducts)} curated finds
-                </p>
+                <div ref={productsStartRef} />
+                {renderPagination(fashionPage, getTotalPages(getFilteredCount(fashionProducts)), setFashionPage, "top")}
                 
                 {isLoading ? (
                   <ProductGridSkeleton />
@@ -518,10 +527,7 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(candles, candlesPage).length} of {getFilteredCount(candles)} curated finds
-              </p>
+              {renderPagination(candlesPage, getTotalPages(getFilteredCount(candles)), setCandlesPage, "top")}
               
               {isLoading ? (
                 <ProductGridSkeleton />
@@ -632,10 +638,7 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(supplements, supplementsPage).length} of {getFilteredCount(supplements)} curated finds
-              </p>
+              {renderPagination(supplementsPage, getTotalPages(getFilteredCount(supplements)), setSupplementsPage, "top")}
               
               {isLoading ? (
                 <ProductGridSkeleton />
@@ -749,10 +752,7 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(affirmations, affirmationsPage).length} of {getFilteredCount(affirmations)} curated finds
-              </p>
+              {renderPagination(affirmationsPage, getTotalPages(getFilteredCount(affirmations)), setAffirmationsPage, "top")}
               
               {isLoading ? (
                 <ProductGridSkeleton />
@@ -787,10 +787,7 @@ const Shop = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
-              <p className="text-sm text-text-muted mb-6 flex items-center gap-2 font-medium">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay"></span>
-                Showing {getPaginatedItems(books, booksPage).length} of {getFilteredCount(books)} curated finds
-              </p>
+              {renderPagination(booksPage, getTotalPages(getFilteredCount(books)), setBooksPage, "top")}
               
               {isLoading ? (
                 <ProductGridSkeleton />
