@@ -1,0 +1,5 @@
+# Agent Reports Directory
+
+Agents write their findings here as JSON files.
+Mission Control reads these files to coordinate next actions.
+

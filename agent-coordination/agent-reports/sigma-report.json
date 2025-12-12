@@ -1,0 +1,55 @@
+{
+  "agent": "SIGMA",
+  "status": "completed",
+  "timestamp": "2025-11-14T18:56:00Z",
+  "findings": {
+    "execution_summary": {
+      "total_executions_found": "20+",
+      "most_recent_execution": "Nov 14, 12:32:26 (ID#645) - SUCCEEDED in 57.246s",
+      "recent_errors": [
+        "Nov 14, 12:23:45 (ID#644) - ERROR in 1m 0.452s",
+        "Nov 14, 12:19:11 (ID#643) - ERROR in 51.476s"
+      ],
+      "authorization_issue": "CRITICAL - Cannot access execution details due to 'Unauthorized' error"
+    },
+    "start_node": {
+      "executed": true,
+      "http_status": "UNKNOWN - Cannot access due to authorization error",
+      "error_message": "AUTHORIZATION ERROR: Execution details show 'Problem loading execution - Unauthorized'. Unable to extract HTTP status code, request body, or response details from Sora video start node.",
+      "request_format": "unknown - execution data inaccessible",
+      "response": "Cannot retrieve response - authorization denied"
+    },
+    "poll_node": {
+      "executed": true,
+      "task_id": null,
+      "video_status": "unknown - cannot access execution details",
+      "video_url": null,
+      "error": "Execution details blocked by authorization error"
+    }
+  },
+  "screenshots": [
+    "sigma-start.png - Workflow Editor canvas view",
+    "sigma-poll.png - Executions list showing successful and failed runs",
+    "sigma-error-unauthorized.png - Authorization error when viewing execution 644"
+  ],
+  "errors": [
+    "CRITICAL: Authorization error prevents viewing execution details",
+    "Error message: 'Problem loading execution - Unauthorized'",
+    "Cannot extract HTTP status codes from '4.4b-1 Start Sora Video' node",
+    "Cannot extract task IDs or video status from '4.4b-2 Poll Sora Status' node",
+    "Two recent failed executions (644, 643) but details are inaccessible",
+    "Latest execution (645) succeeded, but cannot view node-level output data"
+  ],
+  "notes": [
+    "Workflow IS running on schedule (Every 8 Hours)",
+    "Multiple executions exist (initial findings were incorrect due to navigation issues)",
+    "Pattern detected: 2 consecutive failures followed by 1 success",
+    "Failure duration: ~1 minute (suggests timeout or API issue)",
+    "Success duration: ~57 seconds (normal operation)",
+    "RECOMMENDATION: Grant proper execution viewing permissions to diagnose Sora video failures",
+    "RECOMMENDATION: Check n8n execution logs or OpenAI API logs directly for Sora error details",
+    "Node '4.4b-1 Start Sora Video' configured to POST to https://api.openai.com/v1/videos",
+    "Node '4.4b-2 Poll Sora Status' exists and executes after Start node"
+  ]
+}
+

@@ -1,0 +1,1666 @@
+{
+  "name": "Content Engine v3 (Multi-Platform Viral Copy Generator)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "dc20ae32-daa8-456b-857d-043bb4d765c9",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -3456,
+        -1328
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "dd8f84a5-440c-410b-b693-1b3835178d93",
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3456,
+        -1168
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "POST_TO_PINTEREST",
+              "type": "boolean",
+              "value": "=false"
+            },
+            {
+              "id": "a2",
+              "name": "DRY_RUN",
+              "type": "boolean",
+              "value": "=true"
+            },
+            {
+              "id": "a3",
+              "name": "QUALITY_THRESHOLD",
+              "type": "number",
+              "value": "={{ Math.max(0, Math.min(100, 60)) }}"
+            },
+            {
+              "id": "a4",
+              "name": "ENABLE_QUALITY_GATE",
+              "type": "boolean",
+              "value": "=true"
+            },
+            {
+              "id": "3e74cb66-a2e5-48ff-ad5f-2eb20f13c3a7",
+              "name": "GENERATE_IMAGES",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "a6",
+              "name": "PINTEREST_MEDIA_TYPE",
+              "value": "image",
+              "type": "string"
+            },
+            {
+              "id": "a7",
+              "name": "INSTAGRAM_MEDIA_TYPE",
+              "value": "video",
+              "type": "string"
+            },
+            {
+              "id": "a8",
+              "name": "TIKTOK_MEDIA_TYPE",
+              "value": "video",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8068a93-f2b7-42bc-bd9d-decd22e88875",
+      "name": "0.1 Feature Flags",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -3216,
+        -1248
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## PHASE 0: CONFIGURATION\n\nSets workflow-wide feature flags:\n- POST_TO_PINTEREST: Enable actual Pinterest posting\n- DRY_RUN: Preview mode (no posting)\n- QUALITY_THRESHOLD: Minimum score to proceed (0-100)\n- ENABLE_QUALITY_GATE: Toggle quality gate on/off\n- GENERATE_IMAGES: Legacy flag (use media type flags instead)\n- PINTEREST_MEDIA_TYPE: \"image\" | \"video\" | \"none\"\n- INSTAGRAM_MEDIA_TYPE: \"image\" | \"video\" | \"none\"\n- TIKTOK_MEDIA_TYPE: \"image\" | \"video\" | \"none\"\n\nMedia Generation:\n- image = DALL-E 3 (9:16 vertical)\n- video = Sora 2 (up to 20s, 9:16 vertical)\n- none = Skip generation\n- TikTok \"video\" + Instagram \"video\" = TikTok reuses IG video (cost optimization)\n\nOutputs: Feature flag values accessible to all downstream nodes",
+        "height": 416,
+        "width": 716,
+        "color": 7
+      },
+      "id": "d9a744a5-b428-45c4-9995-c8395a84e863",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3984,
+        -1392
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/automation/data/products.json",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "f423b04e-daee-4a9c-9b9e-30881e03b1ef",
+      "name": "1.1 Fetch Products",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2976,
+        -1248
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let products = $json;\n\n// Handle different data structures\nif (!Array.isArray(products)) {\n  if (products && products.products) {\n    products = products.products;\n  } else if (products) {\n    products = [products];\n  } else {\n    // No products data, return fallback product (not error object)\n    return [{ json: { id: 'fallback-001', name: 'Fallback Product', title: 'Fallback Product', category: 'General', description: 'Default product', price: 10, image: 'product-candle-1.jpg', tags: ['default'], _is_fallback: true } }];\n  }\n}\n\nif (!Array.isArray(products) || products.length === 0) {\n  return [{ json: { id: 'fallback-001', name: 'Fallback Product', title: 'Fallback Product', category: 'General', description: 'Default product', price: 10, image: 'product-candle-1.jpg', tags: ['default'], _is_fallback: true } }];\n}\n\nconst now = new Date();\nconst available = products.filter(p => {\n  if (!p.last_posted) return true;\n  try {\n    const postedDate = new Date(p.last_posted);\n    // Validate date is valid\n    if (isNaN(postedDate.getTime())) return true; // Invalid date, treat as never posted\n    const days = (now - postedDate) / (1000*60*60*24);\n    return days > 3;\n  } catch (e) {\n    // Date parsing failed, treat as never posted\n    return true;\n  }\n});\n\nconst pool = available.length ? available : products;\nconst selected = pool[Math.floor(Math.random() * pool.length)] || products[0];\n\n// Validate selected product has required fields\nif (!selected || !selected.id) {\n  // Fallback if selected product is invalid\n  return [{ json: { id: 'fallback-001', name: 'Fallback Product', title: 'Fallback Product', category: 'General', description: 'Default product', price: 10, image: 'product-candle-1.jpg', tags: ['default'], _is_fallback: true } }];\n}\n\nreturn [{ json: selected }];\n"
+      },
+      "id": "3dd16f56-104a-472c-adfc-acee4bec8449",
+      "name": "1.2 Select Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2816,
+        -1248
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const product = $json;\nconst imageMap = {\n  'aff-001': 'affirmation-rest',\n  'aff-002': 'affirmation-joy',\n  'aff-003': 'affirmation-abundance',\n  'cnd-001': 'product-candle-1',\n  'cnd-002': 'product-candle-2',\n  'fsh-015': 'product-slip-dress'\n};\n\n// Validate product ID exists and is not 'unknown'\nlet productId = product.id || 'fallback-001';\nif (productId === 'unknown' || !productId || productId.trim() === '') {\n  productId = 'fallback-001';\n}\n\nconst hintBase = imageMap[productId] || (product.image || '').replace(/\\.[^.]+$/,'') || 'product-candle-1';\n\n// Normalize product data structure\nconst normalized = {\n  id: productId,\n  name: product.name || product.title || 'Product',\n  category: product.category || null,\n  description: product.description || '',\n  price: typeof product.price === 'number' ? product.price : null,\n  image: product.image || null,\n  tags: Array.isArray(product.tags) ? product.tags : [],\n  last_posted: product.last_posted || null,\n  _is_fallback: product._is_fallback || false\n};\n\nreturn [{ json: { product: normalized, hintBase } }];\n"
+      },
+      "id": "edf84482-c1f7-4696-831e-906440bea27f",
+      "name": "1.3 Map to Image Hint",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2656,
+        -1248
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/Tyrizle851/luna-ritual-studio/contents/src/assets?ref=main",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "c94c9460-fb46-44d0-993e-53a79e1befbc",
+      "name": "1.4 List src/assets",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2496,
+        -1248
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get images from GitHub src/assets directory\nconst owner = 'Tyrizle851';\nconst repo = 'luna-ritual-studio';\nconst ref = 'main';\nconst baseRaw = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}`;\n\n// Get all input items - GitHub API returns array of files\nconst allInputs = $input.all();\nconst allFiles = [];\n\n// Extract files from input\nfor (const item of allInputs) {\n    const data = item.json;\n    \n    // Handle if data is directly the array from GitHub API\n    if (Array.isArray(data)) {\n        for (const file of data) {\n            if (file && file.type === 'file' && /\\.(png|jpe?g|webp)$/i.test(file.name)) {\n                allFiles.push({ name: file.name, path: file.path });\n            }\n        }\n    }\n    // Handle if data is a single file object\n    else if (data && data.type === 'file' && /\\.(png|jpe?g|webp)$/i.test(data.name)) {\n        allFiles.push({ name: data.name, path: data.path });\n    }\n}\n\n// Get product info with fallback handling\nconst prodNode = $node['1.3 Map to Image Hint'];\nconst prod = prodNode?.json?.product || $input.first()?.json?.product || {};\nconst hintBase = prodNode?.json?.hintBase || $input.first()?.json?.hintBase || 'product-candle-1';\nconst id = (prod.id || 'fallback-001').toLowerCase();\nconst name = (prod.name || prod.title || '').toLowerCase();\n\n// Score each file\nfunction score(file) {\n    const base = file.name.replace(/\\.[^.]+$/, '').toLowerCase();\n    let s = 0;\n    if (hintBase && base.includes(hintBase.toLowerCase())) s += 5;\n    if (id && base.includes(id)) s += 3;\n    if (name) {\n        const tokens = name.split(/[^a-z0-9]+/).filter(Boolean);\n        for (const t of tokens) {\n            if (t.length > 2 && base.includes(t)) s += 1;\n        }\n    }\n    if (/\\.png$/i.test(file.name)) s += 0.2;\n    if (/\\.(jpg|jpeg)$/i.test(file.name)) s += 0.15;\n    return s;\n}\n\n// Find best match\nlet best = null;\nfor (const f of allFiles) {\n    const s = score(f);\n    if (!best || s > best.s) {\n        best = { ...f, s };\n    }\n}\n\n// Build URL\nlet url = null;\nif (best) {\n    url = `${baseRaw}/${best.path}`;\n} else {\n    // Fallback to default image\n    url = `${baseRaw}/src/assets/product-candle-1.jpg`;\n}\n\n// Warn if no files found\nconst warnings = [];\nif (allFiles.length === 0) {\n  warnings.push('NO_IMAGE_FILES_FOUND_IN_GITHUB_REPO');\n}\n\nreturn [{ json: {\n    resolved_image_url: url,\n    picked: best,\n    candidates_count: allFiles.length,\n    warnings: warnings.length > 0 ? warnings : undefined\n} }];\n"
+      },
+      "id": "f4fa6232-3a29-41fe-950c-1ed613b3a935",
+      "name": "1.5 Resolve via GitHub",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2336,
+        -1248
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## PHASE 1: DATA INGESTION\n\nFetches and normalizes product data:\n1. Fetch Products: Retrieves product catalog from GitHub\n2. Select Product: Randomly selects one product (avoids recently posted)\n3. Map to Image Hint: Normalizes product data structure, creates image hint\n4. List src/assets: Fetches available images from GitHub repo\n5. Resolve via GitHub: Matches product to best available image\n\nOutputs:\n- product: Normalized product object\n- resolved_image_url: Best-match image URL\n- hintBase: Image filename hint",
+        "height": 648,
+        "width": 1012,
+        "color": 6
+      },
+      "id": "4e48ad10-18fa-4e3b-9a58-511bd0f12f58",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3232,
+        -1616
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ \n  {\n    \"model\": \"gpt-5-chat-latest\",\n    \"temperature\": 0.7,\n    \"response_format\": { \"type\": \"json_object\" },\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are the content creator for Luna Ritual Studio, a wellness and lifestyle brand that curates intentional products for mindful living. Your brand promotes carefully selected products (mostly affiliate/curated recommendations) and your own signature affirmations. You create scroll-stopping, high-conversion ad copy that feels aspirational yet accessible - like a trusted brand sharing discoveries, not a consumer review.\\n\\n=== OUTPUT REQUIREMENTS ===\\nYou MUST return ONLY valid JSON with this EXACT structure (no markdown, no explanations):\\n\\n{\\n  \\\"product\\\": {\\n    \\\"id\\\": \\\"string\\\",\\n    \\\"name\\\": \\\"string\\\",\\n    \\\"category\\\": \\\"string|null\\\",\\n    \\\"description\\\": \\\"string\\\",\\n    \\\"price\\\": \\\"number|null\\\",\\n    \\\"image\\\": \\\"url|null\\\",\\n    \\\"tags\\\": [\\\"array\\\"]\\n  },\\n  \\\"pinterest\\\": {\\n    \\\"title\\\": \\\"≤100 chars\\\",\\n    \\\"description\\\": \\\"≤500 chars\\\",\\n    \\\"alt_text\\\": \\\"≤250 chars\\\",\\n    \\\"hashtags\\\": [\\\"#tag1\\\", \\\"#tag2\\\", \\\"#tag3\\\"],\\n    \\\"creative_prompt\\\": {\\n      \\\"modality\\\": \\\"image\\\",\\n      \\\"orientation\\\": \\\"9:16\\\",\\n      \\\"prompt_text\\\": \\\"Detailed 200+ char image generation prompt\\\"\\n    }\\n  },\\n  \\\"instagram\\\": {\\n    \\\"caption\\\": \\\"≤2200 chars, first 120 = hook sentence\\\",\\n    \\\"hashtags\\\": [\\\"#tag1\\\", \\\"#tag2\\\", \\\"#tag3\\\"],\\n    \\\"creative_prompt\\\": {\\n      \\\"modality\\\": \\\"video\\\",\\n      \\\"orientation\\\": \\\"9:16\\\",\\n      \\\"prompt_text\\\": \\\"UGC-style Reel concept\\\",\\n      \\\"video_spec\\\": {\\n        \\\"shots\\\": [\\n          {\\\"duration_s\\\": 2, \\\"shot_description\\\": \\\"Pattern interrupt opener\\\", \\\"on_screen_text\\\": \\\"HOOK\\\"},\\n          {\\\"duration_s\\\": 3, \\\"shot_description\\\": \\\"Benefit demo\\\", \\\"on_screen_text\\\": \\\"Why it works\\\"},\\n          {\\\"duration_s\\\": 3, \\\"shot_description\\\": \\\"Social proof/lifestyle\\\", \\\"on_screen_text\\\": \\\"Real results\\\"},\\n          {\\\"duration_s\\\": 2, \\\"shot_description\\\": \\\"CTA with detail\\\", \\\"on_screen_text\\\": \\\"Get yours\\\"}\\n        ],\\n        \\\"voiceover_script\\\": \\\"2-3 concise sentences matching shots. End with clear action.\\\"\\n      }\\n    }\\n  },\\n  \\\"tiktok\\\": {\\n    \\\"caption\\\": \\\"≤2200 chars, first 120 = hook sentence\\\",\\n    \\\"hashtags\\\": [\\\"#tag1\\\", \\\"#tag2\\\", \\\"#tag3\\\"],\\n    \\\"creative_prompt\\\": {\\n      \\\"modality\\\": \\\"video\\\",\\n      \\\"orientation\\\": \\\"9:16\\\",\\n      \\\"prompt_text\\\": \\\"Lo-fi UGC TikTok concept\\\",\\n      \\\"video_spec\\\": {\\n        \\\"shots\\\": [\\n          {\\\"duration_s\\\": 2, \\\"shot_description\\\": \\\"Unexpected opener\\\", \\\"on_screen_text\\\": \\\"Wait...\\\"},\\n          {\\\"duration_s\\\": 3, \\\"shot_description\\\": \\\"Transformation moment\\\", \\\"on_screen_text\\\": \\\"This changes everything\\\"},\\n          {\\\"duration_s\\\": 3, \\\"shot_description\\\": \\\"Relatable micro-story\\\", \\\"on_screen_text\\\": \\\"No really\\\"},\\n          {\\\"duration_s\\\": 2, \\\"shot_description\\\": \\\"CTA with scarcity\\\", \\\"on_screen_text\\\": \\\"Link in bio\\\"}\\n        ],\\n        \\\"voiceover_script\\\": \\\"Casual, conversational. 2-3 sentences. Ends with action.\\\"\\n      }\\n    }\\n  },\\n  \\\"diagnostics\\\": {\\n    \\\"warnings\\\": []\\n  }\\n}\\n\\n=== CHARACTER LIMITS (STRICT) ===\\n- Pinterest title: 100 chars MAX\\n- Pinterest description: 500 chars MAX\\n- Pinterest alt_text: 250 chars MAX\\n- Instagram caption: 2200 chars MAX (first 120 = scroll-stopping hook)\\n- TikTok caption: 2200 chars MAX (first 120 = scroll-stopping hook)\\n- creative_prompt.prompt_text: 200-500 chars (detailed visual specs)\\n\\n=== PLATFORM VOICE GUIDELINES ===\\n\\n**PINTEREST (Aspirational, Save-for-Later Energy):**\\n- Title: Benefit-forward, SEO-friendly, emotionally resonant\\n- Description: Create desire and FOMO, use sensory details, include subtle CTA\\n- Tone: Warm, aspirational, \\\"this could be yours\\\"\\n- Examples: \\\"The Ritual That Changed My Mornings\\\", \\\"5 Ways to Bring More Calm Into Your Day\\\"\\n- Avoid: Hard sales language, urgency tactics\\n\\n**INSTAGRAM (Brand Voice with Relatable Energy):**\\n- First 120 chars: MUST stop scroll - pattern interrupt, curiosity gap, relatable moment\\n- Body: Warm, authentic brand voice that feels like a trusted curator sharing discoveries\\n- Tone: \\\"We found this\\\", \\\"This is everything\\\", \\\"You need to see this\\\" - aspirational but accessible\\n- Product References: Use natural, conversational language. Say \\\"this linen robe\\\" not \\\"Our Linen Robe in Natural\\\". Avoid SKU-style names, color codes, or catalog copy.\\n- Examples: \\\"This is the [product] everyone's been asking us about ✨\\\", \\\"We curated this [product] for [benefit]\\\"\\n- Voice: Luna Ritual Studio as a knowledgeable friend recommending intentional choices - conversational, not formal\\n- Avoid: Catalog language (\\\"Our [Product Name] in [Color]\\\"), first-person consumer testimonials (\\\"I tried\\\"), stiff corporate jargon, product sheet formality\\n\\n**TIKTOK (Brand Voice with Pattern Interrupt):**\\n- First 120 chars: Unexpected opener that feels native to TikTok\\n- Body: Casual brand voice, duet/stitch potential, creates FOMO\\n- Tone: \\\"We added this to the shop\\\", \\\"This is the [product] we've been stocking\\\", authentic excitement\\n- Examples: \\\"This [product] just restocked and we're obsessed 🤍\\\", \\\"The [product] everyone's been asking us to carry...\\\"\\n- Voice: Luna Ritual Studio as an excited curator sharing new finds\\n- Avoid: First-person consumer testimonials, over-produced corporate feel\\n\\n=== VIRALITY RULES (NON-NEGOTIABLE) ===\\n1. NO emoji at character position 0 (breaks screen readers, looks spammy)\\n2. Max 4 emojis total per caption (less is more)\\n3. Hashtags: 3-5 for Pinterest, 3-7 for Instagram/TikTok\\n4. Hashtag strategy: 1-2 broad (10M+ posts) + 2-3 niche (10K-500K posts) + 0-2 seasonal\\n5. All hashtags lowercase, start with #, NO DUPLICATES within same platform\\n6. Hooks (IG/TikTok first 120 chars) MUST:\\n   - End in complete sentence (punctuation)\\n   - Contain pattern interrupt words (wait, POV, okay so, hear me out, no one talks about, etc.)\\n   - Avoid generic openings (\\\"Introducing\\\", \\\"Check out\\\", \\\"Buy now\\\")\\n7. Every caption needs clear CTA (\\\"link in bio\\\", \\\"tap to shop\\\", \\\"get yours\\\", \\\"save for later\\\")\\n8. Use emotional language: obsessed, love, favorite, game changer, life changing, can't stop, need\\n9. NO medical/financial claims, NO competitor names\\n10. Social proof: \\\"everyone's asking about\\\", \\\"sold out twice\\\", \\\"you guys loved\\\"\\n\\n=== CREATIVE PROMPT REQUIREMENTS ===\\n\\n**Pinterest creative_prompt.prompt_text (200-500 chars):**\\n- Must specify: Vertical 9:16 composition, lighting (soft/natural/dramatic), background style (minimalist/lifestyle/editorial), camera angle (overhead/eye-level/close-up)\\n- Include: Color palette, mood, texture details\\n- Example: \\\"Professional product photography of [NAME]. Vertical 9:16 composition, soft diffused natural light from camera left, warm beige minimalist background with subtle texture. Product positioned center-frame at eye level, shallow depth of field (f/2.8). Muted earth tones (cream, sage, terracotta). Clean, editorial aesthetic. High resolution, Pinterest-ready.\\\"\\n- If product.image exists: Add \\\"Keep product packaging/design identical to reference image. Do not invent new branding.\\\"\\n\\n**Instagram/TikTok video_spec (MUST be fully populated):**\\n- shots array: 4 shots total (intro, development, climax, CTA)\\n- Each shot needs: duration_s (2-4 seconds), shot_description (camera angle, action, lighting), on_screen_text (bold text overlay)\\n- voiceover_script: 2-3 sentences matching shot sequence, conversational tone, ends with action\\n- prompt_text: Overall video concept (UGC for IG, lo-fi native for TikTok)\\n\\n=== EXAMPLES OF GOOD VS BAD ===\\n\\n❌ BAD Instagram Caption:\\n\\\"Introducing our new product! Check it out. #wellness #selfcare #product #shop #buy #sale #new #trending\\\"\\n(Generic, no hook, emoji spam, too many hashtags)\\n\\n✅ GOOD Instagram Caption (Brand Voice):\\n\\\"This is the candle that's been selling out faster than we can restock it 🕯️\\\\n\\\\nWe curated this specifically for those late-night overthinkers who bring work stress to bed. The blend (lavender + chamomile + vanilla) creates that \\\"brain knows it's time to chill\\\" moment we all need.\\\\n\\\\nIt's quickly becoming our most-requested ritual essential. Light it 30 minutes before bed and watch your wind-down routine transform.\\\\n\\\\nFor the chronic overthinkers and bedtime worriers... this one's for you. Link in bio to discover the ritual that's changing sleep for our community. ✨\\\\n\\\\n#calmingrituals #sleepbetter #anxietyrelief #slowliving #selfcareessentials\\\"\\n(Brand voice, community-focused, relatable problem/solution, emotional language, strategic hashtags, clear affiliate CTA)\\n\\n=== YOUR TASK ===\\nGenerate platform-native, viral-optimized copy for the product provided in the user message. Follow ALL rules above. Return ONLY the JSON structure specified. No explanations, no markdown fences, just pure JSON.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Product Data:\\n\" + JSON.stringify($node['1.3 Map to Image Hint'].json.product)\n      }\n    ]\n  }\n}}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 90000
+        }
+      },
+      "id": "0243292d-b502-4a10-a715-cc0f62675d3f",
+      "name": "2.1 Generate Copy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2096,
+        -1248
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== BULLETPROOF PARSE RESPONSE WITH COMPELLING FALLBACKS =====\n\n// Get product data from input chain (preserved from earlier phases)\nconst product = $node['1.3 Map to Image Hint']?.json?.product || $input.first()?.json?.product || { name: 'Product', category: 'wellness' };\nlet content;\nlet parsed;\nlet usedFallback = false;\nconst warnings = [];\n\ntry {\n  // Extract content from OpenAI response\n  if ($json.choices && Array.isArray($json.choices) && $json.choices.length > 0 && $json.choices[0] && $json.choices[0].message && $json.choices[0].message.content) {\n    content = $json.choices[0].message.content;\n  } else if ($json.error) {\n    throw new Error('OpenAI API error: ' + JSON.stringify($json.error));\n  } else if (!$json || Object.keys($json).length === 0) {\n    throw new Error('Empty response from OpenAI API');\n  } else {\n    throw new Error('Unexpected OpenAI response format: ' + JSON.stringify($json).slice(0, 200));\n  }\n\n  // Strip markdown code fences (but preserve JSON structure)\n  // Only remove fences if they wrap the entire content\n  content = content.trim();\n  if (content.startsWith('```json')) {\n    content = content.replace(/^```json\\n?/, '').replace(/\\n?```$/, '');\n  } else if (content.startsWith('```')) {\n    content = content.replace(/^```\\n?/, '').replace(/\\n?```$/, '');\n  }\n  content = content.trim();\n\n  // Parse JSON\n  parsed = JSON.parse(content);\n\n  // Validate structure has required keys\n  if (!parsed.pinterest || !parsed.instagram || !parsed.tiktok) {\n    throw new Error('Missing required platform keys in parsed JSON');\n  }\n\n  // Validate nested structures\n  if (!parsed.pinterest.title || !parsed.pinterest.description) {\n    throw new Error('Missing required Pinterest fields');\n  }\n  if (!parsed.instagram.caption || !parsed.instagram.creative_prompt) {\n    throw new Error('Missing required Instagram fields');\n  }\n  if (!parsed.tiktok.caption || !parsed.tiktok.creative_prompt) {\n    throw new Error('Missing required TikTok fields');\n  }\n  \n  // Validate creative_prompt structure for video_spec\n  if (parsed.instagram.creative_prompt && parsed.instagram.creative_prompt.video_spec) {\n    if (!Array.isArray(parsed.instagram.creative_prompt.video_spec.shots)) {\n      throw new Error('Instagram video_spec.shots must be an array');\n    }\n  }\n  if (parsed.tiktok.creative_prompt && parsed.tiktok.creative_prompt.video_spec) {\n    if (!Array.isArray(parsed.tiktok.creative_prompt.video_spec.shots)) {\n      throw new Error('TikTok video_spec.shots must be an array');\n    }\n  }\n\n  // Ensure product passthrough\n  parsed.product = product;\n\n  // Ensure diagnostics exists\n  if (!parsed.diagnostics) {\n    parsed.diagnostics = { warnings: [] };\n  }\n  if (!Array.isArray(parsed.diagnostics.warnings)) {\n    parsed.diagnostics.warnings = [];\n  }\n\n} catch (e) {\n  // ===== FALLBACK: BUILD COMPELLING DEFAULT COPY =====\n  usedFallback = true;\n  warnings.push('FALLBACK_USED_DUE_TO_PARSE_ERROR: ' + e.message);\n\n  const name = product.name || 'this';\n  const category = product.category || 'wellness';\n  const price = product.price ? `$${product.price}` : '';\n  const description = product.description || '';\n  const tags = Array.isArray(product.tags) ? product.tags : [];\n\n  // Smart hashtag generation (mix broad + niche)\n  const broadTags = ['#selfcare', '#wellness', '#slowliving', '#dailyritual'];\n  const nicheTags = tags.length > 0 ? tags.map(t => '#' + t.toLowerCase().replace(/[^a-z0-9]/g, '')) : ['#lunarituals', '#intentionalliving'];\n  const allTags = [...broadTags.slice(0, 2), ...nicheTags.slice(0, 3)].slice(0, 5);\n\n  parsed = {\n    product: product,\n    pinterest: {\n      title: `This ${name} might just become your new favorite ritual ✨`.slice(0, 100),\n      description: `Discover the ${name} that everyone's talking about. ${description ? description.slice(0, 300) : `Perfect for your ${category} routine, this is the kind of ${category} essential you'll reach for every single day.`} Elevate your daily rituals. ${price}`.slice(0, 500),\n      alt_text: `${name} - ${category} product in minimalist setting`.slice(0, 250),\n      hashtags: allTags.slice(0, 5),\n      creative_prompt: {\n        modality: 'image',\n        orientation: '9:16',\n        prompt_text: `Professional product photography of ${name}. Vertical 9:16 composition, soft diffused natural lighting from top-left, warm minimalist background (cream or beige with subtle texture). Product positioned center-frame at eye level, shallow depth of field. Clean, editorial aesthetic with muted earth tones. High resolution, Pinterest-ready. ${product.image ? 'Keep product packaging identical to reference image.' : ''}`.slice(0, 500)\n      }\n    },\n    instagram: {\n      caption: `This is the ${name} that's been selling out faster than we can restock it ✨\\n\\nWe curated this specifically for those who need a ${category} ritual that actually works. ${description ? description.slice(0, 200) : `You know that feeling when you find something that just makes sense? That's this.`}\\n\\nIt's quickly becoming our most-requested essential. The kind of ${category} find that feels less like a chore and more like... taking care of yourself? If that makes sense.\\n\\nFor those looking for a sign to try something new for your ${category} routine, this is it. Link in bio. ${price}\\n\\n#${category}essentials #dailyritual #slowliving`.slice(0, 2200),\n      hashtags: allTags.slice(0, 7),\n      creative_prompt: {\n        modality: 'video',\n        orientation: '9:16',\n        prompt_text: `UGC-style Instagram Reel, handheld iPhone feel, natural lighting, quick cuts, relatable lifestyle vibe`,\n        video_spec: {\n          shots: [\n            { duration_s: 2, shot_description: 'Close-up of product in natural setting, slight camera shake (authentic feel)', on_screen_text: 'okay hear me out...' },\n            { duration_s: 3, shot_description: 'Quick cuts of product in use, lifestyle context, soft focus', on_screen_text: 'game changer energy' },\n            { duration_s: 3, shot_description: 'Slow pan, golden hour lighting, product featured with complementary props', on_screen_text: 'my new favorite' },\n            { duration_s: 2, shot_description: 'Final shot: product displayed beautifully, warm filter', on_screen_text: 'link in bio ✨' }\n          ],\n          voiceover_script: `So I wasn't expecting this to become a daily thing, but ${name} actually delivered. It's one of those finds that just makes sense. If you've been looking for this, link in bio.`\n        }\n      }\n    },\n    tiktok: {\n      caption: `wait why is no one talking about ${name}?? 👀\\n\\nno but seriously, we added this to the shop thinking it'd be just another ${category} thing and now we're lowkey obsessed. ${description ? description.slice(0, 150) : 'Like actually good, not just trendy good.'}\\n\\nif you're on ${category}tok you need this. trust. link in bio before it sells out again ${price}\\n\\n#${category}tok #fyp #viral`.slice(0, 2200),\n      hashtags: [...allTags.slice(0, 5), '#fyp', '#viral'].slice(0, 7),\n      creative_prompt: {\n        modality: 'video',\n        orientation: '9:16',\n        prompt_text: `Lo-fi TikTok style, raw UGC feel, pattern-interrupt first frame, fast-paced beat-matched cuts, relatable commentary`,\n        video_spec: {\n          shots: [\n            { duration_s: 1.5, shot_description: 'Unexpected opener: extreme close-up of product, slightly off-center, dramatic lighting', on_screen_text: 'wait...' },\n            { duration_s: 3, shot_description: 'Quick montage: product in various contexts, jump cuts, lo-fi aesthetic', on_screen_text: 'no bc why is this actually good' },\n            { duration_s: 3, shot_description: 'Relatable moment: casual setting, product featured naturally, authentic reaction', on_screen_text: 'im obsessed??' },\n            { duration_s: 2, shot_description: 'CTA shot: product center frame, text overlay, urgency implied', on_screen_text: 'link in bio before its gone' }\n          ],\n          voiceover_script: `Okay so wait, ${name}? Actually lives up to the hype. I wasn't expecting it but here we are. Link in bio if you want to try it.`\n        }\n      }\n    },\n    diagnostics: {\n      warnings: warnings\n    }\n  };\n}\n\n// ===== SMART CHARACTER LIMIT ENFORCEMENT =====\n\n// Helper: Slice without breaking mid-word or mid-emoji\nfunction smartSlice(str, maxLen) {\n  if (!str) return '';\n  str = str.toString().trim();\n  if (str.length <= maxLen) return str;\n\n  // Find last space before limit\n  let sliced = str.slice(0, maxLen);\n  const lastSpace = sliced.lastIndexOf(' ');\n  if (lastSpace > maxLen * 0.8) {\n    sliced = sliced.slice(0, lastSpace);\n  }\n\n  // Handle UTF-16 surrogate pairs (emojis)\n  const lastCharCode = sliced.charCodeAt(sliced.length - 1);\n  if (lastCharCode >= 0xD800 && lastCharCode <= 0xDBFF) {\n    sliced = sliced.slice(0, -1);\n  }\n\n  return sliced + '...';\n}\n\n// Enforce limits\nif (parsed.pinterest) {\n  if (parsed.pinterest.title && parsed.pinterest.title.length > 100) {\n    parsed.pinterest.title = smartSlice(parsed.pinterest.title, 100);\n    parsed.diagnostics.warnings.push('PIN_TITLE_TRUNCATED_TO_100');\n  }\n  if (parsed.pinterest.description && parsed.pinterest.description.length > 500) {\n    parsed.pinterest.description = smartSlice(parsed.pinterest.description, 500);\n    parsed.diagnostics.warnings.push('PIN_DESC_TRUNCATED_TO_500');\n  }\n  if (parsed.pinterest.alt_text && parsed.pinterest.alt_text.length > 250) {\n    parsed.pinterest.alt_text = smartSlice(parsed.pinterest.alt_text, 250);\n    parsed.diagnostics.warnings.push('PIN_ALT_TRUNCATED_TO_250');\n  }\n}\n\nif (parsed.instagram && parsed.instagram.caption && parsed.instagram.caption.length > 2200) {\n  parsed.instagram.caption = smartSlice(parsed.instagram.caption, 2200);\n  parsed.diagnostics.warnings.push('IG_CAPTION_TRUNCATED_TO_2200');\n}\n\nif (parsed.tiktok && parsed.tiktok.caption && parsed.tiktok.caption.length > 2200) {\n  parsed.tiktok.caption = smartSlice(parsed.tiktok.caption, 2200);\n  parsed.diagnostics.warnings.push('TT_CAPTION_TRUNCATED_TO_2200');\n}\n\nreturn [{ json: parsed }];\n"
+      },
+      "id": "4c827068-5e0d-4107-8cca-cd8c8ec1fafe",
+      "name": "2.2 Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2096,
+        -1088
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== COMPREHENSIVE VALIDATION & COERCION =====\n\n// Deep clone to avoid mutations\nconst data = JSON.parse(JSON.stringify($json));\nconst warnings = Array.isArray(data.diagnostics?.warnings) ? [...data.diagnostics.warnings] : [];\n\n// Helper: Count emojis (handles UTF-16 surrogate pairs)\nfunction countEmojis(str) {\n  if (!str) return 0;\n  const emojiRegex = /\\p{Emoji}/gu;\n  const matches = str.match(emojiRegex);\n  return matches ? matches.length : 0;\n}\n\n// Helper: Clean and dedupe hashtags\nfunction cleanHashtags(tags, platformName) {\n  if (!Array.isArray(tags)) tags = [];\n  \n  const cleaned = tags\n    .map(t => (t || '').toString().trim())\n    .filter(Boolean)\n    .map(t => {\n      t = t.toLowerCase();\n      if (!t.startsWith('#')) t = '#' + t;\n      // Preserve underscores and hyphens in hashtags (valid characters)\n      return t.replace(/[^#a-z0-9_-]/g, '');\n    })\n    .filter(t => t.length > 1 && t !== '#') // Remove just '#' and empty strings\n\n  // Dedupe\n  const unique = [...new Set(cleaned)];\n  return unique;\n}\n\n// Helper: Smart slice\nfunction smartSlice(str, maxLen, warningMsg) {\n  if (!str) return '';\n  str = str.toString().trim();\n  if (str.length <= maxLen) return str;\n\n  const original = str.length;\n  let sliced = str.slice(0, maxLen);\n  const lastSpace = sliced.lastIndexOf(' ');\n  if (lastSpace > maxLen * 0.8) {\n    sliced = sliced.slice(0, lastSpace);\n  }\n\n  // Handle UTF-16 surrogate pairs\n  const lastCharCode = sliced.charCodeAt(sliced.length - 1);\n  if (lastCharCode >= 0xD800 && lastCharCode <= 0xDBFF) {\n    sliced = sliced.slice(0, -1);\n  }\n\n  warnings.push(`${warningMsg}_EXCEEDED_${original}_CHARS`);\n  return sliced.trim();\n}\n\n// ===== PINTEREST VALIDATION =====\nif (data.pinterest) {\n  // Title\n  if (data.pinterest.title && data.pinterest.title.length > 100) {\n    data.pinterest.title = smartSlice(data.pinterest.title, 100, 'PIN_TITLE');\n  }\n\n  // Description\n  if (data.pinterest.description && data.pinterest.description.length > 500) {\n    data.pinterest.description = smartSlice(data.pinterest.description, 500, 'PIN_DESC');\n  }\n\n  // Alt text\n  if (data.pinterest.alt_text && data.pinterest.alt_text.length > 250) {\n    data.pinterest.alt_text = smartSlice(data.pinterest.alt_text, 250, 'PIN_ALT');\n  }\n\n  // Hashtags\n  data.pinterest.hashtags = cleanHashtags(data.pinterest.hashtags, 'PIN');\n  if (data.pinterest.hashtags.length < 3) {\n    warnings.push(`PIN_TAGS_TOO_FEW_${data.pinterest.hashtags.length}`);\n    // Pad with generic tags\n    const padding = ['#wellness', '#selfcare', '#lunarituals'].slice(0, 3 - data.pinterest.hashtags.length);\n    data.pinterest.hashtags = [...data.pinterest.hashtags, ...padding];\n  }\n  if (data.pinterest.hashtags.length > 5) {\n    warnings.push(`PIN_TAGS_TOO_MANY_${data.pinterest.hashtags.length}`);\n    data.pinterest.hashtags = data.pinterest.hashtags.slice(0, 5);\n  }\n\n  // Emoji validation\n  const pinTitle = data.pinterest.title || '';\n  if (pinTitle.length > 0) {\n    const firstChar = pinTitle.charAt(0);\n    if (/\\p{Emoji}/u.test(firstChar)) {\n      warnings.push('PIN_EMOJI_AT_START');\n    }\n  }\n  const pinEmojiCount = countEmojis(pinTitle);\n  if (pinEmojiCount > 4) {\n    warnings.push(`PIN_TOO_MANY_EMOJIS_${pinEmojiCount}`);\n  }\n}\n\n// ===== INSTAGRAM VALIDATION =====\nif (data.instagram) {\n  // Caption\n  if (data.instagram.caption && data.instagram.caption.length > 2200) {\n    data.instagram.caption = smartSlice(data.instagram.caption, 2200, 'IG_CAPTION');\n  }\n\n  // Hashtags\n  data.instagram.hashtags = cleanHashtags(data.instagram.hashtags, 'IG');\n  if (data.instagram.hashtags.length < 3) {\n    warnings.push(`IG_TAGS_TOO_FEW_${data.instagram.hashtags.length}`);\n    const padding = ['#selfcare', '#wellness', '#dailyritual'].slice(0, 3 - data.instagram.hashtags.length);\n    data.instagram.hashtags = [...data.instagram.hashtags, ...padding];\n  }\n  if (data.instagram.hashtags.length > 7) {\n    warnings.push(`IG_TAGS_TOO_MANY_${data.instagram.hashtags.length}`);\n    data.instagram.hashtags = data.instagram.hashtags.slice(0, 7);\n  }\n\n  // Emoji validation\n  const igCaption = data.instagram.caption || '';\n  if (igCaption.length > 0) {\n    const firstChar = igCaption.charAt(0);\n    if (/\\p{Emoji}/u.test(firstChar)) {\n      warnings.push('IG_EMOJI_AT_START');\n    }\n  }\n  const igEmojiCount = countEmojis(igCaption);\n  if (igEmojiCount > 4) {\n    warnings.push(`IG_TOO_MANY_EMOJIS_${igEmojiCount}`);\n  }\n\n  // Hook validation (first 120 chars)\n  const hook = igCaption.slice(0, 120);\n  if (hook.length >= 120) {\n    const lastChar = hook.charAt(119);\n    if (!/[.!?]/.test(lastChar)) {\n      warnings.push('IG_HOOK_NO_PUNCTUATION');\n    }\n  }\n}\n\n// ===== TIKTOK VALIDATION =====\nif (data.tiktok) {\n  // Caption\n  if (data.tiktok.caption && data.tiktok.caption.length > 2200) {\n    data.tiktok.caption = smartSlice(data.tiktok.caption, 2200, 'TT_CAPTION');\n  }\n\n  // Hashtags\n  data.tiktok.hashtags = cleanHashtags(data.tiktok.hashtags, 'TT');\n  if (data.tiktok.hashtags.length < 3) {\n    warnings.push(`TT_TAGS_TOO_FEW_${data.tiktok.hashtags.length}`);\n    const padding = ['#fyp', '#viral', '#wellness'].slice(0, 3 - data.tiktok.hashtags.length);\n    data.tiktok.hashtags = [...data.tiktok.hashtags, ...padding];\n  }\n  if (data.tiktok.hashtags.length > 7) {\n    warnings.push(`TT_TAGS_TOO_MANY_${data.tiktok.hashtags.length}`);\n    data.tiktok.hashtags = data.tiktok.hashtags.slice(0, 7);\n  }\n\n  // Emoji validation\n  const ttCaption = data.tiktok.caption || '';\n  if (ttCaption.length > 0) {\n    const firstChar = ttCaption.charAt(0);\n    if (/\\p{Emoji}/u.test(firstChar)) {\n      warnings.push('TT_EMOJI_AT_START');\n    }\n  }\n  const ttEmojiCount = countEmojis(ttCaption);\n  if (ttEmojiCount > 4) {\n    warnings.push(`TT_TOO_MANY_EMOJIS_${ttEmojiCount}`);\n  }\n\n  // Hook validation\n  const ttHook = ttCaption.slice(0, 120);\n  if (ttHook.length >= 120) {\n    const lastChar = ttHook.charAt(119);\n    if (!/[.!?]/.test(lastChar)) {\n      warnings.push('TT_HOOK_NO_PUNCTUATION');\n    }\n  }\n}\n\n// ===== FINALIZE =====\nif (!data.diagnostics) {\n  data.diagnostics = {};\n}\ndata.diagnostics.warnings = warnings;\n\nreturn [{ json: data }];\n"
+      },
+      "id": "5ba59968-f5cc-4c80-b4c0-d76c6f737b30",
+      "name": "2.3 Validate & Coerce",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2096,
+        -928
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== HVC (HIGH VIRAL COEFFICIENT) SCORING SYSTEM =====\n\nconst data = { ...$json };\nconst igCaption = data.instagram?.caption || '';\nconst ttCaption = data.tiktok?.caption || '';\nconst pinTitle = data.pinterest?.title || '';\nconst pinDesc = data.pinterest?.description || '';\n\nconst subscores = {};\nlet totalScore = 0;\n\n// ===== HOOK ANALYSIS (0-25 points) =====\nlet hookScore = 0;\n\nconst patternInterruptWords = ['wait', 'pov:', 'okay so', 'hear me out', 'no one talks about', \"why didn't\", 'obsessed', 'actually', 'no but', 'lowkey', 'okay but'];\nconst genericOpenings = ['introducing', 'check out', 'buy now', 'new product', 'available now', 'shop now'];\n\nconst igHook = igCaption.length >= 120 ? igCaption.slice(0, 120).toLowerCase() : igCaption.toLowerCase();\nconst ttHook = ttCaption.length >= 120 ? ttCaption.slice(0, 120).toLowerCase() : ttCaption.toLowerCase();\n\n// Check for pattern interrupt (10 points)\nconst hasPatternInterrupt = patternInterruptWords.some(word => igHook.includes(word) || ttHook.includes(word));\nif (hasPatternInterrupt) hookScore += 10;\n\n// Ends in complete sentence (5 points) - only check if hook is long enough\nconst igLastChar = igCaption.length >= 120 ? igCaption.slice(0, 120).trim().slice(-1) : (igCaption.trim().slice(-1) || '');\nconst ttLastChar = ttCaption.length >= 120 ? ttCaption.slice(0, 120).trim().slice(-1) : (ttCaption.trim().slice(-1) || '');\nif (['.', '!', '?'].includes(igLastChar) || ['.', '!', '?'].includes(ttLastChar)) {\n  hookScore += 5;\n}\n\n// Avoids generic openings (5 points)\nconst hasGeneric = genericOpenings.some(phrase => igHook.includes(phrase) || ttHook.includes(phrase));\nif (!hasGeneric) hookScore += 5;\n\n// Curiosity gap / specificity (remaining 5 points)\nif ((igHook.includes('...') || ttHook.includes('...')) || (igHook.includes('?') || ttHook.includes('?'))) {\n  hookScore += 5;\n}\n\nsubscores.hook = Math.min(hookScore, 25);\ntotalScore += subscores.hook;\n\n// ===== EMOTION (0-15 points) =====\nlet emotionScore = 0;\n\nconst emotionWords = ['obsessed', 'love', 'favorite', 'favourite', 'game changer', 'life changing', \"can't stop\", 'need', 'must have', 'amazing', 'incredible', 'transformed', 'changed my', 'adore', 'wow'];\nconst allText = (igCaption + ' ' + ttCaption + ' ' + pinTitle + ' ' + pinDesc).toLowerCase();\n\nlet emotionCount = 0;\nemotionWords.forEach(word => {\n  // Use word boundaries to avoid substring matches (e.g., \"love\" matching \"glove\")\n  const escapedWord = word.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n  const regex = new RegExp('\\\\b' + escapedWord + '\\\\b', 'i');\n  if (regex.test(allText)) emotionCount++;\n});\n\nif (emotionCount >= 2) {\n  emotionScore = 15;\n} else if (emotionCount === 1) {\n  emotionScore = 8;\n}\n\nsubscores.emotion = emotionScore;\ntotalScore += subscores.emotion;\n\n// ===== AUTHENTICITY (0-10 points) =====\nlet authenticityScore = 0;\n\nconst casualLanguage = [\"i'm\", \"you're\", \"it's\", \"don't\", \"can't\", \"didn't\", 'gonna', 'wanna', 'kinda', 'sorta', 'tbh', 'ngl', 'literally'];\nconst buzzwords = ['elevate', 'journey', 'solution', 'innovative', 'revolutionary', 'cutting-edge', 'next-level', 'transform your life'];\n\nconst hasCasual = casualLanguage.some(word => allText.includes(word));\nif (hasCasual) authenticityScore += 5;\n\nconst hasBuzzwords = buzzwords.some(word => allText.includes(word));\nif (!hasBuzzwords) authenticityScore += 5;\n\nsubscores.authenticity = authenticityScore;\ntotalScore += subscores.authenticity;\n\n// ===== BENEFIT CLARITY (0-15 points) =====\nlet benefitScore = 0;\n\nconst outcomeWords = ['help', 'helps', 'improve', 'better', 'easier', 'faster', 'more', 'less', 'reduce', 'increase', 'boost', 'enhance'];\nconst sensoryWords = ['soft', 'smooth', 'warm', 'cozy', 'fresh', 'light', 'gentle', 'calming', 'soothing', 'energizing', 'feel', 'scent', 'texture'];\n\nconst hasOutcome = outcomeWords.some(word => allText.includes(word));\nif (hasOutcome) benefitScore += 10;\n\nconst hasSensory = sensoryWords.some(word => allText.includes(word));\nif (hasSensory) benefitScore += 5;\n\nsubscores.benefit_clarity = benefitScore;\ntotalScore += subscores.benefit_clarity;\n\n// ===== NOVELTY (0-10 points) =====\nlet noveltyScore = 0;\n\nconst uniqueFraming = ['no one talks about', 'secret', 'hack', 'trick', 'discovered', 'found out', 'realized', 'never knew', 'wish i knew'];\nconst hasUnique = uniqueFraming.some(phrase => allText.includes(phrase));\n\nif (hasUnique) {\n  noveltyScore = 10;\n} else {\n  // Check if it's not just a feature list\n  const featureWords = ['features', 'includes', 'contains', 'made with', 'available in'];\n  const isFeatureList = featureWords.some(word => allText.includes(word));\n  if (!isFeatureList) noveltyScore = 5;\n}\n\nsubscores.novelty = noveltyScore;\ntotalScore += subscores.novelty;\n\n// ===== SHAREABILITY (0-10 points) =====\nlet shareabilityScore = 0;\n\nconst relatableWords = ['anyone else', 'just me', 'relate', 'same', 'mood', \"that's so\", 'when you', 'pov', 'if you'];\nconst socialProof = [\"everyone's\", 'sold out', 'viral', 'trending', 'you guys loved', 'keep asking', 'dm me about'];\n\nconst hasRelatable = relatableWords.some(word => allText.includes(word));\nif (hasRelatable) shareabilityScore += 5;\n\nconst hasSocialProof = socialProof.some(phrase => allText.includes(phrase));\nif (hasSocialProof) shareabilityScore += 5;\n\nsubscores.shareability = shareabilityScore;\ntotalScore += subscores.shareability;\n\n// ===== CTA STRENGTH (0-5 points) =====\nlet ctaScore = 0;\n\nconst strongCTA = ['link in bio', 'tap the link', 'get yours', 'shop now', 'try it', 'grab yours', 'swipe up', 'click the link', 'check it out'];\nconst hasCTA = strongCTA.some(phrase => allText.includes(phrase));\n\nif (hasCTA) ctaScore = 5;\n\nsubscores.cta_strength = ctaScore;\ntotalScore += subscores.cta_strength;\n\n// ===== PLATFORM FIT (0-10 points) =====\nlet platformScore = 0;\n\nconst pinterestWords = ['save', 'pin', 'inspiration', 'ideas', 'discover', 'explore'];\nconst instagramWords = ['reel', 'story', 'post', 'feed', 'share'];\nconst tiktokWords = ['fyp', 'foryou', 'viral', 'duet', 'stitch', 'sound'];\n\nconst pinText = (pinTitle + ' ' + pinDesc).toLowerCase();\nconst hasPlatformLanguage = \n  pinterestWords.some(w => pinText.includes(w)) ||\n  instagramWords.some(w => igCaption.toLowerCase().includes(w)) ||\n  tiktokWords.some(w => ttCaption.toLowerCase().includes(w));\n\nif (hasPlatformLanguage) {\n  platformScore = 10;\n} else {\n  // At least check if it's not generic across all platforms\n  // Filter out empty strings before checking uniqueness\n  const uniqueParts = [igCaption.slice(0, 50), ttCaption.slice(0, 50), pinTitle].filter(s => s && s.trim().length > 0);\n  const uniqueness = new Set(uniqueParts).size;\n  if (uniqueness === 3 && uniqueParts.length === 3) platformScore = 5; // All platforms have unique copy\n}\n\nsubscores.platform_fit = platformScore;\ntotalScore += subscores.platform_fit;\n\n// ===== FINALIZE =====\nconst flags = $node['0.1 Feature Flags']?.json || {};\nconst enableQualityGate = flags.ENABLE_QUALITY_GATE !== false; // Default to true if not set\n// Handle threshold properly - 0 is valid, so check for undefined/null explicitly\nconst threshold = (flags.QUALITY_THRESHOLD !== undefined && flags.QUALITY_THRESHOLD !== null) ? flags.QUALITY_THRESHOLD : 60;\n\n// If quality gate disabled, always approve\nconst gateStatus = enableQualityGate ? (totalScore >= threshold ? 'APPROVED' : 'REJECTED') : 'APPROVED';\n\ndata.diagnostics.quality_score = totalScore;\ndata.diagnostics.quality_subscores = subscores;\ndata.diagnostics.gate_status = gateStatus;\ndata.diagnostics.threshold_used = threshold;\ndata.diagnostics.quality_gate_enabled = enableQualityGate;\n\nreturn [{ json: data }];\n"
+      },
+      "id": "52991669-db59-4138-8b6e-38826e7dcfa7",
+      "name": "3.1 Quality Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2096,
+        -768
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.diagnostics.gate_status }}",
+              "value2": "APPROVED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2824d67b-3d9e-489b-a9eb-f94dac2d7d32",
+      "name": "3.2 IF Quality Gate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -2096,
+        -592
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## PHASE 2: CONTENT GENERATION\n\nGenerates viral-optimized ad copy for all 3 platforms:\n1. Generate Copy: Calls OpenAI GPT-4o with comprehensive prompt\n   - Enforces JSON mode via response_format\n   - Temperature 0.7 for creative variety\n   - Platform-specific voice guidelines\n   - Character limits enforced in prompt\n   - Retry logic for transient failures\n\n2. Parse Response: Bulletproof JSON parsing\n   - Extracts content from OpenAI response\n   - Strips markdown fences\n   - Validates structure\n   - IF PARSING FAILS: Builds compelling fallback copy\n   - Smart character slicing (no mid-word/emoji breaks)\n\n3. Validate & Coerce: Final validation pass\n   - Enforces all platform limits\n   - Cleans/dedupes hashtags\n   - Checks emoji violations\n   - Validates hooks end in punctuation\n   - Accumulates warnings (never crashes)\n\nOutputs:\n- pinterest: {title, description, alt_text, hashtags, creative_prompt}\n- instagram: {caption, hashtags, creative_prompt with video_spec}\n- tiktok: {caption, hashtags, creative_prompt with video_spec}\n- diagnostics: {warnings array}",
+        "height": 720,
+        "width": 480,
+        "color": 5
+      },
+      "id": "1485fb4d-5170-45b4-af11-33b34e1f7655",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        -1472
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## PHASE 3: QUALITY CONTROL\n\nScores copy quality and decides whether to proceed:\n\n1. Quality Gate: HVC (High Viral Coefficient) scoring (0-100)\n   - HOOK (0-25): Pattern interrupt, complete sentence, no generic openings\n   - EMOTION (0-15): Emotional language count\n   - AUTHENTICITY (0-10): Casual language, avoids buzzwords\n   - BENEFIT CLARITY (0-15): Specific outcome + sensory detail\n   - NOVELTY (0-10): Unique framing vs feature list\n   - SHAREABILITY (0-10): Relatable + social proof\n   - CTA STRENGTH (0-5): Clear action phrase\n   - PLATFORM FIT (0-10): Platform-native language\n   \n   Adds to diagnostics:\n   - quality_score: total\n   - quality_subscores: breakdown\n   - gate_status: APPROVED (≥threshold) or REJECTED\n\n2. IF Quality Gate Check: Branches based on score\n   - TRUE (APPROVED): Continue to image selection\n   - FALSE (REJECTED): Skip to summary with failure message\n   - Threshold configurable via Feature Flags (default: 60)\n\nOutputs:\n- Same structure as input + quality scoring in diagnostics",
+        "height": 580,
+        "width": 1760,
+        "color": 4
+      },
+      "id": "7b438ceb-3cfa-44f1-ac66-f9b3f834d187",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -4000,
+        -880
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== CHOOSE FINAL IMAGE + PACKAGE OUTPUT =====\n\n// Deep clone to avoid mutations\nconst payload = JSON.parse(JSON.stringify($json));\nlet finalImageUrl = null;\n\n// Determine image source\ntry {\n  // Priority 1: Product image from normalized data\n  const productImage = payload.product?.image;\n  if (productImage && typeof productImage === 'string' && productImage.startsWith('https://')) {\n    finalImageUrl = productImage;\n  }\n  \n  // Priority 2: Resolved image from GitHub\n  if (!finalImageUrl) {\n    const resolvedUrl = $node['1.5 Resolve via GitHub']?.json?.resolved_image_url;\n    if (resolvedUrl && typeof resolvedUrl === 'string' && resolvedUrl.startsWith('https://')) {\n      finalImageUrl = resolvedUrl;\n    }\n  }\n  \n  // Priority 3: Hardcoded fallback\n  if (!finalImageUrl) {\n    finalImageUrl = 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg';\n    // Create new diagnostics object to avoid mutation\n    const diagnostics = payload.diagnostics || {};\n    const warnings = Array.isArray(diagnostics.warnings) ? [...diagnostics.warnings] : [];\n    warnings.push('USING_HARDCODED_FALLBACK_IMAGE');\n    payload = { ...payload, diagnostics: { ...diagnostics, warnings } };\n  }\n} catch (e) {\n  finalImageUrl = 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg';\n  // Create new diagnostics object to avoid mutation\n  const diagnostics = payload.diagnostics || {};\n  const warnings = Array.isArray(diagnostics.warnings) ? [...diagnostics.warnings] : [];\n  warnings.push('IMAGE_SELECTION_ERROR: ' + e.message);\n  payload = { ...payload, diagnostics: { ...diagnostics, warnings } };\n}\n\n// Extract creative prompts for future image/video generation\nconst pinterestCreativePrompt = payload.pinterest?.creative_prompt?.prompt_text || '';\nconst instagramCreativePrompt = payload.instagram?.creative_prompt || {};\nconst tiktokCreativePrompt = payload.tiktok?.creative_prompt || {};\n\n// Package everything\nconst output = {\n  final_image_url: finalImageUrl,\n  pinterest_creative_prompt: pinterestCreativePrompt,\n  instagram_creative_prompt: instagramCreativePrompt,\n  tiktok_creative_prompt: tiktokCreativePrompt,\n  payload: payload\n};\n\nreturn [{ json: output }];\n"
+      },
+      "id": "17b5ac56-74ba-439d-922e-cad949037f1e",
+      "name": "4.1 Choose Final URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1696,
+        -416
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.final_image_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          },
+          "timeout": 240000
+        }
+      },
+      "id": "4e722989-f4ce-4a4f-9a21-216dffe22a29",
+      "name": "4.5 Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -288,
+        -512
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "summary",
+              "name": "summary",
+              "type": "string",
+              "value": "=**🎯 DRY RUN COMPLETE - MULTI-PLATFORM VIRAL COPY GENERATED**\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**📍 PINTEREST**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nTitle: {{ $node['4.6 Aggregate Media'].json.payload.pinterest.title }}\\n\\nDescription: {{ ($node['4.6 Aggregate Media'].json.payload.pinterest?.description || '').slice(0, 200) }}{{ ($node['4.6 Aggregate Media'].json.payload.pinterest?.description || '').length > 200 ? '...' : '' }}\\n\\nHashtags: {{ ($node['4.6 Aggregate Media'].json.payload.pinterest?.hashtags || []).join(' ') }}\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**📸 INSTAGRAM**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nHook (first 120 chars): {{ ($node['4.6 Aggregate Media'].json.payload.instagram?.caption || '').slice(0, 120) }}...\\n\\nHashtags: {{ ($node['4.6 Aggregate Media'].json.payload.instagram?.hashtags || []).join(' ') }}\\n\\nVideo Shots: {{ $node['4.6 Aggregate Media'].json.payload.instagram?.creative_prompt?.video_spec?.shots?.length || 0 }} shots\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**🎵 TIKTOK**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nHook (first 120 chars): {{ ($node['4.6 Aggregate Media'].json.payload.tiktok?.caption || '').slice(0, 120) }}...\\n\\nHashtags: {{ ($node['4.6 Aggregate Media'].json.payload.tiktok?.hashtags || []).join(' ') }}\\n\\nVideo Shots: {{ $node['4.6 Aggregate Media'].json.payload.tiktok?.creative_prompt?.video_spec?.shots?.length || 0 }} shots\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**⭐ QUALITY SCORE: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_score }}/100 ({{ $node['4.6 Aggregate Media'].json.payload.diagnostics.gate_status }})**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nHook: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.hook }}/25\\nEmotion: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.emotion }}/15\\nAuthenticity: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.authenticity }}/10\\nBenefit Clarity: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.benefit_clarity }}/15\\nNovelty: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.novelty }}/10\\nShareability: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.shareability }}/10\\nCTA Strength: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.cta_strength }}/5\\nPlatform Fit: {{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_subscores.platform_fit }}/10\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**⚠️ WARNINGS: {{ ($node['4.6 Aggregate Media'].json.payload.diagnostics?.warnings || []).length }}**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n{{ ($node['4.6 Aggregate Media'].json.payload.diagnostics?.warnings || []).length > 0 ? ($node['4.6 Aggregate Media'].json.payload.diagnostics.warnings || []).join('\\n') : 'None - Perfect execution! ✨' }}\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**🎬 MEDIA GENERATED**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\\n📍 PINTEREST:\\nMedia Type: {{ $node['4.6 Aggregate Media'].json.pinterest_media.type }}\\nSource: {{ $node['4.6 Aggregate Media'].json.pinterest_media.source }}\\nURL: {{ $node['4.6 Aggregate Media'].json.pinterest_media.url || 'None' }}\\n\\n📸 INSTAGRAM:\\nMedia Type: {{ $node['4.6 Aggregate Media'].json.instagram_media.type }}\\nSource: {{ $node['4.6 Aggregate Media'].json.instagram_media.source }}\\nURL: {{ $node['4.6 Aggregate Media'].json.instagram_media.url || 'None' }}\\n\\n🎵 TIKTOK:\\nMedia Type: {{ $node['4.6 Aggregate Media'].json.tiktok_media.type }}\\nSource: {{ $node['4.6 Aggregate Media'].json.tiktok_media.source }}\\nURL: {{ $node['4.6 Aggregate Media'].json.tiktok_media.url || 'None' }}\\n"
+            },
+            {
+              "id": "pinterest_title",
+              "name": "pinterest_title",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.pinterest.title }}"
+            },
+            {
+              "id": "pinterest_description",
+              "name": "pinterest_description",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.pinterest.description }}"
+            },
+            {
+              "id": "pinterest_hashtags",
+              "name": "pinterest_hashtags",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.pinterest.hashtags || []).join(' ') }}"
+            },
+            {
+              "id": "instagram_caption",
+              "name": "instagram_caption",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.instagram.caption }}"
+            },
+            {
+              "id": "instagram_hook",
+              "name": "instagram_hook",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.instagram.caption || '').slice(0, 120) }}"
+            },
+            {
+              "id": "instagram_hashtags",
+              "name": "instagram_hashtags",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.instagram.hashtags || []).join(' ') }}"
+            },
+            {
+              "id": "tiktok_caption",
+              "name": "tiktok_caption",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.tiktok.caption }}"
+            },
+            {
+              "id": "tiktok_hook",
+              "name": "tiktok_hook",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.tiktok.caption || '').slice(0, 120) }}"
+            },
+            {
+              "id": "tiktok_hashtags",
+              "name": "tiktok_hashtags",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.tiktok.hashtags || []).join(' ') }}"
+            },
+            {
+              "id": "quality_score",
+              "name": "quality_score",
+              "type": "number",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.diagnostics.quality_score }}"
+            },
+            {
+              "id": "quality_status",
+              "name": "quality_status",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.payload.diagnostics.gate_status }}"
+            },
+            {
+              "id": "warnings_count",
+              "name": "warnings_count",
+              "type": "number",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.diagnostics?.warnings || []).length }}"
+            },
+            {
+              "id": "warnings",
+              "name": "warnings",
+              "type": "string",
+              "value": "={{ ($node['4.6 Aggregate Media'].json.payload.diagnostics?.warnings || []).join('; ') || 'None' }}"
+            },
+            {
+              "id": "final_image_url",
+              "name": "final_image_url",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.final_image_url }}"
+            },
+            {
+              "id": "instagram_video_shots",
+              "name": "instagram_video_shots",
+              "type": "string",
+              "value": "={{ JSON.stringify($node['4.6 Aggregate Media'].json.payload.instagram?.creative_prompt?.video_spec?.shots || []) }}"
+            },
+            {
+              "id": "tiktok_video_shots",
+              "name": "tiktok_video_shots",
+              "type": "string",
+              "value": "={{ JSON.stringify($node['4.6 Aggregate Media'].json.payload.tiktok?.creative_prompt?.video_spec?.shots || []) }}"
+            },
+            {
+              "id": "image_source",
+              "name": "image_source",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.image_source }}"
+            },
+            {
+              "id": "generation_status",
+              "name": "generation_status",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.generation_status }}"
+            },
+            {
+              "id": "generation_error",
+              "name": "generation_error",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.generation_error || 'None' }}"
+            },
+            {
+              "id": "pinterest_media_url",
+              "name": "pinterest_media_url",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.pinterest_media.url || 'None' }}"
+            },
+            {
+              "id": "pinterest_media_type",
+              "name": "pinterest_media_type",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.pinterest_media.type }}"
+            },
+            {
+              "id": "pinterest_media_source",
+              "name": "pinterest_media_source",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.pinterest_media.source }}"
+            },
+            {
+              "id": "instagram_media_url",
+              "name": "instagram_media_url",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.instagram_media.url || 'None' }}"
+            },
+            {
+              "id": "instagram_media_type",
+              "name": "instagram_media_type",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.instagram_media.type }}"
+            },
+            {
+              "id": "instagram_media_source",
+              "name": "instagram_media_source",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.instagram_media.source }}"
+            },
+            {
+              "id": "tiktok_media_url",
+              "name": "tiktok_media_url",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.tiktok_media.url || 'None' }}"
+            },
+            {
+              "id": "tiktok_media_type",
+              "name": "tiktok_media_type",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.tiktok_media.type }}"
+            },
+            {
+              "id": "tiktok_media_source",
+              "name": "tiktok_media_source",
+              "type": "string",
+              "value": "={{ $node['4.6 Aggregate Media'].json.tiktok_media.source }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8156a79a-5df5-427d-9f3d-6e3d5ed8070f",
+      "name": "4.7 Dry-Run Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -112,
+        -512
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "summary",
+              "name": "summary",
+              "type": "string",
+              "value": "=**❌ QUALITY GATE FAILED**\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**⭐ QUALITY SCORE: {{ $json.diagnostics.quality_score }}/100 ({{ $json.diagnostics.gate_status }})**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nThreshold Required: {{ $json.diagnostics.threshold_used }}\\nScore Achieved: {{ $json.diagnostics.quality_score }}\\n\\n**Subscores Breakdown:**\\nHook: {{ $json.diagnostics.quality_subscores.hook }}/25\\nEmotion: {{ $json.diagnostics.quality_subscores.emotion }}/15\\nAuthenticity: {{ $json.diagnostics.quality_subscores.authenticity }}/10\\nBenefit Clarity: {{ $json.diagnostics.quality_subscores.benefit_clarity }}/15\\nNovelty: {{ $json.diagnostics.quality_subscores.novelty }}/10\\nShareability: {{ $json.diagnostics.quality_subscores.shareability }}/10\\nCTA Strength: {{ $json.diagnostics.quality_subscores.cta_strength }}/5\\nPlatform Fit: {{ $json.diagnostics.quality_subscores.platform_fit }}/10\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**💡 RECOMMENDATION**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\nCopy did not meet quality threshold. Consider:\\n- Regenerating with different product data\\n- Lowering threshold in Feature Flags if acceptable\\n- Manual review and editing before posting\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**⚠️ WARNINGS: {{ $json.diagnostics.warnings.length }}**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n{{ $json.diagnostics.warnings.join('\\n') }}\\n\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n**📄 GENERATED COPY (For Review)**\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\\n**Pinterest Title:**\\n{{ $json.pinterest.title }}\\n\\n**Instagram Hook:**\\n{{ $json.instagram.caption.slice(0, 120) }}...\\n\\n**TikTok Hook:**\\n{{ $json.tiktok.caption.slice(0, 120) }}...\\n"
+            },
+            {
+              "id": "quality_score",
+              "name": "quality_score",
+              "type": "number",
+              "value": "={{ $json.diagnostics.quality_score }}"
+            },
+            {
+              "id": "quality_status",
+              "name": "quality_status",
+              "type": "string",
+              "value": "={{ $json.diagnostics?.gate_status || 'REJECTED' }}"
+            },
+            {
+              "id": "pinterest_title",
+              "name": "pinterest_title",
+              "type": "string",
+              "value": "={{ $json.pinterest.title }}"
+            },
+            {
+              "id": "instagram_hook",
+              "name": "instagram_hook",
+              "type": "string",
+              "value": "={{ ($json.instagram?.caption || '').slice(0, 120) }}"
+            },
+            {
+              "id": "tiktok_hook",
+              "name": "tiktok_hook",
+              "type": "string",
+              "value": "={{ ($json.tiktok?.caption || '').slice(0, 120) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bdaeec81-ab6c-40cf-ae18-d83e800800d7",
+      "name": "4.8 Failed Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1680,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## PHASE 4: MEDIA GENERATION & OUTPUT\n\nGenerates images/videos for all 3 platforms based on feature flags:\n\n1. Choose Final URL: Packages payload with creative prompts\n\n2. Route Media Generation: Splits into 3 platform paths\n   - Reads PINTEREST_MEDIA_TYPE, INSTAGRAM_MEDIA_TYPE, TIKTOK_MEDIA_TYPE flags\n   - Converts video_spec to Sora prompts\n   - Creates separate items for each platform\n\n3. Switch Media Type: Routes each platform based on media_type\n   - \"image\" → Generate Image (DALL-E 3)\n   - \"video\" → Start Sora Video → Poll Status (5 min timeout)\n   - \"reuse_instagram\" → Reuse Instagram Video (TikTok)\n   - \"none\" → Skip Generation\n\n4.4a-d: Parallel media generation handlers\n   - Handle Image Result: Processes DALL-E response\n   - Start Sora Video: POST to /v1/videos (returns task_id)\n   - Poll Sora Status: Async polling every 10s up to 5 min\n   - Reuse Instagram Video: TikTok uses IG video\n   - Skip Generation: Platform disabled\n\n6. Aggregate Media: Merges all 3 platforms back\n   - Combines Pinterest/Instagram/TikTok media\n   - Handles fallbacks (video fails → uses static image)\n   - Tracks sources (sora2/dalle3/github/reused)\n\n5. Download Media: Downloads final media files\n\n7. Dry-Run Summary: Shows all platforms with media info\n   - Copy for all 3 platforms\n   - Media type, source, URL for each\n   - Quality scores\n   - Fallback tracking\n\nOutputs:\n- pinterest_media: {url, type, source}\n- instagram_media: {url, type, source}\n- tiktok_media: {url, type, source}\n- All copy fields\n- Quality metrics",
+        "height": 660,
+        "width": 884,
+        "color": 3
+      },
+      "id": "1c485ff3-d981-49ca-b0c9-7fdca8141656",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2288,
+        -272
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== HANDLE DALL-E IMAGE RESULT =====\n\n// DALL-E node receives platform item from Route Media, outputs API response\n// $json = DALL-E API response\n// $input.first() = original platform item that went into DALL-E node\nconst dalleResponse = $json;\n\n// Get platform data from input (the item that went into DALL-E node)\n// This preserves the platform context through the HTTP request node\nlet platformData = {};\nconst inputItems = $input.all();\n\n// Try to get platform data from input items (preserved through HTTP node)\nif (inputItems.length > 0) {\n  // Check all input items for platform data\n  const itemWithPlatform = inputItems.find(item => item.json && item.json.platform);\n  if (itemWithPlatform && itemWithPlatform.json.platform) {\n    platformData = itemWithPlatform.json;\n  } else if (inputItems[0].json) {\n    // Use first item even if no platform field\n    platformData = inputItems[0].json;\n  }\n}\n\n// If still no platform data, reconstruct from upstream nodes\nif (!platformData.platform || !platformData.fallback_image_url) {\n  const upstreamData = $node['4.1 Choose Final URL']?.json || {};\n  const routeData = $node['4.2 Route Media Generation']?.json || {};\n  \n  platformData = {\n    platform: platformData.platform || routeData.platform || 'pinterest',\n    fallback_image_url: platformData.fallback_image_url || upstreamData.final_image_url || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg',\n    original_payload: platformData.original_payload || upstreamData.payload || {},\n    ...platformData // Preserve any existing fields\n  };\n}\n\n// Validate fallback URL exists\nif (!platformData.fallback_image_url || typeof platformData.fallback_image_url !== 'string' || !platformData.fallback_image_url.startsWith('http')) {\n  platformData.fallback_image_url = 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg';\n}\n\nlet mediaUrl = null;\nlet source = 'dalle3';\nlet error = null;\nlet fallbackToImage = false;\n\n// Try to extract image URL from DALL-E response\ntry {\n  // Check for error first\n  if (dalleResponse?.error) {\n    error = dalleResponse.error.message || JSON.stringify(dalleResponse.error);\n    source = 'dalle3_failed';\n    fallbackToImage = true;\n  }\n  // Check standard DALL-E response structure: { data: [{ url: '...' }] }\n  else if (dalleResponse?.data && Array.isArray(dalleResponse.data) && dalleResponse.data.length > 0) {\n    const firstItem = dalleResponse.data[0];\n    if (firstItem?.url && typeof firstItem.url === 'string' && firstItem.url.startsWith('http')) {\n      mediaUrl = firstItem.url;\n    } else if (firstItem?.b64_json) {\n      // Base64 encoded image - would need to decode, but for now treat as error\n      error = 'DALL-E returned base64 image (not URL format)';\n      source = 'dalle3_failed';\n      fallbackToImage = true;\n    }\n  }\n  // Check alternative response structures\n  else if (dalleResponse?.url && typeof dalleResponse.url === 'string' && dalleResponse.url.startsWith('http')) {\n    mediaUrl = dalleResponse.url;\n  } else if (dalleResponse?.image?.url && typeof dalleResponse.image.url === 'string' && dalleResponse.image.url.startsWith('http')) {\n    mediaUrl = dalleResponse.image.url;\n  } else if (Array.isArray(dalleResponse) && dalleResponse.length > 0 && dalleResponse[0]?.url && typeof dalleResponse[0].url === 'string' && dalleResponse[0].url.startsWith('http')) {\n    mediaUrl = dalleResponse[0].url;\n  }\n  // If no valid URL found and no error, treat as unexpected format\n  else if (!error) {\n    error = 'Unexpected DALL-E response format: ' + JSON.stringify(dalleResponse).slice(0, 200);\n    source = 'dalle3_failed';\n    fallbackToImage = true;\n  }\n} catch (e) {\n  error = e.message || 'Unknown error parsing DALL-E response';\n  source = 'dalle3_error';\n  fallbackToImage = true;\n}\n\n// If DALL-E failed, use GitHub fallback\nif (fallbackToImage || !mediaUrl) {\n  mediaUrl = platformData.fallback_image_url;\n  if (!source.includes('failed')) source = 'github_fallback';\n}\n\nreturn [{ json: {\n  platform: platformData.platform,\n  media_url: mediaUrl,\n  media_type: 'image',\n  source: source,\n  error: error,\n  fallback_to_image: fallbackToImage,\n  original_data: platformData\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        -448
+      ],
+      "id": "d8f592a6-b732-40a2-b175-7b33920c9ac4",
+      "name": "4.4a Handle Image Result"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"dall-e-3\",\n  \"prompt\": {{ JSON.stringify(($json.prompt && $json.prompt.trim() && $json.prompt.trim().length > 10) ? $json.prompt.trim() : 'Professional product photography, vertical 9:16 composition, soft natural lighting, minimalist background, high quality') }},\n  \"size\": {{ JSON.stringify(['1024x1024', '1024x1792', '1792x1024'].includes($json.size) ? $json.size : '1024x1792') }},\n  \"quality\": \"standard\",\n  \"n\": 1\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1136,
+        -448
+      ],
+      "id": "510a11fb-f24a-4db4-8bd1-c344843e8b1f",
+      "name": "4.4a Generate Image (DALL-E 3)",
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== ROUTE MEDIA GENERATION: Split into 3 Platform Paths =====\n\nconst upstreamData = $json;\nconst payload = upstreamData.payload || {};\nconst flags = $node['0.1 Feature Flags']?.json || {};\n\n// Get media type flags with validation\nconst allowedTypes = ['image', 'video', 'none'];\nconst pinterestTypeRaw = (flags.PINTEREST_MEDIA_TYPE || 'image').toLowerCase();\nconst instagramTypeRaw = (flags.INSTAGRAM_MEDIA_TYPE || 'video').toLowerCase();\nconst tiktokTypeRaw = (flags.TIKTOK_MEDIA_TYPE || 'video').toLowerCase();\n\nconst pinterestType = allowedTypes.includes(pinterestTypeRaw) ? pinterestTypeRaw : 'image';\nconst instagramType = allowedTypes.includes(instagramTypeRaw) ? instagramTypeRaw : 'video';\nconst tiktokType = allowedTypes.includes(tiktokTypeRaw) ? tiktokTypeRaw : 'video';\n\n// Helper: Convert video_spec to Sora prompt\nfunction videoSpecToPrompt(creative_prompt, platform) {\n  if (!creative_prompt || !creative_prompt.video_spec) return null;\n  \n  const spec = creative_prompt.video_spec;\n  // Validate shots is an array\n  if (!Array.isArray(spec.shots)) return null;\n  const shots = spec.shots || [];\n  \n  // Validate shots array is not empty\n  if (shots.length === 0) return null;\n  \n  const voiceover = spec.voiceover_script || '';\n  const style = creative_prompt.prompt_text || '';\n  \n  // Build shot-by-shot prompt\n  let prompt = `${style}\\n\\n`;\n  \n  let currentTime = 0;\n  shots.forEach((shot, idx) => {\n    // Validate shot has required fields\n    if (!shot || typeof shot !== 'object') return;\n    const duration = Math.max(1, Math.min(20, shot.duration_s || 2)); // Clamp duration\n    const shotDesc = shot.shot_description || `Shot ${idx + 1}`;\n    const endTime = currentTime + duration;\n    prompt += `Shot ${idx + 1} (${currentTime}-${endTime}s): ${shotDesc}. `;\n    if (shot.on_screen_text) {\n      prompt += `Text overlay: \"${shot.on_screen_text}\". `;\n    }\n    prompt += `\\n`;\n    currentTime = endTime;\n  });\n  \n  if (voiceover) {\n    prompt += `\\nVoiceover: ${voiceover}`;\n  }\n  \n  // Calculate total duration\n  const totalDuration = shots.reduce((sum, s) => {\n    if (!s || typeof s !== 'object') return sum;\n    return sum + Math.max(1, Math.min(20, s.duration_s || 2));\n  }, 0);\n  \n  // Ensure duration is between 4-20 seconds (Sora requirements)\n  // Clamp to valid range and round to nearest 4 seconds\n  const validDuration = Math.max(4, Math.min(20, Math.round(totalDuration / 4) * 4));\n  \n  // Validate prompt is not empty\n  const finalPrompt = prompt.trim();\n  if (!finalPrompt || finalPrompt.length === 0 || finalPrompt === style.trim()) {\n    return null; // Invalid prompt\n  }\n  \n  return { prompt: finalPrompt, duration: validDuration };\n}\n\n// Build platform configs\nconst platforms = [];\n\n// PINTEREST\nif (pinterestType !== 'none') {\n  let pinPrompt = null;\n  let pinPromptText = '';\n  \n  if (pinterestType === 'video') {\n    // For video, try Pinterest's own creative_prompt first, then Instagram's\n    pinPrompt = videoSpecToPrompt(payload.pinterest?.creative_prompt, 'pinterest');\n    if (!pinPrompt) {\n      pinPrompt = videoSpecToPrompt(payload.instagram?.creative_prompt, 'pinterest');\n    }\n    if (!pinPrompt) {\n      // Fallback: use Pinterest image prompt as video prompt\n      pinPromptText = payload.pinterest?.creative_prompt?.prompt_text || payload.instagram?.creative_prompt?.prompt_text || 'Product video showcasing features and benefits in vertical format';\n    }\n  } else {\n    pinPromptText = payload.pinterest?.creative_prompt?.prompt_text || '';\n  }\n  \n  // Ensure prompt is never empty\n  const finalPinPrompt = pinPrompt ? pinPrompt.prompt : (pinPromptText.trim() || 'Professional product photography, vertical 9:16 composition, soft natural lighting, minimalist background');\n  \n  const pinModel = pinterestType === 'image' ? 'dall-e-3' : 'sora-2';\n  platforms.push({\n    platform: 'pinterest',\n    media_type: pinterestType,\n    prompt: finalPinPrompt,\n    duration: pinPrompt ? pinPrompt.duration : null,\n    model: pinModel,\n    size: pinModel === 'sora-2' ? '720x1280' : '1024x1792'\n  });\n}\n\n// INSTAGRAM\nif (instagramType !== 'none') {\n  // Validate creative_prompt exists before calling videoSpecToPrompt\n  const igCreativePrompt = payload.instagram?.creative_prompt;\n  let igPrompt = null;\n  let igPromptText = '';\n  \n  if (instagramType === 'video' && igCreativePrompt) {\n    igPrompt = videoSpecToPrompt(igCreativePrompt, 'instagram');\n    if (!igPrompt) {\n      // Fallback: use image prompt as video prompt\n      igPromptText = igCreativePrompt?.prompt_text || payload.pinterest?.creative_prompt?.prompt_text || 'UGC-style Instagram Reel showcasing product features and benefits';\n    }\n  } else {\n    igPromptText = igCreativePrompt?.prompt_text || payload.pinterest?.creative_prompt?.prompt_text || '';\n  }\n  \n  // Ensure prompt is never empty - use appropriate fallback based on media type\n  const finalIgPrompt = igPrompt ? igPrompt.prompt : (igPromptText.trim() || (instagramType === 'video' ? 'UGC-style Instagram Reel showcasing product features and benefits in vertical format' : 'Professional product photography for Instagram, vertical 9:16 composition, soft natural lighting'));\n  \n  const igModel = instagramType === 'image' ? 'dall-e-3' : 'sora-2';\n  platforms.push({\n    platform: 'instagram',\n    media_type: instagramType,\n    prompt: finalIgPrompt,\n    duration: igPrompt ? igPrompt.duration : null,\n    model: igModel,\n    size: igModel === 'sora-2' ? '720x1280' : '1024x1792'\n  });\n}\n\n// TIKTOK (reuses Instagram video or generates separately)\nif (tiktokType !== 'none') {\n  if (tiktokType === 'video' && instagramType === 'video') {\n    // Reuse Instagram video\n    platforms.push({\n      platform: 'tiktok',\n      media_type: 'reuse_instagram',\n      prompt: null,\n      duration: null,\n      model: null,\n      size: null\n    });\n  } else {\n    let ttPrompt = null;\n    let ttPromptText = '';\n    \n    if (tiktokType === 'video') {\n      ttPrompt = videoSpecToPrompt(payload.tiktok?.creative_prompt, 'tiktok');\n      if (!ttPrompt) {\n        // Fallback: use image prompt as video prompt\n        ttPromptText = payload.tiktok?.creative_prompt?.prompt_text || payload.pinterest?.creative_prompt?.prompt_text || 'Lo-fi TikTok style video showcasing product features and benefits';\n      }\n    } else {\n      ttPromptText = payload.tiktok?.creative_prompt?.prompt_text || payload.pinterest?.creative_prompt?.prompt_text || '';\n    }\n    \n    // Ensure prompt is never empty\n    const finalTtPrompt = ttPrompt ? ttPrompt.prompt : (ttPromptText.trim() || (tiktokType === 'video' ? 'Lo-fi TikTok style video showcasing product features and benefits in vertical format' : 'Professional product photography for TikTok, vertical 9:16 composition, soft natural lighting'));\n    \n    const ttModel = tiktokType === 'image' ? 'dall-e-3' : 'sora-2';\n    platforms.push({\n      platform: 'tiktok',\n      media_type: tiktokType,\n      prompt: finalTtPrompt,\n      duration: ttPrompt ? ttPrompt.duration : null,\n      model: ttModel,\n      size: ttModel === 'sora-2' ? '720x1280' : '1024x1792'\n    });\n  }\n}\n\n// Attach original data to each platform item\nconst output = platforms.map(p => ({\n  ...p,\n  fallback_image_url: upstreamData.final_image_url,\n  original_payload: payload\n}));\n\n// If no platforms enabled, return empty array (workflow will complete without media generation)\nif (output.length === 0) {\n  return [{ json: { \n    error: 'No platforms enabled', \n    original_payload: payload,\n    platform: 'none',\n    media_type: 'none',\n    source: 'skipped_all_platforms'\n  } }];\n}\n\nreturn output.map(item => ({ json: item }));"
+      },
+      "id": "34d211cc-1f88-4064-b155-50784472cff4",
+      "name": "4.2 Route Media Generation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        -416
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.media_type }}",
+              "rightValue": "image",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e4580efe-b816-48f1-8ae9-cc2b7c3ccc1d",
+      "name": "4.3a IF Media = Image",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1344,
+        -416
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.media_type }}",
+              "rightValue": "video",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ba9106b4-3d0a-4268-a61d-1b4dd526d0f8",
+      "name": "4.3b IF Media = Video",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1344,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.media_type }}",
+              "rightValue": "reuse_instagram",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7f7bd2dd-5d9f-416a-afc2-beb3abc1f215",
+      "name": "4.3c IF Media = Reuse",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1344,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/videos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": {{ JSON.stringify($json.model || 'sora-2') }},\n  \"prompt\": {{ JSON.stringify(($json.prompt && $json.prompt.trim() && $json.prompt.trim().length > 10) ? $json.prompt.trim() : 'Product video showcasing features and benefits in vertical format, professional quality') }},\n  \"seconds\": {{ JSON.stringify(String((() => { const d = $json.duration || 10; const clamped = Math.max(4, Math.min(20, d)); const rounded = Math.round(clamped / 4) * 4; return Math.max(4, Math.min(20, rounded === 0 ? 4 : rounded)); })())) }},\n  \"size\": {{ JSON.stringify(['720x1280', '1280x720', '1024x1024'].includes($json.size) ? $json.size : '720x1280') }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 240000
+        }
+      },
+      "id": "78bdf903-c328-4766-abff-825fa49f829a",
+      "name": "4.4b-1 Start Sora Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1104,
+        -224
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "amount": 240
+      },
+      "id": "9e155dcb-898d-430b-b473-713043917be6",
+      "name": "4.4b-2 Wait 240 Seconds",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        -272
+      ],
+      "webhookId": "1432183f-c752-4314-81cf-06c2bf772598"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/videos/{{ (() => { const id = $node['4.4b-1 Start Sora Video']?.json?.id || $json.id || $node['4.4b-1 Start Sora Video']?.json?.task_id || $json.task_id || ''; return id.toString(); })() }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 240000
+        }
+      },
+      "id": "cdf30460-ef02-45de-81c2-58bc92609ace",
+      "name": "4.4b-3 Get Sora Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -688,
+        -224
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== MERGE STATUS WITH INPUT DATA (preserve retry_count) =====\n\n// Get Sora Status returns only API response, but we need to preserve retry_count and platform data from input\nconst apiResponse = $json;\nconst inputData = $input.first()?.json || {};\n\n// Merge: API response takes priority, but preserve retry_count and original_data from input\n// This ensures retry_count persists through the polling loop\nconst mergedData = {\n  ...apiResponse,\n  retry_count: (inputData.retry_count !== undefined && inputData.retry_count !== null) ? inputData.retry_count : ((apiResponse.retry_count !== undefined && apiResponse.retry_count !== null) ? apiResponse.retry_count : 0),\n  original_data: inputData.original_data || apiResponse.original_data || {},\n  platform: inputData.platform || apiResponse.platform || 'unknown',\n  task_id: apiResponse.id || inputData.task_id || apiResponse.task_id\n};\n\nreturn [{ json: mergedData }];"
+      },
+      "id": "11aac75b-15db-4e04-a1f7-a9974c258a8b",
+      "name": "4.4b-3b Merge Status Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -544,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== ADD RETRY COUNTER =====\n\n// Get platform data from input (preserved from Route Media through the chain)\nconst inputItems = $input.all();\nconst platformData = inputItems.find(item => item.json.platform)?.json || inputItems[0]?.json || {};\nconst soraStartResponse = $node['4.4b-1 Start Sora Video']?.json || {};\nconst statusData = $json;\n\n// Check if Start Sora failed immediately\nif (!soraStartResponse.id && soraStartResponse.error) {\n  return [{ json: {\n    platform: platformData.platform,\n    media_url: null,\n    media_type: 'video_failed',\n    source: 'sora2_failed',\n    error: soraStartResponse.error.message || JSON.stringify(soraStartResponse.error),\n    fallback_to_image: true,\n    original_data: platformData\n  }}];\n}\n\n// Get retry count from merged data (preserved through loop) or initialize\nconst previousRetryCount = statusData.retry_count || 0;\nconst retryCount = previousRetryCount + 1;\nconst taskId = soraStartResponse.id || statusData.id;\nconst status = statusData.status || soraStartResponse.status || 'processing';\n\nreturn [{ json: {\n  platform: platformData.platform,\n  task_id: taskId,\n  status: status,\n  retry_count: retryCount,\n  video_url: statusData.video?.url || null,\n  original_data: platformData\n}}];"
+      },
+      "id": "c458114f-5cb2-4fa1-8ae4-58e970f3e656",
+      "name": "4.4b-4 Add Retry Counter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ ($json.status || '').toLowerCase() }}",
+              "value2": "completed"
+            }
+          ],
+          "options": {
+            "caseSensitive": false
+          }
+        },
+        "options": {}
+      },
+      "id": "b0431b6e-540d-4aed-850d-ee4e6fe9bf21",
+      "name": "4.4b-5 IF Video Completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== EXTRACT VIDEO URL =====\n\n// Get status from current item (from Merge Status Data node)\nconst statusData = $json;\n// Get API response from Get Sora Status node\nconst soraStatusResponse = $node['4.4b-3 Get Sora Status']?.json || statusData;\n\n// Verify status is actually completed (case-insensitive)\nconst actualStatus = (statusData.status || soraStatusResponse?.status || '').toLowerCase();\n\n// Check for failed/error statuses\nif (actualStatus === 'failed' || actualStatus === 'error' || actualStatus === 'cancelled') {\n  return [{ json: {\n    ...statusData,\n    error: `Video generation failed with status: ${actualStatus}`,\n    fallback_to_image: true,\n    polling_required: false\n  }}];\n}\n\nif (actualStatus !== 'completed') {\n  return [{ json: {\n    ...statusData,\n    error: `Video not completed yet. Status: ${actualStatus}. This node should only run when status = 'completed'.`,\n    fallback_to_image: false,\n    polling_required: true\n  }}];\n}\n\n// Try multiple possible locations for video URL\nlet videoUrl = null;\n\n// Check various possible structures in Sora API response\n// Based on OpenAI Sora API, completed videos might have URL in different places\nif (soraStatusResponse?.video?.url) {\n  videoUrl = soraStatusResponse.video.url;\n} else if (soraStatusResponse?.file?.url) {\n  videoUrl = soraStatusResponse.file.url;\n} else if (soraStatusResponse?.url) {\n  videoUrl = soraStatusResponse.url;\n} else if (soraStatusResponse?.video_url) {\n  videoUrl = soraStatusResponse.video_url;\n} else if (statusData.video_url) {\n  videoUrl = statusData.video_url;\n} else if (statusData.video?.url) {\n  videoUrl = statusData.video.url;\n} else if (statusData.url) {\n  videoUrl = statusData.url;\n}\n\n// If still no URL, we'll use the API endpoint to download via video ID\n// Don't construct CDN URL - it requires auth tokens and doesn't work directly\n// Instead, pass the video ID to Download Video node which will use API endpoint\n\n// Get video ID for API endpoint download\nconst videoId = soraStatusResponse?.id || statusData.task_id;\n\nif (!videoId) {\n  // Log the actual response structure for debugging (limit size)\n  const debugInfo = {\n    statusData_keys: Object.keys(statusData || {}),\n    soraStatus_keys: Object.keys(soraStatusResponse || {}),\n    status: actualStatus,\n    full_status_response: JSON.stringify(soraStatusResponse || {}).slice(0, 500) // Reduced from 1000\n  };\n  \n  return [{ json: {\n    ...statusData,\n    error: 'No video ID found in completed response. Debug: ' + JSON.stringify(debugInfo),\n    fallback_to_image: true,\n    debug_info: debugInfo\n  }}];\n}\n\n// Pass video ID and URL (if found) to download node\n// Download node will use API endpoint: GET /v1/videos/{id}/file\nreturn [{ json: {\n  ...statusData,\n  video_id: videoId,\n  video_url: videoUrl || `https://api.openai.com/v1/videos/${videoId}/file`, // API endpoint for reference\n  task_id: videoId\n}}];"
+      },
+      "id": "5a7dc446-9060-4f0c-922e-9477821eafa3",
+      "name": "4.4b-6 Extract Video URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        -304
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/videos/{{ (() => { const id = $node['4.4b-6 Extract Video URL']?.json?.video_id || $node['4.4b-6 Extract Video URL']?.json?.task_id || $node['4.4b-1 Start Sora Video']?.json?.id || ''; if (!id || id.toString().trim() === '') throw new Error('No video ID available for download'); return id.toString(); })() }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 240000
+        }
+      },
+      "id": "1b0e08eb-2585-4e63-a792-5ebb8f4c7ba9",
+      "name": "4.4b-7 Download Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        -304
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== EXTRACT VIDEO DOWNLOAD URL =====\n\n// This node receives JSON response from \"Download Video\" (which gets video metadata)\n// We need to extract the actual video file download URL from that metadata\n\nconst videoMetadata = $json;\nconst statusData = $node['4.4b-6 Extract Video URL']?.json || {};\nlet platformData = statusData.original_data || $input.first()?.json?.original_data || {};\n\n// Validate platform data exists\nif (!platformData.platform || !platformData.fallback_image_url) {\n  const upstreamData = $node['4.1 Choose Final URL']?.json || {};\n  const routeData = $node['4.2 Route Media Generation']?.json || {};\n  \n  platformData = {\n    platform: platformData.platform || routeData.platform || 'instagram',\n    fallback_image_url: platformData.fallback_image_url || upstreamData.final_image_url || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg',\n    original_payload: platformData.original_payload || upstreamData.payload || {},\n    ...platformData\n  };\n}\n\n// Extract the actual downloadable video URL from metadata\nlet videoDownloadUrl = null;\n\nif (videoMetadata && !videoMetadata.error) {\n  // Sora API may return video URL in different locations\n  if (videoMetadata.file?.download_url && typeof videoMetadata.file.download_url === 'string' && videoMetadata.file.download_url.startsWith('http')) {\n    videoDownloadUrl = videoMetadata.file.download_url;\n  } else if (videoMetadata.download_url && typeof videoMetadata.download_url === 'string' && videoMetadata.download_url.startsWith('http')) {\n    videoDownloadUrl = videoMetadata.download_url;\n  } else if (videoMetadata.video?.download_url && typeof videoMetadata.video.download_url === 'string' && videoMetadata.video.download_url.startsWith('http')) {\n    videoDownloadUrl = videoMetadata.video.download_url;\n  } else if (videoMetadata.video?.url && typeof videoMetadata.video.url === 'string' && videoMetadata.video.url.startsWith('http')) {\n    videoDownloadUrl = videoMetadata.video.url;\n  } else if (videoMetadata.url && typeof videoMetadata.url === 'string' && videoMetadata.url.startsWith('http')) {\n    videoDownloadUrl = videoMetadata.url;\n  } else if (statusData.video_url && typeof statusData.video_url === 'string' && statusData.video_url.startsWith('http')) {\n    videoDownloadUrl = statusData.video_url;\n  }\n}\n\n// If we found a download URL, pass it to the next node for binary download\nif (videoDownloadUrl && videoDownloadUrl.startsWith('http')) {\n  return [{ json: {\n    platform: platformData.platform,\n    video_download_url: videoDownloadUrl,\n    media_type: 'video',\n    source: 'sora2',\n    error: null,\n    fallback_to_image: false,\n    original_data: platformData\n  }}];\n} else {\n  // No valid download URL, use fallback\n  return [{ json: {\n    platform: platformData.platform,\n    media_url: null,\n    media_type: 'video_failed',\n    source: 'sora2_failed',\n    error: 'No valid video download URL found in API response. Response: ' + JSON.stringify(videoMetadata).slice(0, 300),\n    fallback_to_image: true,\n    original_data: platformData\n  }}];\n}"
+      },
+      "id": "1586f6ff-4039-41ec-8ced-c732afbd3209",
+      "name": "4.4b-8 Handle Video Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        -304
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_download_url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          },
+          "timeout": 240000
+        }
+      },
+      "id": "video-binary-download-new",
+      "name": "4.4b-8b Download Video Binary",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [304, -304],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== PASS VIDEO BINARY TO MERGE =====\n\n// This node receives the actual video binary from download\n// We need to pass it with proper structure to Aggregate Media\n\nconst originalData = $node['4.4b-8 Handle Video Success']?.json || {};\nconst platformData = originalData.original_data || {};\n\n// Check if we have binary data (actual video file)\nconst hasBinary = $binary && Object.keys($binary).length > 0;\n\nif (hasBinary) {\n  // Success - we have the actual video file!\n  return [{ \n    json: {\n      platform: platformData.platform || 'instagram',\n      media_type: 'video',\n      source: 'sora2',\n      error: null,\n      fallback_to_image: false,\n      original_data: platformData,\n      has_binary: true\n    },\n    binary: $binary  // Pass through the video binary\n  }];\n} else {\n  // Download failed, use fallback\n  return [{ json: {\n    platform: platformData.platform || 'instagram',\n    media_url: platformData.fallback_image_url || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg',\n    media_type: 'video_failed',\n    source: 'sora2_download_failed',\n    error: 'Video binary download failed, using image fallback',\n    fallback_to_image: true,\n    original_data: platformData\n  }}];\n}"
+      },
+      "id": "video-binary-handler-new",
+      "name": "4.4b-8c Pass Video Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [464, -304]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.retry_count || 0 }}",
+              "value2": 5,
+              "operation": "smallerEqual"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "07a75ded-50c5-435d-907d-ea58b5015724",
+      "name": "4.4b-9 IF Retries < 5?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== TIMEOUT FALLBACK =====\n\nconst statusData = $json;\nconst platformData = statusData.original_data || $input.first()?.json?.original_data || {};\nconst retryCount = (statusData.retry_count !== undefined && statusData.retry_count !== null) ? statusData.retry_count : 5;\nconst fallbackUrl = platformData.fallback_image_url || $node['4.1 Choose Final URL']?.json?.final_image_url || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg';\n\nreturn [{ json: {\n  platform: platformData.platform || 'unknown',\n  media_url: fallbackUrl,\n  media_type: 'image_fallback',\n  source: 'sora2_timeout_fallback',\n  error: `Sora video generation timed out after ${retryCount} attempts (${retryCount * 240}s)`,  \n  fallback_to_image: true,\n  original_data: platformData\n}}];"
+      },
+      "id": "80f7ef49-108f-4236-a715-06ebc41368d4",
+      "name": "4.4b-10 Timeout Fallback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "platform",
+              "name": "platform",
+              "type": "string",
+              "value": "={{ $json.platform }}"
+            },
+            {
+              "id": "media_url",
+              "name": "media_url",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "media_type",
+              "name": "media_type",
+              "type": "string",
+              "value": "reuse_instagram"
+            },
+            {
+              "id": "source",
+              "name": "source",
+              "type": "string",
+              "value": "reused_from_instagram"
+            },
+            {
+              "id": "error",
+              "name": "error",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "fallback_to_image",
+              "name": "fallback_to_image",
+              "type": "boolean",
+              "value": "=false"
+            },
+            {
+              "id": "original_data",
+              "name": "original_data",
+              "type": "object",
+              "value": "={{ $json.original_data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "72fdbf49-de99-4b38-ab60-e71c6032b4c8",
+      "name": "4.4c Reuse Instagram Video",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1104,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "platform",
+              "name": "platform",
+              "type": "string",
+              "value": "={{ $json.platform }}"
+            },
+            {
+              "id": "media_url",
+              "name": "media_url",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "media_type",
+              "name": "media_type",
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "id": "source",
+              "name": "source",
+              "type": "string",
+              "value": "skipped"
+            },
+            {
+              "id": "error",
+              "name": "error",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "fallback_to_image",
+              "name": "fallback_to_image",
+              "type": "boolean",
+              "value": "=false"
+            },
+            {
+              "id": "original_data",
+              "name": "original_data",
+              "type": "object",
+              "value": "={{ $json.original_data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1f6b66cd-d747-4082-a4a3-6b6e5713e02e",
+      "name": "4.4d Skip Generation",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1104,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== AGGREGATE ALL PLATFORM MEDIA RESULTS =====\n\nconst allItems = $input.all();\nconst upstreamData = $node['4.1 Choose Final URL']?.json || {};\nlet payload = upstreamData.payload || {};\n\n// Initialize media storage\nconst mediaResults = {\n  pinterest: { url: null, type: 'none', source: 'not_generated' },\n  instagram: { url: null, type: 'none', source: 'not_generated' },\n  tiktok: { url: null, type: 'none', source: 'not_generated' }\n};\n\nconst fallbackWarnings = [];\nlet instagramVideoUrl = null;\n\n// Process all platform results\n// Handle case where all platforms are disabled\nif (allItems.length === 0 || (allItems.length === 1 && allItems[0].json.error === 'No platforms enabled')) {\n  // All platforms disabled - return empty media results\n  const output = {\n    pinterest_media: { url: null, type: 'none', source: 'skipped' },\n    instagram_media: { url: null, type: 'none', source: 'skipped' },\n    tiktok_media: { url: null, type: 'none', source: 'skipped' },\n    payload: payload,\n    final_image_url: upstreamData.final_image_url || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg',\n    image_source: 'github',\n    generation_status: 'skipped_all_platforms',\n    generation_error: 'All platforms disabled via feature flags'\n  };\n  return [{ json: output }];\n}\n\nfor (const item of allItems) {\n  const data = item.json;\n  const platform = data.platform;\n  \n  if (!platform || typeof platform !== 'string') continue;\n  const platformLower = platform.toLowerCase();\n  if (!['pinterest', 'instagram', 'tiktok'].includes(platformLower)) continue;\n  \n  // Handle reuse_instagram case for TikTok\n  if (data.source === 'reused_from_instagram') {\n    if (instagramVideoUrl) {\n      mediaResults.tiktok = {\n        url: instagramVideoUrl,\n        type: 'video',\n        source: 'reused_from_instagram'\n      };\n    } else {\n      // Instagram video not ready yet, will handle after loop\n      mediaResults.tiktok = {\n        url: null,\n        type: 'pending_reuse',\n        source: 'waiting_for_instagram'\n      };\n    }\n    continue;\n  }\n  \n  // Handle fallback to image\n  if (data.fallback_to_image && data.fallback_to_image === true) {\n    mediaResults[platformLower] = {\n      url: data.original_data?.fallback_image_url || upstreamData.final_image_url,\n      type: 'image_fallback',\n      source: 'github_fallback'\n    };\n    fallbackWarnings.push(`${platformLower.toUpperCase()}_VIDEO_FAILED_FALLBACK_TO_IMAGE: ${data.error || 'Unknown error'}`);\n  }\n  // Handle successful generation\n  else if (data.media_url) {\n    // Determine media type from source if not explicitly set\n    let mediaType = data.media_type;\n    if (!mediaType) {\n      if (data.source === 'sora2') {\n        mediaType = 'video';\n      } else if (data.source === 'dalle3' || data.source === 'github_fallback') {\n        mediaType = 'image';\n      } else {\n        mediaType = 'image'; // default\n      }\n    }\n    \n    mediaResults[platformLower] = {\n      url: data.media_url,\n      type: mediaType,\n      source: data.source\n    };\n    \n    // Store Instagram video for TikTok reuse\n    if (platformLower === 'instagram' && (mediaType === 'video' || data.source === 'sora2')) {\n      instagramVideoUrl = data.media_url;\n    }\n  }\n  // Handle pending polling (video still generating)\n  else if (data.polling_required && data.task_id) {\n    // Video is still being generated, use fallback image for now\n    mediaResults[platformLower] = {\n      url: data.original_data?.fallback_image_url || upstreamData.final_image_url,\n      type: 'image_fallback',\n      source: 'github_fallback_pending_video'\n    };\n    fallbackWarnings.push(`${platformLower.toUpperCase()}_VIDEO_STILL_GENERATING_USING_FALLBACK_IMAGE: Task ID ${data.task_id}`);\n  }\n  // Handle skipped\n  else if (data.source === 'skipped') {\n    mediaResults[platformLower] = {\n      url: null,\n      type: 'none',\n      source: 'skipped'\n    };\n  }\n}\n\n// Final check for TikTok reuse\nif (mediaResults.tiktok.type === 'pending_reuse' && instagramVideoUrl) {\n  mediaResults.tiktok = {\n    url: instagramVideoUrl,\n    type: 'video',\n    source: 'reused_from_instagram'\n  };\n} else if (mediaResults.tiktok.type === 'pending_reuse') {\n  // Instagram video failed, use fallback\n  mediaResults.tiktok = {\n    url: upstreamData.final_image_url,\n    type: 'image_fallback',\n    source: 'github_fallback'\n  };\n  fallbackWarnings.push('TIKTOK_INSTAGRAM_REUSE_FAILED_FALLBACK_TO_IMAGE');\n}\n\n// Add fallback warnings to diagnostics (create new object to avoid mutation)\nconst payloadCopy = JSON.parse(JSON.stringify(payload));\nif (fallbackWarnings.length > 0) {\n  if (!payloadCopy.diagnostics) payloadCopy.diagnostics = { warnings: [] };\n  if (!payloadCopy.diagnostics.warnings) payloadCopy.diagnostics.warnings = [];\n  payloadCopy.diagnostics.warnings.push(...fallbackWarnings);\n  payload = payloadCopy;\n}\n\n// Package final output\n// Determine final image URL (for download node)\nlet finalImageUrl = upstreamData.final_image_url;\nif (mediaResults.pinterest.url && mediaResults.pinterest.type === 'image') {\n  finalImageUrl = mediaResults.pinterest.url;\n} else if (mediaResults.instagram.url && mediaResults.instagram.type === 'image') {\n  finalImageUrl = mediaResults.instagram.url;\n} else if (mediaResults.tiktok.url && mediaResults.tiktok.type === 'image') {\n  finalImageUrl = mediaResults.tiktok.url;\n}\n\nconst output = {\n  pinterest_media: mediaResults.pinterest,\n  instagram_media: mediaResults.instagram,\n  tiktok_media: mediaResults.tiktok,\n  payload: payload,\n  final_image_url: finalImageUrl,\n  image_source: finalImageUrl === upstreamData.final_image_url ? 'github' : 'generated',\n  generation_status: 'complete',\n  generation_error: fallbackWarnings.length > 0 ? fallbackWarnings.join('; ') : null\n};\n\nreturn [{ json: output }];"
+      },
+      "id": "26b84c99-b673-48d0-ae8b-0c1223c03302",
+      "name": "4.6 Aggregate Media",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -512
+      ]
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -672,
+        -560
+      ],
+      "id": "b07e8c1d-8ce8-4a3d-a932-f31e4f3322ba",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "0.1 Feature Flags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every 8 Hours": {
+      "main": [
+        [
+          {
+            "node": "0.1 Feature Flags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "0.1 Feature Flags": {
+      "main": [
+        [
+          {
+            "node": "1.1 Fetch Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1.1 Fetch Products": {
+      "main": [
+        [
+          {
+            "node": "1.2 Select Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1.2 Select Product": {
+      "main": [
+        [
+          {
+            "node": "1.3 Map to Image Hint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1.3 Map to Image Hint": {
+      "main": [
+        [
+          {
+            "node": "1.4 List src/assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1.4 List src/assets": {
+      "main": [
+        [
+          {
+            "node": "1.5 Resolve via GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1.5 Resolve via GitHub": {
+      "main": [
+        [
+          {
+            "node": "2.1 Generate Copy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.1 Generate Copy": {
+      "main": [
+        [
+          {
+            "node": "2.2 Parse Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.2 Parse Response": {
+      "main": [
+        [
+          {
+            "node": "2.3 Validate & Coerce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.3 Validate & Coerce": {
+      "main": [
+        [
+          {
+            "node": "3.1 Quality Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3.1 Quality Gate": {
+      "main": [
+        [
+          {
+            "node": "3.2 IF Quality Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3.2 IF Quality Gate": {
+      "main": [
+        [
+          {
+            "node": "4.1 Choose Final URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.8 Failed Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1 Choose Final URL": {
+      "main": [
+        [
+          {
+            "node": "4.2 Route Media Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.2 Route Media Generation": {
+      "main": [
+        [
+          {
+            "node": "4.3a IF Media = Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.3a IF Media = Image": {
+      "main": [
+        [
+          {
+            "node": "4.4a Generate Image (DALL-E 3)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.3b IF Media = Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.3b IF Media = Video": {
+      "main": [
+        [
+          {
+            "node": "4.4b-1 Start Sora Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.3c IF Media = Reuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.3c IF Media = Reuse": {
+      "main": [
+        [
+          {
+            "node": "4.4c Reuse Instagram Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.4d Skip Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4a Generate Image (DALL-E 3)": {
+      "main": [
+        [
+          {
+            "node": "4.4a Handle Image Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4a Handle Image Result": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-1 Start Sora Video": {
+      "main": [
+        [
+          {
+            "node": "4.4b-2 Wait 240 Seconds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-3 Get Sora Status": {
+      "main": [
+        [
+          {
+            "node": "4.4b-3b Merge Status Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-3b Merge Status Data": {
+      "main": [
+        [
+          {
+            "node": "4.4b-4 Add Retry Counter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-4 Add Retry Counter": {
+      "main": [
+        [
+          {
+            "node": "4.4b-5 IF Video Completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-5 IF Video Completed?": {
+      "main": [
+        [
+          {
+            "node": "4.4b-6 Extract Video URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.4b-9 IF Retries < 5?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-6 Extract Video URL": {
+      "main": [
+        [
+          {
+            "node": "4.4b-7 Download Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-7 Download Video": {
+      "main": [
+        [
+          {
+            "node": "4.4b-8 Handle Video Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-8 Handle Video Success": {
+      "main": [
+        [
+          {
+            "node": "4.4b-8b Download Video Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-8b Download Video Binary": {
+      "main": [
+        [
+          {
+            "node": "4.4b-8c Pass Video Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-8c Pass Video Binary": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "4.4b-9 IF Retries < 5?": {
+      "main": [
+        [
+          {
+            "node": "4.4b-2 Wait 240 Seconds",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4.4b-10 Timeout Fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-10 Timeout Fallback": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "4.4c Reuse Instagram Video": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "4.4d Skip Generation": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "4.6 Aggregate Media": {
+      "main": [
+        [
+          {
+            "node": "4.5 Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.5 Download Image": {
+      "main": [
+        [
+          {
+            "node": "4.7 Dry-Run Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "4.6 Aggregate Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.4b-2 Wait 240 Seconds": {
+      "main": [
+        [
+          {
+            "node": "4.4b-3 Get Sora Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1336672b-edd4-4701-8fc1-10e7ca1e6d14",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e17069aec1f5f4433a0cfb2937bb81eec037b717ef005364726457217fad2889"
+  },
+  "id": "C0Rzd37yUjTdCTMT",
+  "tags": []
+}

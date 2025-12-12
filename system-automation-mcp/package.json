@@ -1,0 +1,19 @@
+{
+  "name": "system-automation-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "system-automation-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["mcp", "automation", "windows", "desktop"],
+  "author": "",
+  "license": "ISC",
+  "description": "MCP server for full system automation: filesystem, applications, desktop control",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.21.1"
+  }
+}

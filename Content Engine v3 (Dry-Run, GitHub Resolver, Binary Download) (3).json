@@ -1,0 +1,629 @@
+{
+  "name": "Content Engine v3 (Dry-Run, GitHub Resolver, Binary Download)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "17741c94-09eb-40d1-9995-99071e622e81",
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1360,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "POST_TO_PINTEREST",
+              "type": "boolean",
+              "value": "=false"
+            },
+            {
+              "id": "a2",
+              "name": "DRY_RUN",
+              "type": "boolean",
+              "value": "=true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2c0813c8-5b7d-40fd-be80-399da1bc0a6b",
+      "name": "Feature Flags",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1008,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/automation/data/products.json",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "496c247d-8750-4a1b-82bc-8214d85584c2",
+      "name": "Fetch Products",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -864,
+        -160
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let products = $json;\n\n// Handle different data structures\nif (!Array.isArray(products)) {\n  if (products && products.products) {\n    products = products.products;\n  } else if (products) {\n    products = [products];\n  } else {\n    // No products data, return error\n    return [{ json: { error: 'No products found', id: 'fallback-001', name: 'Fallback Product', title: 'Fallback Product', category: 'General', description: 'Default product', price: 10, image: 'product-candle-1.jpg', tags: ['default'] } }];\n  }\n}\n\nif (!Array.isArray(products) || products.length === 0) {\n  return [{ json: { error: 'Empty products array', id: 'fallback-001', name: 'Fallback Product', title: 'Fallback Product', category: 'General', description: 'Default product', price: 10, image: 'product-candle-1.jpg', tags: ['default'] } }];\n}\n\nconst now = new Date();\nconst available = products.filter(p => {\n  if (!p.last_posted) return true;\n  const days = (now - new Date(p.last_posted)) / (1000*60*60*24);\n  return days > 3;\n});\n\nconst pool = available.length ? available : products;\nconst selected = pool[Math.floor(Math.random() * pool.length)] || products[0];\n\nreturn [{ json: selected }];\n"
+      },
+      "id": "dbf44721-83ed-4468-9389-6e30d08ec3a8",
+      "name": "Select Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const product = $json;\nconst imageMap = {\n  'aff-001': 'affirmation-rest',\n  'aff-002': 'affirmation-joy',\n  'aff-003': 'affirmation-abundance',\n  'cnd-001': 'product-candle-1',\n  'cnd-002': 'product-candle-2',\n  'fsh-015': 'product-slip-dress'\n};\nconst hintBase = imageMap[product.id] || (product.image || '').replace(/\\.[^.]+$/,'') || '';\nreturn [{ json: { product, hintBase } }];\n"
+      },
+      "id": "c058b828-095f-449a-8e33-48ae55c48c86",
+      "name": "Map to Image Hint",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -576,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/Tyrizle851/luna-ritual-studio/contents/src/assets?ref=main",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "eda32029-ad72-4cae-b77f-2e103917f94d",
+      "name": "List src/assets",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -416,
+        -160
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get images from GitHub src/assets directory\nconst owner = 'Tyrizle851';\nconst repo = 'luna-ritual-studio';\nconst ref = 'main';\nconst baseRaw = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}`;\n\n// Get all input items - GitHub API returns array of files\nconst allInputs = $input.all();\nconst allFiles = [];\n\n// Extract files from input\nfor (const item of allInputs) {\n    const data = item.json;\n    \n    // Handle if data is directly the array from GitHub API\n    if (Array.isArray(data)) {\n        for (const file of data) {\n            if (file && file.type === 'file' && /\\.(png|jpe?g|webp)$/i.test(file.name)) {\n                allFiles.push({ name: file.name, path: file.path });\n            }\n        }\n    }\n    // Handle if data is a single file object\n    else if (data && data.type === 'file' && /\\.(png|jpe?g|webp)$/i.test(data.name)) {\n        allFiles.push({ name: data.name, path: data.path });\n    }\n}\n\n// Get product info\nconst prod = $node['Map to Image Hint'].json.product || {};\nconst hintBase = $node['Map to Image Hint'].json.hintBase || '';\nconst id = (prod.id || '').toLowerCase();\nconst name = (prod.name || prod.title || '').toLowerCase();\n\n// Score each file\nfunction score(file) {\n    const base = file.name.replace(/\\.[^.]+$/, '').toLowerCase();\n    let s = 0;\n    if (hintBase && base.includes(hintBase.toLowerCase())) s += 5;\n    if (id && base.includes(id)) s += 3;\n    if (name) {\n        const tokens = name.split(/[^a-z0-9]+/).filter(Boolean);\n        for (const t of tokens) {\n            if (t.length > 2 && base.includes(t)) s += 1;\n        }\n    }\n    if (/\\.png$/i.test(file.name)) s += 0.2;\n    if (/\\.(jpg|jpeg)$/i.test(file.name)) s += 0.15;\n    return s;\n}\n\n// Find best match\nlet best = null;\nfor (const f of allFiles) {\n    const s = score(f);\n    if (!best || s > best.s) {\n        best = { ...f, s };\n    }\n}\n\n// Build URL\nlet url = null;\nif (best) {\n    url = `${baseRaw}/${best.path}`;\n} else {\n    // Fallback to default image\n    url = `${baseRaw}/src/assets/product-candle-1.jpg`;\n}\n\nreturn [{ json: {\n    resolved_image_url: url,\n    picked: best,\n    candidates_count: allFiles.length\n} }];\n"
+      },
+      "id": "052a3903-26bb-4351-b6ef-55daf7a89a59",
+      "name": "Resolve via GitHub",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ \n  {\n    \"model\": \"gpt-4o-mini\",\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a social media strategist. Return only compact JSON with keys: title, description, alt_text, hashtags[], image_prompt.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Create Pinterest-friendly content. Title<=100; Description<=500; alt_text<=250; 0-5 hashtags; image_prompt must keep product identical to reference.\nProduct: \" + ($node['Map to Image Hint'].json.product?.name || $node['Map to Image Hint'].json.product?.title || \"Product\") + \"\nCategory: \" + ($node['Map to Image Hint'].json.product?.category || \"\") + \"\nDescription: \" + ($node['Map to Image Hint'].json.product?.description || \"\")\n      }\n    ],\n    \"temperature\": 0.5\n  }\n}}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "a7e2277e-919b-4b73-a9f4-3c890bca15d7",
+      "name": "Generate Copy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        304,
+        -288
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let content;\ntry {\n  if ($json.choices && $json.choices[0]) {\n    content = $json.choices[0].message.content;\n  } else if ($json.error) {\n    throw new Error('OpenAI API failed');\n  } else {\n    content = JSON.stringify($json);\n  }\n  content = content.replace(/```json\\n?/g,'').replace(/```/g,'').trim();\n  const parsed = JSON.parse(content);\n  return [{ json: {\n    product: $node['Map to Image Hint'].json.product,\n    title: parsed.title,\n    description: parsed.description,\n    alt_text: parsed.alt_text,\n    hashtags: parsed.hashtags,\n    image_prompt: parsed.image_prompt\n  }}];\n} catch (e) {\n  const base = $node['Map to Image Hint'].json;\n  const product = base.product || {};\n  return [{ json: {\n    product: product,\n    title: product.name || product.title || 'Product',\n    description: product.description || 'Discover your new ritual.',\n    alt_text: product.name || product.title || 'Product image',\n    hashtags: ['#wellness','#selfcare','#lunarituals'],\n    image_prompt: `Professional product photo of ${product.name || product.title || 'product'}. Vertical composition, soft natural lighting, minimalist background. Pinterest-ready.`\n  }}];\n}\n"
+      },
+      "id": "0bef187a-854d-465e-98ca-94267ff55607",
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const clamp = (s,n)=> (s||'').toString().trim().slice(0,n);\nconst o = { ...$json };\no.title = clamp(o.title || 'Product', 100);\no.description = clamp(o.description || 'Discover your new ritual.', 500);\no.alt_text = clamp(o.alt_text || o.title, 250);\nlet tags = Array.isArray(o.hashtags) ? o.hashtags : [];\ntags = tags.map(t => (t||'').toString().trim())\n  .filter(Boolean)\n  .map(t => t.startsWith('#') ? t.toLowerCase() : ('#'+t.toLowerCase()))\n  .slice(0,5);\no.hashtags = tags.length ? tags : ['#wellness','#selfcare','#lunarituals'];\no.image_prompt = clamp(o.image_prompt || `Professional product photo of ${o.title}. Vertical composition, soft natural lighting, minimalist background. Keep product identical to reference.`, 1000);\nreturn [{ json: o }];\n"
+      },
+      "id": "0cf46c4a-744d-4173-a551-a263eb2052cc",
+      "name": "Validate & Coerce",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/models",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "3efdac55-0586-4e4d-8585-38c082dc249f",
+      "name": "Probe Models",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        304,
+        144
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if Probe Models succeeded\nif ($json.error || !$json.data) {\n  return [{ json: { canImage: false, reason: 'API check failed' } }];\n}\n\nconst models = ($json.data || []).map(m => m.id);\nconst hasDallE = models.some(m => m.includes('dall-e'));\nreturn [{ json: { canImage: hasDallE, models_checked: models.length } }];\n"
+      },
+      "id": "66a0240f-2105-4a84-8dd5-94fae0fedf47",
+      "name": "Decide Capabilities",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$node['Decide Capabilities'].json.canImage === true}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "67751ac8-b777-468e-b3cd-ebd316363111",
+      "name": "IF Can Image",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1200,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ \n  {\n    \"model\": \"gpt-image-1\",\n    \"prompt\": ($node['Validate & Coerce'].json.image_prompt + \" Vertical composition, soft natural lighting, minimalist set. Pinterest-ready product photography.\"),\n    \"size\": \"1024x1536\",\n    \"n\": 1\n  }\n}}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "59666845-6e31-4620-8f4f-3a9c55193fd2",
+      "name": "Generate Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        176
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Try to get generated image URL and capture detailed error info\nlet genUrl = null;\nlet dalleError = null;\nlet dalleStatus = \"not_attempted\";\n\ntry {\n  const dalleNode = $node['Generate Image'];\n  \n  if (!dalleNode) {\n    dalleError = \"Generate Image node didn't execute\";\n    dalleStatus = \"node_not_executed\";\n  } else if (dalleNode.json) {\n    const dalleData = dalleNode.json;\n    \n    // Check for OpenAI API error response\n    if (dalleData.error) {\n      dalleError = `OpenAI API Error: ${dalleData.error.message || JSON.stringify(dalleData.error)}`;\n      dalleStatus = \"api_error\";\n      \n      // Capture specific error details\n      if (dalleData.error.code) {\n        dalleError += ` (Code: ${dalleData.error.code})`;\n      }\n      if (dalleData.error.type) {\n        dalleError += ` (Type: ${dalleData.error.type})`;\n      }\n    }\n    // Check for successful response\n    else if (dalleData.data && dalleData.data[0] && dalleData.data[0].url) {\n      genUrl = dalleData.data[0].url;\n      dalleStatus = \"success\";\n    }\n    // Unknown response format\n    else {\n      dalleError = `Unexpected response format: ${JSON.stringify(dalleData).substring(0, 200)}`;\n      dalleStatus = \"unexpected_response\";\n    }\n  } else {\n    dalleError = \"Generate Image node has no data\";\n    dalleStatus = \"no_data\";\n  }\n} catch (e) {\n  dalleError = `Exception: ${e.message}`;\n  dalleStatus = \"exception\";\n}\n\n// Get resolved image from GitHub\nconst resolved = $node['Resolve via GitHub']?.json?.resolved_image_url;\n\n// Use generated if available, otherwise use resolved\nconst finalUrl = genUrl || resolved || 'https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg';\n\nreturn [{ json: { \n  final_image_url: finalUrl, \n  generated_used: !!genUrl,\n  has_resolved: !!resolved,\n  dalle_status: dalleStatus,\n  dalle_error: dalleError,\n  dalle_attempted: true\n} }];\n"
+      },
+      "id": "55932033-7802-42a2-ac1d-2266333708bd",
+      "name": "Choose Final URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -784,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Choose Final URL\"].json.final_image_url || \"https://raw.githubusercontent.com/Tyrizle851/luna-ritual-studio/main/src/assets/product-candle-1.jpg\" }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "da430941-fa67-47ef-98a8-7be499f36cb6",
+      "name": "Download Final Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        656
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s1",
+              "name": "summary",
+              "type": "string",
+              "value": "=DRY RUN - no posting\n\nPRODUCT:\n{{ $node['Validate & Coerce'].json.product?.name || 'Product' }} (${{ $node['Validate & Coerce'].json.product?.price || '0' }})\nCategory: {{ $node['Validate & Coerce'].json.product?.category || 'General' }}\n\nAI-SHARPENED CONTENT:\n{{ $json.output }}\n\nIMAGE INFO:\nURL: {{ $node['Choose Final URL'].json.final_image_url }}\nGenerated Image Used: {{ $node['Choose Final URL'].json.generated_used }}\nGitHub Match: {{ $node['Resolve via GitHub'].json.picked?.path || 'fallback' }}\nCandidates Scanned: {{ $node['Resolve via GitHub'].json.candidates_count }}\n\nDALL-E STATUS:\nStatus: {{ $node['Choose Final URL'].json.dalle_status }}\nError: {{ $node['Choose Final URL'].json.dalle_error || 'None' }}\nAttempted: {{ $node['Choose Final URL'].json.dalle_attempted }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e0b6f4ec-714b-4f58-a1ab-6f961bacc4c8",
+      "name": "Dry-Run Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        240,
+        704
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1360,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Review and sharpen this Pinterest post for maximum engagement:\n\nPRODUCT:\nName: {{ $node['Validate & Coerce'].json.product?.name || 'Product' }}\nCategory: {{ $node['Validate & Coerce'].json.product?.category || 'General' }}\nPrice: ${{ $node['Validate & Coerce'].json.product?.price || '0' }}\n\nCURRENT CONTENT:\nTitle: {{ $node['Validate & Coerce'].json.title }}\nDescription: {{ $node['Validate & Coerce'].json.description }}\nHashtags: {{ ($node['Validate & Coerce'].json.hashtags || []).join(', ') }}\n\nTASK:\nImprove this content for Pinterest. Make the title more compelling and emotionally engaging (max 100 chars). Enhance the description to create desire and connection (max 500 chars). Optimize hashtags for Pinterest discovery (3-5 tags). Keep the brand voice authentic and aspirational.\n\nReturn your response in this exact JSON format:\n{\n  \"title\": \"improved title here\",\n  \"description\": \"improved description here\",\n  \"alt_text\": \"accessibility description here\",\n  \"hashtags\": [\"tag1\", \"tag2\", \"tag3\"],\n  \"review_notes\": \"brief explanation of what you improved\"\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -432,
+        720
+      ],
+      "id": "0f43de00-5c45-4ac5-a92d-b35aeee1b88c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-chat-latest",
+          "mode": "list",
+          "cachedResultName": "gpt-5-chat-latest"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        912
+      ],
+      "id": "2d134051-8577-4eaa-9c37-f91f11870bf9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YjYg1uyO5UwIHq1v",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 8 Hours": {
+      "main": [
+        [
+          {
+            "node": "Feature Flags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feature Flags": {
+      "main": [
+        [
+          {
+            "node": "Fetch Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Products": {
+      "main": [
+        [
+          {
+            "node": "Select Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Product": {
+      "main": [
+        [
+          {
+            "node": "Map to Image Hint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map to Image Hint": {
+      "main": [
+        [
+          {
+            "node": "List src/assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List src/assets": {
+      "main": [
+        [
+          {
+            "node": "Resolve via GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve via GitHub": {
+      "main": [
+        [
+          {
+            "node": "Generate Copy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Response": {
+      "main": [
+        [
+          {
+            "node": "Validate & Coerce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & Coerce": {
+      "main": [
+        [
+          {
+            "node": "Probe Models",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe Models": {
+      "main": [
+        [
+          {
+            "node": "Decide Capabilities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decide Capabilities": {
+      "main": [
+        [
+          {
+            "node": "IF Can Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Can Image": {
+      "main": [
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Choose Final URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Choose Final URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose Final URL": {
+      "main": [
+        [
+          {
+            "node": "Download Final Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Final Image": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Copy": {
+      "main": [
+        [
+          {
+            "node": "Parse Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Feature Flags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Dry-Run Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fbd02a26-dde1-47ef-8bf4-ad706874c436",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e17069aec1f5f4433a0cfb2937bb81eec037b717ef005364726457217fad2889"
+  },
+  "id": "C0Rzd37yUjTdCTMT",
+  "tags": []
+}

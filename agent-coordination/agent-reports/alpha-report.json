@@ -1,0 +1,69 @@
+{
+  "agent": "ALPHA",
+  "status": "completed",
+  "timestamp": "2025-11-14T18:54:00Z",
+  "findings": {
+    "pinterest_media": {
+      "type": "unknown",
+      "source": "unknown",
+      "url": null,
+      "status": "pending",
+      "note": "Unable to access execution data due to authorization error"
+    },
+    "instagram_media": {
+      "type": "unknown",
+      "source": "unknown",
+      "url": null,
+      "status": "pending",
+      "fallback_used": false,
+      "note": "Unable to access execution data due to authorization error"
+    },
+    "tiktok_media": {
+      "type": "unknown",
+      "source": "unknown",
+      "url": null,
+      "status": "pending",
+      "reused_instagram": false,
+      "note": "Unable to access execution data due to authorization error"
+    },
+    "payload_complete": false
+  },
+  "screenshot": "alpha-aggregate.png",
+  "errors": [
+    {
+      "code": "UNAUTHORIZED",
+      "message": "Problem loading execution - Unauthorized",
+      "description": "n8n workflow interface returned 'Unauthorized' error when attempting to access execution #645 data. The 4.6 Aggregate Media node is visible in the workflow canvas but its output data cannot be loaded due to permission restrictions.",
+      "location": "https://lunastudios.app.n8n.cloud/workflow/C0Rzd37yUjTdCTMT/executions/645",
+      "timestamp": "2025-11-14T18:52:49Z",
+      "recovery_action": "User needs to verify n8n account permissions or provide alternative access method to view execution output data"
+    },
+    {
+      "code": "ERR_ABORTED",
+      "message": "Navigation to execution endpoints aborted",
+      "description": "Attempted to navigate to /debug/645 and /executions/645 endpoints directly but both resulted in ERR_ABORTED, confirming persistent authorization/permission issues with accessing execution data.",
+      "attempts": [
+        "https://lunastudios.app.n8n.cloud/workflow/C0Rzd37yUjTdCTMT/debug/645",
+        "https://lunastudios.app.n8n.cloud/workflow/C0Rzd37yUjTdCTMT/executions/645"
+      ],
+      "timestamp": "2025-11-14T18:55:10Z",
+      "recovery_action": "Browser session lacks authentication to view execution details. User must log in with proper credentials or provide API access token."
+    }
+  ],
+  "execution_info": {
+    "execution_id": "645",
+    "execution_time": "Nov 14, 12:32:26",
+    "status": "Succeeded",
+    "duration": "57.246s",
+    "node_name": "4.6 Aggregate Media",
+    "node_items": 3,
+    "accessible": false
+  },
+  "recommendations": [
+    "Verify n8n Cloud account permissions for execution data access",
+    "Check if API token or authentication credentials have expired",
+    "Consider using n8n API endpoint directly to fetch execution data",
+    "Alternative: Execute workflow manually with browser devtools open to capture network responses"
+  ]
+}
+

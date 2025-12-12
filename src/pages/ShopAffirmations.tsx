@@ -134,9 +134,9 @@ const ShopAffirmations = () => {
                   setModalOpen(true);
                 }}
               >
-                <WishlistButton productId={affirmation.id} />
+                <WishlistButton productId={affirmation.id} className="top-1.5 right-1.5 sm:top-2 sm:right-2" />
                 {affirmation.badge && (
-                  <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                  <div className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-semibold shadow-sm ${
                     affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
                     affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                     affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :

@@ -261,54 +261,53 @@ const Shop = () => {
         <meta name="keywords" content={currentMeta.keywords} />
       </Helmet>
       {/* Sticky Category Navigation */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+      <div className="sticky top-0 z-[999] bg-background/98 backdrop-blur-md border-b border-border/40 shadow-sm">
         <div className="container-custom">
-          <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 py-3 sm:py-4">
+          <div className="flex items-center justify-evenly gap-1 sm:gap-4 md:gap-8 py-2 sm:py-4 overflow-x-auto scrollbar-hide">
             <button
               onClick={() => setSelectedTab("fashion")}
-              className={`inline-flex items-center gap-1 text-[9px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-[8px] sm:text-xs uppercase tracking-wide font-medium transition-all p-1 ${
                 selectedTab === "fashion" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
             >
-              <Shirt className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 text-clay" />
-              <span className="hidden xs:inline sm:inline">Fashion</span>
+              <Shirt className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-clay" />
+              <span className="hidden sm:inline">Fashion</span>
             </button>
             <button
               onClick={() => setSelectedTab("candles")}
-              className={`inline-flex items-center gap-1 text-[9px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-[8px] sm:text-xs uppercase tracking-wide font-medium transition-all p-1 ${
                 selectedTab === "candles" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
             >
-              <Flame className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 text-clay" />
-              <span className="hidden xs:inline sm:inline">Candles</span>
+              <Flame className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-clay" />
+              <span className="hidden sm:inline">Candles</span>
             </button>
             <button
               onClick={() => setSelectedTab("affirmations")}
-              className={`inline-flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-xs uppercase tracking-wide font-semibold transition-all ${
+              className={`flex-shrink-0 inline-flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 text-[8px] sm:text-xs uppercase tracking-wide font-semibold transition-all p-1 ${
                 selectedTab === "affirmations" ? "text-clay scale-105" : "text-clay/70 hover:text-clay"
               }`}
             >
-              <Moon className="h-3 w-3 sm:h-4 sm:w-4 text-clay" />
-              Affirmations
+              <Moon className="h-4 w-4 sm:h-4 sm:w-4 text-clay" />
+              <span className="hidden sm:inline">Affirmations</span>
             </button>
             <button
               onClick={() => setSelectedTab("supplements")}
-              className={`inline-flex items-center gap-1 text-[9px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-[8px] sm:text-xs uppercase tracking-wide font-medium transition-all p-1 ${
                 selectedTab === "supplements" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
             >
-              <Pill className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 text-clay" />
-              <span className="hidden xs:inline sm:inline">Supps</span>
-              <span className="hidden md:inline">lements</span>
+              <Pill className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-clay" />
+              <span className="hidden sm:inline">Supplements</span>
             </button>
             <button
               onClick={() => setSelectedTab("books")}
-              className={`inline-flex items-center gap-1 text-[9px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-[8px] sm:text-xs uppercase tracking-wide font-medium transition-all p-1 ${
                 selectedTab === "books" ? "text-clay" : "text-text-muted hover:text-clay"
               }`}
             >
-              <BookOpen className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 text-clay" />
-              <span className="hidden xs:inline sm:inline">Books</span>
+              <BookOpen className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-clay" />
+              <span className="hidden sm:inline">Books</span>
             </button>
           </div>
         </div>
@@ -365,33 +364,34 @@ const Shop = () => {
             </motion.div>
           </div>
 
-          {/* Integrated Search & Filter Bar */}
+          {/* Search & Filter Bar */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
             <div className="mb-10">
               <div className="relative max-w-4xl mx-auto">
-                <div className="flex items-center gap-2 sm:gap-3 bg-white border border-border/40 rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-3 sm:px-5 py-2.5 sm:py-3.5 hover:border-clay/30 transition-all">
-                  <Search className="h-4 w-4 sm:h-5 sm:w-5 text-clay flex-shrink-0" />
-                  <input
-                    type="text"
-                    placeholder="Search collection..."
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-text-primary placeholder:text-text-muted font-medium"
-                  />
-                  <div className="hidden sm:flex items-center gap-2 pl-4 border-l border-border/40">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+                  {/* Search Bar */}
+                  <div className="flex items-center gap-2 bg-white border border-border/40 rounded-lg shadow-sm px-3 py-2 sm:py-2.5 hover:border-clay/30 transition-all flex-1">
+                    <Search className="h-4 w-4 text-clay flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-text-primary placeholder:text-text-muted font-medium min-w-0"
+                    />
+                  </div>
+                  {/* Filter - Desktop */}
+                  <div className="hidden sm:block">
                     <SortFilter value={sortOption} onChange={setSortOption} />
                   </div>
-                  <div className="sm:hidden flex-shrink-0">
-                    <button
-                      onClick={() => {
-                        const drawer = document.querySelector('[role="dialog"]');
-                        if (drawer) drawer.click();
-                      }}
-                      className="p-1.5 hover:bg-clay/5 rounded transition-colors"
-                    >
-                      <svg className="h-4 w-4 text-clay" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                      </svg>
-                    </button>
+                  {/* Filter - Mobile */}
+                  <div className="sm:hidden">
+                    <MobileFilterDrawer
+                      sortValue={sortOption}
+                      onSortChange={setSortOption}
+                      categories={[]}
+                      selectedCategory=""
+                      onCategoryChange={() => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -430,9 +430,9 @@ const Shop = () => {
                           setIsFashionModalOpen(true);
                         }}
                       >
-                        <WishlistButton productId={product.id} />
+                        <WishlistButton productId={product.id} className="top-1.5 right-1.5 sm:top-2 sm:right-2" />
                         {product.badge && (
-                          <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                          <div className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-semibold shadow-sm ${
                             product.badge === 'Sale' ? 'bg-foreground text-background' :
                             product.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                             product.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -544,9 +544,9 @@ const Shop = () => {
                         setIsCandleModalOpen(true);
                       }}
                     >
-                      <WishlistButton productId={candle.id} />
+                      <WishlistButton productId={candle.id} className="top-1.5 right-1.5 sm:top-2 sm:right-2" />
                       {candle.badge && (
-                        <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                        <div className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-semibold shadow-sm ${
                           candle.badge === 'Sale' ? 'bg-foreground text-background' :
                           candle.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                           candle.badge === 'Best Value' ? 'bg-accent text-accent-foreground' :
@@ -658,9 +658,9 @@ const Shop = () => {
                         setIsSupplementModalOpen(true);
                       }}
                     >
-                      <WishlistButton productId={supplement.id} />
+                      <WishlistButton productId={supplement.id} className="top-1.5 right-1.5 sm:top-2 sm:right-2" />
                       {supplement.badge && (
-                        <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                        <div className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-semibold shadow-sm ${
                           supplement.badge === 'Sale' ? 'bg-foreground text-background' :
                           supplement.badge === 'Best Value' ? 'bg-primary text-primary-foreground' :
                           supplement.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
@@ -813,9 +813,9 @@ const Shop = () => {
                         setIsBookModalOpen(true);
                       }}
                     >
-                      <WishlistButton productId={book.id} />
+                      <WishlistButton productId={book.id} className="top-1.5 right-1.5 sm:top-2 sm:right-2" />
                       {book.badge && (
-                        <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                        <div className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-semibold shadow-sm ${
                           book.badge === 'Sale' ? 'bg-foreground text-background' :
                           book.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
                           book.badge === 'Top Pick' ? 'bg-accent text-accent-foreground' :
