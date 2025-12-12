@@ -25,7 +25,7 @@ export const AffirmationProductCard = ({
     <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
       {affirmation.badge && (
-        <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
+        <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
           affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
           affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
           affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :

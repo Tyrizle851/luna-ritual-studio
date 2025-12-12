@@ -136,7 +136,13 @@ const ShopAffirmations = () => {
               >
                 <WishlistButton productId={affirmation.id} />
                 {affirmation.badge && (
-                  <div className="absolute top-2 left-2 z-10 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
+                  <div className={`absolute top-2 left-2 z-10 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+                    affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
+                    affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+                    affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :
+                    affirmation.badge === 'Staff Pick' ? 'bg-clay text-white' :
+                    'bg-secondary text-foreground'
+                  }`}>
                     {affirmation.badge}
                   </div>
                 )}
