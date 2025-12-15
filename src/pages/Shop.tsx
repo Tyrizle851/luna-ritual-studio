@@ -712,11 +712,11 @@ const Shop = () => {
                           {supplement.badge}
                         </div>
                       )}
-                      <div className="overflow-hidden aspect-[4/5] bg-white">
+                      <div className="overflow-hidden aspect-[4/5]">
                         <img
                           src={supplement.image}
                           alt={supplement.name}
-                          className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                         />
                       </div>
                       <div className="p-2 sm:p-3 lg:p-4">
