@@ -12,16 +12,46 @@ export const NewsletterSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setIsSubmitting(true);
-    console.log("Newsletter signup:", { email, firstName });
-    
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    toast.success("Welcome to The Ritual! Check your inbox.");
-    setEmail("");
-    setFirstName("");
-    setIsSubmitting(false);
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+      if (!supabaseUrl) {
+        throw new Error('Supabase URL not configured');
+      }
+
+      const response = await fetch(
+        `${supabaseUrl}/functions/v1/handle-newsletter-signup`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            firstName: firstName.trim(),
+            source: 'newsletter'
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Subscription failed');
+      }
+
+      toast.success(data.message || "Welcome to The Ritual! Check your inbox.");
+      setEmail("");
+      setFirstName("");
+    } catch (error) {
+      console.error('Newsletter signup error:', error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

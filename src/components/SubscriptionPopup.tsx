@@ -27,17 +27,53 @@ export const SubscriptionPopup = ({ open, onOpenChange }: SubscriptionPopupProps
     if (!email) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Welcome to the ritual ✨",
-      description: "Your 30% discount code has been sent to your inbox!",
-    });
-    
-    setEmail("");
-    setIsSubmitting(false);
-    onOpenChange(false);
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+      if (!supabaseUrl) {
+        throw new Error('Supabase URL not configured');
+      }
+
+      const response = await fetch(
+        `${supabaseUrl}/functions/v1/handle-newsletter-signup`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            source: 'popup'
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Subscription failed');
+      }
+
+      toast({
+        title: "Welcome to the ritual ✨",
+        description: data.discountCode
+          ? `Your 30% discount code ${data.discountCode} has been sent to your inbox!`
+          : "Check your inbox for a special welcome!",
+      });
+
+      setEmail("");
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Popup signup error:', error);
+      toast({
+        title: "Oops!",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
