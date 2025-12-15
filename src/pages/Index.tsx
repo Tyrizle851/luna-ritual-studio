@@ -44,13 +44,22 @@ const Index = () => {
       </Helmet>
       <div className="min-h-screen">
       {/* Hero Section - reduced height by 15% */}
-      <section className="relative h-[72vh] flex items-center justify-center text-center overflow-hidden py-16">
+      <section className="relative h-[72vh] flex items-center justify-center text-center overflow-hidden py-16 bg-[#2a2520]">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center scale-125 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
+          poster="/hero-poster.jpg"
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          onLoadedData={(e) => {
+            e.currentTarget.play().catch(() => {
+              console.log('Autoplay prevented by browser');
+            });
+          }}
+          className="absolute inset-0 w-full h-full object-cover object-center scale-125"
           style={{ filter: 'brightness(0.6) blur(4px) saturate(0.85)' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
