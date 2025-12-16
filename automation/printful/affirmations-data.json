@@ -1,0 +1,16 @@
+[
+  {
+    "id": "aff-001",
+    "title": "I am worthy of rest",
+    "category": "Self-Love",
+    "description": "A gentle reminder that rest is your birthright. This design gives you permission to pause and honor your need for restoration.",
+    "image": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-001/digital.png"
+  },
+  {
+    "id": "aff-002",
+    "title": "Joy is my natural state",
+    "category": "Joy",
+    "description": "Joy isn't something you have to earn or wait for—it's already within you. This affirmation helps you reconnect with the light that's always been there.",
+    "image": "https://tfximqohiizipawvzkms.supabase.co/storage/v1/object/public/product-images/affirmations/aff-002/digital.png"
+  }
+]

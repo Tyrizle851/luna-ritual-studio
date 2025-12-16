@@ -102,7 +102,7 @@ Create a design that feels handcrafted, peaceful, and professionally refined.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-exp',
+        model: 'google/gemini-3-pro-image-preview',
         messages: [
           {
             role: 'user',

@@ -16,6 +16,7 @@ const morningRitualImg = LOCAL_DIGITAL_IMAGES["aff-014"];
 const powerHourImg = LOCAL_DIGITAL_IMAGES["aff-015"];
 const gratitudeGardenImg = LOCAL_DIGITAL_IMAGES["aff-002"];
 const focusFlowImg = LOCAL_DIGITAL_IMAGES["aff-004"];
+const miraclesPreviewImg = LOCAL_DIGITAL_IMAGES["aff-017"]; // "I am open to miracles" preview
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -85,7 +86,7 @@ const AffirmationBuilder = () => {
     accentElements: "watercolor washes, flowing lines, organic shapes"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
-  const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([]);
+  const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([miraclesPreviewImg]); // Show "I am open to miracles" by default
   const [finalImagesB64, setFinalImagesB64] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<'preview' | 'final'>('preview');
   const [expandedImage, setExpandedImage] = useState<{ url: string; type: 'preview' | 'final' } | null>(null);
