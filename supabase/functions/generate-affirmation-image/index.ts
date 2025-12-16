@@ -1,4 +1,4 @@
-// Edge function for generating final affirmation images using OpenAI
+// Edge function for generating final affirmation images using Lovable's Gemini gateway
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -42,6 +42,24 @@ interface GenerateRequest {
   designSpec: DesignSpec;
 }
 
+const THEME_AESTHETICS: Record<string, string> = {
+  'confidence': 'Bold warm earth tones, strong flowing lines, grounded energy',
+  'peace': 'Soft blues and creams, gentle watercolor washes, serene flowing elements',
+  'focus': 'Cool grays and whites, clean lines, minimal organic accents',
+  'gratitude': 'Warm golden beiges, soft botanical shadows, abundant flowing curves',
+  'abundance': 'Rich earth tones, flowing gold accents, organic prosperity symbols',
+  'healing': 'Soft greens and creams, gentle nature elements, soothing watercolor',
+  'strength': 'Deep earthy tones, bold organic lines, grounded powerful flow',
+  'joy': 'Warm sunny tones, playful flowing elements, light organic touches',
+  'balance': 'Neutral earth tones, symmetrical flow, harmonious organic shapes',
+  'courage': 'Bold warm tones, dynamic flowing lines, empowering organic elements',
+  'clarity': 'Clean whites and soft grays, minimal flowing lines, clear space',
+  'renewal': 'Fresh greens and creams, spring-like watercolor, new growth elements',
+  'freedom': 'Airy blues and whites, expansive flowing lines, liberated organic flow',
+  'passion': 'Warm reds and earth tones, dynamic flowing curves, energetic elements',
+  'wisdom': 'Deep earth tones, elegant flowing lines, timeless organic sophistication'
+};
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -49,11 +67,11 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('OPENAI_API_KEY');
+    const apiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!apiKey) {
-      console.error('OPENAI_API_KEY not configured');
+      console.error('LOVABLE_API_KEY not configured');
       return new Response(
-        JSON.stringify({ error: 'OpenAI API key not configured' }),
+        JSON.stringify({ error: 'Lovable API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -75,7 +93,7 @@ Deno.serve(async (req) => {
     }
 
     const { designSpec } = body;
-    
+
     if (!designSpec) {
       console.error('Missing designSpec in request');
       return new Response(
@@ -86,30 +104,33 @@ Deno.serve(async (req) => {
 
     console.log('Generating final affirmation image with designSpec:', JSON.stringify(designSpec, null, 2));
 
-    // Build a focused, effective prompt similar to preview but for final quality
-    const prompt = buildFinalPrompt(designSpec);
-    
-    console.log('Calling OpenAI API for final generation...');
+    // Build watercolor-focused prompt
+    const prompt = buildWatercolorPrompt(designSpec);
 
-    // Call OpenAI's image generation API directly with high quality
-    const aiResponse = await fetch('https://api.openai.com/v1/images/generations', {
+    console.log('Calling Lovable Gemini API for final generation...');
+
+    // Call Lovable's Gemini gateway
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-image-1',
-        prompt: prompt,
-        size: '1024x1024',
-        quality: 'high', // High quality for final image
-        output_format: 'png',
+        model: 'google/gemini-2.0-flash-exp',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        modalities: ['image', 'text']
       }),
     });
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
-      console.error('OpenAI API error:', aiResponse.status, errorText);
+      console.error('Lovable Gemini API error:', aiResponse.status, errorText);
       return new Response(
         JSON.stringify({ error: 'Image generation failed', details: errorText }),
         { status: aiResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -117,22 +138,29 @@ Deno.serve(async (req) => {
     }
 
     const aiData = await aiResponse.json();
-    const imageB64 = aiData?.data?.[0]?.b64_json;
+    const imageUrl = aiData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-    if (!imageB64) {
-      console.error('No image data in OpenAI response');
+    if (!imageUrl) {
+      console.error('No image data in Lovable response');
       return new Response(
         JSON.stringify({ error: 'No image generated' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
+    // Fetch the image and convert to base64
+    console.log('Fetching generated image...');
+    const imageResponse = await fetch(imageUrl);
+    const imageBuffer = await imageResponse.arrayBuffer();
+    const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+    const imageB64 = `data:image/png;base64,${base64}`;
+
     console.log('Successfully generated final image');
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         imageB64,
-        generationId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}` 
+        generationId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -140,177 +168,75 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Edge function error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: 'Internal server error', 
-        detail: error instanceof Error ? error.message : String(error) 
+      JSON.stringify({
+        error: 'Internal server error',
+        detail: error instanceof Error ? error.message : String(error)
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
 
-// Focused, effective prompt builder - based on what works in preview
-function buildFinalPrompt(spec: DesignSpec): string {
-  // 35% chance of gradient (matching preview logic)
-  const useGradient = Math.random() < 0.35;
-  
-  // Elegant variation system - brand-aligned aesthetic
-  const variations = buildAestheticVariations();
-  
-  const gradientInstructions = useGradient 
-    ? `
+// Build watercolor-focused prompt for high quality output
+function buildWatercolorPrompt(spec: DesignSpec): string {
+  const themeAesthetic = THEME_AESTHETICS[spec.theme] || THEME_AESTHETICS['peace'];
 
-GRADIENT TEXT EFFECT (CRITICAL):
-- Apply a smooth, elegant gradient to the MAIN HEADLINE text only
-- The gradient should flow across ALL WORDS in the headline consistently
-- Use 2-3 harmonious colors from the chosen palette
-- Gradient direction: typically left-to-right or top-to-bottom
-- Keep gradient subtle and sophisticated (avoid harsh transitions)
-- Ensure text remains highly readable
-- Supporting phrases should remain solid color (no gradient)
-`
-    : `
+  // Use palette colors
+  const colorPalette = spec.paletteToken.hex.join(', ');
 
-TEXT COLOR:
-- Use solid colors for all text
-- No gradients on text
-`;
+  return `Create an elegant watercolor affirmation design with premium gallery-quality:
 
-  const THEME_CONTEXT: Record<string, string> = {
-    'calm-morning': 'Evoke peaceful sunrise energy, gentle awakening, soft optimism. Include phrases about fresh starts, mindful beginnings, peaceful energy.',
-    'focus': 'Sharp, clear, purposeful energy. Phrases about clarity, determination, goal-achievement, mental strength.',
-    'gratitude': 'Warm, abundant, heart-centered energy. Phrases about thankfulness, appreciation, abundance, love.',
-    'confidence': 'Bold, empowered, strong energy. Phrases about self-belief, courage, strength, capability.',
-    'peace': 'Serene, calming, meditative energy. Phrases about tranquility, balance, inner calm, letting go.',
-    'strength': 'Unshakeable resilience, enduring power. Phrases about resilience, endurance, foundation, stability.',
-    'joy': 'Pure delight, radiant happiness. Phrases about celebration, delight, happiness, play.',
-    'balance': 'Centered equilibrium, harmonious stability. Phrases about harmony, alignment, middle way.',
-    'courage': 'Brave action despite fear. Phrases about bravery, bold steps, fearless heart.',
-    'clarity': 'Crystal-clear vision, sharp understanding. Phrases about clear vision, truth, understanding.',
-    'abundance': 'Overflowing prosperity, generous plenty. Phrases about prosperity, wealth, endless possibility.',
-    'healing': 'Gentle restoration, patient recovery. Phrases about restoration, nurturing, growth, care.',
-  };
+AFFIRMATION TEXT (primary focus):
+"${spec.mainAffirmation}"
 
-  const themeContext = THEME_CONTEXT[spec.theme] || THEME_CONTEXT['peace'];
+AESTHETIC STYLE:
+- Watercolor painting aesthetic with soft, organic washes
+- Hand-painted feel with flowing, natural elements
+- ${themeAesthetic}
+- Sophisticated and gallery-worthy quality
+- Modern minimalist meets organic artistry
 
-  return `Create a high-quality, printable motivational affirmation design with the following specifications:
-
-THEME & CONCEPT:
-- Primary theme: ${spec.theme}
-- Mood/Style: ${spec.mood}
+COMPOSITION:
+- Portrait orientation (suitable for 8x10" or 11x14" print)
+- Centered text with generous breathing room
+- Elegant serif typography, well-spaced and highly readable
+- Single affirmation text only (focus on main message)
 - Layout style: ${spec.layoutArchetype}
 
-DESIGN REQUIREMENTS:
-- Layout: Vertical composition (portrait orientation, suitable for 8x10" or similar)
-- Typography: Mix 3-4 complementary fonts (serif, sans-serif, script/handwritten styles)
-- Font hierarchy: Vary sizes dramatically - largest phrase should be 3-4x larger than smallest
-- Text arrangement: ${spec.layoutArchetype}
-- White space: VERY generous breathing room - more space between objects and words
-- Object placement: Ensure decorative elements have ample spacing and don't crowd text
+VISUAL ELEMENTS:
+- Soft watercolor background washes in theme colors
+- Organic flowing lines that add graceful movement
+- Subtle botanical shadows or abstract organic shapes
+- Hand-drawn quality with natural imperfections
+- Accent elements: ${spec.accentSet.slice(0, 3).join(', ')}
 
 COLOR PALETTE:
-Primary colors to use: ${spec.paletteToken.hex.join(', ')}
-- Background: Use the FIRST color from the palette (${spec.paletteToken.hex[0]}) as the main background - this is the calmest, lightest tone
-- Text and accents: Use the remaining colors for typography and decorative elements
-- Ensure excellent readability with high contrast between background and text
+Use these colors: ${colorPalette}
+- Soft, muted earth tones (creams, beiges, soft browns)
+- Watercolor transparency and layering effects
+- High contrast between text and background for readability
+- Natural, organic color harmonies
 
-DECORATIVE ELEMENTS:
-Include 4-6 delicate accent elements: ${spec.accentSet.join(', ')}
-- Elements should enhance, not overwhelm
-- Style: Hand-drawn, organic feel (avoid overly perfect/digital look)
-- SPACING: Give these elements generous space - don't cluster them
+ARTISTIC QUALITY:
+- Professional, print-ready quality at 300 DPI
+- Clean, uncluttered composition with emphasis on negative space
+- Timeless and sophisticated aesthetic
+- No harsh digital effects or gradients
+- No overcrowding - prioritize breathing room
+- Gallery-quality finish
 
-AFFIRMATION CONTENT:
-Main Headline: "${spec.mainAffirmation}"
-Supporting phrases (include ALL of these):
-${spec.supportingPhrases.map((line: string) => `- ${line}`).join('\n')}
-${gradientInstructions}
-ARTISTIC STYLE:
-- Overall aesthetic: Modern farmhouse meets minimalist inspiration
-- Texture: Subtle, slight paper texture or organic imperfection
-- Line quality: Hand-drawn appearance, slight irregularity
-- Balance: Asymmetrical but visually balanced
-- Professional yet approachable, commercial-quality
-- SPACING: Prioritize generous spacing between all elements
+TYPOGRAPHY:
+- Font style: ${spec.typography.headline}
+- Large, elegant, well-spaced letters
+- Professional serif or elegant sans-serif
+- High readability and sophistication
 
 TECHNICAL SPECIFICATIONS:
-- Resolution: High quality, print-ready
-- Format: Print-ready quality
-- Background: Clean (white/cream) or subtle texture
-- Contrast: Ensure excellent readability
-- Word spacing: Generous letter-spacing and word-spacing throughout
-- Element spacing: Keep decorative elements well-separated from text and each other
+- High resolution, print-ready
+- Portrait orientation (3:4 aspect ratio)
+- Professional quality typography
+- Gallery-quality finish
+- Suitable for framing and professional printing
 
-THEME CONTEXT:
-${themeContext}
-
-AESTHETIC VARIATIONS:
-${variations}
-
-Base aesthetic (CRITICAL - always apply):
-Premium minimal natural aesthetic, modern editorial calm, clean negative space, no harsh gradients, no clutter, no graphic filters, no obvious patterns, quiet luxury.
-
-Focus on creating a balanced, elegant design with GENEROUS SPACING that feels authentic and ready to print.`;
-}
-
-// Build elegant aesthetic variations
-function buildAestheticVariations(): string {
-  const variations: string[] = [];
-  
-  // Material Texture System (40% chance)
-  if (Math.random() < 0.40) {
-    const textures = [
-      "handmade paper texture, subtle grain, barely visible, premium tactile",
-      "soft cotton weave texture, premium tactile feel, minimal grain",
-      "matte vellum surface, smooth minimal texture, elegant base",
-      "clay micro-texture, organic feel, very subtle surface",
-      "watercolor paper texture, gentle tooth, natural artisan quality"
-    ];
-    const selected = textures[Math.floor(Math.random() * textures.length)];
-    variations.push(`Material texture: ${selected}`);
-  }
-  
-  // Atmospheric Depth (30% chance)
-  if (Math.random() < 0.30) {
-    const atmospheric = [
-      "soft natural light vignette, gentle edge softness, barely perceptible",
-      "light bloom spill, subtle halo behind headline text, ambient glow 2-5% opacity",
-      "ambient glow behind main elements, VERY light, natural lens softness",
-      "faint tonal horizon band like morning sky, soft atmospheric depth"
-    ];
-    const selected = atmospheric[Math.floor(Math.random() * atmospheric.length)];
-    variations.push(`Atmospheric effect: ${selected}`);
-  }
-  
-  // Botanical/Organic Shadow Layer (20% chance)
-  if (Math.random() < 0.20) {
-    const shadows = [
-      "faint fern shadow, 4-6% opacity, organic whisper, barely visible",
-      "olive branch shadow suggestion, subtle 5-8% opacity, natural hint",
-      "palm frond shadow blur, delicate 4-7% opacity, tropical calm",
-      "tall grass shadow blur, soft 5-8% opacity, natural serenity"
-    ];
-    const selected = shadows[Math.floor(Math.random() * shadows.length)];
-    variations.push(`Organic shadow: ${selected} (NOT actual botanical elements, only their shadows)`);
-  }
-  
-  // Hand-touch Micro Accents (10% chance) - only for soft/peaceful themes
-  const softMoods = ['calm-morning', 'peace', 'gratitude', 'healing'];
-  if (Math.random() < 0.10) {
-    const accents = [
-      "1-2 tiny delicate pencil speckles near text edge, barely visible artisan touch",
-      "faint hand-drawn mark near headline corner, minimal organic accent",
-      "tiny soft sun sparkle, very subtle, one small elegant detail",
-      "one minimal brush swoop in far background corner, whisper detail"
-    ];
-    const selected = accents[Math.floor(Math.random() * accents.length)];
-    variations.push(`Micro accent: ${selected} (extremely delicate, if too visible remove)`);
-  }
-  
-  // If no variations selected, return empty (clean base aesthetic)
-  if (variations.length === 0) {
-    return "Clean base aesthetic with no additional variations.";
-  }
-  
-  return variations.join('\n');
+Create a design that feels handcrafted, peaceful, and professionally refined - like something you'd find in a high-end boutique or art gallery.`;
 }

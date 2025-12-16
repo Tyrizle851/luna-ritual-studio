@@ -72,17 +72,17 @@ const AffirmationBuilder = () => {
   const [seed, setSeed] = useState("");
   const [loading, setLoading] = useState(false);
   const [generatedData, setGeneratedData] = useState<GeneratedData>({
-    headline: "FEARLESS FORWARD",
+    headline: "I am open to miracles",
     supportingLines: [
-      "I trust my decisions",
-      "I claim my power",
-      "I rise boldly",
-      "My voice matters"
+      "Magic flows through me",
+      "I welcome the unexpected",
+      "Wonder fills my day",
+      "Possibility surrounds me"
     ],
-    palette: ["#1a1a1a", "#d4af37", "#ffffff"],
-    paletteNames: ["#1a1a1a", "#d4af37", "#ffffff"],
-    layoutStyle: "Centered headline with elegant underline bar",
-    accentElements: "thin horizontal bars, serif typography"
+    palette: ["#F5F1E8", "#D4B896", "#8B7355"],
+    paletteNames: ["#F5F1E8", "#D4B896", "#8B7355"],
+    layoutStyle: "Centered with flowing organic elements",
+    accentElements: "watercolor washes, flowing lines, organic shapes"
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
   const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([]);
