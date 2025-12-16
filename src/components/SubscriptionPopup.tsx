@@ -10,6 +10,7 @@ import {
 import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/logo.png";
 import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+import { supabase } from "@/integrations/supabase/client";
 
 const affirmationJoy = LOCAL_DIGITAL_IMAGES["aff-002"];
 
@@ -27,17 +28,31 @@ export const SubscriptionPopup = ({ open, onOpenChange }: SubscriptionPopupProps
     if (!email) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     
-    toast({
-      title: "Welcome to the ritual ✨",
-      description: "Your 30% discount code has been sent to your inbox!",
-    });
-    
-    setEmail("");
-    setIsSubmitting(false);
-    onOpenChange(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('handle-newsletter-signup', {
+        body: { email, source: 'popup' }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Welcome to the ritual ✨",
+        description: "Your 30% discount code has been sent to your inbox!",
+      });
+      
+      setEmail("");
+      onOpenChange(false);
+    } catch (error: any) {
+      console.error("Newsletter signup error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

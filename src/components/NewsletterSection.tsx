@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Mail, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const NewsletterSection = () => {
   const [email, setEmail] = useState("");
@@ -14,14 +15,23 @@ export const NewsletterSection = () => {
     if (!email) return;
     
     setIsSubmitting(true);
-    console.log("Newsletter signup:", { email, firstName });
     
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    toast.success("Welcome to The Ritual! Check your inbox.");
-    setEmail("");
-    setFirstName("");
-    setIsSubmitting(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('handle-newsletter-signup', {
+        body: { email, firstName, source: 'newsletter' }
+      });
+
+      if (error) throw error;
+
+      toast.success("Welcome to The Ritual! Check your inbox.");
+      setEmail("");
+      setFirstName("");
+    } catch (error: any) {
+      console.error("Newsletter signup error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
