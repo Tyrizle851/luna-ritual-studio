@@ -19,6 +19,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { buildDesignSpec } from "@/lib/designSpecBuilder";
 import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
+import { downloadImage } from "./AffirmationBuilder/utils/imageProcessing";
 import { useAffirmationGeneration } from "./AffirmationBuilder/hooks/useAffirmationGeneration";
 import { WorkflowProgress } from "./AffirmationBuilder/components/WorkflowProgress";
 import { LoadingState } from "./AffirmationBuilder/components/LoadingState";
@@ -456,23 +457,6 @@ const AffirmationBuilder = () => {
 
     setFavorites(updatedFavorites);
     localStorage.setItem('affirmation-favorites', JSON.stringify(updatedFavorites));
-  };
-
-  const downloadImage = (imageUrl: string, format: string, type: 'preview' | 'final') => {
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    
-    const sizeMap: Record<string, string> = {
-      'original': 'original',
-      'instagram-square': '1080x1080',
-      'instagram-story': '1080x1920',
-      'print-8x10': '8x10',
-      'print-11x14': '11x14'
-    };
-
-    link.download = `affirmation-${type}-${sizeMap[format]}-${Date.now()}.png`;
-    link.click();
-    toast.success(`Downloaded ${type} ${sizeMap[format]} format!`);
   };
 
   const updatePaletteColor = (index: number, color: string) => {
