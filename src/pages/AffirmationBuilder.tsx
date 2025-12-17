@@ -1179,6 +1179,21 @@ const AffirmationBuilder = () => {
                         : "Creates 4 high-resolution versions perfect for printing (~60 sec)"}
                     </p>
                   </div>
+
+                  {/* Social Proof */}
+                  <div className="pt-4 mt-4 border-t border-border/40 space-y-2">
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <span className="text-amber-500">★★★★★</span>
+                        <span className="font-medium text-foreground">4.9/5</span>
+                      </div>
+                      <span>•</span>
+                      <span>1,200+ affirmations created this week</span>
+                    </div>
+                    <p className="text-xs text-center text-muted-foreground italic">
+                      "Finally, affirmations that match my vibe!" - Sarah M.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -1664,6 +1679,21 @@ const AffirmationBuilder = () => {
                     {loading && finalImagesB64.length === 0 && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
                     Create Print-Quality
                   </Button>
+
+                  {/* Social Proof */}
+                  <div className="pt-4 mt-4 border-t border-border/40 space-y-2">
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <span className="text-amber-500">★★★★★</span>
+                        <span className="font-medium text-foreground">4.9/5</span>
+                      </div>
+                      <span>•</span>
+                      <span>1,200+ created this week</span>
+                    </div>
+                    <p className="text-xs text-center text-muted-foreground italic">
+                      "Love the watercolor aesthetic!" - Emma K.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
