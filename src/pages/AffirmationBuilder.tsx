@@ -23,6 +23,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { buildDesignSpec } from "@/lib/designSpecBuilder";
 import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
+import { useAffirmationGeneration } from "./AffirmationBuilder/hooks/useAffirmationGeneration";
 
 interface GeneratedData {
   headline: string;
@@ -105,6 +106,81 @@ const AffirmationBuilder = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [selectedImages, setSelectedImages] = useState<number[]>([]);
   const [showComparison, setShowComparison] = useState(false);
+
+  // Custom hook for affirmation generation with AbortController support
+  const {
+    loading: generationLoading,
+    loadingProgress: generationProgress,
+    loadingMessage: generationMessage,
+    previewImages,
+    finalImages,
+    generatePreviews,
+    generateFinal,
+    cancelGeneration,
+  } = useAffirmationGeneration({
+    theme,
+    mood,
+    layoutStyle,
+    userKeywords,
+    seed,
+    customPalette,
+    generatedData,
+    setGeneratedData,
+    generatePreviewData: () => generatePreviewData(),
+  });
+
+  // Sync hook state with component state
+  useEffect(() => {
+    setLoading(generationLoading);
+    setLoadingProgress(generationProgress);
+    setLoadingMessage(generationMessage);
+  }, [generationLoading, generationProgress, generationMessage]);
+
+  useEffect(() => {
+    if (previewImages.length > 0) {
+      setPreviewImagesB64(previewImages);
+    }
+  }, [previewImages]);
+
+  useEffect(() => {
+    if (finalImages.length > 0) {
+      setFinalImagesB64(finalImages);
+      setViewMode('final');
+
+      // Save first final image to history
+      const newHistoryItem: HistoryItem = {
+        id: `history-${Date.now()}`,
+        imageB64: finalImages[0],
+        generatedData,
+        timestamp: Date.now()
+      };
+
+      // Try to save with progressively smaller history sizes
+      let savedSuccessfully = false;
+      let maxHistorySize = 5;
+
+      while (!savedSuccessfully && maxHistorySize > 0) {
+        try {
+          const updatedHistory = [newHistoryItem, ...history].slice(0, maxHistorySize);
+          localStorage.setItem('affirmation-history', JSON.stringify(updatedHistory));
+          setHistory(updatedHistory);
+          savedSuccessfully = true;
+        } catch (e) {
+          if (e instanceof Error && e.name === 'QuotaExceededError') {
+            console.warn(`LocalStorage quota exceeded with ${maxHistorySize} items, reducing...`);
+            maxHistorySize--;
+            if (maxHistorySize === 0) {
+              console.warn('Unable to save to localStorage, keeping in memory only');
+              setHistory([newHistoryItem]);
+              toast('History saved in memory only (storage full)', { duration: 3000 });
+            }
+          } else {
+            throw e;
+          }
+        }
+      }
+    }
+  }, [finalImages, generatedData, history]);
 
   // Check for first-time user
   useEffect(() => {
@@ -344,300 +420,11 @@ const AffirmationBuilder = () => {
   };
 
   const handleGenerate = async () => {
-    setLoading(true);
-    setPreviewImagesB64([]);
-    setLoadingProgress(0);
-    setLoadingMessage("Preparing your design...");
-
-    try {
-      // Use existing preview data from state (set by Randomize button)
-      // Only generate new if none exists
-      const preview = generatedData || generatePreviewData();
-      if (!generatedData) {
-        // Apply custom palette if set and we're generating new data
-        if (customPalette.length > 0) {
-          preview.palette = customPalette;
-          preview.paletteNames = customPalette;
-        }
-        setGeneratedData(preview);
-      }
-
-      setLoadingProgress(10);
-      setLoadingMessage("Creating 4 unique watercolor variations...");
-
-      // Generate 4 preview images in parallel
-      toast.info("✨ Creating 4 preview variations for you... (~30 seconds)");
-
-      // Simulate progress while waiting
-      const progressInterval = setInterval(() => {
-        setLoadingProgress(prev => Math.min(prev + 5, 90));
-      }, 1500);
-
-      const requests = Array(4).fill(null).map(() =>
-        supabase.functions.invoke('generate-preview-image', {
-          body: {
-            headline: preview.headline,
-            supportingLines: preview.supportingLines,
-            theme,
-            mood,
-            layout: preview.layoutStyle,
-            palette: preview.palette,
-            accentElements: preview.accentElements
-          }
-        })
-      );
-
-      const results = await Promise.all(requests);
-      clearInterval(progressInterval);
-
-      setLoadingProgress(95);
-      setLoadingMessage("Finalizing your previews...");
-
-      const successfulImages = results
-        .filter(result => !result.error && result.data?.imageB64)
-        .map(result => `data:image/png;base64,${result.data.imageB64}`);
-
-      if (successfulImages.length > 0) {
-        setLoadingProgress(100);
-        setPreviewImagesB64(successfulImages);
-        toast.success(`🎨 ${successfulImages.length} beautiful preview${successfulImages.length > 1 ? 's' : ''} ready! Pick your favorite to refine.`);
-
-        // Celebrate with confetti!
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#D4B896', '#8B7355', '#F5F1E8']
-        });
-      } else {
-        toast.error("We're having trouble creating your preview. This usually resolves quickly - try again?");
-      }
-    } catch (error) {
-      console.error('Preview error:', error);
-      toast.error("Oops! Something went wrong. Please try again or adjust your settings.");
-    } finally {
-      setLoading(false);
-      setLoadingProgress(0);
-      setLoadingMessage("");
-    }
+    await generatePreviews();
   };
 
   const handleGenerateUnique = async () => {
-    setLoading(true);
-    setFinalImagesB64([]);
-    setLoadingProgress(0);
-    setLoadingMessage("Preparing print-quality designs...");
-
-    try {
-      // Ensure we have current preview data
-      if (!generatedData) {
-        await handleGenerate();
-      }
-
-      setLoadingProgress(10);
-      setLoadingMessage("Building your high-resolution designs...");
-
-      // Map layout style to archetype (supports both old and new names)
-      const layoutMap: Record<string, LayoutArchetype> = {
-        // Old names for backward compatibility - map to closest new equivalents
-        "vintage": "arc-flow",
-        "clean-serif": "floating-cluster",
-        "botanical": "botanical-frame",
-        "grid": "editorial-grid-luxe",
-        "halo": "circle-harmony",
-        "organic": "arc-flow",
-        "geometric": "editorial-grid-luxe",
-        "celestial": "radiant-center-burst",
-        "minimal-zen": "floating-cluster",
-        "grit": "asymmetric-balance",
-        "scattered-organic": "pebble-scatter",
-        "flowing-curves": "arc-flow",
-        "angular-grid": "editorial-grid-luxe",
-        "circular-orbit": "circle-harmony",
-        "diagonal-dynamic": "asymmetric-balance",
-        "layered-depth": "floating-cluster",
-        "vertical-cascade": "vertical-flow",
-        "horizontal-sweep": "soft-anchor-left",
-        "corner-radial": "radiant-center-burst",
-        "spiral-flow": "golden-spiral",
-        "stepped-rhythm": "gentle-column",
-        "arch-composition": "arc-flow",
-        "split-panel": "soft-anchor-left",
-        "wave-pattern": "ribbon-drift",
-        "botanical-branch": "botanical-frame",
-        "minimal-focus": "minimal-horizon",
-        "centered-stack": "centered-serenity",
-        // New 20 layout names (passthrough)
-        "centered-serenity": "centered-serenity",
-        "vertical-flow": "vertical-flow",
-        "floating-cluster": "floating-cluster",
-        "asymmetric-balance": "asymmetric-balance",
-        "arc-flow": "arc-flow",
-        "golden-spiral": "golden-spiral",
-        "botanical-frame": "botanical-frame",
-        "minimal-horizon": "minimal-horizon",
-        "radiant-center-burst": "radiant-center-burst",
-        "soft-anchor-left": "soft-anchor-left",
-        "soft-anchor-right": "soft-anchor-right",
-        "gentle-column": "gentle-column",
-        "pebble-scatter": "pebble-scatter",
-        "circle-harmony": "circle-harmony",
-        "prayer-stack": "prayer-stack",
-        "ribbon-drift": "ribbon-drift",
-        "editorial-grid-luxe": "editorial-grid-luxe",
-        "calm-waterfall": "calm-waterfall",
-        "sacred-geometry": "sacred-geometry",
-        "breath-space-minimal": "breath-space-minimal"
-      };
-      
-      const layoutArchetype = layoutMap[layoutStyle?.toLowerCase()] || layoutMap[layoutStyle] || "asymmetric-balance";
-      
-      // Get active palette (custom or generated)
-      const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
-      
-      // Build proper DesignSpec using the new system with current preview data
-      const designSpec = buildDesignSpec({
-        theme: theme as ThemeSlug,
-        mood: mood as MoodSlug,
-        layoutOverride: layoutArchetype,
-        keywords: userKeywords,
-        seed: seed ? parseInt(seed) : undefined,
-        customPaletteHex: activePalette,
-        customHeadline: generatedData.headline,
-        customSupportingPhrases: generatedData.supportingLines
-      });
-      
-      // Generate 4 final images in parallel
-      toast.info("✨ Creating your print-quality affirmations... (~60 seconds)");
-
-      setLoadingProgress(20);
-      setLoadingMessage("Rendering 4 print-quality variations (300 DPI)...");
-
-      // Simulate progress while waiting (60 seconds estimate)
-      const progressInterval = setInterval(() => {
-        setLoadingProgress(prev => Math.min(prev + 3, 90));
-      }, 2000);
-
-      const requests = Array(4).fill(null).map(() =>
-        supabase.functions.invoke('generate-affirmation-image', {
-          body: { designSpec }
-        })
-      );
-
-      const results = await Promise.all(requests);
-      clearInterval(progressInterval);
-
-      setLoadingProgress(95);
-      setLoadingMessage("Finalizing your print-ready images...");
-      
-      // Check for errors
-      const hasErrors = results.some(result => {
-        if (result.error) {
-          console.error('Edge function error:', result.error);
-          const errorMessage = result.error.message || JSON.stringify(result.error);
-          if (errorMessage.includes('402') || errorMessage.includes('credits depleted') || errorMessage.includes('payment')) {
-            toast.error('Generation limit reached. Please check your account to continue creating.');
-            return true;
-          } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
-            toast.error('Rate limit exceeded. Please wait a moment and try again.');
-            return true;
-          }
-          return true;
-        }
-        if (result.data?.error) {
-          console.error('API error:', result.data.error);
-          if (result.data.error.includes('credits depleted') || result.data.error.includes('payment')) {
-            toast.error('Generation limit reached. Please check your account to continue creating.');
-            return true;
-          } else if (result.data.error.includes('rate limit')) {
-            toast.error('Rate limit exceeded. Please wait a moment and try again.');
-            return true;
-          }
-          return true;
-        }
-        return false;
-      });
-      
-      if (hasErrors) {
-        return;
-      }
-      
-      const successfulImages = results
-        .filter(result => result.data?.imageB64)
-        .map(result => `data:image/png;base64,${result.data.imageB64}`);
-      
-      if (successfulImages.length > 0) {
-        setLoadingProgress(100);
-        setFinalImagesB64(successfulImages);
-        setViewMode('final'); // Switch to final view
-
-        // Save first final image to history with quota management
-        const newHistoryItem: HistoryItem = {
-          id: `history-${Date.now()}`,
-          imageB64: successfulImages[0],
-          generatedData,
-          timestamp: Date.now()
-        };
-        
-        // Try to save with progressively smaller history sizes
-        let savedSuccessfully = false;
-        let maxHistorySize = 5;
-        
-        while (!savedSuccessfully && maxHistorySize > 0) {
-          try {
-            const updatedHistory = [newHistoryItem, ...history].slice(0, maxHistorySize);
-            localStorage.setItem('affirmation-history', JSON.stringify(updatedHistory));
-            setHistory(updatedHistory);
-            savedSuccessfully = true;
-          } catch (e) {
-            if (e instanceof Error && e.name === 'QuotaExceededError') {
-              console.warn(`LocalStorage quota exceeded with ${maxHistorySize} items, reducing...`);
-              maxHistorySize--;
-              if (maxHistorySize === 0) {
-                console.warn('Unable to save to localStorage, keeping in memory only');
-                setHistory([newHistoryItem]);
-                toast('History saved in memory only (storage full)', { duration: 3000 });
-              }
-            } else {
-              throw e;
-            }
-          }
-        }
-        
-        toast.success(`🎉 ${successfulImages.length} print-ready image${successfulImages.length > 1 ? 's' : ''} created! Download your favorite.`);
-
-        // Big celebration for final images!
-        const duration = 3000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors: ['#D4B896', '#8B7355', '#F5F1E8', '#3a2817'] };
-
-        function randomInRange(min: number, max: number) {
-          return Math.random() * (max - min) + min;
-        }
-
-        const interval: any = setInterval(function() {
-          const timeLeft = animationEnd - Date.now();
-
-          if (timeLeft <= 0) {
-            return clearInterval(interval);
-          }
-
-          const particleCount = 50 * (timeLeft / duration);
-          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-        }, 250);
-      } else {
-        console.error('No image data in responses');
-        toast.error('Your affirmation is taking longer than expected. Want to try simpler settings or wait a bit?');
-      }
-    } catch (e) {
-      console.error('Image generation error:', e);
-      toast.error(e instanceof Error ? e.message : 'An unexpected error occurred.');
-    } finally {
-      setLoading(false);
-      setLoadingProgress(0);
-      setLoadingMessage("");
-    }
+    await generateFinal();
   };
 
   const handleRandomize = () => {
