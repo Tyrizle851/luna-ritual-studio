@@ -59,7 +59,7 @@ AESTHETIC STYLE:
 - Sophisticated and gallery-worthy quality
 
 COMPOSITION:
-- Portrait orientation (suitable for 8x10" or 11x14" print)
+- Portrait orientation with 4:5 aspect ratio (512×640 pixels)
 - Centered text with generous breathing room
 - Elegant serif typography, well-spaced and readable
 - Single affirmation text only (no additional phrases)
@@ -85,10 +85,11 @@ ARTISTIC QUALITY:
 - No overcrowding - emphasize negative space
 
 TECHNICAL:
-- High resolution, print-ready
+- Dimensions: 512×640 pixels (4:5 portrait aspect ratio)
+- Medium resolution for quick preview
 - Portrait orientation
 - Professional typography
-- Gallery-quality finish
+- Clean, polished finish
 
 Create a design that feels handcrafted, peaceful, and professionally refined.`;
 
@@ -140,12 +141,11 @@ Create a design that feels handcrafted, peaceful, and professionally refined.`;
     const imageResponse = await fetch(imageUrl);
     const imageBuffer = await imageResponse.arrayBuffer();
     const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
-    const imageB64 = `data:image/png;base64,${base64}`;
 
     console.log('Preview image generated successfully');
     return new Response(
       JSON.stringify({
-        imageB64,
+        imageB64: base64,  // Return JUST base64 without prefix
         message: 'Preview generated successfully'
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

@@ -349,8 +349,8 @@ const AffirmationBuilder = () => {
       }
       
       // Generate 4 preview images in parallel
-      toast.info("Generating 4 preview variations...");
-      
+      toast.info("✨ Creating 4 preview variations for you... (~30 seconds)");
+
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-preview-image', {
           body: {
@@ -372,13 +372,13 @@ const AffirmationBuilder = () => {
       
       if (successfulImages.length > 0) {
         setPreviewImagesB64(successfulImages);
-        toast.success(`${successfulImages.length} preview${successfulImages.length > 1 ? 's' : ''} generated!`);
+        toast.success(`🎨 ${successfulImages.length} beautiful preview${successfulImages.length > 1 ? 's' : ''} ready! Pick your favorite to refine.`);
       } else {
-        toast.error("Failed to generate preview images");
+        toast.error("We're having trouble creating your preview. This usually resolves quickly - try again?");
       }
     } catch (error) {
       console.error('Preview error:', error);
-      toast.error("Failed to generate previews");
+      toast.error("Oops! Something went wrong. Please try again or adjust your settings.");
     } finally {
       setLoading(false);
     }
@@ -464,8 +464,8 @@ const AffirmationBuilder = () => {
       });
       
       // Generate 4 final images in parallel
-      toast.info("Generating 4 high-quality final images...");
-      
+      toast.info("✨ Creating your print-quality affirmations... (~60 seconds)");
+
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-affirmation-image', {
           body: { designSpec }
@@ -480,7 +480,7 @@ const AffirmationBuilder = () => {
           console.error('Edge function error:', result.error);
           const errorMessage = result.error.message || JSON.stringify(result.error);
           if (errorMessage.includes('402') || errorMessage.includes('credits depleted') || errorMessage.includes('payment')) {
-            toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+            toast.error('Generation limit reached. Please check your account to continue creating.');
             return true;
           } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
             toast.error('Rate limit exceeded. Please wait a moment and try again.');
@@ -491,7 +491,7 @@ const AffirmationBuilder = () => {
         if (result.data?.error) {
           console.error('API error:', result.data.error);
           if (result.data.error.includes('credits depleted') || result.data.error.includes('payment')) {
-            toast.error('AI credits depleted. Please add credits to your Lovable workspace to continue.');
+            toast.error('Generation limit reached. Please check your account to continue creating.');
             return true;
           } else if (result.data.error.includes('rate limit')) {
             toast.error('Rate limit exceeded. Please wait a moment and try again.');
@@ -547,10 +547,10 @@ const AffirmationBuilder = () => {
           }
         }
         
-        toast.success(`${successfulImages.length} final image${successfulImages.length > 1 ? 's' : ''} generated successfully!`);
+        toast.success(`🎉 ${successfulImages.length} print-ready image${successfulImages.length > 1 ? 's' : ''} created! Download your favorite.`);
       } else {
         console.error('No image data in responses');
-        toast.error('No images were returned. Please try again.');
+        toast.error('Your affirmation is taking longer than expected. Want to try simpler settings or wait a bit?');
       }
     } catch (e) {
       console.error('Image generation error:', e);
@@ -1172,15 +1172,16 @@ const AffirmationBuilder = () => {
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-2">
                       {previewImagesB64.map((imageUrl, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817]"
                           onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
+                          style={{ aspectRatio: '4/5' }}
                         >
-                          <img 
-                            src={imageUrl} 
-                            alt={`Preview ${index + 1}`} 
-                            className="w-full h-auto"
+                          <img
+                            src={imageUrl}
+                            alt={`Preview ${index + 1}`}
+                            className="w-full h-full object-cover"
                           />
                           <div className="absolute top-1 right-1 bg-muted text-muted-foreground px-1.5 py-0.5 rounded text-xs font-semibold">
                             Preview
@@ -1613,15 +1614,16 @@ const AffirmationBuilder = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {finalImagesB64.map((imageUrl, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-[#5a3817] transition-all hover:scale-105"
                           onClick={() => setExpandedImage({ url: imageUrl, type: 'final' })}
+                          style={{ aspectRatio: '4/5' }}
                         >
-                          <img 
-                            src={imageUrl} 
-                            alt={`Final Affirmation ${index + 1}`} 
-                            className="w-full h-auto"
+                          <img
+                            src={imageUrl}
+                            alt={`Final Affirmation ${index + 1}`}
+                            className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
                             <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">View Full Size</span>
@@ -1650,15 +1652,16 @@ const AffirmationBuilder = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {previewImagesB64.map((imageUrl, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-[#5a3817] transition-all hover:scale-105"
                           onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
+                          style={{ aspectRatio: '4/5' }}
                         >
-                          <img 
-                            src={imageUrl} 
-                            alt={`Preview Affirmation ${index + 1}`} 
-                            className="w-full h-auto"
+                          <img
+                            src={imageUrl}
+                            alt={`Preview Affirmation ${index + 1}`}
+                            className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
                             <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">View Full Size</span>

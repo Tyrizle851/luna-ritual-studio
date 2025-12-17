@@ -153,13 +153,12 @@ Deno.serve(async (req) => {
     const imageResponse = await fetch(imageUrl);
     const imageBuffer = await imageResponse.arrayBuffer();
     const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
-    const imageB64 = `data:image/png;base64,${base64}`;
 
     console.log('Successfully generated final image');
 
     return new Response(
       JSON.stringify({
-        imageB64,
+        imageB64: base64,  // Return JUST base64 without prefix
         generationId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -197,7 +196,8 @@ AESTHETIC STYLE:
 - Modern minimalist meets organic artistry
 
 COMPOSITION:
-- Portrait orientation (suitable for 8x10" or 11x14" print)
+- Portrait orientation with 4:5 aspect ratio (2400×3000 pixels)
+- Suitable for 8×10" professional printing at 300 DPI
 - Centered text with generous breathing room
 - Elegant serif typography, well-spaced and highly readable
 - Single affirmation text only (focus on main message)
@@ -232,9 +232,10 @@ TYPOGRAPHY:
 - High readability and sophistication
 
 TECHNICAL SPECIFICATIONS:
-- High resolution, print-ready
-- Portrait orientation (3:4 aspect ratio)
-- Professional quality typography
+- Dimensions: 2400×3000 pixels (8×10" at 300 DPI)
+- 4:5 portrait aspect ratio
+- Print-ready quality
+- Professional typography
 - Gallery-quality finish
 - Suitable for framing and professional printing
 
