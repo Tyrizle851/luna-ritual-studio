@@ -101,6 +101,8 @@ const AffirmationBuilder = () => {
   const [showGallery, setShowGallery] = useState(false);
   const [activeTab, setActiveTab] = useState("create");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingMessage, setLoadingMessage] = useState("");
 
   // Staff Picks Presets
   const staffPresets: StaffPreset[] = [
@@ -333,7 +335,9 @@ const AffirmationBuilder = () => {
   const handleGenerate = async () => {
     setLoading(true);
     setPreviewImagesB64([]);
-    
+    setLoadingProgress(0);
+    setLoadingMessage("Preparing your design...");
+
     try {
       // Use existing preview data from state (set by Randomize button)
       // Only generate new if none exists
@@ -346,9 +350,17 @@ const AffirmationBuilder = () => {
         }
         setGeneratedData(preview);
       }
-      
+
+      setLoadingProgress(10);
+      setLoadingMessage("Creating 4 unique watercolor variations...");
+
       // Generate 4 preview images in parallel
       toast.info("✨ Creating 4 preview variations for you... (~30 seconds)");
+
+      // Simulate progress while waiting
+      const progressInterval = setInterval(() => {
+        setLoadingProgress(prev => Math.min(prev + 5, 90));
+      }, 1500);
 
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-preview-image', {
@@ -363,13 +375,19 @@ const AffirmationBuilder = () => {
           }
         })
       );
-      
+
       const results = await Promise.all(requests);
+      clearInterval(progressInterval);
+
+      setLoadingProgress(95);
+      setLoadingMessage("Finalizing your previews...");
+
       const successfulImages = results
         .filter(result => !result.error && result.data?.imageB64)
         .map(result => `data:image/png;base64,${result.data.imageB64}`);
-      
+
       if (successfulImages.length > 0) {
+        setLoadingProgress(100);
         setPreviewImagesB64(successfulImages);
         toast.success(`🎨 ${successfulImages.length} beautiful preview${successfulImages.length > 1 ? 's' : ''} ready! Pick your favorite to refine.`);
       } else {
@@ -380,18 +398,26 @@ const AffirmationBuilder = () => {
       toast.error("Oops! Something went wrong. Please try again or adjust your settings.");
     } finally {
       setLoading(false);
+      setLoadingProgress(0);
+      setLoadingMessage("");
     }
   };
 
   const handleGenerateUnique = async () => {
     setLoading(true);
     setFinalImagesB64([]);
+    setLoadingProgress(0);
+    setLoadingMessage("Preparing print-quality designs...");
+
     try {
       // Ensure we have current preview data
       if (!generatedData) {
         await handleGenerate();
       }
-      
+
+      setLoadingProgress(10);
+      setLoadingMessage("Building your high-resolution designs...");
+
       // Map layout style to archetype (supports both old and new names)
       const layoutMap: Record<string, LayoutArchetype> = {
         // Old names for backward compatibility - map to closest new equivalents
@@ -465,13 +491,25 @@ const AffirmationBuilder = () => {
       // Generate 4 final images in parallel
       toast.info("✨ Creating your print-quality affirmations... (~60 seconds)");
 
+      setLoadingProgress(20);
+      setLoadingMessage("Rendering 4 print-quality variations (300 DPI)...");
+
+      // Simulate progress while waiting (60 seconds estimate)
+      const progressInterval = setInterval(() => {
+        setLoadingProgress(prev => Math.min(prev + 3, 90));
+      }, 2000);
+
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-affirmation-image', {
           body: { designSpec }
         })
       );
-      
+
       const results = await Promise.all(requests);
+      clearInterval(progressInterval);
+
+      setLoadingProgress(95);
+      setLoadingMessage("Finalizing your print-ready images...");
       
       // Check for errors
       const hasErrors = results.some(result => {
@@ -510,9 +548,10 @@ const AffirmationBuilder = () => {
         .map(result => `data:image/png;base64,${result.data.imageB64}`);
       
       if (successfulImages.length > 0) {
+        setLoadingProgress(100);
         setFinalImagesB64(successfulImages);
         setViewMode('final'); // Switch to final view
-        
+
         // Save first final image to history with quota management
         const newHistoryItem: HistoryItem = {
           id: `history-${Date.now()}`,
@@ -556,6 +595,8 @@ const AffirmationBuilder = () => {
       toast.error(e instanceof Error ? e.message : 'An unexpected error occurred.');
     } finally {
       setLoading(false);
+      setLoadingProgress(0);
+      setLoadingMessage("");
     }
   };
 
@@ -729,6 +770,119 @@ const AffirmationBuilder = () => {
                 <span className="text-sm font-semibold text-foreground text-center">Instant</span>
               </div>
             </div>
+
+            {/* Workflow Step Indicator */}
+            <div className="flex justify-center items-center gap-2 md:gap-4 mb-8 max-w-2xl mx-auto">
+              <div className="flex items-center gap-2">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+                  previewImagesB64.length === 0 ? 'bg-primary border-primary text-primary-foreground' : 'bg-primary/10 border-primary text-primary'
+                }`}>
+                  <span className="text-sm font-semibold">1</span>
+                </div>
+                <span className={`hidden sm:inline text-sm font-medium ${
+                  previewImagesB64.length === 0 ? 'text-foreground' : 'text-muted-foreground'
+                }`}>Choose</span>
+              </div>
+
+              <div className="flex-1 h-0.5 bg-muted max-w-[80px] md:max-w-[120px]">
+                <div className={`h-full transition-all duration-500 ${
+                  previewImagesB64.length > 0 ? 'bg-primary w-full' : 'bg-primary/30 w-0'
+                }`} />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+                  previewImagesB64.length > 0 && finalImagesB64.length === 0 ? 'bg-primary border-primary text-primary-foreground' :
+                  previewImagesB64.length > 0 ? 'bg-primary/10 border-primary text-primary' :
+                  'bg-muted border-muted-foreground/20 text-muted-foreground'
+                }`}>
+                  <span className="text-sm font-semibold">2</span>
+                </div>
+                <span className={`hidden sm:inline text-sm font-medium ${
+                  previewImagesB64.length > 0 && finalImagesB64.length === 0 ? 'text-foreground' : 'text-muted-foreground'
+                }`}>Preview</span>
+              </div>
+
+              <div className="flex-1 h-0.5 bg-muted max-w-[80px] md:max-w-[120px]">
+                <div className={`h-full transition-all duration-500 ${
+                  finalImagesB64.length > 0 ? 'bg-primary w-full' : 'bg-primary/30 w-0'
+                }`} />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+                  finalImagesB64.length > 0 ? 'bg-primary border-primary text-primary-foreground' :
+                  'bg-muted border-muted-foreground/20 text-muted-foreground'
+                }`}>
+                  <span className="text-sm font-semibold">3</span>
+                </div>
+                <span className={`hidden sm:inline text-sm font-medium ${
+                  finalImagesB64.length > 0 ? 'text-foreground' : 'text-muted-foreground'
+                }`}>Create</span>
+              </div>
+            </div>
+
+            {/* Loading Overlay with Progress */}
+            {loading && loadingMessage && (
+              <Card className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 mx-auto max-w-md shadow-2xl border-2 border-primary/20 animate-in fade-in-0 zoom-in-95">
+                <CardContent className="pt-6">
+                  <div className="space-y-4">
+                    {/* Progress Circle */}
+                    <div className="flex justify-center">
+                      <div className="relative w-20 h-20">
+                        <svg className="w-20 h-20 -rotate-90">
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="36"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                            className="text-muted"
+                          />
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="36"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                            strokeDasharray={`${2 * Math.PI * 36}`}
+                            strokeDashoffset={`${2 * Math.PI * 36 * (1 - loadingProgress / 100)}`}
+                            className="text-primary transition-all duration-500 ease-out"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-lg font-semibold text-primary">{loadingProgress}%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Loading Message */}
+                    <div className="text-center space-y-2">
+                      <p className="text-lg font-medium text-foreground">{loadingMessage}</p>
+                      <p className="text-sm text-muted-foreground">This won't take long...</p>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary/80 via-primary to-primary/80 transition-all duration-500 ease-out"
+                        style={{ width: `${loadingProgress}%` }}
+                      />
+                    </div>
+
+                    {/* Animated Sparkles */}
+                    <div className="flex justify-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary animate-pulse" style={{ animationDelay: '0ms' }} />
+                      <Sparkles className="h-5 w-5 text-primary animate-pulse" style={{ animationDelay: '200ms' }} />
+                      <Sparkles className="h-5 w-5 text-primary animate-pulse" style={{ animationDelay: '400ms' }} />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             <Dialog open={showGallery} onOpenChange={setShowGallery}>
               <DialogTrigger asChild>
