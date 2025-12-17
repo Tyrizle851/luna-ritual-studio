@@ -3,7 +3,8 @@ import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/integrations/supabase/client';
 import { buildDesignSpec } from '@/lib/designSpecBuilder';
-import type { ThemeSlug, MoodSlug, LayoutArchetype } from '@/types/design-spec';
+import type { ThemeSlug, MoodSlug } from '@/types/design-spec';
+import { getLayoutArchetype } from '../utils/layoutMapping';
 
 interface GeneratedData {
   headline: string;
@@ -196,59 +197,8 @@ export function useAffirmationGeneration({
       setLoadingProgress(10);
       setLoadingMessage('Building your high-resolution designs...');
 
-      // Layout mapping
-      const layoutMap: Record<string, LayoutArchetype> = {
-        'vintage': 'arc-flow',
-        'clean-serif': 'floating-cluster',
-        'botanical': 'botanical-frame',
-        'grid': 'editorial-grid-luxe',
-        'halo': 'circle-harmony',
-        'organic': 'arc-flow',
-        'geometric': 'editorial-grid-luxe',
-        'celestial': 'radiant-center-burst',
-        'minimal-zen': 'floating-cluster',
-        'grit': 'asymmetric-balance',
-        'scattered-organic': 'pebble-scatter',
-        'flowing-curves': 'arc-flow',
-        'angular-grid': 'editorial-grid-luxe',
-        'circular-orbit': 'circle-harmony',
-        'diagonal-dynamic': 'asymmetric-balance',
-        'layered-depth': 'floating-cluster',
-        'vertical-cascade': 'vertical-flow',
-        'horizontal-sweep': 'soft-anchor-left',
-        'corner-radial': 'radiant-center-burst',
-        'spiral-flow': 'golden-spiral',
-        'stepped-rhythm': 'gentle-column',
-        'arch-composition': 'arc-flow',
-        'split-panel': 'soft-anchor-left',
-        'wave-pattern': 'ribbon-drift',
-        'botanical-branch': 'botanical-frame',
-        'minimal-focus': 'minimal-horizon',
-        'centered-stack': 'centered-serenity',
-        'centered-serenity': 'centered-serenity',
-        'vertical-flow': 'vertical-flow',
-        'floating-cluster': 'floating-cluster',
-        'asymmetric-balance': 'asymmetric-balance',
-        'arc-flow': 'arc-flow',
-        'golden-spiral': 'golden-spiral',
-        'botanical-frame': 'botanical-frame',
-        'minimal-horizon': 'minimal-horizon',
-        'radiant-center-burst': 'radiant-center-burst',
-        'soft-anchor-left': 'soft-anchor-left',
-        'soft-anchor-right': 'soft-anchor-right',
-        'gentle-column': 'gentle-column',
-        'pebble-scatter': 'pebble-scatter',
-        'circle-harmony': 'circle-harmony',
-        'prayer-stack': 'prayer-stack',
-        'ribbon-drift': 'ribbon-drift',
-        'editorial-grid-luxe': 'editorial-grid-luxe',
-        'calm-waterfall': 'calm-waterfall',
-        'sacred-geometry': 'sacred-geometry',
-        'breath-space-minimal': 'breath-space-minimal',
-      };
-
-      const layoutArchetype =
-        layoutMap[layoutStyle?.toLowerCase()] || layoutMap[layoutStyle] || 'asymmetric-balance';
+      // Get layout archetype using shared utility
+      const layoutArchetype = getLayoutArchetype(layoutStyle);
 
       // Get active palette
       const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
