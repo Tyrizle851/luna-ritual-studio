@@ -26,6 +26,7 @@ import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
 import { useAffirmationGeneration } from "./AffirmationBuilder/hooks/useAffirmationGeneration";
 import { WorkflowProgress } from "./AffirmationBuilder/components/WorkflowProgress";
 import { LoadingState } from "./AffirmationBuilder/components/LoadingState";
+import { OnboardingDialog } from "./AffirmationBuilder/components/OnboardingDialog";
 
 interface GeneratedData {
   headline: string;
@@ -607,96 +608,7 @@ const AffirmationBuilder = () => {
             />
 
             {/* Onboarding Dialog for First-Time Users */}
-            <Dialog open={showOnboarding} onOpenChange={setShowOnboarding}>
-              <DialogContent className="max-w-lg">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl flex items-center gap-2">
-                    <Sparkles className="h-6 w-6 text-primary" />
-                    Welcome to Affirmation Studio!
-                  </DialogTitle>
-                  <DialogDescription className="text-base pt-2">
-                    Create personalized watercolor affirmations in 3 easy steps
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="space-y-6 py-4">
-                  {/* Step 1 */}
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-lg font-semibold text-primary">1</span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">Choose Your Theme</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Select a theme that matches your intention (Confidence, Peace, Focus, etc.)
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step 2 */}
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-lg font-semibold text-primary">2</span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">Preview Options</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Generate 4 quick previews (~30 sec) to explore different styles
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step 3 */}
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-lg font-semibold text-primary">3</span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">Create Print-Quality</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Generate 4 high-resolution versions (300 DPI) perfect for printing
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Quick Tip */}
-                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <Sparkles className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-semibold text-sm text-foreground mb-1">Quick Tip</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Try our Quick Start Templates below for instant inspiration!
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowOnboarding(false)}
-                    className="flex-1"
-                  >
-                    Skip
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setShowOnboarding(false);
-                      // Scroll to templates
-                      setTimeout(() => {
-                        const templates = document.querySelector('[class*="Quick Start"]');
-                        templates?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      }, 100);
-                    }}
-                    className="flex-1"
-                  >
-                    Get Started
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <OnboardingDialog open={showOnboarding} onOpenChange={setShowOnboarding} />
 
             {/* Image Comparison Dialog */}
             <Dialog open={showComparison} onOpenChange={setShowComparison}>
