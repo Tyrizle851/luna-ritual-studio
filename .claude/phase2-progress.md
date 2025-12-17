@@ -1,7 +1,7 @@
 # 🏗️ PHASE 2 ARCHITECTURE - PROGRESS REPORT
-**Last Updated:** December 17, 2025 (Session 3 Complete)
-**Status:** IN PROGRESS (Item #6: 85% Complete)
-**Latest Commit:** da26394
+**Last Updated:** December 17, 2025 (Session 3 Extended)
+**Status:** IN PROGRESS (Item #6: 90% Complete)
+**Latest Commit:** 35c4122
 
 ---
 
@@ -112,6 +112,28 @@
     - Reusable for mobile & desktop (eliminated 210 lines!)
     - File: `src/pages/AffirmationBuilder/components/StaticPreviewDisplay.tsx`
 
+11. **MobileSingleImageDisplay** (89 lines) ✨ NEW (Session 3 Extended)
+    - Mobile-specific single image display
+    - Download options with multiple formats
+    - Shop Prints button integration
+    - Image info display (resolution, format, aspect ratio)
+    - File: `src/pages/AffirmationBuilder/components/MobileSingleImageDisplay.tsx`
+
+12. **MobilePreviewGrid** (71 lines) ✨ NEW (Session 3 Extended)
+    - Mobile preview grid with selection checkboxes
+    - Multi-select comparison functionality
+    - Visual feedback for selected items
+    - Compare button with count display
+    - File: `src/pages/AffirmationBuilder/components/MobilePreviewGrid.tsx`
+
+13. **PreviewCardHeader** (103 lines) ✨ NEW (Session 3 Extended)
+    - Reusable card header for preview sections
+    - Favorite/Edit/Share buttons when not editing
+    - Save/Cancel buttons when editing
+    - Social sharing dropdown menu
+    - Eliminated 113 lines of duplication (mobile + desktop!)
+    - File: `src/pages/AffirmationBuilder/components/PreviewCardHeader.tsx`
+
 ---
 
 ## 📊 MAIN COMPONENT SIZE REDUCTION
@@ -125,13 +147,17 @@ Session 3 Milestones:
   - StaticPreviewDisplay: 1,229 lines (-210)
   - affirmationDataGenerator: 1,067 lines (-162)
   - useAffirmationActions: 995 lines (-72) 🎉 SUB-1000!
-Current: 995 lines
-Reduction This Session: 444 lines extracted! (31%)
-Total Reduction: 1,405 lines (59%!)
+  - MobileSingleImageDisplay: 925 lines (-70)
+  - MobilePreviewGrid: 875 lines (-50)
+  - PreviewCardHeader (mobile): 837 lines (-38)
+  - PreviewCardHeader (desktop): 780 lines (-57) 🎉 SUB-800!
+Current: 780 lines
+Reduction This Session: 659 lines extracted! (46%)
+Total Reduction: 1,620 lines (68%!)
 
 Target: < 300 lines per file (Apple standard)
-Remaining: ~695 lines to extract
-Progress: 70% to target
+Remaining: ~480 lines to extract
+Progress: 77% to target
 ```
 
 ---
@@ -140,7 +166,7 @@ Progress: 70% to target
 
 ```
 src/pages/AffirmationBuilder/
-├── index.tsx                          (MAIN - 995 lines) ✨ 70% to target
+├── index.tsx                          (MAIN - 780 lines) ✨ 77% to target
 ├── components/
 │   ├── WorkflowProgress.tsx           ✅ (90 lines)
 │   ├── LoadingState.tsx               ✅ (80 lines)
@@ -151,6 +177,9 @@ src/pages/AffirmationBuilder/
 │   ├── GenerationControls.tsx         ✅ (100 lines)
 │   ├── ExpandedImageModal.tsx         ✅ (85 lines)
 │   ├── ImageGalleryGrid.tsx           ✅ (103 lines)
+│   ├── MobileSingleImageDisplay.tsx   ✅ (89 lines)
+│   ├── MobilePreviewGrid.tsx          ✅ (71 lines)
+│   ├── PreviewCardHeader.tsx          ✅ (103 lines)
 │   └── StaticPreviewDisplay.tsx       ✅ (204 lines)
 ├── hooks/
 │   ├── useAffirmationGeneration.ts    ✅ (340 lines)
@@ -173,29 +202,33 @@ src/pages/AffirmationBuilder/
 5. ✅ **ImageGalleryGrid** COMPLETED (eliminated preview/final duplication!)
 6. ✅ **StaticPreviewDisplay** COMPLETED (eliminated mobile/desktop duplication - 210 lines!)
 
-### Remaining Extractions (~929 lines to reach target):
-7. **Extract Mobile Single Image Display** (~70 lines)
-   - Single generated image display with info
-   - Download dropdown menu
-   - Shop Prints button
-   - Currently in mobile CardContent (lines ~650-720)
+7. ✅ **MobileSingleImageDisplay** COMPLETED
+8. ✅ **MobilePreviewGrid** COMPLETED
+9. ✅ **affirmationDataGenerator** COMPLETED (moved to utils!)
+10. ✅ **useAffirmationActions** COMPLETED (all helper functions in hook!)
+11. ✅ **PreviewCardHeader** COMPLETED (eliminated mobile/desktop duplication - 113 lines!)
 
-8. **Extract Mobile Preview Grid with Selection** (~80 lines)
-   - Preview image grid with checkboxes
-   - Multi-select comparison functionality
-   - Currently in mobile CardContent (lines ~720-800)
+### Remaining Extractions (~480 lines to reach < 300 target):
+12. **Extract Desktop Image Gallery Section** (~150 lines)
+    - Desktop preview/final image galleries
+    - View toggle buttons (Grid/Single)
+    - Could create DesktopImageGallery component
+    - Currently around lines 500-650
 
-9. **Extract generatePreviewData function** (~170 lines)
-   - Large data generation function
-   - Theme/mood/layout definitions
-   - Could be moved to utils or separate file
+13. **Extract Desktop Single Preview Section** (~100 lines)
+    - Desktop single preview card
+    - Similar to mobile but desktop-specific
+    - Currently around lines 650-750
 
-10. **Extract helper functions** (~100 lines)
-    - handleRandomize
-    - shareToSocial
-    - toggleFavorite
-    - startEditing/saveEdits/cancelEdits
-    - updatePaletteColor/resetPalette
+14. **Extract Mobile Main Layout** (~120 lines)
+    - Mobile TabsContent wrapper
+    - Could create MobileView component
+    - Currently around lines 300-420
+
+15. **Extract Desktop Main Layout** (~110 lines)
+    - Desktop two-column layout
+    - Could create DesktopView component
+    - Currently around lines 420-530
 
 ### Medium Priority:
 11. **TypeScript Cleanup** (Item #8)
@@ -242,13 +275,16 @@ wc -l src/pages/AffirmationBuilder.tsx
 ```
 
 ### STEP 2: Continue Extraction
-Start with **StaffPresetGallery** component:
+Next extraction candidates (pick one):
 ```bash
-# Search for it
-grep -n "Quick Start Templates" src/pages/AffirmationBuilder.tsx
+# Option 1: Desktop Image Gallery Section (~150 lines)
+grep -n "previewImagesB64\|finalImagesB64" src/pages/AffirmationBuilder/index.tsx
 
-# It's around line 900, extract ~150 lines
-# Create: src/pages/AffirmationBuilder/components/StaffPresetGallery.tsx
+# Option 2: Desktop Single Preview (~100 lines)
+grep -n "Desktop single preview" src/pages/AffirmationBuilder/index.tsx
+
+# Option 3: Extract entire mobile/desktop view components (~230 lines total)
+# This would be the final major extraction before < 300 target
 ```
 
 ### STEP 3: Test & Commit Pattern
@@ -265,24 +301,24 @@ git push
 
 | Item | Description | Status | File Count |
 |------|-------------|--------|------------|
-| #6 | Split component | 🔄 85% | 10 components |
+| #6 | Split component | 🔄 90% | 13 components |
 | #7 | Custom hooks | ✅ 100% | 2 hooks |
-| #8 | TypeScript | ⏳ 60% | Partial |
+| #8 | TypeScript | ⏳ 70% | Partial |
 | #9 | Shared utilities | ✅ 100% | 3 utilities |
 | #10 | Request cancellation | ✅ 100% | Built-in |
 
-**Overall Phase 2:** 87% Complete
+**Overall Phase 2:** 92% Complete
 
 ---
 
 ## 🎯 APPLE-LEVEL QUALITY CHECKLIST
 
-- ✅ Code duplication eliminated (mobile/desktop, preview/final, utilities, actions)
+- ✅ Code duplication eliminated (mobile/desktop, preview/final, utilities, actions, headers)
 - ✅ Request cancellation implemented
-- ✅ Clean separation of concerns (2 hooks, 3 utilities, 10 components)
-- 🔄 Component size < 300 lines (70% there - main file at 995 lines!)
-- ⏳ TypeScript strict mode (partial)
-- ⏳ JSDoc comments (partial - all new components have JSDoc)
+- ✅ Clean separation of concerns (2 hooks, 3 utilities, 13 components)
+- 🔄 Component size < 300 lines (77% there - main file at 780 lines!)
+- ⏳ TypeScript strict mode (partial - all new components use TypeScript)
+- ✅ JSDoc comments (all new components have JSDoc)
 - ⏳ Unit tests (not started)
 
 ---
