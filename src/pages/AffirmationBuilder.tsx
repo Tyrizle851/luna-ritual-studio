@@ -24,6 +24,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { buildDesignSpec } from "@/lib/designSpecBuilder";
 import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
 import { useAffirmationGeneration } from "./AffirmationBuilder/hooks/useAffirmationGeneration";
+import { WorkflowProgress } from "./AffirmationBuilder/components/WorkflowProgress";
 
 interface GeneratedData {
   headline: string;
@@ -599,55 +600,10 @@ const AffirmationBuilder = () => {
             </div>
 
             {/* Workflow Step Indicator */}
-            <div className="flex justify-center items-center gap-2 md:gap-4 mb-8 max-w-2xl mx-auto">
-              <div className="flex items-center gap-2">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
-                  previewImagesB64.length === 0 ? 'bg-primary border-primary text-primary-foreground' : 'bg-primary/10 border-primary text-primary'
-                }`}>
-                  <span className="text-sm font-semibold">1</span>
-                </div>
-                <span className={`hidden sm:inline text-sm font-medium ${
-                  previewImagesB64.length === 0 ? 'text-foreground' : 'text-muted-foreground'
-                }`}>Choose</span>
-              </div>
-
-              <div className="flex-1 h-0.5 bg-muted max-w-[80px] md:max-w-[120px]">
-                <div className={`h-full transition-all duration-500 ${
-                  previewImagesB64.length > 0 ? 'bg-primary w-full' : 'bg-primary/30 w-0'
-                }`} />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
-                  previewImagesB64.length > 0 && finalImagesB64.length === 0 ? 'bg-primary border-primary text-primary-foreground' :
-                  previewImagesB64.length > 0 ? 'bg-primary/10 border-primary text-primary' :
-                  'bg-muted border-muted-foreground/20 text-muted-foreground'
-                }`}>
-                  <span className="text-sm font-semibold">2</span>
-                </div>
-                <span className={`hidden sm:inline text-sm font-medium ${
-                  previewImagesB64.length > 0 && finalImagesB64.length === 0 ? 'text-foreground' : 'text-muted-foreground'
-                }`}>Preview</span>
-              </div>
-
-              <div className="flex-1 h-0.5 bg-muted max-w-[80px] md:max-w-[120px]">
-                <div className={`h-full transition-all duration-500 ${
-                  finalImagesB64.length > 0 ? 'bg-primary w-full' : 'bg-primary/30 w-0'
-                }`} />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
-                  finalImagesB64.length > 0 ? 'bg-primary border-primary text-primary-foreground' :
-                  'bg-muted border-muted-foreground/20 text-muted-foreground'
-                }`}>
-                  <span className="text-sm font-semibold">3</span>
-                </div>
-                <span className={`hidden sm:inline text-sm font-medium ${
-                  finalImagesB64.length > 0 ? 'text-foreground' : 'text-muted-foreground'
-                }`}>Create</span>
-              </div>
-            </div>
+            <WorkflowProgress
+              hasPreviewImages={previewImagesB64.length > 0}
+              hasFinalImages={finalImagesB64.length > 0}
+            />
 
             {/* Onboarding Dialog for First-Time Users */}
             <Dialog open={showOnboarding} onOpenChange={setShowOnboarding}>
