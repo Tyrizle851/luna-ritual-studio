@@ -1,7 +1,7 @@
 # 🏗️ PHASE 2 ARCHITECTURE - PROGRESS REPORT
-**Last Updated:** December 17, 2025 (Session 2)
-**Status:** IN PROGRESS (Item #6: 70% Complete)
-**Latest Commit:** 9075b11
+**Last Updated:** December 17, 2025 (Session 3)
+**Status:** IN PROGRESS (Item #6: 80% Complete)
+**Latest Commit:** 579462a
 
 ---
 
@@ -35,7 +35,7 @@
   - Prevents race conditions
   - Clean memory management
 
-### Item #6: Component Splitting 🔄 (70% Complete)
+### Item #6: Component Splitting 🔄 (80% Complete)
 **Extracted Components:**
 1. **WorkflowProgress** (90 lines)
    - 3-step indicator: Choose → Preview → Create
@@ -56,19 +56,19 @@
    - Multi-select preview viewing
    - File: `src/pages/AffirmationBuilder/components/ComparisonDialog.tsx`
 
-5. **StaffPresetGallery** (130 lines) ✨ NEW
+5. **StaffPresetGallery** (130 lines)
    - 4 preset template cards
    - Auto-download on click
    - File: `src/pages/AffirmationBuilder/components/StaffPresetGallery.tsx`
 
-6. **IntentionSelector** (212 lines) ✨ NEW
+6. **IntentionSelector** (212 lines)
    - Theme/mood selection dropdowns
    - Advanced options collapsible
    - Layout, keywords, custom colors
    - Reusable for mobile & desktop (eliminated duplication!)
    - File: `src/pages/AffirmationBuilder/components/IntentionSelector.tsx`
 
-7. **GenerationControls** (100 lines) ✨ NEW
+7. **GenerationControls** (100 lines)
    - See Previews button
    - Randomize button
    - Create Print-Quality button
@@ -76,20 +76,42 @@
    - Reusable for mobile & desktop (eliminated duplication!)
    - File: `src/pages/AffirmationBuilder/components/GenerationControls.tsx`
 
+8. **ExpandedImageModal** (85 lines)
+   - Full-size image modal with downloads
+   - Multi-format download menu
+   - Shop Prints button for final images
+   - File: `src/pages/AffirmationBuilder/components/ExpandedImageModal.tsx`
+
+9. **ImageGalleryGrid** (103 lines)
+   - Reusable image grid for preview/final
+   - 2-column responsive grid with hover effects
+   - Type-specific badges and actions
+   - Eliminated preview/final duplication!
+   - File: `src/pages/AffirmationBuilder/components/ImageGalleryGrid.tsx`
+
+10. **StaticPreviewDisplay** (204 lines) ✨ NEW (Session 3)
+    - Editable affirmation preview display
+    - Decorative corner elements & design
+    - Theme/mood/palette metadata display
+    - Reusable for mobile & desktop (eliminated 210 lines!)
+    - File: `src/pages/AffirmationBuilder/components/StaticPreviewDisplay.tsx`
+
 ---
 
 ## 📊 MAIN COMPONENT SIZE REDUCTION
 
 ```
 Before:  2,400 lines (monolithic)
-Session Start: 1,892 lines
-Current: 1,567 lines
-Reduction This Session: 325 lines extracted!
-Total Reduction: 833 lines
+Session 2 Start: 1,892 lines
+Session 2 End: 1,439 lines (453 lines extracted)
+Session 3 Start: 1,439 lines
+Current: 1,229 lines
+Reduction This Session: 210 lines extracted!
+Total Reduction: 1,171 lines (49%!)
 
 Target: < 300 lines per file (Apple standard)
-Remaining: ~1,267 lines to extract
-Progress: 35% to target
+Remaining: ~929 lines to extract
+Progress: 51% to target
 ```
 
 ---
@@ -98,15 +120,18 @@ Progress: 35% to target
 
 ```
 src/pages/AffirmationBuilder/
-├── index.tsx                          (MAIN - 1,567 lines)
+├── index.tsx                          (MAIN - 1,229 lines) ✨ 51% to target
 ├── components/
 │   ├── WorkflowProgress.tsx           ✅ (90 lines)
 │   ├── LoadingState.tsx               ✅ (80 lines)
 │   ├── OnboardingDialog.tsx           ✅ (100 lines)
 │   ├── ComparisonDialog.tsx           ✅ (80 lines)
-│   ├── StaffPresetGallery.tsx         ✅ (130 lines) ← NEW
-│   ├── IntentionSelector.tsx          ✅ (212 lines) ← NEW
-│   └── GenerationControls.tsx         ✅ (100 lines) ← NEW
+│   ├── StaffPresetGallery.tsx         ✅ (130 lines)
+│   ├── IntentionSelector.tsx          ✅ (212 lines)
+│   ├── GenerationControls.tsx         ✅ (100 lines)
+│   ├── ExpandedImageModal.tsx         ✅ (85 lines)
+│   ├── ImageGalleryGrid.tsx           ✅ (103 lines)
+│   └── StaticPreviewDisplay.tsx       ✅ (204 lines) ← NEW
 ├── hooks/
 │   └── useAffirmationGeneration.ts    ✅ (340 lines)
 └── utils/
@@ -122,29 +147,42 @@ src/pages/AffirmationBuilder/
 1. ✅ **StaffPresetGallery** COMPLETED
 2. ✅ **IntentionSelector** COMPLETED (eliminated mobile/desktop duplication!)
 3. ✅ **GenerationControls** COMPLETED (eliminated mobile/desktop duplication!)
+4. ✅ **ExpandedImageModal** COMPLETED
+5. ✅ **ImageGalleryGrid** COMPLETED (eliminated preview/final duplication!)
+6. ✅ **StaticPreviewDisplay** COMPLETED (eliminated mobile/desktop duplication - 210 lines!)
 
-4. **Extract PreviewGallery** (~300 lines remaining)
-   - Preview image grid display
-   - Final image grid display
-   - View mode toggle (Preview vs Final)
-   - Image selection/comparison
-   - Static preview display (editable headline/lines)
-   - Currently spans mobile (line ~660) and desktop (line ~1100+)
-   - High impact: eliminates significant duplication
+### Remaining Extractions (~929 lines to reach target):
+7. **Extract Mobile Single Image Display** (~70 lines)
+   - Single generated image display with info
+   - Download dropdown menu
+   - Shop Prints button
+   - Currently in mobile CardContent (lines ~650-720)
 
-5. **Extract ExpandedImageModal** (~100 lines)
-   - Full-size image view dialog
-   - Close functionality
-   - Download options
+8. **Extract Mobile Preview Grid with Selection** (~80 lines)
+   - Preview image grid with checkboxes
+   - Multi-select comparison functionality
+   - Currently in mobile CardContent (lines ~720-800)
+
+9. **Extract generatePreviewData function** (~170 lines)
+   - Large data generation function
+   - Theme/mood/layout definitions
+   - Could be moved to utils or separate file
+
+10. **Extract helper functions** (~100 lines)
+    - handleRandomize
+    - shareToSocial
+    - toggleFavorite
+    - startEditing/saveEdits/cancelEdits
+    - updatePaletteColor/resetPalette
 
 ### Medium Priority:
-6. **TypeScript Cleanup** (Item #8)
-   - Add strict types to all components
-   - Fix any `any` types
-   - Add JSDoc comments
+11. **TypeScript Cleanup** (Item #8)
+    - Add strict types to all components
+    - Fix any `any` types
+    - Add JSDoc comments
 
-7. **Create index.ts barrel exports**
-   - Cleaner imports in main file
+12. **Create index.ts barrel exports**
+    - Cleaner imports in main file
 
 ---
 
@@ -205,24 +243,24 @@ git push
 
 | Item | Description | Status | File Count |
 |------|-------------|--------|------------|
-| #6 | Split component | 🔄 50% | 4 components |
+| #6 | Split component | 🔄 80% | 10 components |
 | #7 | Custom hooks | ✅ 100% | 1 hook |
 | #8 | TypeScript | ⏳ 60% | Partial |
 | #9 | Shared utilities | ✅ 100% | 2 utilities |
 | #10 | Request cancellation | ✅ 100% | Built-in |
 
-**Overall Phase 2:** 72% Complete
+**Overall Phase 2:** 82% Complete
 
 ---
 
 ## 🎯 APPLE-LEVEL QUALITY CHECKLIST
 
-- ✅ Code duplication eliminated (utilities)
+- ✅ Code duplication eliminated (mobile/desktop, preview/final, utilities)
 - ✅ Request cancellation implemented
 - ✅ Clean separation of concerns (hooks)
-- 🔄 Component size < 300 lines (50% there)
+- 🔄 Component size < 300 lines (51% there - main file at 1,229 lines)
 - ⏳ TypeScript strict mode (partial)
-- ⏳ JSDoc comments (pending)
+- ⏳ JSDoc comments (partial - new components have some)
 - ⏳ Unit tests (not started)
 
 ---
