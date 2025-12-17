@@ -136,11 +136,18 @@ Create a design that feels handcrafted, peaceful, and professionally refined.`;
       );
     }
 
-    // Fetch the image and convert to base64
+    // Fetch the image and convert to base64 (chunked to avoid stack overflow)
     console.log('Fetching generated image...');
     const imageResponse = await fetch(imageUrl);
     const imageBuffer = await imageResponse.arrayBuffer();
-    const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+    const uint8Array = new Uint8Array(imageBuffer);
+    let binary = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.subarray(i, i + chunkSize);
+      binary += String.fromCharCode(...chunk);
+    }
+    const base64 = btoa(binary);
 
     console.log('Preview image generated successfully');
     return new Response(
