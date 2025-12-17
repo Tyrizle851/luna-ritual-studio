@@ -101,7 +101,6 @@ const AffirmationBuilder = () => {
   const [showGallery, setShowGallery] = useState(false);
   const [activeTab, setActiveTab] = useState("create");
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showPresets, setShowPresets] = useState(true);
 
   // Staff Picks Presets
   const staffPresets: StaffPreset[] = [
@@ -766,22 +765,15 @@ const AffirmationBuilder = () => {
             </Dialog>
           </div>
 
-          {/* Staff Picks Section - Collapsible on Mobile */}
-          <Collapsible open={showPresets} onOpenChange={setShowPresets} className="mb-8">
-            <Card className="bg-gradient-to-br from-card to-muted/20">
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/20 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="h-5 w-5 text-primary" />
-                      <CardTitle>Staff Picks</CardTitle>
-                    </div>
-                    <ChevronDown className={`h-5 w-5 transition-transform ${showPresets ? 'rotate-180' : ''}`} />
-                  </div>
-                  <CardDescription>Curated designs ready to download</CardDescription>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
+          {/* Quick Start Templates - Always Visible */}
+          <Card className="bg-gradient-to-br from-card to-muted/20 mb-8">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <CardTitle>Quick Start Templates</CardTitle>
+              </div>
+              <CardDescription>Beautiful designs to inspire your creation</CardDescription>
+            </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {staffPresets.map((preset) => (
@@ -831,9 +823,7 @@ const AffirmationBuilder = () => {
                     ))}
                   </div>
                 </CardContent>
-              </CollapsibleContent>
             </Card>
-          </Collapsible>
 
           {/* Mobile: Tabs, Desktop: Two Columns */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="lg:hidden">
@@ -846,8 +836,8 @@ const AffirmationBuilder = () => {
             <TabsContent value="create">
               <Card className="bg-card">
               <CardHeader>
-                <CardTitle>Your Inputs</CardTitle>
-                <CardDescription>Choose your affirmation style</CardDescription>
+                <CardTitle>Set Your Intention</CardTitle>
+                <CardDescription>What do you want to invite into your life?</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Theme Selection */}
@@ -990,39 +980,51 @@ const AffirmationBuilder = () => {
 
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button 
-                      onClick={() => {
-                        handleGenerate();
-                        setActiveTab("preview");
-                      }}
-                      variant="outline"
-                      className="h-11"
-                      disabled={loading}
-                    >
-                      {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      AI Preview
-                    </Button>
-                    
-                    <Button 
-                      onClick={handleRandomize}
-                      variant="secondary"
-                      className="h-11"
-                      disabled={loading}
-                    >
-                      <Palette className="mr-2 h-4 w-4" />
-                      Randomize
-                    </Button>
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-3">
+                      <Button
+                        onClick={() => {
+                          handleGenerate();
+                          setActiveTab("preview");
+                        }}
+                        variant="outline"
+                        className="h-11"
+                        disabled={loading}
+                      >
+                        {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                        See Previews
+                      </Button>
+
+                      <Button
+                        onClick={handleRandomize}
+                        variant="secondary"
+                        className="h-11"
+                        disabled={loading}
+                      >
+                        <Palette className="mr-2 h-4 w-4" />
+                        Randomize
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Preview first to explore options (~30 seconds)
+                    </p>
                   </div>
-                
-                  <Button 
-                    onClick={handleGenerateUnique}
-                    className="w-full h-12 bg-primary hover:bg-primary/90"
-                    disabled={loading}
-                  >
-                    {loading && generatedImageB64 === null && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Generate Final Images
-                  </Button>
+
+                  <div className="space-y-2">
+                    <Button
+                      onClick={handleGenerateUnique}
+                      className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold"
+                      disabled={loading || previewImagesB64.length === 0}
+                    >
+                      {loading && generatedImageB64 === null && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                      Create Print-Quality
+                    </Button>
+                    <p className="text-xs text-muted-foreground text-center">
+                      {previewImagesB64.length === 0
+                        ? "Generate previews first to unlock print-quality creation"
+                        : "Creates 4 high-resolution versions perfect for printing (~60 sec)"}
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -1334,8 +1336,8 @@ const AffirmationBuilder = () => {
             {/* Left Column: Input Form */}
             <Card className="bg-card">
               <CardHeader>
-                <CardTitle>Your Inputs</CardTitle>
-                <CardDescription>Choose your affirmation style</CardDescription>
+                <CardTitle>Set Your Intention</CardTitle>
+                <CardDescription>What do you want to invite into your life?</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Theme Selection */}
@@ -1479,14 +1481,14 @@ const AffirmationBuilder = () => {
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4">
                   <div className="grid grid-cols-2 gap-3">
-                    <Button 
+                    <Button
                       onClick={handleGenerate}
                       variant="outline"
                       className="h-11"
                       disabled={loading}
                     >
                       {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      AI Preview
+                      See Previews
                     </Button>
                     
                     <Button 
@@ -1500,13 +1502,13 @@ const AffirmationBuilder = () => {
                     </Button>
                   </div>
                 
-                  <Button 
+                  <Button
                     onClick={handleGenerateUnique}
-                    className="w-full h-12 bg-primary hover:bg-primary/90"
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold"
                     disabled={loading}
                   >
                     {loading && finalImagesB64.length === 0 && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Generate Final Images
+                    Create Print-Quality
                   </Button>
                 </div>
               </CardContent>
