@@ -1,7 +1,7 @@
 # 🏗️ PHASE 2 ARCHITECTURE - PROGRESS REPORT
-**Last Updated:** December 17, 2025
-**Status:** IN PROGRESS (Item #6: 50% Complete)
-**Latest Commit:** 446d1c3
+**Last Updated:** December 17, 2025 (Session 2)
+**Status:** IN PROGRESS (Item #6: 70% Complete)
+**Latest Commit:** 9075b11
 
 ---
 
@@ -35,26 +35,46 @@
   - Prevents race conditions
   - Clean memory management
 
-### Item #6: Component Splitting 🔄 (50% Complete)
+### Item #6: Component Splitting 🔄 (70% Complete)
 **Extracted Components:**
-1. **WorkflowProgress** (~90 lines)
+1. **WorkflowProgress** (90 lines)
    - 3-step indicator: Choose → Preview → Create
    - File: `src/pages/AffirmationBuilder/components/WorkflowProgress.tsx`
 
-2. **LoadingState** (~80 lines)
+2. **LoadingState** (80 lines)
    - Circular progress indicator
    - Progress messages & animations
    - File: `src/pages/AffirmationBuilder/components/LoadingState.tsx`
 
-3. **OnboardingDialog** (~100 lines)
+3. **OnboardingDialog** (100 lines)
    - First-time user welcome
    - 3-step workflow explanation
    - File: `src/pages/AffirmationBuilder/components/OnboardingDialog.tsx`
 
-4. **ComparisonDialog** (~80 lines)
+4. **ComparisonDialog** (80 lines)
    - Side-by-side image comparison
    - Multi-select preview viewing
    - File: `src/pages/AffirmationBuilder/components/ComparisonDialog.tsx`
+
+5. **StaffPresetGallery** (130 lines) ✨ NEW
+   - 4 preset template cards
+   - Auto-download on click
+   - File: `src/pages/AffirmationBuilder/components/StaffPresetGallery.tsx`
+
+6. **IntentionSelector** (212 lines) ✨ NEW
+   - Theme/mood selection dropdowns
+   - Advanced options collapsible
+   - Layout, keywords, custom colors
+   - Reusable for mobile & desktop (eliminated duplication!)
+   - File: `src/pages/AffirmationBuilder/components/IntentionSelector.tsx`
+
+7. **GenerationControls** (100 lines) ✨ NEW
+   - See Previews button
+   - Randomize button
+   - Create Print-Quality button
+   - Social proof section
+   - Reusable for mobile & desktop (eliminated duplication!)
+   - File: `src/pages/AffirmationBuilder/components/GenerationControls.tsx`
 
 ---
 
@@ -62,12 +82,14 @@
 
 ```
 Before:  2,400 lines (monolithic)
-Current: ~1,640 lines (estimate)
-Reduction: 760 lines extracted!
+Session Start: 1,892 lines
+Current: 1,567 lines
+Reduction This Session: 325 lines extracted!
+Total Reduction: 833 lines
 
 Target: < 300 lines per file (Apple standard)
-Remaining: ~1,340 lines to extract
-Progress: 31% to target
+Remaining: ~1,267 lines to extract
+Progress: 35% to target
 ```
 
 ---
@@ -76,12 +98,15 @@ Progress: 31% to target
 
 ```
 src/pages/AffirmationBuilder/
-├── index.tsx                          (MAIN - still ~1,640 lines)
+├── index.tsx                          (MAIN - 1,567 lines)
 ├── components/
 │   ├── WorkflowProgress.tsx           ✅ (90 lines)
 │   ├── LoadingState.tsx               ✅ (80 lines)
 │   ├── OnboardingDialog.tsx           ✅ (100 lines)
-│   └── ComparisonDialog.tsx           ✅ (80 lines)
+│   ├── ComparisonDialog.tsx           ✅ (80 lines)
+│   ├── StaffPresetGallery.tsx         ✅ (130 lines) ← NEW
+│   ├── IntentionSelector.tsx          ✅ (212 lines) ← NEW
+│   └── GenerationControls.tsx         ✅ (100 lines) ← NEW
 ├── hooks/
 │   └── useAffirmationGeneration.ts    ✅ (340 lines)
 └── utils/
@@ -94,31 +119,23 @@ src/pages/AffirmationBuilder/
 ## 🎯 NEXT STEPS (Priority Order)
 
 ### High Priority - Component Splitting:
-1. **Extract StaffPresetGallery** (~150 lines)
-   - Staff preset cards with download
-   - Currently in main file around line ~900
+1. ✅ **StaffPresetGallery** COMPLETED
+2. ✅ **IntentionSelector** COMPLETED (eliminated mobile/desktop duplication!)
+3. ✅ **GenerationControls** COMPLETED (eliminated mobile/desktop duplication!)
 
-2. **Extract IntentionSelector** (~200 lines)
-   - Theme/mood/layout selection dropdowns
-   - Advanced options collapsible
-   - Currently in main file around line ~1100
-
-3. **Extract PreviewGallery** (~250 lines)
+4. **Extract PreviewGallery** (~300 lines remaining)
    - Preview image grid display
-   - Image selection checkboxes
-   - Download/share buttons
-   - Currently in main file around line ~1300
-
-4. **Extract GenerationControls** (~150 lines)
-   - "See Previews" button
-   - "Create Print-Quality" button
-   - Randomize button
-   - Social proof section
-   - Currently in main file around line ~1200
+   - Final image grid display
+   - View mode toggle (Preview vs Final)
+   - Image selection/comparison
+   - Static preview display (editable headline/lines)
+   - Currently spans mobile (line ~660) and desktop (line ~1100+)
+   - High impact: eliminates significant duplication
 
 5. **Extract ExpandedImageModal** (~100 lines)
    - Full-size image view dialog
    - Close functionality
+   - Download options
 
 ### Medium Priority:
 6. **TypeScript Cleanup** (Item #8)
