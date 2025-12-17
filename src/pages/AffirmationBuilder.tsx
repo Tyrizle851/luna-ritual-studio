@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import confetti from "canvas-confetti";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -102,6 +103,8 @@ const AffirmationBuilder = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<number[]>([]);
+  const [showComparison, setShowComparison] = useState(false);
 
   // Check for first-time user
   useEffect(() => {
@@ -398,6 +401,14 @@ const AffirmationBuilder = () => {
         setLoadingProgress(100);
         setPreviewImagesB64(successfulImages);
         toast.success(`🎨 ${successfulImages.length} beautiful preview${successfulImages.length > 1 ? 's' : ''} ready! Pick your favorite to refine.`);
+
+        // Celebrate with confetti!
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#D4B896', '#8B7355', '#F5F1E8']
+        });
       } else {
         toast.error("We're having trouble creating your preview. This usually resolves quickly - try again?");
       }
@@ -594,6 +605,27 @@ const AffirmationBuilder = () => {
         }
         
         toast.success(`🎉 ${successfulImages.length} print-ready image${successfulImages.length > 1 ? 's' : ''} created! Download your favorite.`);
+
+        // Big celebration for final images!
+        const duration = 3000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors: ['#D4B896', '#8B7355', '#F5F1E8', '#3a2817'] };
+
+        function randomInRange(min: number, max: number) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval: any = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
       } else {
         console.error('No image data in responses');
         toast.error('Your affirmation is taking longer than expected. Want to try simpler settings or wait a bit?');
@@ -922,6 +954,65 @@ const AffirmationBuilder = () => {
               </DialogContent>
             </Dialog>
 
+            {/* Image Comparison Dialog */}
+            <Dialog open={showComparison} onOpenChange={setShowComparison}>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Compare Your Favorites</DialogTitle>
+                  <DialogDescription>
+                    View your selected previews side-by-side to pick the perfect one
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                  {selectedImages.map((imageIndex) => (
+                    <div key={imageIndex} className="space-y-2">
+                      <div className="relative rounded-lg overflow-hidden border-2 border-primary" style={{ aspectRatio: '4/5' }}>
+                        <img
+                          src={previewImagesB64[imageIndex]}
+                          alt={`Preview ${imageIndex + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded font-semibold text-sm">
+                          Option {imageIndex + 1}
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setExpandedImage({ url: previewImagesB64[imageIndex], type: 'preview' });
+                          setShowComparison(false);
+                        }}
+                        className="w-full"
+                      >
+                        View Full Size
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedImages([]);
+                      setShowComparison(false);
+                    }}
+                    className="flex-1"
+                  >
+                    Clear Selection
+                  </Button>
+                  <Button
+                    onClick={() => setShowComparison(false)}
+                    className="flex-1"
+                  >
+                    Done Comparing
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+
             {/* Loading Overlay with Progress */}
             {loading && loadingMessage && (
               <Card className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 mx-auto max-w-md shadow-2xl border-2 border-primary/20 animate-in fade-in-0 zoom-in-95">
@@ -1033,7 +1124,7 @@ const AffirmationBuilder = () => {
                     {staffPresets.map((preset) => (
                       <div
                         key={preset.name}
-                        className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:border-primary transition-all group"
+                        className="flex flex-col border rounded-lg overflow-hidden cursor-pointer hover:shadow-xl hover:scale-105 hover:border-primary transition-all duration-300 group"
                         onClick={async () => {
                           try {
                             // Fetch the image as a blob
@@ -1060,10 +1151,10 @@ const AffirmationBuilder = () => {
                         }}
                       >
                         <div className="aspect-square relative overflow-hidden">
-                          <img 
-                            src={preset.previewImage} 
+                          <img
+                            src={preset.previewImage}
                             alt={preset.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Download className="h-8 w-8 text-white" />
@@ -1234,7 +1325,7 @@ const AffirmationBuilder = () => {
                       <Button
                         onClick={handleGenerate}
                         variant="outline"
-                        className="h-11"
+                        className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         disabled={loading}
                       >
                         {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
@@ -1244,7 +1335,7 @@ const AffirmationBuilder = () => {
                       <Button
                         onClick={handleRandomize}
                         variant="secondary"
-                        className="h-11"
+                        className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         disabled={loading}
                       >
                         <Palette className="mr-2 h-4 w-4" />
@@ -1259,7 +1350,7 @@ const AffirmationBuilder = () => {
                   <div className="space-y-2">
                     <Button
                       onClick={handleGenerateUnique}
-                      className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold"
+                      className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
                       disabled={loading || previewImagesB64.length === 0}
                     >
                       {loading && generatedImageB64 === null && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
@@ -1437,23 +1528,49 @@ const AffirmationBuilder = () => {
                       {previewImagesB64.map((imageUrl, index) => (
                         <div
                           key={index}
-                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817]"
-                          onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
+                          className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                            selectedImages.includes(index) ? 'border-primary ring-2 ring-primary shadow-lg' : 'border-[#3a2817]'
+                          }`}
                           style={{ aspectRatio: '4/5' }}
                         >
                           <img
                             src={imageUrl}
                             alt={`Preview ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
                           />
                           <div className="absolute top-1 right-1 bg-muted text-muted-foreground px-1.5 py-0.5 rounded text-xs font-semibold">
                             Preview
                           </div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedImages(prev =>
+                                prev.includes(index)
+                                  ? prev.filter(i => i !== index)
+                                  : [...prev, index]
+                              );
+                            }}
+                            className="absolute top-1 left-1 w-6 h-6 rounded-full bg-background border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
+                          >
+                            {selectedImages.includes(index) && <Check className="h-4 w-4" />}
+                          </button>
                         </div>
                       ))}
                     </div>
+                    {selectedImages.length >= 2 && (
+                      <Button
+                        onClick={() => setShowComparison(true)}
+                        variant="outline"
+                        className="w-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      >
+                        Compare Selected ({selectedImages.length})
+                      </Button>
+                    )}
                     <p className="text-sm text-muted-foreground text-center">
-                      Preview quality. Click "Generate Final Images" for high-quality versions.
+                      {selectedImages.length > 0
+                        ? `Select 2 or more to compare • ${selectedImages.length} selected`
+                        : "Click checkboxes to select favorites for comparison"}
                     </p>
                   </div>
                 ) : (
@@ -1745,27 +1862,27 @@ const AffirmationBuilder = () => {
                     <Button
                       onClick={handleGenerate}
                       variant="outline"
-                      className="h-11"
+                      className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                       disabled={loading}
                     >
                       {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
                       See Previews
                     </Button>
-                    
-                    <Button 
+
+                    <Button
                       onClick={handleRandomize}
                       variant="secondary"
-                      className="h-11"
+                      className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                       disabled={loading}
                     >
                       <Palette className="mr-2 h-4 w-4" />
                       Randomize
                     </Button>
                   </div>
-                
+
                   <Button
                     onClick={handleGenerateUnique}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold"
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
                     disabled={loading}
                   >
                     {loading && finalImagesB64.length === 0 && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
@@ -1894,14 +2011,14 @@ const AffirmationBuilder = () => {
                       {finalImagesB64.map((imageUrl, index) => (
                         <div
                           key={index}
-                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-[#5a3817] transition-all hover:scale-105"
+                          className="relative group cursor-pointer rounded-lg overflow-hidden border-2 border-[#3a2817] hover:border-primary transition-all duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1"
                           onClick={() => setExpandedImage({ url: imageUrl, type: 'final' })}
                           style={{ aspectRatio: '4/5' }}
                         >
                           <img
                             src={imageUrl}
                             alt={`Final Affirmation ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
                             <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">View Full Size</span>
