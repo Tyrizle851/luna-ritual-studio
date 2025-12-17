@@ -33,6 +33,8 @@ import { GenerationControls } from "./AffirmationBuilder/components/GenerationCo
 import { ExpandedImageModal } from "./AffirmationBuilder/components/ExpandedImageModal";
 import { ImageGalleryGrid } from "./AffirmationBuilder/components/ImageGalleryGrid";
 import { StaticPreviewDisplay } from "./AffirmationBuilder/components/StaticPreviewDisplay";
+import { MobileSingleImageDisplay } from "./AffirmationBuilder/components/MobileSingleImageDisplay";
+import { MobilePreviewGrid } from "./AffirmationBuilder/components/MobilePreviewGrid";
 
 interface GeneratedData {
   headline: string;
@@ -482,125 +484,21 @@ const AffirmationBuilder = () => {
               </CardHeader>
               <CardContent>
                 {generatedImageB64 ? (
-                  <div className="space-y-4">
-                    <div className="rounded-lg overflow-hidden border">
-                      <img 
-                        src={generatedImageB64} 
-                        alt="Generated Affirmation" 
-                        className="w-full h-auto"
-                      />
-                    </div>
-                    
-                    {/* Image Info */}
-                    <div className="bg-muted/30 p-3 rounded-lg">
-                      <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div>
-                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Resolution</p>
-                          <p className="text-foreground text-sm font-medium">1024 x 1024px</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Aspect Ratio</p>
-                          <p className="text-foreground text-sm font-medium">1:1 (Square)</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-1 text-xs uppercase tracking-wide text-muted-foreground">Format</p>
-                        <p className="text-foreground text-sm font-medium">High Quality PNG</p>
-                      </div>
-                    </div>
-
-                    {/* Download & Shop Actions */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button className="w-full">
-                            <Download className="mr-2 h-4 w-4" />
-                            Download
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'original', 'final')}>
-                            Original Size
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'instagram-square', 'final')}>
-                            Instagram Square (1080x1080)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'instagram-story', 'final')}>
-                            Instagram Story (1080x1920)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'print-8x10', 'final')}>
-                            Print 8x10
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => generatedImageB64 && downloadImage(generatedImageB64, 'print-11x14', 'final')}>
-                            Print 11x14
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      
-                      <Button 
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => {
-                          window.open('/shop', '_blank');
-                          toast.success('Opening shop...');
-                        }}
-                      >
-                        <span className="mr-2">🛒</span>
-                        Shop Prints
-                      </Button>
-                    </div>
-                  </div>
+                  <MobileSingleImageDisplay imageUrl={generatedImageB64} />
                 ) : previewImagesB64.length > 0 ? (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
-                      {previewImagesB64.map((imageUrl, index) => (
-                        <div
-                          key={index}
-                          className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-                            selectedImages.includes(index) ? 'border-primary ring-2 ring-primary shadow-lg' : 'border-[#3a2817]'
-                          }`}
-                          style={{ aspectRatio: '4/5' }}
-                        >
-                          <img
-                            src={imageUrl}
-                            alt={`Preview ${index + 1}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            onClick={() => setExpandedImage({ url: imageUrl, type: 'preview' })}
-                          />
-                          <div className="absolute top-1 right-1 bg-muted text-muted-foreground px-1.5 py-0.5 rounded text-xs font-semibold">
-                            Preview
-                          </div>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedImages(prev =>
-                                prev.includes(index)
-                                  ? prev.filter(i => i !== index)
-                                  : [...prev, index]
-                              );
-                            }}
-                            className="absolute top-1 left-1 w-6 h-6 rounded-full bg-background border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
-                          >
-                            {selectedImages.includes(index) && <Check className="h-4 w-4" />}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    {selectedImages.length >= 2 && (
-                      <Button
-                        onClick={() => setShowComparison(true)}
-                        variant="outline"
-                        className="w-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                      >
-                        Compare Selected ({selectedImages.length})
-                      </Button>
-                    )}
-                    <p className="text-sm text-muted-foreground text-center">
-                      {selectedImages.length > 0
-                        ? `Select 2 or more to compare • ${selectedImages.length} selected`
-                        : "Click checkboxes to select favorites for comparison"}
-                    </p>
-                  </div>
+                  <MobilePreviewGrid
+                    images={previewImagesB64}
+                    selectedImages={selectedImages}
+                    onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
+                    onToggleSelection={(index) =>
+                      setSelectedImages(prev =>
+                        prev.includes(index)
+                          ? prev.filter(i => i !== index)
+                          : [...prev, index]
+                      )
+                    }
+                    onCompare={() => setShowComparison(true)}
+                  />
                 ) : (
                   <StaticPreviewDisplay
                     generatedData={generatedData}
