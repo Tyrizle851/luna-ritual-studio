@@ -26,6 +26,7 @@ import { OnboardingDialog } from "./AffirmationBuilder/components/OnboardingDial
 import { ComparisonDialog } from "./AffirmationBuilder/components/ComparisonDialog";
 import { StaffPresetGallery } from "./AffirmationBuilder/components/StaffPresetGallery";
 import { IntentionSelector } from "./AffirmationBuilder/components/IntentionSelector";
+import { GenerationControls } from "./AffirmationBuilder/components/GenerationControls";
 
 interface GeneratedData {
   headline: string;
@@ -642,65 +643,16 @@ const AffirmationBuilder = () => {
                 />
 
                 {/* Action Buttons */}
-                <div className="space-y-3 pt-4">
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-3">
-                      <Button
-                        onClick={handleGenerate}
-                        variant="outline"
-                        className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                        disabled={loading}
-                      >
-                        {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                        See Previews
-                      </Button>
-
-                      <Button
-                        onClick={handleRandomize}
-                        variant="secondary"
-                        className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                        disabled={loading}
-                      >
-                        <Palette className="mr-2 h-4 w-4" />
-                        Randomize
-                      </Button>
-                    </div>
-                    <p className="text-xs text-muted-foreground text-center">
-                      Preview first to explore options (~30 seconds)
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Button
-                      onClick={handleGenerateUnique}
-                      className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                      disabled={loading || previewImagesB64.length === 0}
-                    >
-                      {loading && generatedImageB64 === null && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      Create Print-Quality
-                    </Button>
-                    <p className="text-xs text-muted-foreground text-center">
-                      {previewImagesB64.length === 0
-                        ? "Generate previews first to unlock print-quality creation"
-                        : "Creates 4 high-resolution versions perfect for printing (~60 sec)"}
-                    </p>
-                  </div>
-
-                  {/* Social Proof */}
-                  <div className="pt-4 mt-4 border-t border-border/40 space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <span className="text-amber-500">★★★★★</span>
-                        <span className="font-medium text-foreground">4.9/5</span>
-                      </div>
-                      <span>•</span>
-                      <span>1,200+ affirmations created this week</span>
-                    </div>
-                    <p className="text-xs text-center text-muted-foreground italic">
-                      "Finally, affirmations that match my vibe!" - Sarah M.
-                    </p>
-                  </div>
-                </div>
+                <GenerationControls
+                  loading={loading}
+                  generatedImageB64={generatedImageB64}
+                  previewImagesB64={previewImagesB64}
+                  finalImagesB64={finalImagesB64}
+                  handleGenerate={handleGenerate}
+                  handleRandomize={handleRandomize}
+                  handleGenerateUnique={handleGenerateUnique}
+                  showHelpText={true}
+                />
               </CardContent>
             </Card>
             </div>
@@ -1060,53 +1012,16 @@ const AffirmationBuilder = () => {
                 />
 
                 {/* Action Buttons */}
-                <div className="space-y-3 pt-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button
-                      onClick={handleGenerate}
-                      variant="outline"
-                      className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                      disabled={loading}
-                    >
-                      {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      See Previews
-                    </Button>
-
-                    <Button
-                      onClick={handleRandomize}
-                      variant="secondary"
-                      className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                      disabled={loading}
-                    >
-                      <Palette className="mr-2 h-4 w-4" />
-                      Randomize
-                    </Button>
-                  </div>
-
-                  <Button
-                    onClick={handleGenerateUnique}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    disabled={loading}
-                  >
-                    {loading && finalImagesB64.length === 0 && previewImagesB64.length > 0 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Create Print-Quality
-                  </Button>
-
-                  {/* Social Proof */}
-                  <div className="pt-4 mt-4 border-t border-border/40 space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <span className="text-amber-500">★★★★★</span>
-                        <span className="font-medium text-foreground">4.9/5</span>
-                      </div>
-                      <span>•</span>
-                      <span>1,200+ created this week</span>
-                    </div>
-                    <p className="text-xs text-center text-muted-foreground italic">
-                      "Love the watercolor aesthetic!" - Emma K.
-                    </p>
-                  </div>
-                </div>
+                <GenerationControls
+                  loading={loading}
+                  generatedImageB64={generatedImageB64}
+                  previewImagesB64={previewImagesB64}
+                  finalImagesB64={finalImagesB64}
+                  handleGenerate={handleGenerate}
+                  handleRandomize={handleRandomize}
+                  handleGenerateUnique={handleGenerateUnique}
+                  showHelpText={false}
+                />
               </CardContent>
             </Card>
 
