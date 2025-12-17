@@ -183,61 +183,158 @@ function buildWatercolorPrompt(spec: DesignSpec): string {
   // Use palette colors
   const colorPalette = spec.paletteToken.hex.join(', ');
 
-  return `Create an elegant watercolor affirmation design with premium gallery-quality:
+  return `Create a PRINT-QUALITY watercolor affirmation design for professional 8×10" printing:
 
-AFFIRMATION TEXT (primary focus):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          TEXT (CRITICAL PRIORITY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 "${spec.mainAffirmation}"
 
-AESTHETIC STYLE:
-- Watercolor painting aesthetic with soft, organic washes
-- Hand-painted feel with flowing, natural elements
-- ${themeAesthetic}
-- Sophisticated and gallery-worthy quality
-- Modern minimalist meets organic artistry
+TYPOGRAPHY REQUIREMENTS:
+• Font: ${spec.typography.headline} (or similar high-end editorial serif)
+• Reference fonts: Cormorant Garamond, Playfair Display, Freight Display
+• Size: Large enough to read from 3 feet away when printed 8×10"
+• Text color: ${spec.paletteToken.hex[0]} or deep warm brown (#3A2817)
+• Letter-spacing: Slightly loose for elegance (+0.02em to +0.05em)
+• Line height: 1.4-1.6 for multi-word phrases
+• Alignment: Optically centered (accounting for visual weight, not just mathematical center)
+• Text must be RAZOR SHARP and PERFECTLY READABLE - this is non-negotiable
+• NO artistic distortion, warping, or perspective effects on letters
+• Text occupies 25-40% of vertical space with generous margins
 
-COMPOSITION:
-- Portrait orientation with 4:5 aspect ratio (2400×3000 pixels)
-- Suitable for 8×10" professional printing at 300 DPI
-- Centered text with generous breathing room
-- Elegant serif typography, well-spaced and highly readable
-- Single affirmation text only (focus on main message)
-- Layout style: ${spec.layoutArchetype}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        AESTHETIC & BRAND MOOD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-VISUAL ELEMENTS:
-- Soft watercolor background washes in theme colors
-- Organic flowing lines that add graceful movement
-- Subtle botanical shadows or abstract organic shapes
-- Hand-drawn quality with natural imperfections
-- Accent elements: ${spec.accentSet.slice(0, 3).join(', ')}
+Theme Energy: ${themeAesthetic}
+Layout Style: ${spec.layoutArchetype}
 
-COLOR PALETTE:
-Use these colors: ${colorPalette}
-- Soft, muted earth tones (creams, beiges, soft browns)
-- Watercolor transparency and layering effects
-- High contrast between text and background for readability
-- Natural, organic color harmonies
+Brand References (Luna Rituals Aesthetic):
+• Anthropologie home décor section - organic, feminine, curated
+• Rifle Paper Co. - editorial watercolor with restraint
+• Modern wellness studios - serene, upscale, Instagram-worthy
+• Artisan paper goods shops - handcrafted quality, attention to detail
+• High-end yoga studios - peaceful, sophisticated, intentional
 
-ARTISTIC QUALITY:
-- Professional, print-ready quality at 300 DPI
-- Clean, uncluttered composition with emphasis on negative space
-- Timeless and sophisticated aesthetic
-- No harsh digital effects or gradients
-- No overcrowding - prioritize breathing room
-- Gallery-quality finish
+Quality Bar: This should look like a $45-65 art print from a boutique gallery
 
-TYPOGRAPHY:
-- Font style: ${spec.typography.headline}
-- Large, elegant, well-spaced letters
-- Professional serif or elegant sans-serif
-- High readability and sophistication
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       WATERCOLOR PAINTING TECHNIQUE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TECHNICAL SPECIFICATIONS:
-- Dimensions: 2400×3000 pixels (8×10" at 300 DPI)
-- 4:5 portrait aspect ratio
-- Print-ready quality
-- Professional typography
-- Gallery-quality finish
-- Suitable for framing and professional printing
+Render as if hand-painted by a professional watercolor artist on 300gsm cotton paper:
 
-Create a design that feels handcrafted, peaceful, and professionally refined - like something you'd find in a high-end boutique or art gallery.`;
+• Wet-on-wet technique: soft bleeding, natural pigment diffusion
+• Layered washes: transparent overlays creating depth (NOT flat color fills)
+• Organic edges: irregular, feathered boundaries (no hard vector lines)
+• Natural imperfections: granulation, blooms, subtle color pooling
+• Paper texture: visible tooth of cold-press watercolor paper
+• Pigment behavior: authentic watercolor physics (settles in paper grain)
+• Brush quality: visible subtle brushstrokes, NOT digital airbrush smoothness
+
+IMPORTANT: Should look indistinguishable from a scanned original watercolor painting
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      COMPOSITION & SPATIAL LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dimensions: 2400×3000 pixels (8×10" at 300 DPI)
+Aspect Ratio: Exactly 4:5 portrait
+Print Safe Area: Keep all important elements 0.25" from edges
+
+Layout Principles:
+• Golden ratio composition (1.618:1 spatial division)
+• Text positioned in upper or middle third (rule of thirds)
+• 60-75% negative space (breathing room is ESSENTIAL)
+• Visual weight: Heavier decorative elements at bottom
+• Asymmetric balance for organic feel (not rigidly centered)
+• No borders, frames, or confining rectangles - let design breathe
+• Elements flow naturally, guiding eye to text
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          COLOR PALETTE (EXACT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User-Selected Colors: ${colorPalette}
+Accent Elements: ${spec.accentSet.slice(0, 2).join(', ')}
+
+Application Guidelines:
+• Background: Soft cream/warm white (#FAF7F2 to #F5EFE7) - 70% of design
+• Primary watercolor: Use 1-2 colors from palette as main washes
+• Accent touches: Subtle hints of complementary tones
+• Text color: Ensure 7:1 contrast ratio with background (WCAG AAA)
+• Saturation: Keep muted and sophisticated (60-75% desaturated from pure hues)
+• Color harmony: Analogous or monochromatic schemes only
+• NO pure white, pure black, or highly saturated colors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   VISUAL ELEMENTS (Minimal & Refined)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Select ONE primary approach (don't mix):
+
+Option A - Abstract Watercolor Washes:
+• Organic, asymmetric shapes flowing from one corner
+• Transparent layers creating subtle depth
+• Occupy 15-25% of composition (background element only)
+
+Option B - Botanical Elements:
+• Delicate stem or leaf silhouettes (minimalist line drawings)
+• Subtle watercolor shadows behind botanical forms
+• Monochromatic or single accent color
+• Small scale, positioned to frame text without touching it
+
+Option C - Flowing Gestural Lines:
+• Calligraphic brushstrokes suggesting movement
+• Thin, elegant lines in muted accent color
+• Abstract and non-literal (no recognizable shapes)
+
+All elements must:
+• Stay BEHIND or BESIDE text (never overlapping letters)
+• Be understated - text is the hero
+• Have soft, watercolor-quality edges (no vector crispness)
+• Complement theme without being literal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        STRICT AVOIDANCE LIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT INCLUDE:
+✗ Clipart, icons, or stock imagery
+✗ Perfect geometric shapes (circles, triangles, grids)
+✗ Digital effects (drop shadows, glows, bevels, filters)
+✗ Multiple fonts or decorative scripts
+✗ Small text, subheadings, or additional copy
+✗ Busy patterns that compete with main text
+✗ Artificial gradients or Photoshop-style color transitions
+✗ Photo-realistic elements or 3D rendering
+✗ Borders, corner flourishes, or ornamental frames
+✗ Text on curved paths or with perspective distortion
+✗ Oversized design elements that dwarf the text
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         PRINT QUALITY STANDARDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Technical Output:
+• Resolution: 300 DPI (print-ready)
+• Dimensions: 2400×3000 pixels exact
+• Color space: RGB (will be converted to CMYK for print)
+• Text rendering: Crisp, anti-aliased, professional-grade
+• File quality: No compression artifacts or pixelation
+• Sharpness: Text edges must be clean when printed actual size
+
+Quality Benchmark - Should Match:
+• A professionally printed art piece from Minted or Artifact Uprising
+• Editorial design from Kinfolk or Cereal magazine
+• Boutique wedding stationery ($8-12 per card quality level)
+• Museum gift shop art prints ($40-60 price point)
+• Something a professional interior designer would specify for a client
+
+Final Check: Would this look professionally printed and worth framing in a $3000+ home?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Output: 2400×3000px, 4:5 portrait, 300 DPI print-ready, gallery-quality watercolor design`;
 }
