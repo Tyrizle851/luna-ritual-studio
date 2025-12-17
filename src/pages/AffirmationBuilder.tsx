@@ -19,7 +19,6 @@ const focusFlowImg = LOCAL_DIGITAL_IMAGES["aff-004"];
 const miraclesPreviewImg = LOCAL_DIGITAL_IMAGES["aff-017"]; // "I am open to miracles" preview
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { buildDesignSpec } from "@/lib/designSpecBuilder";
 import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
@@ -99,10 +98,19 @@ const AffirmationBuilder = () => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showGallery, setShowGallery] = useState(false);
-  const [activeTab, setActiveTab] = useState("create");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check for first-time user
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('affirmation-builder-visited');
+    if (!hasVisited) {
+      setShowOnboarding(true);
+      localStorage.setItem('affirmation-builder-visited', 'true');
+    }
+  }, []);
 
   // Staff Picks Presets
   const staffPresets: StaffPreset[] = [
@@ -822,6 +830,98 @@ const AffirmationBuilder = () => {
               </div>
             </div>
 
+            {/* Onboarding Dialog for First-Time Users */}
+            <Dialog open={showOnboarding} onOpenChange={setShowOnboarding}>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl flex items-center gap-2">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                    Welcome to Affirmation Studio!
+                  </DialogTitle>
+                  <DialogDescription className="text-base pt-2">
+                    Create personalized watercolor affirmations in 3 easy steps
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-6 py-4">
+                  {/* Step 1 */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-lg font-semibold text-primary">1</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-1">Choose Your Theme</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Select a theme that matches your intention (Confidence, Peace, Focus, etc.)
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-lg font-semibold text-primary">2</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-1">Preview Options</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Generate 4 quick previews (~30 sec) to explore different styles
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-lg font-semibold text-primary">3</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-1">Create Print-Quality</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Generate 4 high-resolution versions (300 DPI) perfect for printing
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Quick Tip */}
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <Sparkles className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-semibold text-sm text-foreground mb-1">Quick Tip</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Try our Quick Start Templates below for instant inspiration!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowOnboarding(false)}
+                    className="flex-1"
+                  >
+                    Skip
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setShowOnboarding(false);
+                      // Scroll to templates
+                      setTimeout(() => {
+                        const templates = document.querySelector('[class*="Quick Start"]');
+                        templates?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 100);
+                    }}
+                    className="flex-1"
+                  >
+                    Get Started
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+
             {/* Loading Overlay with Progress */}
             {loading && loadingMessage && (
               <Card className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 mx-auto max-w-md shadow-2xl border-2 border-primary/20 animate-in fade-in-0 zoom-in-95">
@@ -979,15 +1079,10 @@ const AffirmationBuilder = () => {
                 </CardContent>
             </Card>
 
-          {/* Mobile: Tabs, Desktop: Two Columns */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="lg:hidden">
-            <TabsList className="grid w-full grid-cols-2 mb-4 sticky top-0 z-10 bg-background">
-              <TabsTrigger value="create">Create</TabsTrigger>
-              <TabsTrigger value="preview">Preview</TabsTrigger>
-            </TabsList>
-
-            {/* Mobile Create Tab */}
-            <TabsContent value="create">
+          {/* Mobile: Single Scroll Layout (No Tabs) */}
+          <div className="lg:hidden space-y-6">
+            {/* Mobile Create Section */}
+            <div>
               <Card className="bg-card">
               <CardHeader>
                 <CardTitle>Set Your Intention</CardTitle>
@@ -1137,10 +1232,7 @@ const AffirmationBuilder = () => {
                   <div className="space-y-2">
                     <div className="grid grid-cols-2 gap-3">
                       <Button
-                        onClick={() => {
-                          handleGenerate();
-                          setActiveTab("preview");
-                        }}
+                        onClick={handleGenerate}
                         variant="outline"
                         className="h-11"
                         disabled={loading}
@@ -1197,10 +1289,10 @@ const AffirmationBuilder = () => {
                 </div>
               </CardContent>
             </Card>
-            </TabsContent>
+            </div>
 
-            {/* Mobile Preview Tab */}
-            <TabsContent value="preview">
+            {/* Mobile Preview Section */}
+            <div>
 
               <Card className="bg-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
@@ -1497,8 +1589,8 @@ const AffirmationBuilder = () => {
                 )}
               </CardContent>
             </Card>
-            </TabsContent>
-          </Tabs>
+            </div>
+          </div>
 
           {/* Desktop: Two Column Layout (unchanged) */}
           <div className="hidden lg:grid grid-cols-2 gap-8">
