@@ -511,72 +511,15 @@ const AffirmationBuilder = () => {
 
             {/* Right Column: Preview (Desktop) */}
             <Card className="bg-card">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-                <div>
-                  <CardTitle>Preview</CardTitle>
-                  <CardDescription>Generated affirmation design</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                  {!isEditing && (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={toggleFavorite}
-                        className={isFavorite ? "text-red-500" : ""}
-                      >
-                        <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={startEditing}
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </Button>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="icon">
-                            <Share2 className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
-                            Share to X/Twitter
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
-                            Share to Facebook
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareToSocial('pinterest')}>
-                            Pin to Pinterest
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareToSocial('copy')}>
-                            Copy Caption
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </>
-                  )}
-                  {isEditing && (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={saveEdits}
-                      >
-                        <Check className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={cancelEdits}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </CardHeader>
+              <PreviewCardHeader
+                isEditing={isEditing}
+                isFavorite={isFavorite}
+                onToggleFavorite={toggleFavorite}
+                onStartEditing={startEditing}
+                onSaveEdits={saveEdits}
+                onCancelEdits={cancelEdits}
+                onShareToSocial={shareToSocial}
+              />
               <CardContent>
                 {/* View Toggle Buttons - Show when both preview and final exist */}
                 {previewImagesB64.length > 0 && finalImagesB64.length > 0 && (
