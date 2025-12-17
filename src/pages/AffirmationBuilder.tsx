@@ -30,6 +30,7 @@ import { IntentionSelector } from "./AffirmationBuilder/components/IntentionSele
 import { GenerationControls } from "./AffirmationBuilder/components/GenerationControls";
 import { ExpandedImageModal } from "./AffirmationBuilder/components/ExpandedImageModal";
 import { ImageGalleryGrid } from "./AffirmationBuilder/components/ImageGalleryGrid";
+import { StaticPreviewDisplay } from "./AffirmationBuilder/components/StaticPreviewDisplay";
 
 interface GeneratedData {
   headline: string;
@@ -835,135 +836,24 @@ const AffirmationBuilder = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    <div className="bg-gradient-to-br from-background to-muted/20 p-6 rounded-lg border-2 border-muted min-h-[400px] flex flex-col justify-between relative overflow-hidden">
-                      {/* Decorative corner elements */}
-                      <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-muted-foreground/30"></div>
-                      <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-muted-foreground/30"></div>
-                      <div className="absolute bottom-4 left-4 w-16 h-16 border-l-2 border-b-2 border-muted-foreground/30"></div>
-                      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-muted-foreground/30"></div>
-                      
-                      {/* Additional decorative elements */}
-                      <div className="absolute top-1/4 left-8 w-8 h-8 rounded-full border border-muted-foreground/20"></div>
-                      <div className="absolute bottom-1/4 right-8 w-6 h-6 rounded-full border border-muted-foreground/20"></div>
-                      <div className="absolute top-1/3 right-12 w-1 h-16 bg-gradient-to-b from-muted-foreground/20 to-transparent"></div>
-                      <div className="absolute bottom-1/3 left-12 w-1 h-16 bg-gradient-to-t from-muted-foreground/20 to-transparent"></div>
-                      
-                      {/* Top section */}
-                      <div className="relative z-10">
-                        <div className="flex justify-center mb-3">
-                          <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
-                        </div>
-                        {isEditing ? (
-                          <Input
-                            value={editedHeadline}
-                            onChange={(e) => setEditedHeadline(e.target.value.toUpperCase())}
-                            className="font-display text-2xl md:text-5xl text-center mb-2 tracking-wider uppercase bg-transparent border-2 border-dashed"
-                            style={{ color: generatedData.palette[1] || '#c9a961' }}
-                          />
-                        ) : (
-                          <h3 className="font-display text-2xl md:text-5xl text-center mb-2 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
-                            {generatedData.headline}
-                          </h3>
-                        )}
-                        <div className="flex justify-center mb-4">
-                          <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Middle section with supporting lines */}
-                      <div className="relative z-10 space-y-3 mb-4">
-                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 4).map((line, i) => (
-                          <div key={i} className="flex items-center justify-center gap-2">
-                            {i % 2 === 0 && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
-                            {isEditing ? (
-                              <Input
-                                value={line}
-                                onChange={(e) => {
-                                  const newLines = [...editedLines];
-                                  newLines[i] = e.target.value;
-                                  setEditedLines(newLines);
-                                }}
-                                className="text-center leading-relaxed text-sm md:text-lg bg-transparent border border-dashed"
-                                style={{ 
-                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
-                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                                  fontWeight: i % 2 === 0 ? '600' : '400'
-                                }}
-                              />
-                            ) : (
-                              <p 
-                                className="text-center leading-relaxed text-sm md:text-lg"
-                                style={{ 
-                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
-                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                                  fontWeight: i % 2 === 0 ? '600' : '400'
-                                }}
-                              >
-                                {line}
-                              </p>
-                            )}
-                            {i % 2 === 1 && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
-                          </div>
-                        ))}
-                      </div>
-                      
-                      {/* Bottom decorative line */}
-                      <div className="relative z-10">
-                        <div className="flex justify-center items-center gap-2">
-                          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-muted-foreground/30"></div>
-                          <div className="w-3 h-3 rotate-45 border border-muted-foreground/30"></div>
-                          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-muted-foreground/30"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <div className="grid grid-cols-3 gap-3 mb-3">
-                          <div>
-                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
-                            <p className="text-foreground text-xs font-medium capitalize">{theme}</p>
-                          </div>
-                          <div>
-                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
-                            <p className="text-foreground text-xs font-medium capitalize">{mood}</p>
-                          </div>
-                          <div>
-                            <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
-                            <p className="text-foreground text-xs font-medium capitalize">{layoutStyle || 'Auto'}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <div className="mb-2">
-                          <p className="font-semibold mb-1.5 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Palette</p>
-                          <div className="flex gap-1.5 flex-wrap">
-                            {generatedData.palette.map((color, i) => (
-                              <div key={i} className="flex items-center gap-1.5">
-                                <div className="w-5 h-5 rounded border border-muted" style={{ backgroundColor: color }}></div>
-                                <span className="text-[10px] text-muted-foreground">{color}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Accents</p>
-                          <p className="text-muted-foreground text-[10px] leading-relaxed">{generatedData.accentElements}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button 
-                      onClick={handleGenerateUnique}
-                      className="w-full h-11 bg-primary hover:bg-primary/90"
-                      disabled={loading}
-                    >
-                      {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      Generate Unique Image
-                    </Button>
-                  </div>
+                  <StaticPreviewDisplay
+                    generatedData={generatedData}
+                    theme={theme}
+                    mood={mood}
+                    layoutStyle={layoutStyle}
+                    isEditing={isEditing}
+                    editedHeadline={editedHeadline}
+                    editedLines={editedLines}
+                    onHeadlineChange={setEditedHeadline}
+                    onLineChange={(index, value) => {
+                      const newLines = [...editedLines];
+                      newLines[index] = value;
+                      setEditedLines(newLines);
+                    }}
+                    loading={loading}
+                    onGenerate={handleGenerateUnique}
+                    isMobile={true}
+                  />
                 )}
               </CardContent>
             </Card>
@@ -1122,124 +1012,24 @@ const AffirmationBuilder = () => {
 
                 {/* Static Preview when no images */}
                 {previewImagesB64.length === 0 && finalImagesB64.length === 0 && (
-                  <div className="space-y-6">
-                    <div className="bg-gradient-to-br from-background to-muted/20 p-12 rounded-lg border-2 border-muted min-h-[600px] flex flex-col justify-between relative overflow-hidden">
-                      {/* Decorative corner elements */}
-                      <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-muted-foreground/30"></div>
-                      <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-muted-foreground/30"></div>
-                      <div className="absolute bottom-4 left-4 w-16 h-16 border-l-2 border-b-2 border-muted-foreground/30"></div>
-                      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-muted-foreground/30"></div>
-                      
-                      {/* Additional decorative elements */}
-                      <div className="absolute top-1/4 left-8 w-8 h-8 rounded-full border border-muted-foreground/20"></div>
-                      <div className="absolute bottom-1/4 right-8 w-6 h-6 rounded-full border border-muted-foreground/20"></div>
-                      <div className="absolute top-1/3 right-12 w-1 h-16 bg-gradient-to-b from-muted-foreground/20 to-transparent"></div>
-                      <div className="absolute bottom-1/3 left-12 w-1 h-16 bg-gradient-to-t from-muted-foreground/20 to-transparent"></div>
-                      
-                      {/* Top section */}
-                      <div className="relative z-10">
-                        <div className="flex justify-center mb-3">
-                          <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
-                        </div>
-                        {isEditing ? (
-                          <Input
-                            value={editedHeadline}
-                            onChange={(e) => setEditedHeadline(e.target.value.toUpperCase())}
-                            className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase bg-transparent border-2 border-dashed"
-                            style={{ color: generatedData.palette[1] || '#c9a961' }}
-                          />
-                        ) : (
-                          <h3 className="font-display text-4xl md:text-5xl text-center mb-3 tracking-wider uppercase" style={{ color: generatedData.palette[1] || '#c9a961' }}>
-                            {generatedData.headline}
-                          </h3>
-                        )}
-                        <div className="flex justify-center mb-8">
-                          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/40 to-transparent"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Middle section with supporting lines */}
-                      <div className="relative z-10 space-y-5 mb-8">
-                        {(isEditing ? editedLines : generatedData.supportingLines).slice(0, 6).map((line, i) => (
-                          <div key={i} className="flex items-center justify-center gap-3">
-                            {i % 2 === 0 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[0] || '#8b8b8b' }}></div>}
-                            {isEditing ? (
-                              <Input
-                                value={line}
-                                onChange={(e) => {
-                                  const newLines = [...editedLines];
-                                  newLines[i] = e.target.value;
-                                  setEditedLines(newLines);
-                                }}
-                                className="text-center leading-relaxed text-base md:text-lg bg-transparent border border-dashed"
-                                style={{ 
-                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
-                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                                  fontWeight: i % 2 === 0 ? '600' : '400'
-                                }}
-                              />
-                            ) : (
-                              <p 
-                                className="text-center leading-relaxed text-base md:text-lg"
-                                style={{ 
-                                  color: generatedData.palette[i % generatedData.palette.length] || '#2c2c2c',
-                                  fontStyle: i % 2 === 1 ? 'italic' : 'normal',
-                                  fontWeight: i % 2 === 0 ? '600' : '400'
-                                }}
-                              >
-                                {line}
-                              </p>
-                            )}
-                            {i % 2 === 1 && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: generatedData.palette[1] || '#c9a961' }}></div>}
-                          </div>
-                        ))}
-                      </div>
-                      
-                      {/* Bottom decorative line */}
-                      <div className="relative z-10">
-                        <div className="flex justify-center items-center gap-2">
-                          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-muted-foreground/30"></div>
-                          <div className="w-3 h-3 rotate-45 border border-muted-foreground/30"></div>
-                          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-muted-foreground/30"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{theme}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{mood}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
-                          <p className="text-foreground text-sm font-medium capitalize">{layoutStyle || 'Auto'}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-3 bg-muted/30 p-4 rounded-lg">
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Palette</p>
-                          <div className="flex gap-2 flex-wrap">
-                            {generatedData.palette.map((color, i) => (
-                              <div key={i} className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded border border-muted" style={{ backgroundColor: color }}></div>
-                                <span className="text-xs text-muted-foreground">{color}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Accents</p>
-                          <p className="text-muted-foreground text-xs leading-relaxed">{generatedData.accentElements}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <StaticPreviewDisplay
+                    generatedData={generatedData}
+                    theme={theme}
+                    mood={mood}
+                    layoutStyle={layoutStyle}
+                    isEditing={isEditing}
+                    editedHeadline={editedHeadline}
+                    editedLines={editedLines}
+                    onHeadlineChange={setEditedHeadline}
+                    onLineChange={(index, value) => {
+                      const newLines = [...editedLines];
+                      newLines[index] = value;
+                      setEditedLines(newLines);
+                    }}
+                    loading={loading}
+                    onGenerate={handleGenerateUnique}
+                    isMobile={false}
+                  />
                 )}
               </CardContent>
             </Card>
