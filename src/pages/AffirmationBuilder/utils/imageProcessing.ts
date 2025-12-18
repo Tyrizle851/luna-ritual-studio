@@ -111,7 +111,7 @@ export function base64ToBlob(base64: string, contentType = 'image/png'): Blob {
     byteArrays.push(byteArray);
   }
 
-  return new Blob(byteArrays, { type: contentType });
+  return new Blob(byteArrays as BlobPart[], { type: contentType });
 }
 
 /**
