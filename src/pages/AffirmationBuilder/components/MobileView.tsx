@@ -5,11 +5,6 @@ import { PreviewCardHeader } from './PreviewCardHeader';
 import { MobileSingleImageDisplay } from './MobileSingleImageDisplay';
 import { MobilePreviewGrid } from './MobilePreviewGrid';
 import { StaticPreviewDisplay } from './StaticPreviewDisplay';
-import { ShimmerLoading } from './ShimmerLoading';
-import { LOCAL_DIGITAL_IMAGES } from '@/lib/localDigitalImages';
-
-// Initial placeholder image shown on first load
-const miraclesPreviewImg = LOCAL_DIGITAL_IMAGES["aff-017"]; // "I am open to miracles"
 
 interface GeneratedData {
   headline: string;
@@ -128,20 +123,8 @@ export function MobileView({
             onShareToSocial={shareToSocial}
           />
           <CardContent>
-            {loading ? (
-              // ✅ Show premium shimmer loading state while generating
-              <ShimmerLoading message="Creating your affirmation..." />
-            ) : generatedImageB64 ? (
+            {generatedImageB64 ? (
               <MobileSingleImageDisplay imageUrl={generatedImageB64} />
-            ) : previewImagesB64.length === 1 && previewImagesB64[0] === miraclesPreviewImg ? (
-              // ✅ FIX: Show initial placeholder as full-width hero image (not in grid)
-              <div className="w-full aspect-[4/5] rounded-lg overflow-hidden">
-                <img
-                  src={previewImagesB64[0]}
-                  alt="Example preview - I am open to miracles"
-                  className="w-full h-full object-cover"
-                />
-              </div>
             ) : previewImagesB64.length > 0 ? (
               <MobilePreviewGrid
                 images={previewImagesB64}

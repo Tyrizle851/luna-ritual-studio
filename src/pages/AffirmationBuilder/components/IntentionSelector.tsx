@@ -83,44 +83,26 @@ export function IntentionSelector({
         </Select>
       </div>
 
-      {/* Mood Selection - Updated with Luna Signature + Exploratory */}
+      {/* Mood Selection */}
       <div className="space-y-2">
-        <Label htmlFor={`mood${idSuffix}`} className="flex items-center gap-2">
-          Style
-          <span className="text-xs text-muted-foreground">(Visual aesthetic)</span>
-        </Label>
+        <Label htmlFor={`mood${idSuffix}`}>Mood</Label>
         <Select value={mood} onValueChange={setMood}>
           <SelectTrigger id={`mood${idSuffix}`}>
-            <SelectValue placeholder="Choose your style" />
+            <SelectValue />
           </SelectTrigger>
-          <SelectContent className="max-h-[400px]">
-            {/* Luna Signature Styles */}
-            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
-              ✨ Luna Signature Styles
-            </div>
-            <SelectItem value="soft-watercolor">🌊 Soft Watercolor</SelectItem>
-            <SelectItem value="flowing-waves">〰️ Flowing Waves</SelectItem>
-            <SelectItem value="radiant-burst">☀️ Radiant Burst</SelectItem>
-            <SelectItem value="layered-serenity">🏜️ Layered Serenity</SelectItem>
-            <SelectItem value="botanical-whisper">🌿 Botanical Whisper</SelectItem>
-            <SelectItem value="golden-glow">✨ Golden Glow</SelectItem>
-            <SelectItem value="celestial-light">🌙 Celestial Light</SelectItem>
-
-            {/* Divider */}
-            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t mt-2 pt-3">
-              🎨 Exploratory Styles
-            </div>
-            <SelectItem value="zen-minimal">⚪ Zen Minimal</SelectItem>
-            <SelectItem value="cool-serenity">💙 Cool Serenity</SelectItem>
-            <SelectItem value="geometric-structure">▢ Geometric Structure</SelectItem>
-            <SelectItem value="bold-modern">💪 Bold Modern</SelectItem>
-            <SelectItem value="vibrant-energy">⚡ Vibrant Energy</SelectItem>
-            <SelectItem value="mystical-deep">🌌 Mystical Deep</SelectItem>
+          <SelectContent>
+            <SelectItem value="minimalist">Minimalist</SelectItem>
+            <SelectItem value="bohemian">Bohemian</SelectItem>
+            <SelectItem value="modern-serif">Modern Serif</SelectItem>
+            <SelectItem value="coastal">Coastal</SelectItem>
+            <SelectItem value="earthy">Earthy</SelectItem>
+            <SelectItem value="vibrant">Vibrant</SelectItem>
+            <SelectItem value="pastel">Pastel</SelectItem>
+            <SelectItem value="monochrome">Monochrome</SelectItem>
+            <SelectItem value="sunset">Sunset</SelectItem>
+            <SelectItem value="forest">Forest</SelectItem>
           </SelectContent>
         </Select>
-        <p className="text-xs text-muted-foreground">
-          Luna Signature styles match our gallery. Exploratory styles offer more variety.
-        </p>
       </div>
 
       {/* Advanced Options - Collapsible */}

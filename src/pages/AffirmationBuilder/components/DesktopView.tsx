@@ -5,11 +5,6 @@ import { GenerationControls } from './GenerationControls';
 import { PreviewCardHeader } from './PreviewCardHeader';
 import { ImageGalleryGrid } from './ImageGalleryGrid';
 import { StaticPreviewDisplay } from './StaticPreviewDisplay';
-import { ShimmerLoading } from './ShimmerLoading';
-import { LOCAL_DIGITAL_IMAGES } from '@/lib/localDigitalImages';
-
-// Initial placeholder image shown on first load
-const miraclesPreviewImg = LOCAL_DIGITAL_IMAGES["aff-017"]; // "I am open to miracles"
 
 interface GeneratedData {
   headline: string;
@@ -125,90 +120,66 @@ export function DesktopView({
           onShareToSocial={shareToSocial}
         />
         <CardContent>
-          {loading ? (
-            // ✅ Show premium shimmer loading state while generating
-            <ShimmerLoading message="Creating your affirmation..." />
-          ) : (
-            <>
-              {/* View Toggle Buttons - Show when both preview and final exist */}
-              {previewImagesB64.length > 0 && finalImagesB64.length > 0 && (
-                <div className="flex gap-2 mb-6">
-                  <Button
-                    variant={viewMode === 'preview' ? 'default' : 'outline'}
-                    className="flex-1"
-                    onClick={() => setViewMode('preview')}
-                  >
-                    Preview Images
-                  </Button>
-                  <Button
-                    variant={viewMode === 'final' ? 'default' : 'outline'}
-                    className="flex-1"
-                    onClick={() => setViewMode('final')}
-                  >
-                    Final Images
-                  </Button>
-                </div>
-              )}
+          {/* View Toggle Buttons - Show when both preview and final exist */}
+          {previewImagesB64.length > 0 && finalImagesB64.length > 0 && (
+            <div className="flex gap-2 mb-6">
+              <Button
+                variant={viewMode === 'preview' ? 'default' : 'outline'}
+                className="flex-1"
+                onClick={() => setViewMode('preview')}
+              >
+                Preview Images
+              </Button>
+              <Button
+                variant={viewMode === 'final' ? 'default' : 'outline'}
+                className="flex-1"
+                onClick={() => setViewMode('final')}
+              >
+                Final Images
+              </Button>
+            </div>
+          )}
 
-              {/* Final Images Section - Only show when in final view mode */}
-              {viewMode === 'final' && (
-                <ImageGalleryGrid
-                  images={finalImagesB64}
-                  type="final"
-                  onImageClick={(url) => setExpandedImage({ url, type: 'final' })}
-                  showShopButton={true}
-                />
-              )}
+          {/* Final Images Section - Only show when in final view mode */}
+          {viewMode === 'final' && (
+            <ImageGalleryGrid
+              images={finalImagesB64}
+              type="final"
+              onImageClick={(url) => setExpandedImage({ url, type: 'final' })}
+              showShopButton={true}
+            />
+          )}
 
-              {/* Preview Images Section - Only show when in preview view mode */}
-              {viewMode === 'preview' && (
-                previewImagesB64.length === 1 && previewImagesB64[0] === miraclesPreviewImg ? (
-                  // ✅ FIX: Show initial placeholder as full-width hero image (not in grid)
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">Example Preview</h3>
-                      <span className="text-xs text-muted-foreground">Click "See Previews" to create your own</span>
-                    </div>
-                    <div className="w-full aspect-[4/5] rounded-lg overflow-hidden border-2 border-[#3a2817]">
-                      <img
-                        src={previewImagesB64[0]}
-                        alt="Example preview - I am open to miracles"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <ImageGalleryGrid
-                    images={previewImagesB64}
-                    type="preview"
-                    onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
-                    showHelpText={finalImagesB64.length === 0}
-                  />
-                )
-              )}
+          {/* Preview Images Section - Only show when in preview view mode */}
+          {viewMode === 'preview' && (
+            <ImageGalleryGrid
+              images={previewImagesB64}
+              type="preview"
+              onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
+              showHelpText={finalImagesB64.length === 0}
+            />
+          )}
 
-              {/* Static Preview when no images */}
-              {previewImagesB64.length === 0 && finalImagesB64.length === 0 && (
-                <StaticPreviewDisplay
-                  generatedData={generatedData}
-                  theme={theme}
-                  mood={mood}
-                  layoutStyle={layoutStyle}
-                  isEditing={isEditing}
-                  editedHeadline={editedHeadline}
-                  editedLines={editedLines}
-                  onHeadlineChange={setEditedHeadline}
-                  onLineChange={(index, value) => {
-                    const newLines = [...editedLines];
-                    newLines[index] = value;
-                    setEditedLines(newLines);
-                  }}
-                  loading={loading}
-                  onGenerate={handleGenerateUnique}
-                  isMobile={false}
-                />
-              )}
-            </>
+          {/* Static Preview when no images */}
+          {previewImagesB64.length === 0 && finalImagesB64.length === 0 && (
+            <StaticPreviewDisplay
+              generatedData={generatedData}
+              theme={theme}
+              mood={mood}
+              layoutStyle={layoutStyle}
+              isEditing={isEditing}
+              editedHeadline={editedHeadline}
+              editedLines={editedLines}
+              onHeadlineChange={setEditedHeadline}
+              onLineChange={(index, value) => {
+                const newLines = [...editedLines];
+                newLines[index] = value;
+                setEditedLines(newLines);
+              }}
+              loading={loading}
+              onGenerate={handleGenerateUnique}
+              isMobile={false}
+            />
           )}
         </CardContent>
       </Card>

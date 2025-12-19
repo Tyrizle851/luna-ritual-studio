@@ -1,5 +1,4 @@
 // Edge function for generating final affirmation images using Lovable's Gemini gateway
-import { translatePaletteToVisual } from './colorTheory.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -60,116 +59,6 @@ const THEME_AESTHETICS: Record<string, string> = {
   'passion': 'Warm reds and earth tones, dynamic flowing curves, energetic elements',
   'wisdom': 'Deep earth tones, elegant flowing lines, timeless organic sophistication'
 };
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//    LUNA RITUALS MOOD SYSTEM (7 Signature + 6 Exploratory)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-interface MoodStyle {
-  category: 'signature' | 'exploratory';
-  technique: string;
-  composition: string;
-  elements: string;
-  avoidances: string;
-}
-
-const MOOD_VISUAL_STYLES: Record<string, MoodStyle> = {
-  "soft-watercolor": {
-    category: 'signature',
-    technique: "Abstract watercolor washes in cream/beige/gold, soft blended edges, ethereal quality",
-    composition: "Gentle flowing arrangement, generous white space, text in optical center",
-    elements: "Soft watercolor clouds, abstract organic shapes, muted earth tone washes (15-25% coverage)",
-    avoidances: "NO hard edges, NO geometric shapes, NO cool colors, NO dark backgrounds"
-  },
-  "flowing-waves": {
-    category: 'signature',
-    technique: "Undulating organic layers in warm earth tones, modern yet organic",
-    composition: "Horizontal or vertical wave flow, text integrated with waves, dynamic movement",
-    elements: "Flowing wave patterns (taupe/cream/gold), layered transparency, graphic but organic",
-    avoidances: "NO rigid structure, NO geometric precision, NO cool water blues (keep warm tones)"
-  },
-  "radiant-burst": {
-    category: 'signature',
-    technique: "Sun rays emanating from center, gold watercolor splashes, energetic but warm",
-    composition: "Radial composition, text at center, rays extending outward, uplifting energy",
-    elements: "Golden sun burst, watercolor rays, scattered gold dots/splashes, celebratory feel",
-    avoidances: "NO harsh lines, NO perfect symmetry, keep organic quality in rays"
-  },
-  "layered-serenity": {
-    category: 'signature',
-    technique: "Flowing sand dune or fabric layers, soft transitions between layers, peaceful grounded",
-    composition: "Horizontal layering, heavier elements at bottom, text floats above layers",
-    elements: "Organic flowing layers (sand dunes, fabric, mist), soft gradients between layers",
-    avoidances: "NO sharp edges between layers, NO geometric layering, keep organic flow"
-  },
-  "botanical-whisper": {
-    category: 'signature',
-    technique: "Delicate botanical silhouettes with warm earth tones, subtle plant accents",
-    composition: "Text centered, delicate botanicals frame corners or sides, airy spacious",
-    elements: "Thin botanical line drawings (eucalyptus, pampas, ferns), soft watercolor shadows",
-    avoidances: "NO heavy botanicals, NO realistic flowers, keep silhouettes delicate"
-  },
-  "golden-glow": {
-    category: 'signature',
-    technique: "Metallic gold shimmer effect, warm premium luxury, sophisticated elegance",
-    composition: "Minimal composition, text is hero, subtle gold accents at edges or behind text",
-    elements: "Gold foil effect (metallic shimmer), soft gold haze/glow, premium luxury feel",
-    avoidances: "NO excessive gold (keep at 10-15%), NO gaudy sparkles, maintain sophistication"
-  },
-  "celestial-light": {
-    category: 'signature',
-    technique: "Moon, stars, but LIGHT backgrounds with warm cream/gold, ethereal but airy",
-    composition: "Celestial elements subtle and small (moon at 10% opacity), text is primary",
-    elements: "Crescent moon silhouette, small star scatter (5-7 stars), soft gold glow around elements",
-    avoidances: "NO dark backgrounds (keep light cream), NO heavy celestial, keep ethereal and soft"
-  },
-  "zen-minimal": {
-    category: 'exploratory',
-    technique: "True minimalism, single thin line accent, 95% negative space, zen simplicity",
-    composition: "Vast white space, text is sole focus, ONE minimal accent (line or dot)",
-    elements: "Single thin line (1-2px) in warm brown or subtle gray, or small geometric dot",
-    avoidances: "NO multiple elements, NO botanicals, NO watercolor washes - pure minimalism"
-  },
-  "cool-serenity": {
-    category: 'exploratory',
-    technique: "Soft blues and cool grays, calm coastal feeling, airy and spacious",
-    composition: "Horizontal flow suggesting horizon, text in upper third, open sky below",
-    elements: "Soft blue/gray watercolor washes, abstract gentle shapes, cool color palette",
-    avoidances: "NO warm earth tones here, embrace cool blues/grays for contrast to signature styles"
-  },
-  "geometric-structure": {
-    category: 'exploratory',
-    technique: "Clean grid system, thin geometric lines, modern editorial, structured",
-    composition: "3×3 or 4×5 invisible grid, text aligned to grid nodes, mathematical precision",
-    elements: "Thin geometric accent lines (1-2px), grid overlay at 5% opacity, angular shapes",
-    avoidances: "NO organic shapes, NO watercolor, NO curves - embrace geometry"
-  },
-  "bold-modern": {
-    category: 'exploratory',
-    technique: "High contrast bold typography, dramatic, powerful, editorial punch",
-    composition: "Large commanding text (40% of vertical space), minimal accents, strong hierarchy",
-    elements: "Bold modern sans-serif or thick serif, high contrast colors, graphic impact",
-    avoidances: "NO soft elements, NO excessive decoration - bold simplicity"
-  },
-  "vibrant-energy": {
-    category: 'exploratory',
-    technique: "Saturated colors, playful geometric accents, energetic composition, modern pop",
-    composition: "Asymmetric dynamic layout, colorful focal points, energetic visual weight",
-    elements: "Bold color blocks, playful dots/dashes, gradient fills, vibrant palette",
-    avoidances: "NO muted tones here, embrace saturation and energy"
-  },
-  "mystical-deep": {
-    category: 'exploratory',
-    technique: "Deep backgrounds (midnight blue, deep purple), ethereal glow effects, mystical",
-    composition: "Dark atmospheric background, text glows softly, constellation patterns",
-    elements: "Deep gradients (navy to purple), constellation lines, crescent moon, star scatter, text glow",
-    avoidances: "NO light backgrounds here, embrace darkness and mystery"
-  }
-};
-
-function getMoodVisualStyle(mood: string): MoodStyle {
-  return MOOD_VISUAL_STYLES[mood] || MOOD_VISUAL_STYLES['soft-watercolor'];
-}
 
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
@@ -290,16 +179,11 @@ Deno.serve(async (req) => {
 // Build watercolor-focused prompt for high quality output
 function buildWatercolorPrompt(spec: DesignSpec): string {
   const themeAesthetic = THEME_AESTHETICS[spec.theme] || THEME_AESTHETICS['peace'];
-  const moodStyle = getMoodVisualStyle(spec.mood);
 
-  // Translate palette hex codes into rich visual direction
-  const colorGuidance = translatePaletteToVisual(
-    spec.paletteToken.hex,
-    spec.theme,
-    spec.mood
-  );
+  // Use palette colors
+  const colorPalette = spec.paletteToken.hex.join(', ');
 
-  return `Create a PRINT-QUALITY affirmation design for professional 8×10" printing:
+  return `Create a PRINT-QUALITY watercolor affirmation design for professional 8×10" printing:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           TEXT (CRITICAL PRIORITY)
@@ -308,13 +192,13 @@ function buildWatercolorPrompt(spec: DesignSpec): string {
 "${spec.mainAffirmation}"
 
 TYPOGRAPHY REQUIREMENTS:
-• Font: ${spec.typography.headline} (or similar high-end editorial font)
+• Font: ${spec.typography.headline} (or similar high-end editorial serif)
 • Reference fonts: Cormorant Garamond, Playfair Display, Freight Display
 • Size: Large enough to read from 3 feet away when printed 8×10"
-• Text color: Choose based on color strategy below for optimal contrast
+• Text color: ${spec.paletteToken.hex[0]} or deep warm brown (#3A2817)
 • Letter-spacing: Slightly loose for elegance (+0.02em to +0.05em)
 • Line height: 1.4-1.6 for multi-word phrases
-• Alignment: According to mood composition style below
+• Alignment: Optically centered (accounting for visual weight, not just mathematical center)
 • Text must be RAZOR SHARP and PERFECTLY READABLE - this is non-negotiable
 • NO artistic distortion, warping, or perspective effects on letters
 • Text occupies 25-40% of vertical space with generous margins
@@ -325,24 +209,6 @@ TYPOGRAPHY REQUIREMENTS:
 
 Theme Energy: ${themeAesthetic}
 Layout Style: ${spec.layoutArchetype}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   VISUAL STYLE (${moodStyle.category === 'signature' ? 'LUNA SIGNATURE' : 'EXPLORATORY'})
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-TECHNIQUE:
-${moodStyle.technique}
-
-COMPOSITION:
-${moodStyle.composition}
-
-VISUAL ELEMENTS:
-${moodStyle.elements}
-
-CRITICAL AVOIDANCES:
-${moodStyle.avoidances}
-
-${colorGuidance}
 
 Brand References (Luna Rituals Aesthetic):
 • Anthropologie home décor section - organic, feminine, curated
@@ -379,12 +245,73 @@ Print Safe Area: Keep all important elements 0.25" from edges
 
 Layout Principles:
 • Golden ratio composition (1.618:1 spatial division)
-• Text positioned according to mood composition style
+• Text positioned in upper or middle third (rule of thirds)
 • 60-75% negative space (breathing room is ESSENTIAL)
 • Visual weight: Heavier decorative elements at bottom
 • Asymmetric balance for organic feel (not rigidly centered)
 • No borders, frames, or confining rectangles - let design breathe
 • Elements flow naturally, guiding eye to text
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          COLOR PALETTE (EXACT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User-Selected Colors: ${colorPalette}
+Accent Elements: ${spec.accentSet.slice(0, 2).join(', ')}
+
+Application Guidelines:
+• Background: Soft cream/warm white (#FAF7F2 to #F5EFE7) - 70% of design
+• Primary watercolor: Use 1-2 colors from palette as main washes
+• Accent touches: Subtle hints of complementary tones
+• Text color: Ensure 7:1 contrast ratio with background (WCAG AAA)
+• Saturation: Keep muted and sophisticated (60-75% desaturated from pure hues)
+• Color harmony: Analogous or monochromatic schemes only
+• NO pure white, pure black, or highly saturated colors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   VISUAL ELEMENTS (Minimal & Refined)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Select ONE primary approach (don't mix):
+
+Option A - Abstract Watercolor Washes:
+• Organic, asymmetric shapes flowing from one corner
+• Transparent layers creating subtle depth
+• Occupy 15-25% of composition (background element only)
+
+Option B - Botanical Elements:
+• Delicate stem or leaf silhouettes (minimalist line drawings)
+• Subtle watercolor shadows behind botanical forms
+• Monochromatic or single accent color
+• Small scale, positioned to frame text without touching it
+
+Option C - Flowing Gestural Lines:
+• Calligraphic brushstrokes suggesting movement
+• Thin, elegant lines in muted accent color
+• Abstract and non-literal (no recognizable shapes)
+
+All elements must:
+• Stay BEHIND or BESIDE text (never overlapping letters)
+• Be understated - text is the hero
+• Have soft, watercolor-quality edges (no vector crispness)
+• Complement theme without being literal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        STRICT AVOIDANCE LIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT INCLUDE:
+✗ Clipart, icons, or stock imagery
+✗ Perfect geometric shapes (circles, triangles, grids)
+✗ Digital effects (drop shadows, glows, bevels, filters)
+✗ Multiple fonts or decorative scripts
+✗ Small text, subheadings, or additional copy
+✗ Busy patterns that compete with main text
+✗ Artificial gradients or Photoshop-style color transitions
+✗ Photo-realistic elements or 3D rendering
+✗ Borders, corner flourishes, or ornamental frames
+✗ Text on curved paths or with perspective distortion
+✗ Oversized design elements that dwarf the text
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
          PRINT QUALITY STANDARDS
@@ -396,16 +323,6 @@ Technical Output:
 • Color space: RGB (will be converted to CMYK for print)
 • Text rendering: Crisp, anti-aliased, professional-grade
 • File quality: No compression artifacts or pixelation
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         CRITICAL REQUIREMENTS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✓ Text must be 100% readable (no distortion, blur, or overlap)
-✓ Follow mood style EXACTLY - don't mix styles
-✓ Follow color strategy PRECISELY - use specified coverage and roles
-✓ Premium quality suitable for selling as digital download ($45-65 value)
-✓ Should look like a $45-65 art print from a boutique gallery
 • Sharpness: Text edges must be clean when printed actual size
 
 Quality Benchmark - Should Match:

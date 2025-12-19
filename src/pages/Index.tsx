@@ -6,9 +6,6 @@ import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { FeaturedArticles } from "@/components/FeaturedArticles";
 import { AffirmationCarousel } from "@/components/AffirmationCarousel";
 import { Testimonials } from "@/components/Testimonials";
-import { TrustBadges } from "@/components/TrustBadges";
-import { SustainabilitySection } from "@/components/SustainabilitySection";
-import { WhyLunaRituals } from "@/components/WhyLunaRituals";
 import { Sparkles, ShoppingBag, BookOpen, Heart, Sprout, Wand2, Moon, Users } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 import { affirmations } from "@/data/affirmations";
@@ -224,17 +221,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <TrustBadges />
-
       {/* The Ritual Edit */}
       <FeaturedProducts />
-
-      {/* Why LunaRituals */}
-      <WhyLunaRituals />
-
-      {/* Sustainability Section */}
-      <SustainabilitySection />
 
       {/* Featured Journal Articles */}
       <FeaturedArticles />

@@ -29,11 +29,6 @@ import AdminAffirmationDigital from "./pages/AdminAffirmationDigital";
 import AdminImageReview from "./pages/AdminImageReview";
 import AdminAffirmationMockups from "./pages/AdminAffirmationMockups";
 import ImageRandomizer from "./pages/ImageRandomizer";
-import OurStory from "./pages/OurStory";
-import Sustainability from "./pages/Sustainability";
-import Reviews from "./pages/Reviews";
-import Wholesale from "./pages/Wholesale";
-import CustomOrders from "./pages/CustomOrders";
 
 const queryClient = new QueryClient();
 
@@ -53,11 +48,6 @@ const AnimatedRoutes = () => {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
-        <Route path="/our-story" element={<OurStory />} />
-        <Route path="/sustainability" element={<Sustainability />} />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="/wholesale" element={<Wholesale />} />
-        <Route path="/custom-orders" element={<CustomOrders />} />
         <Route path="/admin/imagegen" element={<AdminImageGen />} />
         <Route path="/admin/affirmations" element={<AdminAffirmationGen />} />
         <Route path="/admin/affirmation-digital" element={<AdminAffirmationDigital />} />

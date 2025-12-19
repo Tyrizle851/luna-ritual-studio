@@ -1,6 +1,5 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { translatePaletteToVisual } from './colorTheory.ts';
 
 const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
@@ -27,145 +26,15 @@ const THEME_AESTHETICS: Record<string, string> = {
   'wisdom': 'Deep earth tones, elegant flowing lines, timeless organic sophistication'
 };
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//    LUNA RITUALS MOOD SYSTEM (7 Signature + 6 Exploratory)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-interface MoodStyle {
-  category: 'signature' | 'exploratory';
-  technique: string;
-  composition: string;
-  elements: string;
-  avoidances: string;
-}
-
-const MOOD_VISUAL_STYLES: Record<string, MoodStyle> = {
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  //     LUNA SIGNATURE STYLES (7)
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  "soft-watercolor": {
-    category: 'signature',
-    technique: "Abstract watercolor washes in cream/beige/gold, soft blended edges, ethereal quality",
-    composition: "Gentle flowing arrangement, generous white space, text in optical center",
-    elements: "Soft watercolor clouds, abstract organic shapes, muted earth tone washes (15-25% coverage)",
-    avoidances: "NO hard edges, NO geometric shapes, NO cool colors, NO dark backgrounds"
-  },
-
-  "flowing-waves": {
-    category: 'signature',
-    technique: "Undulating organic layers in warm earth tones, modern yet organic",
-    composition: "Horizontal or vertical wave flow, text integrated with waves, dynamic movement",
-    elements: "Flowing wave patterns (taupe/cream/gold), layered transparency, graphic but organic",
-    avoidances: "NO rigid structure, NO geometric precision, NO cool water blues (keep warm tones)"
-  },
-
-  "radiant-burst": {
-    category: 'signature',
-    technique: "Sun rays emanating from center, gold watercolor splashes, energetic but warm",
-    composition: "Radial composition, text at center, rays extending outward, uplifting energy",
-    elements: "Golden sun burst, watercolor rays, scattered gold dots/splashes, celebratory feel",
-    avoidances: "NO harsh lines, NO perfect symmetry, keep organic quality in rays"
-  },
-
-  "layered-serenity": {
-    category: 'signature',
-    technique: "Flowing sand dune or fabric layers, soft transitions between layers, peaceful grounded",
-    composition: "Horizontal layering, heavier elements at bottom, text floats above layers",
-    elements: "Organic flowing layers (sand dunes, fabric, mist), soft gradients between layers",
-    avoidances: "NO sharp edges between layers, NO geometric layering, keep organic flow"
-  },
-
-  "botanical-whisper": {
-    category: 'signature',
-    technique: "Delicate botanical silhouettes with warm earth tones, subtle plant accents",
-    composition: "Text centered, delicate botanicals frame corners or sides, airy spacious",
-    elements: "Thin botanical line drawings (eucalyptus, pampas, ferns), soft watercolor shadows",
-    avoidances: "NO heavy botanicals, NO realistic flowers, keep silhouettes delicate"
-  },
-
-  "golden-glow": {
-    category: 'signature',
-    technique: "Metallic gold shimmer effect, warm premium luxury, sophisticated elegance",
-    composition: "Minimal composition, text is hero, subtle gold accents at edges or behind text",
-    elements: "Gold foil effect (metallic shimmer), soft gold haze/glow, premium luxury feel",
-    avoidances: "NO excessive gold (keep at 10-15%), NO gaudy sparkles, maintain sophistication"
-  },
-
-  "celestial-light": {
-    category: 'signature',
-    technique: "Moon, stars, but LIGHT backgrounds with warm cream/gold, ethereal but airy",
-    composition: "Celestial elements subtle and small (moon at 10% opacity), text is primary",
-    elements: "Crescent moon silhouette, small star scatter (5-7 stars), soft gold glow around elements",
-    avoidances: "NO dark backgrounds (keep light cream), NO heavy celestial, keep ethereal and soft"
-  },
-
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  //      EXPLORATORY STYLES (6)
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  "zen-minimal": {
-    category: 'exploratory',
-    technique: "True minimalism, single thin line accent, 95% negative space, zen simplicity",
-    composition: "Vast white space, text is sole focus, ONE minimal accent (line or dot)",
-    elements: "Single thin line (1-2px) in warm brown or subtle gray, or small geometric dot",
-    avoidances: "NO multiple elements, NO botanicals, NO watercolor washes - pure minimalism"
-  },
-
-  "cool-serenity": {
-    category: 'exploratory',
-    technique: "Soft blues and cool grays, calm coastal feeling, airy and spacious",
-    composition: "Horizontal flow suggesting horizon, text in upper third, open sky below",
-    elements: "Soft blue/gray watercolor washes, abstract gentle shapes, cool color palette",
-    avoidances: "NO warm earth tones here, embrace cool blues/grays for contrast to signature styles"
-  },
-
-  "geometric-structure": {
-    category: 'exploratory',
-    technique: "Clean grid system, thin geometric lines, modern editorial, structured",
-    composition: "3×3 or 4×5 invisible grid, text aligned to grid nodes, mathematical precision",
-    elements: "Thin geometric accent lines (1-2px), grid overlay at 5% opacity, angular shapes",
-    avoidances: "NO organic shapes, NO watercolor, NO curves - embrace geometry"
-  },
-
-  "bold-modern": {
-    category: 'exploratory',
-    technique: "High contrast bold typography, dramatic, powerful, editorial punch",
-    composition: "Large commanding text (40% of vertical space), minimal accents, strong hierarchy",
-    elements: "Bold modern sans-serif or thick serif, high contrast colors, graphic impact",
-    avoidances: "NO soft elements, NO excessive decoration - bold simplicity"
-  },
-
-  "vibrant-energy": {
-    category: 'exploratory',
-    technique: "Saturated colors, playful geometric accents, energetic composition, modern pop",
-    composition: "Asymmetric dynamic layout, colorful focal points, energetic visual weight",
-    elements: "Bold color blocks, playful dots/dashes, gradient fills, vibrant palette",
-    avoidances: "NO muted tones here, embrace saturation and energy"
-  },
-
-  "mystical-deep": {
-    category: 'exploratory',
-    technique: "Deep backgrounds (midnight blue, deep purple), ethereal glow effects, mystical",
-    composition: "Dark atmospheric background, text glows softly, constellation patterns",
-    elements: "Deep gradients (navy to purple), constellation lines, crescent moon, star scatter, text glow",
-    avoidances: "NO light backgrounds here, embrace darkness and mystery"
-  }
-};
-
-function getMoodVisualStyle(mood: string): MoodStyle {
-  return MOOD_VISUAL_STYLES[mood] || MOOD_VISUAL_STYLES['soft-watercolor'];
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { headline, theme, mood, palette } = await req.json();
+    const { headline, theme } = await req.json();
 
-    console.log('Preview generation request:', { headline, theme, mood, palette });
+    console.log('Preview generation request:', { headline, theme });
 
     if (!lovableApiKey) {
       console.error('LOVABLE_API_KEY not configured');
@@ -176,66 +45,77 @@ serve(async (req) => {
     }
 
     const themeAesthetic = THEME_AESTHETICS[theme] || THEME_AESTHETICS['peace'];
-    const moodStyle = getMoodVisualStyle(mood || 'soft-watercolor');
 
-    // Translate palette hex codes into rich visual direction
-    const colorGuidance = palette && palette.length > 0
-      ? translatePaletteToVisual(palette, theme, mood || 'soft-watercolor')
-      : `No custom palette - use ${theme} theme colors with ${mood || 'soft-watercolor'} mood aesthetic`;
-
-    // High-quality prompt optimized for Instagram-worthy aesthetic
-    // Dynamically built based on mood + theme + color theory
-    const prompt = `Create a premium affirmation design for Instagram and digital frames:
+    // High-quality prompt optimized for Instagram-worthy watercolor aesthetic
+    const prompt = `Create a premium watercolor affirmation design for Instagram and digital frames:
 
 ━━━ TEXT (MOST IMPORTANT) ━━━
 "${headline}"
 
 Requirements:
 • Text must be PERFECTLY readable - no artistic distortion of letters
-• Classic editorial font (serif for signature styles, can be modern sans for exploratory)
+• Classic editorial serif font (like Cormorant, Playfair, or Crimson)
 • Large, well-kerned letters with generous line height
-• Text color: Choose based on background (high contrast for readability)
-• Aligned according to mood composition style
+• Text color: Deep charcoal (#2D2D2D) or warm brown (#3A2817)
+• Center-aligned with optical balance
 • Text occupies 25-35% of vertical space (ample breathing room)
 
 ━━━ AESTHETIC & MOOD ━━━
-Theme Energy: ${themeAesthetic}
+${themeAesthetic}
 
-━━━ VISUAL STYLE (${moodStyle.category === 'signature' ? 'LUNA SIGNATURE' : 'EXPLORATORY'}) ━━━
+Style References:
+• High-end Instagram aesthetic (Pinterest-worthy quality)
+• Artisan stationery from boutique paper goods shops
+• Anthropologie or Rifle Paper Co. design language
+• Organic, feminine, editorial sophistication
 
-TECHNIQUE:
-${moodStyle.technique}
+━━━ WATERCOLOR TECHNIQUE ━━━
+• Authentic wet-on-wet watercolor bleeding and blending
+• Soft color transitions with natural pigment pooling
+• Delicate layering with transparency (NOT opaque blocks)
+• Hand-painted imperfections: irregular edges, subtle blooms
+• Texture should look like real cotton paper (NOT digital smooth)
 
-COMPOSITION:
-${moodStyle.composition}
-
-VISUAL ELEMENTS:
-${moodStyle.elements}
-
-CRITICAL AVOIDANCES:
-${moodStyle.avoidances}
-
-${colorGuidance}
-
-━━━ LAYOUT ━━━
+━━━ COMPOSITION & LAYOUT ━━━
 • Portrait 4:5 ratio (512×640px) - perfect for Instagram
-• Visual weight balanced according to mood composition
-• Generous negative space (60-70% for signature, can be less for exploratory)
-• No borders or frames unless specified in mood style
+• Golden ratio composition with text in upper two-thirds
+• Generous white/cream negative space (60-70% of design)
+• Visual weight balanced: heavier elements at bottom
+• No borders, frames, or hard edges - organic flow only
+
+━━━ COLOR PALETTE ━━━
+Primary: Soft creams, warm whites, natural beiges (#FAF7F2, #F5EFE7)
+Accents: Muted earth tones - dusty rose, sage green, soft terracotta, warm taupe
+Avoid: Pure white, saturated colors, neon, black backgrounds
+Technique: Use 2-3 colors max, with one dominant and others as subtle accents
+
+━━━ VISUAL ELEMENTS (Subtle & Minimal) ━━━
+Choose ONE of these approaches:
+1. Abstract watercolor washes (asymmetric, flowing shapes)
+2. Delicate botanical silhouettes (stems, leaves, minimal florals)
+3. Organic flowing lines (calligraphic brushstrokes)
+
+Keep elements:
+• Small and understated (occupy <20% of total space)
+• Behind or around text (never overlapping letters)
+• Monochromatic or analogous colors only
+• Soft edges with natural watercolor bleeding
+
+━━━ AVOID (Critical) ━━━
+✗ Clipart, stock photo elements, or digital illustrations
+✗ Hard edges, perfect circles, or geometric precision
+✗ Overlay textures, filters, or Photoshop effects
+✗ Multiple fonts or decorative script that reduces readability
+✗ Busy backgrounds that compete with text
+✗ Artificial gradients or digital color transitions
+✗ Any text smaller than highly readable size
 
 ━━━ QUALITY BENCHMARK ━━━
 This should look like:
-• A $30-50 art print from an independent artist on Etsy
+• A $30 art print from an independent artist on Etsy
 • Professional editorial design for a wellness magazine
 • Something worth saving to a "Design Inspiration" Pinterest board
-• Ready to frame and display in a modern home
-
-━━━ CRITICAL REQUIREMENTS ━━━
-✓ Text must be 100% readable (no distortion, blur, or overlap)
-✓ Follow mood style EXACTLY - don't mix styles
-✓ Follow color strategy PRECISELY - use specified coverage and roles
-✓ Premium quality suitable for selling as digital download
-✓ Instagram-worthy aesthetic
+• Ready to frame and display in a modern, minimalist home
 
 Output: 512×640px, 4:5 portrait, Instagram-optimized quality`;
 

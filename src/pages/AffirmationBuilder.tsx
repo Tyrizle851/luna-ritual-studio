@@ -71,7 +71,7 @@ interface HistoryItem {
 
 const AffirmationBuilder = () => {
   const [theme, setTheme] = useState("confidence");
-  const [mood, setMood] = useState("soft-watercolor"); // Default to first Luna Signature style
+  const [mood, setMood] = useState("minimalist");
   const [layoutStyle, setLayoutStyle] = useState("");
   const [userKeywords, setUserKeywords] = useState("");
   const [seed, setSeed] = useState("");

@@ -85,8 +85,7 @@ export function useAffirmationActions({
 
   const handleRandomize = () => {
     const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
-    // Updated with 13 new moods: 7 Luna Signature + 6 Exploratory
-    const moods = ["soft-watercolor", "flowing-waves", "radiant-burst", "layered-serenity", "botanical-whisper", "golden-glow", "celestial-light", "zen-minimal", "cool-serenity", "geometric-structure", "bold-modern", "vibrant-energy", "mystical-deep"];
+    const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
     const allLayouts = ["centered-serenity", "vertical-flow", "floating-cluster", "asymmetric-balance", "arc-flow", "golden-spiral", "botanical-frame", "minimal-horizon", "radiant-center-burst", "soft-anchor-left", "soft-anchor-right", "gentle-column", "pebble-scatter", "circle-harmony", "prayer-stack", "ribbon-drift", "editorial-grid-luxe", "calm-waterfall", "sacred-geometry", "breath-space-minimal"];
 
     const newTheme = themes[Math.floor(Math.random() * themes.length)];
@@ -96,12 +95,7 @@ export function useAffirmationActions({
     setTheme(newTheme);
     setMood(newMood);
     setLayoutStyle(newLayout);
-
-    // ✅ FIX: Don't clear preview images - keep existing or placeholder visible
-    // Images will be replaced when user clicks "See Previews"
-    // This prevents the "flash of ugly text" when randomizing
-
-    // Only clear final images and single generated image
+    setPreviewImagesB64([]);
     setFinalImagesB64([]);
     setGeneratedImageB64(null);
 
@@ -109,7 +103,7 @@ export function useAffirmationActions({
     const newData = generatePreviewDataUtil(newTheme, newMood, newLayout);
     setGeneratedData(newData);
 
-    toast.success('✨ New inspiration generated! Click "See Previews" to visualize it.');
+    toast.success('Randomized! Preview updated.');
   };
 
   const startEditing = () => {
