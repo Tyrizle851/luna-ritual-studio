@@ -14,6 +14,7 @@ import { PromotionalBanner } from "./components/PromotionalBanner";
 import { SubscriptionBanner } from "./components/SubscriptionBanner";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
+import Collections from "./pages/Collections";
 import Journal from "./pages/Journal";
 import ArticleDetail from "./pages/ArticleDetail";
 import About from "./pages/About";
@@ -45,6 +46,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Index />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/collections" element={<Collections />} />
         <Route path="/journal" element={<Journal />} />
         <Route path="/journal/:slug" element={<ArticleDetail />} />
         <Route path="/about" element={<About />} />
