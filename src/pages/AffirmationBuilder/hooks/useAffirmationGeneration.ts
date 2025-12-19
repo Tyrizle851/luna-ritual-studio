@@ -12,7 +12,7 @@ interface GeneratedData {
   palette: string[];
   paletteNames: string[];
   layoutStyle: string;
-  accentElements: string[];
+  accentElements: string;
 }
 
 interface UseAffirmationGenerationProps {
