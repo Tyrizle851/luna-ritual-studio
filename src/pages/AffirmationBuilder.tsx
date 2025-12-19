@@ -39,8 +39,6 @@ import { PreviewCardHeader } from "./AffirmationBuilder/components/PreviewCardHe
 import { ReviewsSection } from "./AffirmationBuilder/components/ReviewsSection";
 import { WhyAffirmationStudio } from "./AffirmationBuilder/components/WhyAffirmationStudio";
 import { PageHeader } from "./AffirmationBuilder/components/PageHeader";
-import { MobileView } from "./AffirmationBuilder/components/MobileView";
-import { DesktopView } from "./AffirmationBuilder/components/DesktopView";
 
 interface GeneratedData {
   headline: string;
@@ -300,83 +298,219 @@ const AffirmationBuilder = () => {
           <StaffPresetGallery />
 
           {/* Mobile: Single Scroll Layout (No Tabs) */}
-          <MobileView
-            theme={theme}
-            setTheme={setTheme}
-            mood={mood}
-            setMood={setMood}
-            layoutStyle={layoutStyle}
-            setLayoutStyle={setLayoutStyle}
-            userKeywords={userKeywords}
-            setUserKeywords={setUserKeywords}
-            showAdvanced={showAdvanced}
-            setShowAdvanced={setShowAdvanced}
-            customPalette={customPalette}
-            generatedData={generatedData}
-            updatePaletteColor={updatePaletteColor}
-            resetPalette={resetPalette}
-            loading={loading}
-            generatedImageB64={generatedImageB64}
-            previewImagesB64={previewImagesB64}
-            finalImagesB64={finalImagesB64}
-            handleGenerate={handleGenerate}
-            handleRandomize={handleRandomize}
-            handleGenerateUnique={handleGenerateUnique}
-            isEditing={isEditing}
-            isFavorite={isFavorite}
-            toggleFavorite={toggleFavorite}
-            startEditing={startEditing}
-            saveEdits={saveEdits}
-            cancelEdits={cancelEdits}
-            shareToSocial={shareToSocial}
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-            setExpandedImage={setExpandedImage}
-            setShowComparison={setShowComparison}
-            editedHeadline={editedHeadline}
-            setEditedHeadline={setEditedHeadline}
-            editedLines={editedLines}
-            setEditedLines={setEditedLines}
-          />
+          <div className="lg:hidden space-y-6">
+            {/* Mobile Create Section */}
+            <div>
+              <Card className="bg-card">
+              <CardHeader>
+                <CardTitle>Set Your Intention</CardTitle>
+                <CardDescription>What do you want to invite into your life?</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <IntentionSelector
+                  theme={theme}
+                  setTheme={setTheme}
+                  mood={mood}
+                  setMood={setMood}
+                  layoutStyle={layoutStyle}
+                  setLayoutStyle={setLayoutStyle}
+                  userKeywords={userKeywords}
+                  setUserKeywords={setUserKeywords}
+                  showAdvanced={showAdvanced}
+                  setShowAdvanced={setShowAdvanced}
+                  customPalette={customPalette}
+                  generatedData={generatedData}
+                  updatePaletteColor={updatePaletteColor}
+                  resetPalette={resetPalette}
+                />
+
+                {/* Action Buttons */}
+                <GenerationControls
+                  loading={loading}
+                  generatedImageB64={generatedImageB64}
+                  previewImagesB64={previewImagesB64}
+                  finalImagesB64={finalImagesB64}
+                  handleGenerate={handleGenerate}
+                  handleRandomize={handleRandomize}
+                  handleGenerateUnique={handleGenerateUnique}
+                  showHelpText={true}
+                />
+              </CardContent>
+            </Card>
+            </div>
+
+            {/* Mobile Preview Section */}
+            <div>
+
+              <Card className="bg-card">
+              <PreviewCardHeader
+                isEditing={isEditing}
+                isFavorite={isFavorite}
+                onToggleFavorite={toggleFavorite}
+                onStartEditing={startEditing}
+                onSaveEdits={saveEdits}
+                onCancelEdits={cancelEdits}
+                onShareToSocial={shareToSocial}
+              />
+              <CardContent>
+                {generatedImageB64 ? (
+                  <MobileSingleImageDisplay imageUrl={generatedImageB64} />
+                ) : previewImagesB64.length > 0 ? (
+                  <MobilePreviewGrid
+                    images={previewImagesB64}
+                    selectedImages={selectedImages}
+                    onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
+                    onToggleSelection={(index) =>
+                      setSelectedImages(prev =>
+                        prev.includes(index)
+                          ? prev.filter(i => i !== index)
+                          : [...prev, index]
+                      )
+                    }
+                    onCompare={() => setShowComparison(true)}
+                  />
+                ) : (
+                  <StaticPreviewDisplay
+                    generatedData={generatedData}
+                    theme={theme}
+                    mood={mood}
+                    layoutStyle={layoutStyle}
+                    isEditing={isEditing}
+                    editedHeadline={editedHeadline}
+                    editedLines={editedLines}
+                    onHeadlineChange={setEditedHeadline}
+                    onLineChange={(index, value) => {
+                      const newLines = [...editedLines];
+                      newLines[index] = value;
+                      setEditedLines(newLines);
+                    }}
+                    loading={loading}
+                    onGenerate={handleGenerateUnique}
+                    isMobile={true}
+                  />
+                )}
+              </CardContent>
+            </Card>
+            </div>
+          </div>
 
           {/* Desktop: Two Column Layout (unchanged) */}
-          <DesktopView
-            theme={theme}
-            setTheme={setTheme}
-            mood={mood}
-            setMood={setMood}
-            layoutStyle={layoutStyle}
-            setLayoutStyle={setLayoutStyle}
-            userKeywords={userKeywords}
-            setUserKeywords={setUserKeywords}
-            showAdvanced={showAdvanced}
-            setShowAdvanced={setShowAdvanced}
-            customPalette={customPalette}
-            generatedData={generatedData}
-            updatePaletteColor={updatePaletteColor}
-            resetPalette={resetPalette}
-            loading={loading}
-            generatedImageB64={generatedImageB64}
-            previewImagesB64={previewImagesB64}
-            finalImagesB64={finalImagesB64}
-            handleGenerate={handleGenerate}
-            handleRandomize={handleRandomize}
-            handleGenerateUnique={handleGenerateUnique}
-            isEditing={isEditing}
-            isFavorite={isFavorite}
-            toggleFavorite={toggleFavorite}
-            startEditing={startEditing}
-            saveEdits={saveEdits}
-            cancelEdits={cancelEdits}
-            shareToSocial={shareToSocial}
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-            setExpandedImage={setExpandedImage}
-            editedHeadline={editedHeadline}
-            setEditedHeadline={setEditedHeadline}
-            editedLines={editedLines}
-            setEditedLines={setEditedLines}
-          />
+          <div className="hidden lg:grid grid-cols-2 gap-8">
+            {/* Left Column: Input Form */}
+            <Card className="bg-card">
+              <CardHeader>
+                <CardTitle>Set Your Intention</CardTitle>
+                <CardDescription>What do you want to invite into your life?</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <IntentionSelector
+                  theme={theme}
+                  setTheme={setTheme}
+                  mood={mood}
+                  setMood={setMood}
+                  layoutStyle={layoutStyle}
+                  setLayoutStyle={setLayoutStyle}
+                  userKeywords={userKeywords}
+                  setUserKeywords={setUserKeywords}
+                  showAdvanced={showAdvanced}
+                  setShowAdvanced={setShowAdvanced}
+                  customPalette={customPalette}
+                  generatedData={generatedData}
+                  updatePaletteColor={updatePaletteColor}
+                  resetPalette={resetPalette}
+                  idSuffix="-desktop"
+                />
+
+                {/* Action Buttons */}
+                <GenerationControls
+                  loading={loading}
+                  generatedImageB64={generatedImageB64}
+                  previewImagesB64={previewImagesB64}
+                  finalImagesB64={finalImagesB64}
+                  handleGenerate={handleGenerate}
+                  handleRandomize={handleRandomize}
+                  handleGenerateUnique={handleGenerateUnique}
+                  showHelpText={false}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Right Column: Preview (Desktop) */}
+            <Card className="bg-card">
+              <PreviewCardHeader
+                isEditing={isEditing}
+                isFavorite={isFavorite}
+                onToggleFavorite={toggleFavorite}
+                onStartEditing={startEditing}
+                onSaveEdits={saveEdits}
+                onCancelEdits={cancelEdits}
+                onShareToSocial={shareToSocial}
+              />
+              <CardContent>
+                {/* View Toggle Buttons - Show when both preview and final exist */}
+                {previewImagesB64.length > 0 && finalImagesB64.length > 0 && (
+                  <div className="flex gap-2 mb-6">
+                    <Button
+                      variant={viewMode === 'preview' ? 'default' : 'outline'}
+                      className="flex-1"
+                      onClick={() => setViewMode('preview')}
+                    >
+                      Preview Images
+                    </Button>
+                    <Button
+                      variant={viewMode === 'final' ? 'default' : 'outline'}
+                      className="flex-1"
+                      onClick={() => setViewMode('final')}
+                    >
+                      Final Images
+                    </Button>
+                  </div>
+                )}
+
+                {/* Final Images Section - Only show when in final view mode */}
+                {viewMode === 'final' && (
+                  <ImageGalleryGrid
+                    images={finalImagesB64}
+                    type="final"
+                    onImageClick={(url) => setExpandedImage({ url, type: 'final' })}
+                    showShopButton={true}
+                  />
+                )}
+
+                {/* Preview Images Section - Only show when in preview view mode */}
+                {viewMode === 'preview' && (
+                  <ImageGalleryGrid
+                    images={previewImagesB64}
+                    type="preview"
+                    onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
+                    showHelpText={finalImagesB64.length === 0}
+                  />
+                )}
+
+                {/* Static Preview when no images */}
+                {previewImagesB64.length === 0 && finalImagesB64.length === 0 && (
+                  <StaticPreviewDisplay
+                    generatedData={generatedData}
+                    theme={theme}
+                    mood={mood}
+                    layoutStyle={layoutStyle}
+                    isEditing={isEditing}
+                    editedHeadline={editedHeadline}
+                    editedLines={editedLines}
+                    onHeadlineChange={setEditedHeadline}
+                    onLineChange={(index, value) => {
+                      const newLines = [...editedLines];
+                      newLines[index] = value;
+                      setEditedLines(newLines);
+                    }}
+                    loading={loading}
+                    onGenerate={handleGenerateUnique}
+                    isMobile={false}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Why Affirmation Studio Section */}
