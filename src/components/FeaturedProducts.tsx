@@ -133,18 +133,18 @@ export const FeaturedProducts = () => {
               />
             </div>
             <div className="p-3 sm:p-4">
-              <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">{featuredFashion.brand}</p>
-              <h3 className="font-medium mb-1 sm:mb-2 text-sm sm:text-base group-hover:text-clay transition-colors line-clamp-2">{featuredFashion.name}</h3>
+              <p className="product-brand mb-1 sm:mb-2">{featuredFashion.brand}</p>
+              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredFashion.name}</h3>
               
               {featuredFashion.rating && (
                 <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-primary text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium">{featuredFashion.rating}</span>
+                  <span className="text-gold text-[10px] sm:text-xs">★</span>
+                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredFashion.rating}</span>
                   <span className="text-[10px] sm:text-xs text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredFashion.description}</p>
+              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredFashion.description}</p>
               
               {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
                 <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
@@ -156,23 +156,23 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
+              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
                   {featuredFashion.originalPrice && (
                     <div className="flex items-center gap-1">
                       <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-foreground text-background px-1 sm:px-1.5 py-0.5 rounded font-medium">
+                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
                         -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
                       </span>
                     </div>
                   )}
-                  <span className="font-semibold text-sm sm:text-base text-foreground">${featuredFashion.price.toFixed(2)}</span>
+                  <span className="product-price">${featuredFashion.price.toFixed(2)}</span>
                 </div>
                 
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
+                  variant="clay"
+                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -197,18 +197,18 @@ export const FeaturedProducts = () => {
               />
             </div>
             <div className="p-3 sm:p-4">
-              <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">{featuredCandle.brand}</p>
-              <h3 className="font-medium mb-1 sm:mb-2 text-sm sm:text-base group-hover:text-clay transition-colors line-clamp-2">{featuredCandle.name}</h3>
+              <p className="product-brand mb-1 sm:mb-2">{featuredCandle.brand}</p>
+              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredCandle.name}</h3>
               
               {featuredCandle.rating && (
                 <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-primary text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium">{featuredCandle.rating}</span>
+                  <span className="text-gold text-[10px] sm:text-xs">★</span>
+                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredCandle.rating}</span>
                   <span className="text-[10px] sm:text-xs text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredCandle.description}</p>
+              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredCandle.description}</p>
               
               {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
                 <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
@@ -220,13 +220,13 @@ export const FeaturedProducts = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
-                <span className="font-semibold text-sm sm:text-base text-foreground">${featuredCandle.price.toFixed(2)}</span>
+              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
+                <span className="product-price">${featuredCandle.price.toFixed(2)}</span>
                 
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
+                  variant="clay"
+                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -256,46 +256,46 @@ export const FeaturedProducts = () => {
               />
             </div>
             <div className="p-3 sm:p-4">
-              <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">{featuredBook.author}</p>
-              <h3 className="font-medium mb-1 sm:mb-2 text-sm sm:text-base group-hover:text-clay transition-colors line-clamp-2">{featuredBook.title}</h3>
+              <p className="product-brand mb-1 sm:mb-2">{featuredBook.author}</p>
+              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredBook.title}</h3>
               
               {featuredBook.rating && (
                 <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-primary text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium">{featuredBook.rating}</span>
+                  <span className="text-gold text-[10px] sm:text-xs">★</span>
+                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredBook.rating}</span>
                   <span className="text-[10px] sm:text-xs text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredBook.description}</p>
+              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredBook.description}</p>
               
               {featuredBook.awards && featuredBook.awards.length > 0 && (
                 <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                   {featuredBook.awards.slice(0, 2).map((award, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span key={idx} className="text-[10px] bg-clay/10 text-clay px-2 py-0.5 rounded-full">
                       {award}
                     </span>
                   ))}
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
+              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
                   {featuredBook.originalPrice && (
                     <div className="flex items-center gap-1">
                       <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-foreground text-background px-1 sm:px-1.5 py-0.5 rounded font-medium">
+                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
                         -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
                       </span>
                     </div>
                   )}
-                  <span className="font-semibold text-sm sm:text-base text-foreground">${featuredBook.price.toFixed(2)}</span>
+                  <span className="product-price">${featuredBook.price.toFixed(2)}</span>
                 </div>
                 
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
+                  variant="clay"
+                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -325,46 +325,46 @@ export const FeaturedProducts = () => {
               />
             </div>
             <div className="p-3 sm:p-4">
-              <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider">{featuredSupplement.category}</p>
-              <h3 className="font-medium mb-1 sm:mb-2 text-sm sm:text-base group-hover:text-clay transition-colors line-clamp-2">{featuredSupplement.name}</h3>
+              <p className="product-brand mb-1 sm:mb-2">{featuredSupplement.category}</p>
+              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredSupplement.name}</h3>
               
               {featuredSupplement.rating && (
                 <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-primary text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium">{featuredSupplement.rating}</span>
+                  <span className="text-gold text-[10px] sm:text-xs">★</span>
+                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredSupplement.rating}</span>
                   <span className="text-[10px] sm:text-xs text-text-muted">({featuredSupplement.reviewCount?.toLocaleString()})</span>
                 </div>
               )}
               
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredSupplement.description}</p>
+              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredSupplement.description}</p>
               
               {featuredSupplement.certifications && featuredSupplement.certifications.length > 0 && (
                 <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
                   {featuredSupplement.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span key={idx} className="text-[10px] bg-clay/10 text-clay px-2 py-0.5 rounded-full">
                       {cert}
                     </span>
                   ))}
                 </div>
               )}
               
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50">
+              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
                   {featuredSupplement.originalPrice && (
                     <div className="flex items-center gap-1">
                       <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredSupplement.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-foreground text-background px-1 sm:px-1.5 py-0.5 rounded font-medium">
+                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
                         -{calculateDiscount(featuredSupplement.originalPrice, featuredSupplement.price)}%
                       </span>
                     </div>
                   )}
-                  <span className="font-semibold text-sm sm:text-base text-foreground">${featuredSupplement.price.toFixed(2)}</span>
+                  <span className="product-price">${featuredSupplement.price.toFixed(2)}</span>
                 </div>
                 
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
+                  variant="clay"
+                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
                   asChild
                   onClick={(e) => e.stopPropagation()}
                 >

@@ -22,16 +22,16 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-secondary/50 border-t border-border">
+    <footer className="bg-card border-t border-border">
       {/* Newsletter Section */}
       <div className="border-b border-border">
         <div className="container-custom py-12 lg:py-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div>
-              <h3 className="text-2xl lg:text-3xl font-display font-semibold text-foreground mb-3">
+              <h3 className="text-2xl lg:text-3xl font-display font-semibold text-text-primary mb-3">
                 Intention in your inbox.
               </h3>
-              <p className="text-foreground/70 max-w-md">
+              <p className="text-text-secondary text-sm sm:text-base max-w-md">
                 Join 50,000+ people who receive LunaRituals Weekly—our curated newsletter of personal development tips on happiness, productivity, relationships, and more.
               </p>
             </div>
@@ -42,12 +42,12 @@ export const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="rounded-r-none border-r-0 bg-background h-12 text-sm placeholder:text-foreground/40"
+                className="rounded-r-none border-r-0 bg-background h-12 text-sm placeholder:text-text-muted"
               />
               <Button 
                 type="submit" 
-                variant="ghost"
-                className="rounded-l-none border border-l-0 border-input h-12 px-4 hover:bg-foreground hover:text-background transition-colors"
+                variant="default"
+                className="rounded-l-none h-12 px-4"
                 disabled={isSubmitting}
               >
                 <ArrowRight className="h-4 w-4" />
@@ -62,42 +62,42 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* I. Shop */}
           <div>
-            <h4 className="text-xs font-medium uppercase tracking-[0.15em] text-foreground mb-6">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-primary mb-6">
               I. Shop
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/shop" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Shop All
                 </Link>
               </li>
               <li>
-                <Link to="/shop?filter=bestsellers" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?filter=bestsellers" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Bestsellers
                 </Link>
               </li>
               <li>
-                <Link to="/shop?tab=books" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?tab=books" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Journals
                 </Link>
               </li>
               <li>
-                <Link to="/shop?tab=affirmations" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?tab=affirmations" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Affirmations
                 </Link>
               </li>
               <li>
-                <Link to="/shop?tab=candles" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?tab=candles" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Candles
                 </Link>
               </li>
               <li>
-                <Link to="/shop?tab=supplements" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?tab=supplements" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Wellness
                 </Link>
               </li>
               <li>
-                <Link to="/shop?tab=fashion" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/shop?tab=fashion" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Lifestyle
                 </Link>
               </li>
@@ -106,32 +106,32 @@ export const Footer = () => {
 
           {/* II. LunaRituals */}
           <div>
-            <h4 className="text-xs font-medium uppercase tracking-[0.15em] text-foreground mb-6">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-primary mb-6">
               II. LunaRituals
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/our-story" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/our-story" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link to="/sustainability" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/sustainability" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Sustainability
                 </Link>
               </li>
               <li>
-                <Link to="/reviews" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/reviews" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Reviews
                 </Link>
               </li>
               <li>
-                <Link to="/journal" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/journal" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   The Journal
                 </Link>
               </li>
               <li>
-                <Link to="/affirmation-builder" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/affirmation-builder" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Affirmation Studio
                 </Link>
               </li>
@@ -140,32 +140,32 @@ export const Footer = () => {
 
           {/* III. Support */}
           <div>
-            <h4 className="text-xs font-medium uppercase tracking-[0.15em] text-foreground mb-6">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-primary mb-6">
               III. Support
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/contact" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/contact" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link to="/wholesale" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/wholesale" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Wholesale
                 </Link>
               </li>
               <li>
-                <Link to="/custom-orders" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/custom-orders" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Custom Orders
                 </Link>
               </li>
               <li>
-                <Link to="/privacy-policy" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/privacy-policy" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/terms" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
                   Terms of Service
                 </Link>
               </li>
@@ -174,7 +174,7 @@ export const Footer = () => {
 
           {/* IV. Connect */}
           <div>
-            <h4 className="text-xs font-medium uppercase tracking-[0.15em] text-foreground mb-6">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-primary mb-6">
               IV. Connect
             </h4>
             <ul className="space-y-3">
@@ -183,7 +183,7 @@ export const Footer = () => {
                   href="https://instagram.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                  className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                 >
                   Instagram
                 </a>
@@ -193,7 +193,7 @@ export const Footer = () => {
                   href="https://tiktok.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                  className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                 >
                   TikTok
                 </a>
@@ -203,7 +203,7 @@ export const Footer = () => {
                   href="https://pinterest.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                  className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                 >
                   Pinterest
                 </a>
@@ -213,7 +213,7 @@ export const Footer = () => {
                   href="https://youtube.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                  className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                 >
                   YouTube
                 </a>
@@ -226,7 +226,7 @@ export const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-border">
         <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-foreground/60">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
             <p>
               LunaRituals is making intentional living simple, beautiful and accessible. We create products that help you realize your potential and live a happier, more fulfilling life.
             </p>

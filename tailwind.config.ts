@@ -54,6 +54,10 @@ export default {
         "text-primary": "hsl(var(--text-primary))",
         "text-secondary": "hsl(var(--text-secondary))",
         "text-muted": "hsl(var(--text-muted))",
+        "brown-dark": "hsl(var(--brown-dark))",
+        "brown-medium": "hsl(var(--brown-medium))",
+        "brown-light": "hsl(var(--brown-light))",
+        "cream-text": "hsl(var(--cream-text))",
       },
       fontFamily: {
         display: ['"Playfair Display"', 'serif'],
