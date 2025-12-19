@@ -1,59 +1,66 @@
-import { Award, ShieldCheck, Heart } from "lucide-react";
+import { Award, ShieldCheck, Heart, Leaf, Truck, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 
-const pillars = [
+const features = [
   {
     icon: Award,
-    title: "Research-Driven",
-    description: "Our affirmations are crafted using positive psychology principles backed by scientific research on mindset and self-improvement.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Money-Back Guarantee",
-    description: "Not completely in love with your purchase? We offer hassle-free returns within 30 days for complete peace of mind.",
+    title: "Research-Backed",
+    description: "Affirmations crafted using positive psychology principles"
   },
   {
     icon: Heart,
-    title: "Community Focused",
-    description: "Join a supportive community of 50,000+ intentional living enthusiasts who inspire and uplift each other daily.",
+    title: "50K+ Community",
+    description: "Join intentional souls who start each day with purpose"
+  },
+  {
+    icon: Leaf,
+    title: "Sustainable",
+    description: "Eco-conscious prints and packaging"
+  },
+  {
+    icon: Truck,
+    title: "Free Shipping",
+    description: "On US orders $35+ and international $55+"
+  },
+  {
+    icon: ShieldCheck,
+    title: "Secure Checkout",
+    description: "Shop with complete peace of mind"
+  },
+  {
+    icon: RefreshCw,
+    title: "Easy Returns",
+    description: "30-day hassle-free return policy"
   },
 ];
 
 export const WhyLunaRituals = () => {
   return (
-    <section className="py-16 lg:py-20 bg-white">
+    <section className="py-16 lg:py-20 bg-secondary/30 border-y border-border/30">
       <div className="container-custom">
         <motion.div 
-          className="text-center mb-12"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl lg:text-4xl font-display text-foreground mb-4">Why LunaRituals</h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            More than a shop—a destination for mindful living and daily inspiration
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {pillars.map((pillar, index) => (
+          {features.map((feature, index) => (
             <motion.div 
-              key={pillar.title}
-              className="text-center p-8 bg-secondary rounded-lg"
-              initial={{ opacity: 0, y: 30 }}
+              key={feature.title}
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-clay/10 mb-6">
-                <pillar.icon className="h-8 w-8 text-clay" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-clay/10 mb-4">
+                <feature.icon className="h-5 w-5 text-clay" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">{pillar.title}</h3>
-              <p className="text-text-secondary leading-relaxed">{pillar.description}</p>
+              <h3 className="text-sm font-semibold text-foreground mb-1">{feature.title}</h3>
+              <p className="text-xs text-text-secondary leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

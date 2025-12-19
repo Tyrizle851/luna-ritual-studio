@@ -1,75 +1,36 @@
-import { Truck, ShieldCheck, Heart } from "lucide-react";
-import { motion } from "framer-motion";
+import { Truck, ShieldCheck, Heart, RefreshCw } from "lucide-react";
 
 const trustItems = [
   {
     icon: Truck,
-    title: "Free Shipping",
-    description: "FREE Shipping on US orders $35+, UK £55+, EU €55+. We ship worldwide*.",
+    text: "Free shipping on orders $35+"
   },
   {
     icon: ShieldCheck,
-    title: "100% Secure Checkout",
-    description: "Shop with confidence that your purchase is safe and secure throughout the checkout process.",
+    text: "Secure checkout"
+  },
+  {
+    icon: RefreshCw,
+    text: "Easy 30-day returns"
   },
   {
     icon: Heart,
-    title: "Satisfaction Guarantee",
-    description: "On our entire collection. Because we're confident you'll love your purchase.",
+    text: "50K+ happy customers"
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
-
 export const TrustStrip = () => {
   return (
-    <section className="py-12 lg:py-16 bg-[#FAF8F5] border-t border-border/30">
+    <section className="py-4 bg-clay/5 border-t border-border/20">
       <div className="container-custom">
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {trustItems.map((item, index) => (
-            <motion.div 
-              key={item.title} 
-              className="flex items-start gap-4"
-              variants={itemVariants}
-            >
-              <div className="flex-shrink-0">
-                <item.icon className="h-6 w-6 text-foreground/70" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold text-foreground mb-1">
-                  <span className="text-clay">{item.title.split(' ')[0]}</span>{' '}
-                  {item.title.split(' ').slice(1).join(' ')}
-                </h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+          {trustItems.map((item) => (
+            <div key={item.text} className="flex items-center gap-2 text-text-secondary">
+              <item.icon className="h-4 w-4 text-clay" strokeWidth={1.5} />
+              <span className="text-xs tracking-wide">{item.text}</span>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

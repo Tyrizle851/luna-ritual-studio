@@ -2,13 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Mail, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 
 export const NewsletterCTA = () => {
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,14 +18,13 @@ export const NewsletterCTA = () => {
     
     try {
       const { data, error } = await supabase.functions.invoke('handle-newsletter-signup', {
-        body: { email, firstName, source: 'newsletter-cta' }
+        body: { email, source: 'newsletter-cta' }
       });
 
       if (error) throw error;
 
-      toast.success("Welcome to Luna Weekly! Check your inbox.");
+      toast.success("Welcome to Luna Weekly!");
       setEmail("");
-      setFirstName("");
     } catch (error: any) {
       console.error("Newsletter signup error:", error);
       toast.error("Something went wrong. Please try again.");
@@ -36,10 +34,11 @@ export const NewsletterCTA = () => {
   };
 
   return (
-    <section className="relative py-20 lg:py-28 overflow-hidden">
-      {/* Background with subtle pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-clay/10 via-clay/5 to-transparent" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNhOTdlNjMiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-foreground">
+      {/* Subtle pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_transparent_50%,_hsl(var(--background))_100%)]" />
+      </div>
       
       <div className="container-custom relative z-10">
         <motion.div 
@@ -49,45 +48,39 @@ export const NewsletterCTA = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full mb-6 shadow-sm">
-            <Sparkles className="h-4 w-4 text-clay" />
-            <span className="text-sm font-medium text-clay-dark">Weekly Inspiration</span>
-          </div>
-          
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display text-foreground mb-4">
-            Sign up for Luna Weekly
-          </h2>
-          <p className="text-lg text-text-secondary mb-8 max-w-lg mx-auto">
-            Weekly reflections, new affirmations, exclusive drops, and curated finds delivered straight to your inbox.
+          <p className="text-xs uppercase tracking-[0.3em] text-background/60 mb-6">
+            Weekly Inspiration
           </p>
           
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-            <Input
-              type="text"
-              placeholder="First name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="flex-1 h-12 bg-white border-border/50 focus:border-clay"
-            />
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display text-background mb-6 leading-tight">
+            Join 50,000+ intentional souls
+          </h2>
+          
+          <p className="text-lg text-background/70 mb-10 max-w-lg mx-auto">
+            Weekly reflections, new affirmations, and curated finds delivered to your inbox.
+          </p>
+          
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <Input
               type="email"
-              placeholder="Email address"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 h-12 bg-white border-border/50 focus:border-clay"
+              className="flex-1 h-14 bg-background/10 border-background/20 text-background placeholder:text-background/50 rounded-none focus:border-background/40"
             />
             <Button 
               type="submit"
-              className="h-12 px-8 bg-clay hover:bg-clay-dark text-white font-semibold"
+              size="lg"
+              className="h-14 px-8 bg-background text-foreground hover:bg-background/90 rounded-none"
               disabled={isSubmitting}
             >
-              <Mail className="mr-2 h-4 w-4" />
               {isSubmitting ? "Joining..." : "Subscribe"}
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </form>
           
-          <p className="text-xs text-text-secondary mt-4">
+          <p className="text-xs text-background/40 mt-6">
             No spam, ever. Unsubscribe anytime.
           </p>
         </motion.div>

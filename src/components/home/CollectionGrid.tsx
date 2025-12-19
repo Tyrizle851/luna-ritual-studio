@@ -1,70 +1,106 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Sparkles, BookOpen, Flame, Heart, Shirt, Palette } from "lucide-react";
 
 interface CollectionItem {
   label: string;
   subtitle: string;
   href: string;
-  color: string;
+  icon: React.ElementType;
+  image: string;
 }
 
 const collections: CollectionItem[] = [
-  { label: "AFFIRMATIONS", subtitle: "Your Inner Voice Matters", href: "/shop?tab=affirmations", color: "text-amber-700" },
-  { label: "JOURNALS", subtitle: "Stories to Inspire", href: "/shop?tab=books", color: "text-emerald-700" },
-  { label: "CANDLES", subtitle: "Set the Mood", href: "/shop?tab=candles", color: "text-orange-700" },
-  { label: "WELLNESS", subtitle: "Nourish Your Journey", href: "/shop?tab=supplements", color: "text-teal-700" },
-  { label: "LIFESTYLE", subtitle: "Timeless Pieces", href: "/shop?tab=lifestyle", color: "text-rose-700" },
-  { label: "STUDIO", subtitle: "Create Your Own", href: "/affirmation-builder", color: "text-violet-700" },
+  { 
+    label: "AFFIRMATIONS", 
+    subtitle: "Digital Art", 
+    href: "/shop?tab=affirmations",
+    icon: Sparkles,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop"
+  },
+  { 
+    label: "JOURNALS", 
+    subtitle: "Stories & Books", 
+    href: "/shop?tab=books",
+    icon: BookOpen,
+    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=500&fit=crop"
+  },
+  { 
+    label: "CANDLES", 
+    subtitle: "Set the Mood", 
+    href: "/shop?tab=candles",
+    icon: Flame,
+    image: "https://images.unsplash.com/photo-1602607625929-59c67f44b45a?w=400&h=500&fit=crop"
+  },
+  { 
+    label: "WELLNESS", 
+    subtitle: "Supplements", 
+    href: "/shop?tab=supplements",
+    icon: Heart,
+    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=400&h=500&fit=crop"
+  },
+  { 
+    label: "FASHION", 
+    subtitle: "Curated Style", 
+    href: "/shop?tab=fashion",
+    icon: Shirt,
+    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=500&fit=crop"
+  },
+  { 
+    label: "STUDIO", 
+    subtitle: "Create Yours", 
+    href: "/affirmation-builder",
+    icon: Palette,
+    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=500&fit=crop"
+  },
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
 
 export const CollectionGrid = () => {
   return (
-    <section className="py-16 lg:py-20 bg-[#FAF8F5]">
+    <section className="py-16 lg:py-24 bg-background">
       <div className="container-custom">
         <motion.div 
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
         >
-          {collections.map((item) => (
-            <motion.div key={item.label} variants={itemVariants}>
+          <p className="text-xs uppercase tracking-[0.25em] text-clay mb-4">Shop by Category</p>
+          <h2 className="text-3xl lg:text-4xl font-display text-foreground">The Collections</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+          {collections.map((item, index) => (
+            <motion.div 
+              key={item.label}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08, duration: 0.5 }}
+            >
               <Link 
                 to={item.href} 
-                className="group flex flex-col items-center text-center py-8 lg:py-10 px-4 hover:bg-white/60 rounded-lg transition-all duration-300"
+                className="group relative block aspect-[4/5] overflow-hidden bg-secondary"
               >
-                <h3 className={`text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-2 ${item.color} group-hover:scale-105 transition-transform duration-300`}>
-                  {item.label}
-                </h3>
-                <p className="text-xs sm:text-sm text-text-secondary flex items-center gap-1 group-hover:text-foreground transition-colors duration-300">
-                  {item.subtitle}
-                  <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                </p>
+                <img 
+                  src={item.image}
+                  alt={item.label}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-4 lg:p-6">
+                  <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <item.icon className="h-5 w-5 text-background/80 mb-2" />
+                    <h3 className="text-sm lg:text-base font-semibold tracking-[0.15em] text-background uppercase">
+                      {item.label}
+                    </h3>
+                    <p className="text-xs text-background/70 mt-1">{item.subtitle}</p>
+                  </div>
+                </div>
               </Link>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
