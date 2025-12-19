@@ -73,30 +73,77 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    font-size: 16px;
+    line-height: 1.6;
   }
 
+  /* Elegant typography hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold;
+    @apply font-display font-semibold tracking-tight;
+    line-height: 1.2;
   }
 
+  /* Page titles - largest */
   h1 {
-    @apply text-4xl leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+    letter-spacing: -0.02em;
   }
 
+  /* Section headers */
   h2 {
-    @apply text-3xl leading-snug tracking-tight sm:text-4xl md:text-5xl;
+    @apply text-2xl sm:text-3xl md:text-4xl;
+    letter-spacing: -0.015em;
   }
 
+  /* Subsection headers */
   h3 {
-    @apply text-xl leading-snug sm:text-2xl md:text-3xl;
+    @apply text-xl sm:text-2xl md:text-2xl;
+    letter-spacing: -0.01em;
   }
 
+  /* Card/component headers */
   h4 {
-    @apply text-lg leading-snug sm:text-xl md:text-2xl;
+    @apply text-lg sm:text-xl;
+    letter-spacing: -0.005em;
   }
 
+  /* Small headers */
+  h5 {
+    @apply text-base sm:text-lg font-medium;
+  }
+
+  h6 {
+    @apply text-sm sm:text-base font-medium uppercase tracking-wide;
+  }
+
+  /* Body text */
   p {
-    @apply text-base leading-relaxed sm:text-base md:text-lg;
+    @apply text-base leading-relaxed;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Lead/intro text */
+  .text-lead {
+    @apply text-lg sm:text-xl leading-relaxed;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Small/caption text */
+  .text-small {
+    @apply text-sm leading-normal;
+    color: hsl(var(--text-muted));
+  }
+
+  /* Section description - consistent across pages */
+  .section-description {
+    @apply text-base sm:text-lg leading-relaxed max-w-2xl;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Page subtitle */
+  .page-subtitle {
+    @apply text-sm sm:text-base uppercase tracking-[0.15em] font-medium;
+    color: hsl(var(--clay));
   }
 
   .text-balance {
