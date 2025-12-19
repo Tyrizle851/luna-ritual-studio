@@ -98,7 +98,7 @@ const Index = () => {
             <img 
               src={powerHourImg} 
               alt="I celebrate every small win affirmation" 
-              className="absolute inset-0 w-full h-full object-cover scale-[1.1]"
+              className="absolute inset-0 w-full h-full object-contain scale-[0.6]"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/20" />
             
