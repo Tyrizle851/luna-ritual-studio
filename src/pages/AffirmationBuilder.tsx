@@ -40,32 +40,7 @@ import { ReviewsSection } from "./AffirmationBuilder/components/ReviewsSection";
 import { WhyAffirmationStudio } from "./AffirmationBuilder/components/WhyAffirmationStudio";
 import { PageHeader } from "./AffirmationBuilder/components/PageHeader";
 
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
-
-interface FavoriteConfig {
-  id: string;
-  theme: string;
-  mood: string;
-  layoutStyle: string;
-  userKeywords: string;
-  seed: string;
-  generatedData: GeneratedData;
-  timestamp: number;
-}
-
-interface HistoryItem {
-  id: string;
-  imageB64: string;
-  generatedData: GeneratedData;
-  timestamp: number;
-}
+import type { GeneratedData, FavoriteConfig, HistoryItem } from "./AffirmationBuilder/types";
 
 const AffirmationBuilder = () => {
   const [theme, setTheme] = useState("confidence");
@@ -85,7 +60,7 @@ const AffirmationBuilder = () => {
     palette: ["#F5F1E8", "#D4B896", "#8B7355"],
     paletteNames: ["#F5F1E8", "#D4B896", "#8B7355"],
     layoutStyle: "Centered with flowing organic elements",
-    accentElements: "watercolor washes, flowing lines, organic shapes"
+    accentElements: ["watercolor washes", "flowing lines", "organic shapes"]
   });
   const [generatedImageB64, setGeneratedImageB64] = useState<string | null>(null);
   const [previewImagesB64, setPreviewImagesB64] = useState<string[]>([miraclesPreviewImg]); // Show "I am open to miracles" by default

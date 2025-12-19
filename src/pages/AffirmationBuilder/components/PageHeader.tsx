@@ -7,22 +7,7 @@ import { WorkflowProgress } from './WorkflowProgress';
 import { OnboardingDialog } from './OnboardingDialog';
 import { ComparisonDialog } from './ComparisonDialog';
 import { LoadingState } from './LoadingState';
-
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
-
-interface HistoryItem {
-  id: string;
-  imageB64: string;
-  generatedData: GeneratedData;
-  timestamp: number;
-}
+import type { GeneratedData, HistoryItem } from '../types';
 
 interface PageHeaderProps {
   previewImagesB64: string[];

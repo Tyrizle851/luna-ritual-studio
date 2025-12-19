@@ -5,15 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { buildDesignSpec } from '@/lib/designSpecBuilder';
 import type { ThemeSlug, MoodSlug } from '@/types/design-spec';
 import { getLayoutArchetype } from '../utils/layoutMapping';
-
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string[];
-}
+import type { GeneratedData } from '../types';
 
 interface UseAffirmationGenerationProps {
   theme: string;

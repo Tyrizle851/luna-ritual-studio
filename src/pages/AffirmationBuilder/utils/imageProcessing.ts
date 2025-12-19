@@ -97,7 +97,7 @@ export function base64ToBlob(base64: string, contentType = 'image/png'): Blob {
   const base64Data = base64.includes(',') ? base64.split(',')[1] : base64;
 
   const byteCharacters = atob(base64Data);
-  const byteArrays: Uint8Array[] = [];
+  const byteArrays: BlobPart[] = [];
 
   for (let offset = 0; offset < byteCharacters.length; offset += 512) {
     const slice = byteCharacters.slice(offset, offset + 512);
@@ -108,7 +108,7 @@ export function base64ToBlob(base64: string, contentType = 'image/png'): Blob {
     }
 
     const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
+    byteArrays.push(byteArray as BlobPart);
   }
 
   return new Blob(byteArrays, { type: contentType });
