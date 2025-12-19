@@ -93,35 +93,32 @@ const Index = () => {
           </div>
 
           {/* Right Hero - Product Showcase */}
-          <div className="relative h-[50vh] lg:h-auto bg-secondary/50 flex items-center justify-center p-8 lg:p-12">
-            <div className="text-center max-w-md">
-              <p className="text-foreground text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4" style={{ fontStyle: 'italic' }}>
-                Step into 2025 with clarity and confidence.
-              </p>
-              <p className="text-foreground/70 text-base lg:text-lg mb-8">
-                Mindful tools for connection, gratitude, and growth.
-              </p>
-              <Link 
-                to="/collections"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-foreground text-foreground text-sm font-medium uppercase tracking-wide hover:bg-foreground hover:text-background transition-colors"
-              >
-                Shop Now
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+          <div className="relative h-[50vh] lg:h-auto overflow-hidden">
+            {/* Background Image */}
+            <img 
+              src={powerHourImg} 
+              alt="I celebrate every small win affirmation" 
+              className="absolute inset-0 w-full h-full object-cover scale-[1.1]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/20" />
             
-            {/* Product Images Stack - showing affirmation previews */}
-            <div className="absolute bottom-8 right-8 lg:bottom-12 lg:right-12 hidden lg:flex gap-2">
-              <img 
-                src={morningRitualImg} 
-                alt="Affirmation preview" 
-                className="w-24 h-32 object-cover shadow-lg"
-              />
-              <img 
-                src={powerHourImg} 
-                alt="Affirmation preview" 
-                className="w-24 h-32 object-cover shadow-lg -mt-4"
-              />
+            {/* Content Overlay */}
+            <div className="relative z-10 h-full flex items-center justify-center p-8 lg:p-12">
+              <div className="text-center max-w-md">
+                <p className="text-background text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4 drop-shadow-md" style={{ fontStyle: 'italic' }}>
+                  Step into 2025 with clarity and confidence.
+                </p>
+                <p className="text-background/90 text-base lg:text-lg mb-8 drop-shadow-sm">
+                  Mindful tools for connection, gratitude, and growth.
+                </p>
+                <Link 
+                  to="/collections"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-background/90 backdrop-blur-sm text-foreground text-sm font-medium uppercase tracking-wide hover:bg-background transition-colors"
+                >
+                  Shop Now
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
