@@ -57,7 +57,7 @@ const Index = () => {
               playsInline
               poster="/hero-poster.jpg"
               preload="auto"
-              className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+              className="absolute inset-0 w-full h-full object-cover scale-[1.25]"
               style={{ filter: 'brightness(0.7)' }}
             >
               <source src="/hero-video.mp4" type="video/mp4" />
