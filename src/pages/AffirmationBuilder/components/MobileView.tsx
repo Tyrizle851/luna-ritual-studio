@@ -45,7 +45,7 @@ interface MobileViewProps {
   cancelEdits: () => void;
   shareToSocial: (platform: string) => void;
   selectedImages: number[];
-  setSelectedImages: (indices: number[]) => void;
+  setSelectedImages: React.Dispatch<React.SetStateAction<number[]>>;
   setExpandedImage: (image: { url: string; type: 'preview' | 'final' } | null) => void;
   setShowComparison: (show: boolean) => void;
   editedHeadline: string;
