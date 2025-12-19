@@ -8,54 +8,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* LunaRituals Brand Colors - Warm, Earthy, Feminine */
-    --bg-primary: 33 33% 97%;        /* #FAF7F2 - warm off-white */
-    --bg-secondary: 33 25% 91%;      /* #EDE8E0 - soft stone */
-    --bg-cream: 36 29% 95%;          /* #F5F1EA - cream */
+    /* LunaRituals Brand Colors - Refined Cream & Dark Brown */
+    --bg-cream: 40 33% 96%;          /* Soft warm cream */
+    --bg-cream-light: 45 35% 98%;    /* Lighter cream for cards */
+    --bg-cream-soft: 38 28% 94%;     /* Soft cream for sections */
     
-    --clay: 27 36% 68%;              /* #C8A992 - warm clay */
-    --clay-dark: 27 32% 61%;         /* #B59780 - darker clay */
-    --taupe: 24 13% 56%;             /* #9D8B7F - soft taupe */
-    --gold: 32 41% 70%;              /* #D4AF8E - warm gold */
+    --brown-dark: 25 35% 22%;        /* Deep espresso brown - primary text/buttons */
+    --brown-medium: 25 28% 32%;      /* Medium brown for secondary text */
+    --brown-muted: 25 18% 48%;       /* Muted brown for captions */
+    --brown-light: 28 25% 65%;       /* Light brown for accents */
     
-    --text-primary: 20 27% 15%;      /* #2C2420 - deep warm black */
-    --text-secondary: 25 13% 32%;    /* #5A5047 - medium warm gray */
-    --text-muted: 25 9% 51%;         /* #8A7F76 - muted warm gray */
+    --clay: 28 32% 58%;              /* Warm clay accent */
+    --clay-dark: 25 35% 22%;         /* Same as brown-dark for consistency */
+    --taupe: 24 16% 52%;             /* Soft taupe */
+    --gold: 36 38% 62%;              /* Warm gold accent */
+    
+    --text-primary: 25 35% 22%;      /* Deep brown - main text */
+    --text-secondary: 25 28% 32%;    /* Medium brown - body text */
+    --text-muted: 25 18% 48%;        /* Muted brown - captions */
+    --cream-text: 40 33% 96%;        /* Cream for text on dark backgrounds */
 
     /* Semantic tokens for components */
-    --background: 36 29% 95%;        /* Using cream color */
-    --foreground: 20 27% 15%;
+    --background: 40 33% 96%;        /* Main cream background */
+    --foreground: 25 35% 22%;        /* Dark brown text */
 
-    --card: 33 33% 97%;              /* Lighter cream for cards */
-    --card-foreground: 20 27% 15%;
+    --card: 45 35% 98%;              /* Light cream for cards */
+    --card-foreground: 25 35% 22%;   /* Dark brown text */
 
-    --popover: 33 33% 97%;
-    --popover-foreground: 20 27% 15%;
+    --popover: 45 35% 98%;
+    --popover-foreground: 25 35% 22%;
 
-    --primary: 27 36% 68%;
-    --primary-foreground: 20 27% 15%;
+    --primary: 25 35% 22%;           /* Dark brown for primary buttons */
+    --primary-foreground: 40 33% 96%; /* Cream text on dark brown */
 
-    --secondary: 33 25% 91%;
-    --secondary-foreground: 20 27% 15%;
+    --secondary: 38 28% 94%;         /* Soft cream for secondary elements */
+    --secondary-foreground: 25 35% 22%; /* Dark brown text */
 
-    --muted: 33 25% 91%;
-    --muted-foreground: 25 13% 32%;
+    --muted: 38 28% 94%;
+    --muted-foreground: 25 28% 32%;
 
-    --accent: 32 41% 70%;
-    --accent-foreground: 20 27% 15%;
+    --accent: 28 32% 58%;            /* Clay accent color */
+    --accent-foreground: 45 35% 98%; /* Cream text on accent */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 33 33% 97%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 45 35% 98%;
 
-    --border: 33 25% 91%;
-    --input: 33 25% 91%;
-    --ring: 27 36% 68%;
+    --border: 30 20% 88%;            /* Subtle warm border */
+    --input: 30 20% 88%;
+    --ring: 25 35% 22%;              /* Dark brown focus ring */
 
     --radius: 2px;
 
-    /* Custom shadows */
-    --shadow-subtle: 0 4px 12px hsl(20 27% 15% / 0.08);
-    --shadow-medium: 0 8px 24px hsl(20 27% 15% / 0.12);
+    /* Custom shadows with warm brown tones */
+    --shadow-subtle: 0 4px 12px hsl(25 35% 22% / 0.06);
+    --shadow-medium: 0 8px 24px hsl(25 35% 22% / 0.10);
     
     /* Transitions */
     --transition-smooth: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -77,9 +83,10 @@ All colors MUST be HSL.
     line-height: 1.6;
   }
 
-  /* Elegant typography hierarchy */
+  /* Elegant typography hierarchy - titles always larger than descriptions */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-semibold tracking-tight;
+    color: hsl(var(--text-primary));
     line-height: 1.2;
   }
 
@@ -97,53 +104,86 @@ All colors MUST be HSL.
 
   /* Subsection headers */
   h3 {
-    @apply text-xl sm:text-2xl md:text-2xl;
+    @apply text-xl sm:text-2xl;
     letter-spacing: -0.01em;
   }
 
-  /* Card/component headers */
+  /* Card/component headers - always larger than card descriptions */
   h4 {
-    @apply text-lg sm:text-xl;
+    @apply text-base sm:text-lg md:text-xl font-semibold;
     letter-spacing: -0.005em;
   }
 
   /* Small headers */
   h5 {
-    @apply text-base sm:text-lg font-medium;
+    @apply text-base sm:text-lg font-semibold;
   }
 
   h6 {
-    @apply text-sm sm:text-base font-medium uppercase tracking-wide;
+    @apply text-sm sm:text-base font-semibold uppercase tracking-wide;
   }
 
-  /* Body text */
+  /* Body text - smaller than all headers */
   p {
-    @apply text-base leading-relaxed;
+    @apply text-sm sm:text-base leading-relaxed;
     color: hsl(var(--text-secondary));
   }
 
-  /* Lead/intro text */
+  /* Lead/intro text - still smaller than h3+ */
   .text-lead {
-    @apply text-lg sm:text-xl leading-relaxed;
+    @apply text-base sm:text-lg leading-relaxed;
     color: hsl(var(--text-secondary));
   }
 
   /* Small/caption text */
   .text-small {
-    @apply text-sm leading-normal;
+    @apply text-xs sm:text-sm leading-normal;
     color: hsl(var(--text-muted));
   }
 
-  /* Section description - consistent across pages */
+  /* Section description - always smaller than section headers */
   .section-description {
-    @apply text-base sm:text-lg leading-relaxed max-w-2xl;
+    @apply text-sm sm:text-base leading-relaxed max-w-2xl;
     color: hsl(var(--text-secondary));
   }
 
-  /* Page subtitle */
+  /* Page subtitle - elegant uppercase accent */
   .page-subtitle {
-    @apply text-sm sm:text-base uppercase tracking-[0.15em] font-medium;
-    color: hsl(var(--clay));
+    @apply text-xs sm:text-sm uppercase tracking-[0.2em] font-medium;
+    color: hsl(var(--brown-light));
+  }
+
+  /* Card title - always larger than card description */
+  .card-title {
+    @apply text-base sm:text-lg font-semibold leading-tight;
+    color: hsl(var(--text-primary));
+  }
+
+  /* Card description - smaller than card title */
+  .card-description {
+    @apply text-xs sm:text-sm leading-relaxed;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Product card specific */
+  .product-title {
+    @apply text-sm sm:text-base font-semibold leading-snug;
+    color: hsl(var(--text-primary));
+  }
+
+  .product-description {
+    @apply text-xs leading-relaxed;
+    color: hsl(var(--text-muted));
+  }
+
+  .product-brand {
+    @apply text-[10px] sm:text-xs uppercase tracking-wider font-medium;
+    color: hsl(var(--text-muted));
+  }
+
+  .product-price {
+    @apply text-sm sm:text-base font-bold;
+    color: hsl(var(--text-primary));
   }
 
   .text-balance {

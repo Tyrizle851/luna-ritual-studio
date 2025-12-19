@@ -59,7 +59,7 @@ export const Header = () => {
           {/* Left: Logo */}
           <Link to="/" className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
             <img src={logo} alt="LunaRituals" className="h-8 w-8 lg:h-10 lg:w-10" />
-            <span className="font-display text-lg lg:text-xl font-semibold text-foreground tracking-tight">
+            <span className="font-display text-lg lg:text-xl font-semibold text-text-primary tracking-tight">
               LunaRituals
             </span>
           </Link>
@@ -69,28 +69,28 @@ export const Header = () => {
             <Link 
               to="/shop" 
               className={`px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
-                isShopActive ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'
+                isShopActive ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Shop All
             </Link>
             <Link 
               to="/shop?filter=bestsellers" 
-              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-foreground/80 hover:text-foreground transition-colors"
+              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors"
             >
               Bestsellers
             </Link>
             <Link 
               to="/collections" 
               className={`px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
-                isActive('/collections') ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'
+                isActive('/collections') ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Collections
             </Link>
             <Link 
               to="/shop?filter=new" 
-              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-foreground/80 hover:text-foreground transition-colors"
+              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors"
             >
               New
             </Link>
@@ -103,7 +103,7 @@ export const Header = () => {
             <Link 
               to="/about" 
               className={`px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
-                isActive('/about') ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'
+                isActive('/about') ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Our Story
@@ -111,7 +111,7 @@ export const Header = () => {
             <Link 
               to="/journal" 
               className={`px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
-                isActive('/journal') ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'
+                isActive('/journal') ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Journal
@@ -119,7 +119,7 @@ export const Header = () => {
             <Link 
               to="/contact" 
               className={`px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
-                isActive('/contact') ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'
+                isActive('/contact') ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Contact
@@ -132,7 +132,7 @@ export const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setSearchOpen(!searchOpen)}
-              className="h-9 w-9 text-foreground/80 hover:text-foreground hover:bg-transparent"
+              className="h-9 w-9 text-text-secondary hover:text-text-primary hover:bg-transparent"
             >
               {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
             </Button>
@@ -141,11 +141,11 @@ export const Header = () => {
               variant="ghost"
               size="icon"
               onClick={toggleCart}
-              className="relative h-9 w-9 text-foreground/80 hover:text-foreground hover:bg-transparent"
+              className="relative h-9 w-9 text-text-secondary hover:text-text-primary hover:bg-transparent"
             >
               <ShoppingBag className="h-4 w-4" />
               {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-foreground text-background text-[10px] flex items-center justify-center font-medium">
+                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-medium">
                   {itemCount}
                 </span>
               )}
@@ -170,7 +170,7 @@ export const Header = () => {
             >
               <ShoppingBag className="h-4 w-4" />
               {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-foreground text-background text-[10px] flex items-center justify-center font-medium">
+                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-medium">
                   {itemCount}
                 </span>
               )}
