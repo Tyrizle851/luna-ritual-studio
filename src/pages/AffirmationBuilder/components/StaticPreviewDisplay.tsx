@@ -1,15 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader2, Sparkles } from 'lucide-react';
-
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
+import type { GeneratedData } from '../types';
 
 interface StaticPreviewDisplayProps {
   generatedData: GeneratedData;

@@ -1,11 +1,4 @@
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
+import type { GeneratedData } from '../types';
 
 /**
  * Generates preview affirmation data based on theme, mood, and layout
@@ -188,6 +181,6 @@ export function generatePreviewData(
     palette: finalPalette,
     paletteNames: finalPalette.map(c => c),
     layoutStyle: layoutDescription,
-    accentElements: finalAccents.join(", ")
+    accentElements: finalAccents
   };
 }

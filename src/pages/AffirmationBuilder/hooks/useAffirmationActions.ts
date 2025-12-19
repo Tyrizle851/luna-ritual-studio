@@ -1,25 +1,6 @@
 import { toast } from 'sonner';
 import { generatePreviewData as generatePreviewDataUtil } from '../utils/affirmationDataGenerator';
-
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
-
-interface FavoriteConfig {
-  id: string;
-  theme: string;
-  mood: string;
-  layoutStyle: string;
-  userKeywords: string;
-  seed: string;
-  generatedData: GeneratedData;
-  timestamp: number;
-}
+import type { GeneratedData, FavoriteConfig } from '../types';
 
 interface UseAffirmationActionsProps {
   theme: string;

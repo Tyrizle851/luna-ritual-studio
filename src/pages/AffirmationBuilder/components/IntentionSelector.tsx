@@ -5,15 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Palette, ChevronDown } from 'lucide-react';
-
-interface GeneratedData {
-  headline: string;
-  supportingLines: string[];
-  palette: string[];
-  paletteNames: string[];
-  layoutStyle: string;
-  accentElements: string;
-}
+import type { GeneratedData } from '../types';
 
 interface IntentionSelectorProps {
   theme: string;
