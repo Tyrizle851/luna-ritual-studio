@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
   children: ReactNode;
@@ -10,13 +9,7 @@ interface ProductCardProps {
 export const ProductCard = ({ children, onClick, className = "" }: ProductCardProps) => {
   return (
     <div 
-      className={cn(
-        "group relative bg-card rounded-xl border border-border/50 overflow-hidden",
-        "shadow-subtle hover:shadow-card-hover",
-        "hover:-translate-y-2 transition-all duration-300 ease-smooth cursor-pointer",
-        "img-zoom",
-        className
-      )}
+      className={`group relative bg-[#FAF8F5] border border-[#EBDDD1]/50 shadow-[0_4px_16px_rgba(139,107,84,0.08)] overflow-hidden hover:shadow-[0_8px_24px_rgba(139,107,84,0.14)] hover:-translate-y-1 transition-all duration-300 cursor-pointer ${className}`}
       onClick={onClick}
     >
       {children}

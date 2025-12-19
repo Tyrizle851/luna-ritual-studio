@@ -147,12 +147,13 @@ export function MobileView({
                 images={previewImagesB64}
                 selectedImages={selectedImages}
                 onImageClick={(url) => setExpandedImage({ url, type: 'preview' })}
-                onToggleSelection={(index) => {
-                  const newSelected = selectedImages.includes(index)
-                    ? selectedImages.filter(i => i !== index)
-                    : [...selectedImages, index];
-                  setSelectedImages(newSelected);
-                }}
+                onToggleSelection={(index) =>
+                  setSelectedImages(prev =>
+                    prev.includes(index)
+                      ? prev.filter(i => i !== index)
+                      : [...prev, index]
+                  )
+                }
                 onCompare={() => setShowComparison(true)}
               />
             ) : (
