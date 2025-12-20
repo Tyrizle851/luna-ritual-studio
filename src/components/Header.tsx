@@ -7,6 +7,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchBar } from "@/components/SearchBar";
 import logo from "@/assets/logo.png";
 
+// Category images for mobile menu
+import productChunkyCardigan from "@/assets/product-chunky-cardigan.jpg";
+import productCandleVanillaBean from "@/assets/product-candle-vanilla-bean.jpg";
+import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
+import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
+import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
+
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,13 +43,14 @@ export const Header = () => {
   const isActive = (path: string) => currentPath === path;
   const isShopActive = currentPath.includes('/shop') || currentPath.includes('/collections');
 
-  const shopLinks = [
-    { label: "Shop All", href: "/shop" },
-    { label: "Affirmations", href: "/shop?tab=affirmations" },
-    { label: "Journals", href: "/shop?tab=books" },
-    { label: "Fashion", href: "/shop?tab=fashion" },
-    { label: "Candles", href: "/shop?tab=candles" },
-    { label: "Wellness", href: "/shop?tab=supplements" },
+  // Mobile menu category data with images
+  const mobileCategories = [
+    { label: "Shop All", href: "/shop", image: productChunkyCardigan },
+    { label: "Affirmations", href: "/shop?tab=affirmations", image: LOCAL_DIGITAL_IMAGES["aff-015"] },
+    { label: "Journals", href: "/shop?tab=books", image: throneOfGlassImage },
+    { label: "Fashion", href: "/shop?tab=fashion", image: productChunkyCardigan },
+    { label: "Candles", href: "/shop?tab=candles", image: productCandleVanillaBean },
+    { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementCollagen },
   ];
 
   return (
@@ -181,72 +189,103 @@ export const Header = () => {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] p-0">
-                <nav className="flex flex-col pt-12">
-                  {/* Shop Section */}
-                  <div className="border-b border-border">
-                    <button
-                      onClick={() => setShopDropdownOpen(!shopDropdownOpen)}
-                      className="flex items-center justify-between w-full px-6 py-4 text-sm font-medium uppercase tracking-wide"
-                    >
-                      Shop
-                      <ChevronDown className={`h-4 w-4 transition-transform ${shopDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    {shopDropdownOpen && (
-                      <div className="pb-4">
-                        {shopLinks.map((link) => (
-                          <Link
-                            key={link.href}
-                            to={link.href}
-                            className="block px-8 py-2.5 text-sm text-foreground/70 hover:text-foreground transition-colors"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            {link.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+              <SheetContent side="left" className="w-full sm:w-[350px] p-0 overflow-y-auto">
+                <nav className="flex flex-col pt-16 pb-8">
+                  {/* Image Grid Categories - Mobile Only */}
+                  <div className="px-4 mb-6">
+                    <div className="grid grid-cols-2 gap-3">
+                      {mobileCategories.map((cat) => (
+                        <Link
+                          key={cat.href}
+                          to={cat.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="group relative aspect-[4/3] rounded-lg overflow-hidden"
+                        >
+                          <img 
+                            src={cat.image} 
+                            alt={cat.label}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                          <span className="absolute bottom-3 left-3 text-sm font-medium text-white">
+                            {cat.label} →
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  
-                  <Link
-                    to="/collections"
-                    className="px-6 py-4 text-sm font-medium uppercase tracking-wide border-b border-border"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Collections
-                  </Link>
-                  
-                  <Link
-                    to="/affirmation-builder"
-                    className="px-6 py-4 text-sm font-medium uppercase tracking-wide text-clay border-b border-border"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Studio
-                  </Link>
-                  
-                  <Link
-                    to="/about"
-                    className="px-6 py-4 text-sm font-medium uppercase tracking-wide border-b border-border"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Our Story
-                  </Link>
-                  
-                  <Link
-                    to="/journal"
-                    className="px-6 py-4 text-sm font-medium uppercase tracking-wide border-b border-border"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Journal
-                  </Link>
-                  
-                  <Link
-                    to="/contact"
-                    className="px-6 py-4 text-sm font-medium uppercase tracking-wide border-b border-border"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Contact
-                  </Link>
+
+                  {/* Divider with label */}
+                  <div className="flex items-center justify-between px-4 py-2 border-t border-border">
+                    <span className="text-[11px] uppercase tracking-wider text-text-muted font-medium">Categories</span>
+                    <Link 
+                      to="/shop" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[11px] uppercase tracking-wider text-text-muted hover:text-text-primary"
+                    >
+                      View all
+                    </Link>
+                  </div>
+
+                  {/* Category List with thumbnails */}
+                  <div className="border-t border-border">
+                    {mobileCategories.slice(1).map((cat) => (
+                      <Link
+                        key={cat.href}
+                        to={cat.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-4 px-4 py-3 hover:bg-muted/50 transition-colors border-b border-border/50"
+                      >
+                        <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 bg-muted">
+                          <img 
+                            src={cat.image} 
+                            alt={cat.label}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <span className="text-sm font-medium text-foreground">{cat.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Other Links */}
+                  <div className="mt-4 border-t border-border pt-4">
+                    <Link
+                      to="/collections"
+                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Collections
+                    </Link>
+                    <Link
+                      to="/affirmation-builder"
+                      className="block px-4 py-3 text-sm font-medium text-clay hover:bg-muted/50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Studio
+                    </Link>
+                    <Link
+                      to="/about"
+                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Our Story
+                    </Link>
+                    <Link
+                      to="/journal"
+                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Journal
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Contact
+                    </Link>
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
