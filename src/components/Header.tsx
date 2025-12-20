@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, Search, ShoppingBag, X, ChevronDown } from "lucide-react";
+import { Menu, Search, ShoppingBag, X, Sparkles, Heart, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchBar } from "@/components/SearchBar";
 import logo from "@/assets/logo.png";
 
-// Category images for mobile menu
-import productChunkyCardigan from "@/assets/product-chunky-cardigan.jpg";
-import productCandleVanillaBean from "@/assets/product-candle-vanilla-bean.jpg";
+// Unique category images for mobile menu
+import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
+import productCandleChristmasSet from "@/assets/product-candle-christmas-set.jpg";
 import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
-import throneOfGlassImage from "@/assets/product-throne-of-glass.jpg";
-import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
+import bookFourthWing from "@/assets/product-book-fourth-wing-1763580000.jpg";
+import productSupplementMatcha from "@/assets/product-supplement-domatcha-organic-1763495293.jpg";
+import productLinenRobe from "@/assets/product-linen-robe.jpg";
+import heroHome from "@/assets/hero-home.jpg";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -43,14 +45,14 @@ export const Header = () => {
   const isActive = (path: string) => currentPath === path;
   const isShopActive = currentPath.includes('/shop') || currentPath.includes('/collections');
 
-  // Mobile menu category data with images
+  // Mobile menu category data with UNIQUE images
   const mobileCategories = [
-    { label: "Shop All", href: "/shop", image: productChunkyCardigan },
-    { label: "Affirmations", href: "/shop?tab=affirmations", image: LOCAL_DIGITAL_IMAGES["aff-015"] },
-    { label: "Journals", href: "/shop?tab=books", image: throneOfGlassImage },
-    { label: "Fashion", href: "/shop?tab=fashion", image: productChunkyCardigan },
-    { label: "Candles", href: "/shop?tab=candles", image: productCandleVanillaBean },
-    { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementCollagen },
+    { label: "Shop All", href: "/shop", image: heroHome, emoji: "✨" },
+    { label: "Affirmations", href: "/shop?tab=affirmations", image: LOCAL_DIGITAL_IMAGES["aff-006"], emoji: "🌙" },
+    { label: "Books", href: "/shop?tab=books", image: bookFourthWing, emoji: "📚" },
+    { label: "Fashion", href: "/shop?tab=fashion", image: productLinenRobe, emoji: "👗" },
+    { label: "Candles", href: "/shop?tab=candles", image: productCandleChristmasSet, emoji: "🕯️" },
+    { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementMatcha, emoji: "🍵" },
   ];
 
   return (
@@ -189,102 +191,120 @@ export const Header = () => {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-full sm:w-[350px] p-0 overflow-y-auto">
-                <nav className="flex flex-col pt-16 pb-8">
-                  {/* Image Grid Categories - Mobile Only */}
-                  <div className="px-4 mb-6">
+              <SheetContent side="left" className="w-full sm:w-[380px] p-0 overflow-y-auto bg-background">
+                <nav className="flex flex-col">
+                  {/* Welcome Header */}
+                  <div className="bg-gradient-to-r from-clay/10 via-gold/10 to-clay/10 px-5 py-6 border-b border-border/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <img src={logo} alt="LunaRituals" className="h-8 w-8" />
+                      <span className="font-display text-lg font-semibold text-text-primary">LunaRituals</span>
+                    </div>
+                    <p className="text-sm text-text-secondary">
+                      Curated finds for intentional living ✨
+                    </p>
+                    <div className="flex items-center gap-4 mt-4">
+                      <Link
+                        to="/shop?filter=new"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-1.5 text-xs font-medium text-clay hover:text-clay-dark transition-colors"
+                      >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        New Arrivals
+                      </Link>
+                      <Link
+                        to="/collections"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-1.5 text-xs font-medium text-text-muted hover:text-text-primary transition-colors"
+                      >
+                        <Gift className="h-3.5 w-3.5" />
+                        Gift Guide
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Featured Image Grid */}
+                  <div className="px-4 py-5">
                     <div className="grid grid-cols-2 gap-3">
                       {mobileCategories.map((cat) => (
                         <Link
                           key={cat.href}
                           to={cat.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="group relative aspect-[4/3] rounded-lg overflow-hidden"
+                          className="group relative aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                         >
                           <img 
                             src={cat.image} 
                             alt={cat.label}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                           />
-                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
-                          <span className="absolute bottom-3 left-3 text-sm font-medium text-white">
-                            {cat.label} →
-                          </span>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-3">
+                            <span className="text-lg mb-0.5 block">{cat.emoji}</span>
+                            <span className="text-sm font-semibold text-white drop-shadow-sm">
+                              {cat.label}
+                            </span>
+                          </div>
                         </Link>
                       ))}
                     </div>
                   </div>
 
-                  {/* Divider with label */}
-                  <div className="flex items-center justify-between px-4 py-2 border-t border-border">
-                    <span className="text-[11px] uppercase tracking-wider text-text-muted font-medium">Categories</span>
-                    <Link 
-                      to="/shop" 
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-[11px] uppercase tracking-wider text-text-muted hover:text-text-primary"
-                    >
-                      View all
-                    </Link>
+                  {/* Quick Links */}
+                  <div className="px-4 pb-4">
+                    <div className="bg-muted/50 rounded-xl p-4">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-semibold mb-3 block">Quick Links</span>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          to="/affirmation-builder"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-clay hover:bg-clay/5 transition-colors"
+                        >
+                          <span className="text-base">🎨</span>
+                          Studio
+                        </Link>
+                        <Link
+                          to="/collections"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                        >
+                          <span className="text-base">💫</span>
+                          Collections
+                        </Link>
+                        <Link
+                          to="/about"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                        >
+                          <span className="text-base">💭</span>
+                          Our Story
+                        </Link>
+                        <Link
+                          to="/journal"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                        >
+                          <span className="text-base">📖</span>
+                          Journal
+                        </Link>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Category List with thumbnails */}
-                  <div className="border-t border-border">
-                    {mobileCategories.slice(1).map((cat) => (
+                  {/* Footer */}
+                  <div className="mt-auto border-t border-border/50 px-5 py-4 bg-muted/30">
+                    <div className="flex items-center justify-between">
                       <Link
-                        key={cat.href}
-                        to={cat.href}
+                        to="/contact"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-4 px-4 py-3 hover:bg-muted/50 transition-colors border-b border-border/50"
+                        className="text-xs text-text-muted hover:text-text-primary transition-colors"
                       >
-                        <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 bg-muted">
-                          <img 
-                            src={cat.image} 
-                            alt={cat.label}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <span className="text-sm font-medium text-foreground">{cat.label}</span>
+                        Contact Us
                       </Link>
-                    ))}
-                  </div>
-
-                  {/* Other Links */}
-                  <div className="mt-4 border-t border-border pt-4">
-                    <Link
-                      to="/collections"
-                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Collections
-                    </Link>
-                    <Link
-                      to="/affirmation-builder"
-                      className="block px-4 py-3 text-sm font-medium text-clay hover:bg-muted/50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Studio
-                    </Link>
-                    <Link
-                      to="/about"
-                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Our Story
-                    </Link>
-                    <Link
-                      to="/journal"
-                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Journal
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Contact
-                    </Link>
+                      <div className="flex items-center gap-1 text-xs text-text-muted">
+                        <Heart className="h-3 w-3 text-clay fill-clay" />
+                        Made with love
+                      </div>
+                    </div>
                   </div>
                 </nav>
               </SheetContent>
