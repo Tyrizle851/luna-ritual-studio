@@ -160,24 +160,32 @@ const Index = () => {
         </section>
 
         {/* Featured Affirmations */}
-        <section className="py-12 lg:py-20 bg-secondary/30">
+        <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary/30 via-secondary/20 to-background">
           <div className="container-custom">
-            <div className="text-center mb-10 lg:mb-14">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display font-semibold text-foreground mb-3">
+            {/* Premium Section Header */}
+            <div className="text-center mb-12 lg:mb-16">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <div className="h-px w-8 bg-clay/40" />
+                <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Words to Live By</span>
+                <div className="h-px w-8 bg-clay/40" />
+              </div>
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display font-semibold text-foreground mb-4 tracking-tight">
                 Featured Affirmations
               </h2>
-              <p className="text-foreground/70">Words to carry with you</p>
+              <p className="text-foreground/60 max-w-md mx-auto leading-relaxed">
+                Daily reminders to nurture your mindset and elevate your spirit
+              </p>
             </div>
             
             <AffirmationCarousel affirmations={featuredAffirmations} />
 
-            <div className="text-center mt-10">
+            <div className="text-center mt-12 lg:mt-16">
               <Link
                 to="/shop?tab=affirmations"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-foreground text-foreground text-sm font-medium uppercase tracking-wide hover:bg-foreground hover:text-background transition-colors"
+                className="inline-flex items-center gap-3 px-8 py-4 border border-foreground/20 text-foreground text-sm font-medium uppercase tracking-wider hover:bg-foreground hover:text-background transition-all duration-300 group"
               >
                 View All Affirmations
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
