@@ -380,76 +380,48 @@ const Shop = () => {
         </div>
       </div>
 
-      <div className="min-h-screen section-padding">
-        <div className="container-custom">
-          {/* Hero Section */}
-          <div className="text-center mb-10 sm:mb-14 mt-6 sm:mt-8">
+      <div className="min-h-screen">
+        <div className="container-custom py-4 sm:py-6">
+          {/* Hero Section - Tighter spacing like Intelligent Change */}
+          <div className="text-left mb-4 sm:mb-6">
             <motion.div
               key={selectedTab}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className="mb-3 text-4xl sm:text-5xl md:text-6xl font-display tracking-tight">
-                Shop {tabLabels[selectedTab]}
+              <h1 className="mb-2 text-2xl sm:text-3xl md:text-4xl font-display tracking-tight">
+                {tabLabels[selectedTab]}
               </h1>
-              <div className="flex items-center justify-center mb-4">
-                <div className="h-[2px] w-24 sm:w-32 bg-gradient-to-r from-transparent via-clay to-transparent"></div>
-              </div>
             </motion.div>
             <motion.p
               key={`${selectedTab}-subtitle`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-text-secondary text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-8 sm:mb-10"
+              className="text-text-secondary text-sm sm:text-base max-w-xl"
             >
               {categorySubtitles[selectedTab]}
             </motion.p>
-
-            {/* Stats Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-text-muted font-medium"
-            >
-              <span className="inline-flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5 text-clay" />
-                12K+ Shoppers
-              </span>
-              <span className="text-clay/30">•</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Star className="h-3.5 w-3.5 text-clay fill-clay" />
-                4.9 Rated
-              </span>
-              <span className="text-clay/30">•</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-clay" />
-                Instant Delivery
-              </span>
-            </motion.div>
           </div>
 
-          {/* Search & Filter Bar */}
+          {/* Search & Filter Bar - Tighter spacing */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <div className="mb-10">
-              <div className="relative max-w-4xl mx-auto">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  {/* Search Bar */}
-                  <div className="flex items-center gap-2 bg-white border border-border/40 rounded-lg px-3 py-2.5 hover:border-clay/30 transition-all flex-1">
-                    <Search className="h-4 w-4 text-clay flex-shrink-0" />
-                    <input
-                      type="text"
-                      placeholder="Search products..."
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1 bg-transparent border-none outline-none text-sm text-text-primary placeholder:text-text-muted font-medium min-w-0"
-                    />
-                  </div>
-                  {/* Filter Button */}
-                  <div className="sm:w-auto">
-                    <SortFilter value={sortOption} onChange={setSortOption} />
-                  </div>
+            <div className="mb-4 sm:mb-6">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                {/* Search Bar */}
+                <div className="flex items-center gap-2 bg-white border border-border/40 rounded-lg px-3 py-2 hover:border-clay/30 transition-all flex-1">
+                  <Search className="h-4 w-4 text-clay flex-shrink-0" />
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 bg-transparent border-none outline-none text-sm text-text-primary placeholder:text-text-muted font-medium min-w-0"
+                  />
+                </div>
+                {/* Filter Button */}
+                <div className="sm:w-auto">
+                  <SortFilter value={sortOption} onChange={setSortOption} />
                 </div>
               </div>
             </div>
