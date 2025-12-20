@@ -7,13 +7,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchBar } from "@/components/SearchBar";
 import logo from "@/assets/logo.png";
 
-// Import actual product images
-import productCashmereCardigan from "@/assets/product-cashmere-cardigan.jpg";
-import productCandleVanillaBean from "@/assets/product-candle-woodwick-vanilla-bean-featured.jpg";
+// Import actual product images from cards
+import productChunkyCardigan from "@/assets/product-chunky-cardigan.jpg";
+import productCandleChristmasSet from "@/assets/product-candle-christmas-set.jpg";
 import productBookFourthWing from "@/assets/product-book-fourth-wing-1763580000.jpg";
 import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
-import affirmationDigital from "@/assets/affirmation-digital-aff-006.png";
-import heroHome from "@/assets/hero-home.jpg";
+import affirmationDigital from "@/assets/affirmation-digital-aff-003.png";
+import productLinenRobe from "@/assets/product-linen-robe.jpg";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -44,13 +44,13 @@ export const Header = () => {
   const isActive = (path: string) => currentPath === path;
   const isShopActive = currentPath.includes('/shop') || currentPath.includes('/collections');
 
-  // Mobile menu categories with actual product images
+  // Mobile menu categories with actual product card images
   const mobileCategories = [
-    { label: "Shop All", href: "/shop", image: heroHome, description: "Browse everything" },
+    { label: "Shop All", href: "/shop", image: productLinenRobe, description: "Browse everything" },
     { label: "Affirmations", href: "/shop?tab=affirmations", image: affirmationDigital, description: "Daily inspiration" },
     { label: "Books", href: "/shop?tab=books", image: productBookFourthWing, description: "Cozy reads" },
-    { label: "Fashion", href: "/shop?tab=fashion", image: productCashmereCardigan, description: "Timeless pieces" },
-    { label: "Candles", href: "/shop?tab=candles", image: productCandleVanillaBean, description: "Set the mood" },
+    { label: "Fashion", href: "/shop?tab=fashion", image: productChunkyCardigan, description: "Timeless pieces" },
+    { label: "Candles", href: "/shop?tab=candles", image: productCandleChristmasSet, description: "Set the mood" },
     { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementCollagen, description: "Nourish yourself" },
   ];
 

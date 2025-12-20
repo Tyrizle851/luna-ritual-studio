@@ -327,18 +327,18 @@ const Shop = () => {
         <meta name="keywords" content={currentMeta.keywords} />
       </Helmet>
       {/* Category Navigation - Attached directly under header */}
-      <div className="sticky top-14 lg:top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40">
+      <div className="sticky top-14 lg:top-16 z-40 bg-muted/50 border-b border-border/40">
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-1 px-4 py-2.5 min-w-max">
+          <div className="flex items-center gap-2 px-4 py-3 min-w-max">
             <button
               onClick={() => {
                 setSelectedTab("fashion");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-all ${
                 selectedTab === "fashion" 
-                  ? "bg-clay text-white" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
             >
               <Shirt className="h-3.5 w-3.5" />
@@ -349,10 +349,10 @@ const Shop = () => {
                 setSelectedTab("candles");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-all ${
                 selectedTab === "candles" 
-                  ? "bg-clay text-white" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
             >
               <Flame className="h-3.5 w-3.5" />
@@ -363,10 +363,10 @@ const Shop = () => {
                 setSelectedTab("affirmations");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-all ${
                 selectedTab === "affirmations" 
-                  ? "bg-clay text-white" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
             >
               <Moon className="h-3.5 w-3.5" />
@@ -377,10 +377,10 @@ const Shop = () => {
                 setSelectedTab("supplements");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-all ${
                 selectedTab === "supplements" 
-                  ? "bg-clay text-white" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
             >
               <Pill className="h-3.5 w-3.5" />
@@ -391,10 +391,10 @@ const Shop = () => {
                 setSelectedTab("books");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-all ${
                 selectedTab === "books" 
-                  ? "bg-clay text-white" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
             >
               <BookOpen className="h-3.5 w-3.5" />
