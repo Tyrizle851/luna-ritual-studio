@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, Search, ShoppingBag, X, Sparkles, Heart, Gift } from "lucide-react";
+import { Menu, Search, ShoppingBag, X, Sparkles, Heart, Gift, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchBar } from "@/components/SearchBar";
 import logo from "@/assets/logo.png";
 
-// Unique category images for mobile menu
-import productSilkSleepSet from "@/assets/product-silk-sleep-set.jpg";
-import productCandleChristmasSet from "@/assets/product-candle-christmas-set.jpg";
-import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
-import bookFourthWing from "@/assets/product-book-fourth-wing-1763580000.jpg";
-import productSupplementMatcha from "@/assets/product-supplement-domatcha-organic-1763495293.jpg";
-import productLinenRobe from "@/assets/product-linen-robe.jpg";
+// Import actual product images
+import productCashmereCardigan from "@/assets/product-cashmere-cardigan.jpg";
+import productCandleVanillaBean from "@/assets/product-candle-woodwick-vanilla-bean-featured.jpg";
+import productBookFourthWing from "@/assets/product-book-fourth-wing-1763580000.jpg";
+import productSupplementCollagen from "@/assets/product-supplement-vital-proteins-collagen-1763495213.jpg";
+import affirmationDigital from "@/assets/affirmation-digital-aff-006.png";
 import heroHome from "@/assets/hero-home.jpg";
 
 export const Header = () => {
@@ -45,14 +44,14 @@ export const Header = () => {
   const isActive = (path: string) => currentPath === path;
   const isShopActive = currentPath.includes('/shop') || currentPath.includes('/collections');
 
-  // Mobile menu category data with UNIQUE images
+  // Mobile menu categories with actual product images
   const mobileCategories = [
-    { label: "Shop All", href: "/shop", image: heroHome, emoji: "✨" },
-    { label: "Affirmations", href: "/shop?tab=affirmations", image: LOCAL_DIGITAL_IMAGES["aff-006"], emoji: "🌙" },
-    { label: "Books", href: "/shop?tab=books", image: bookFourthWing, emoji: "📚" },
-    { label: "Fashion", href: "/shop?tab=fashion", image: productLinenRobe, emoji: "👗" },
-    { label: "Candles", href: "/shop?tab=candles", image: productCandleChristmasSet, emoji: "🕯️" },
-    { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementMatcha, emoji: "🍵" },
+    { label: "Shop All", href: "/shop", image: heroHome, description: "Browse everything" },
+    { label: "Affirmations", href: "/shop?tab=affirmations", image: affirmationDigital, description: "Daily inspiration" },
+    { label: "Books", href: "/shop?tab=books", image: productBookFourthWing, description: "Cozy reads" },
+    { label: "Fashion", href: "/shop?tab=fashion", image: productCashmereCardigan, description: "Timeless pieces" },
+    { label: "Candles", href: "/shop?tab=candles", image: productCandleVanillaBean, description: "Set the mood" },
+    { label: "Wellness", href: "/shop?tab=supplements", image: productSupplementCollagen, description: "Nourish yourself" },
   ];
 
   return (
@@ -192,57 +191,58 @@ export const Header = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-full sm:w-[380px] p-0 overflow-y-auto bg-background">
-                <nav className="flex flex-col">
+                <nav className="flex flex-col min-h-full">
                   {/* Welcome Header */}
-                  <div className="bg-gradient-to-r from-clay/10 via-gold/10 to-clay/10 px-5 py-6 border-b border-border/30">
-                    <div className="flex items-center gap-3 mb-2">
-                      <img src={logo} alt="LunaRituals" className="h-8 w-8" />
-                      <span className="font-display text-lg font-semibold text-text-primary">LunaRituals</span>
+                  <div className="px-5 pt-6 pb-5 border-b border-border/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <img src={logo} alt="LunaRituals" className="h-9 w-9" />
+                      <div>
+                        <span className="font-display text-lg font-semibold text-foreground block leading-tight">LunaRituals</span>
+                        <span className="text-xs text-muted-foreground">Intentional living starts here</span>
+                      </div>
                     </div>
-                    <p className="text-sm text-text-secondary">
-                      Curated finds for intentional living ✨
-                    </p>
-                    <div className="flex items-center gap-4 mt-4">
+                    <div className="flex items-center gap-3 mt-4">
                       <Link
                         to="/shop?filter=new"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-1.5 text-xs font-medium text-clay hover:text-clay-dark transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-clay/10 rounded-full text-xs font-medium text-clay"
                       >
-                        <Sparkles className="h-3.5 w-3.5" />
-                        New Arrivals
+                        <Sparkles className="h-3 w-3" />
+                        New In
                       </Link>
                       <Link
                         to="/collections"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-1.5 text-xs font-medium text-text-muted hover:text-text-primary transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-muted rounded-full text-xs font-medium text-muted-foreground"
                       >
-                        <Gift className="h-3.5 w-3.5" />
+                        <Gift className="h-3 w-3" />
                         Gift Guide
                       </Link>
                     </div>
                   </div>
 
-                  {/* Featured Image Grid */}
+                  {/* Shop Categories with Product Images */}
                   <div className="px-4 py-5">
-                    <div className="grid grid-cols-2 gap-3">
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium px-1 mb-3 block">Shop by Category</span>
+                    <div className="grid grid-cols-2 gap-2.5">
                       {mobileCategories.map((cat) => (
                         <Link
                           key={cat.href}
                           to={cat.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="group relative aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                          className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-muted"
                         >
                           <img 
                             src={cat.image} 
                             alt={cat.label}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-3">
-                            <span className="text-lg mb-0.5 block">{cat.emoji}</span>
-                            <span className="text-sm font-semibold text-white drop-shadow-sm">
+                            <span className="text-sm font-semibold text-white block leading-tight">
                               {cat.label}
                             </span>
+                            <span className="text-[10px] text-white/70">{cat.description}</span>
                           </div>
                         </Link>
                       ))}
@@ -250,57 +250,57 @@ export const Header = () => {
                   </div>
 
                   {/* Quick Links */}
-                  <div className="px-4 pb-4">
-                    <div className="bg-muted/50 rounded-xl p-4">
-                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-semibold mb-3 block">Quick Links</span>
-                      <div className="grid grid-cols-2 gap-2">
+                  <div className="px-4 pb-5">
+                    <div className="bg-muted/60 rounded-xl p-4">
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium mb-3 block">More to Explore</span>
+                      <div className="space-y-1">
                         <Link
                           to="/affirmation-builder"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-clay hover:bg-clay/5 transition-colors"
+                          className="flex items-center justify-between px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-clay hover:bg-clay/5 transition-colors"
                         >
-                          <span className="text-base">🎨</span>
-                          Studio
+                          <span>Create in Studio</span>
+                          <ArrowRight className="h-4 w-4" />
                         </Link>
                         <Link
                           to="/collections"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                          className="flex items-center justify-between px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
                         >
-                          <span className="text-base">💫</span>
-                          Collections
+                          <span>View Collections</span>
+                          <ArrowRight className="h-4 w-4 text-muted-foreground" />
                         </Link>
                         <Link
                           to="/about"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                          className="flex items-center justify-between px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
                         >
-                          <span className="text-base">💭</span>
-                          Our Story
+                          <span>Our Story</span>
+                          <ArrowRight className="h-4 w-4 text-muted-foreground" />
                         </Link>
                         <Link
                           to="/journal"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                          className="flex items-center justify-between px-3 py-2.5 bg-background rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
                         >
-                          <span className="text-base">📖</span>
-                          Journal
+                          <span>Read Journal</span>
+                          <ArrowRight className="h-4 w-4 text-muted-foreground" />
                         </Link>
                       </div>
                     </div>
                   </div>
 
                   {/* Footer */}
-                  <div className="mt-auto border-t border-border/50 px-5 py-4 bg-muted/30">
+                  <div className="mt-auto border-t border-border/40 px-5 py-4 bg-muted/30">
                     <div className="flex items-center justify-between">
                       <Link
                         to="/contact"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="text-xs text-text-muted hover:text-text-primary transition-colors"
+                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                       >
                         Contact Us
                       </Link>
-                      <div className="flex items-center gap-1 text-xs text-text-muted">
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                         <Heart className="h-3 w-3 text-clay fill-clay" />
                         Made with love
                       </div>

@@ -248,12 +248,27 @@ const Shop = () => {
     books: "Books"
   };
 
-  const categorySubtitles: Record<string, string> = {
-    fashion: "Timeless pieces for your wardrobe",
-    candles: "Set the mood with artisan scents",
-    supplements: "Nourish your wellness journey",
-    affirmations: "Daily inspiration for intentional living",
-    books: "Stories to inspire your journey"
+  const categorySubtitles: Record<string, { tagline: string; description: string }> = {
+    fashion: {
+      tagline: "Timeless pieces for your wardrobe",
+      description: "Curated clothing and accessories designed for intentional living. From cozy cardigans to classic boots—elevated basics you'll reach for again and again."
+    },
+    candles: {
+      tagline: "Set the mood with artisan scents",
+      description: "Hand-picked candles from Yankee, WoodWick, and artisan makers. Transform any space into a sanctuary with scents that inspire calm and comfort."
+    },
+    supplements: {
+      tagline: "Nourish your wellness journey",
+      description: "Quality supplements to support your daily rituals. From collagen to adaptogens, everything you need to feel your best from the inside out."
+    },
+    affirmations: {
+      tagline: "Daily inspiration for intentional living",
+      description: "Beautiful digital downloads for your phone, desktop, and walls. Powerful affirmations to remind you of your worth every single day."
+    },
+    books: {
+      tagline: "Stories to inspire your journey",
+      description: "Our favorite fantasy series and fiction reads for cozy moments. Transport yourself to magical worlds and discover your next obsession."
+    }
   };
 
   const getCategoryCounts = () => ({
@@ -311,20 +326,22 @@ const Shop = () => {
         
         <meta name="keywords" content={currentMeta.keywords} />
       </Helmet>
-      {/* Sticky Category Navigation - Below Main Header */}
-      <div className="sticky top-16 z-40 bg-background border-b border-border/40">
-        <div className="container-custom">
-          <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 py-3 overflow-x-auto scrollbar-hide">
+      {/* Category Navigation - Attached directly under header */}
+      <div className="sticky top-14 lg:top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40">
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-1 px-4 py-2.5 min-w-max">
             <button
               onClick={() => {
                 setSelectedTab("fashion");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
-                selectedTab === "fashion" ? "text-clay" : "text-text-muted hover:text-clay"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedTab === "fashion" 
+                  ? "bg-clay text-white" 
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              <Shirt className="h-3.5 w-3.5 text-clay" />
+              <Shirt className="h-3.5 w-3.5" />
               <span>Fashion</span>
             </button>
             <button
@@ -332,11 +349,13 @@ const Shop = () => {
                 setSelectedTab("candles");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
-                selectedTab === "candles" ? "text-clay" : "text-text-muted hover:text-clay"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedTab === "candles" 
+                  ? "bg-clay text-white" 
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              <Flame className="h-3.5 w-3.5 text-clay" />
+              <Flame className="h-3.5 w-3.5" />
               <span>Candles</span>
             </button>
             <button
@@ -344,36 +363,41 @@ const Shop = () => {
                 setSelectedTab("affirmations");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold transition-all ${
-                selectedTab === "affirmations" ? "text-clay" : "text-clay/70 hover:text-clay"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedTab === "affirmations" 
+                  ? "bg-clay text-white" 
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              <Moon className="h-4 w-4 text-clay" />
-              <span className="sm:hidden">Affirm</span>
-              <span className="hidden sm:inline">Affirmations</span>
+              <Moon className="h-3.5 w-3.5" />
+              <span>Affirmations</span>
             </button>
             <button
               onClick={() => {
                 setSelectedTab("supplements");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
-                selectedTab === "supplements" ? "text-clay" : "text-text-muted hover:text-clay"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedTab === "supplements" 
+                  ? "bg-clay text-white" 
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              <Pill className="h-3.5 w-3.5 text-clay" />
-              <span>Supps</span>
+              <Pill className="h-3.5 w-3.5" />
+              <span>Wellness</span>
             </button>
             <button
               onClick={() => {
                 setSelectedTab("books");
                 scrollToProducts();
               }}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide font-medium transition-all ${
-                selectedTab === "books" ? "text-clay" : "text-text-muted hover:text-clay"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedTab === "books" 
+                  ? "bg-clay text-white" 
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              <BookOpen className="h-3.5 w-3.5 text-clay" />
+              <BookOpen className="h-3.5 w-3.5" />
               <span>Books</span>
             </button>
           </div>
@@ -390,18 +414,21 @@ const Shop = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium mb-1 block">
+                {categorySubtitles[selectedTab].tagline}
+              </span>
               <h1 className="mb-2 text-2xl sm:text-3xl md:text-4xl font-display tracking-tight">
                 {tabLabels[selectedTab]}
               </h1>
             </motion.div>
             <motion.p
-              key={`${selectedTab}-subtitle`}
+              key={`${selectedTab}-description`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-text-secondary text-sm sm:text-base max-w-xl"
+              className="text-muted-foreground text-sm sm:text-base max-w-2xl leading-relaxed"
             >
-              {categorySubtitles[selectedTab]}
+              {categorySubtitles[selectedTab].description}
             </motion.p>
           </div>
 
