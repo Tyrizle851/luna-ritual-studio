@@ -46,78 +46,87 @@ const Index = () => {
       </Helmet>
 
       <div className="min-h-screen">
-        {/* Hero Section - Split Design like IC */}
-        <section className="grid lg:grid-cols-2 min-h-[70vh]">
-          {/* Left Hero - Video/Image with Overlay */}
-          <div className="relative h-[50vh] lg:h-auto overflow-hidden bg-[#2a2520]">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster="/hero-poster.jpg"
-              preload="auto"
-              className="absolute inset-0 w-full h-full object-cover scale-[1.33]"
-              style={{ filter: 'brightness(0.7)' }}
-            >
-              <source src="/hero-video.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40" />
-            
-            {/* Left Hero Content */}
-            <div className="relative z-10 h-full flex flex-col justify-center p-8 lg:p-12 xl:p-16">
-              <div className="max-w-lg">
-                <p className="text-background/90 text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4" style={{ fontStyle: 'italic' }}>
-                  Join 50,000+ people starting every day with intention.
-                </p>
-                <p className="text-background/80 text-base lg:text-lg mb-8">
-                  Your daily affirmation ritual. New designs weekly.
-                </p>
-                <Link 
-                  to="/shop?tab=affirmations"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background text-sm font-medium uppercase tracking-wide hover:bg-foreground/90 transition-colors"
-                >
-                  Shop Affirmations
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
+        {/* Hero Section - Horizontal Scroll on Mobile, Grid on Desktop */}
+        <section className="lg:grid lg:grid-cols-2 lg:min-h-[75vh]">
+          {/* Mobile: Horizontal Scroll Container */}
+          <div className="flex lg:contents overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+            {/* Left Hero - Video/Image with Overlay */}
+            <div className="relative min-w-full lg:min-w-0 h-[85vh] lg:h-auto overflow-hidden bg-[#2a2520] snap-center">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/hero-poster.jpg"
+                preload="auto"
+                className="absolute inset-0 w-full h-full object-cover scale-[1.33]"
+                style={{ filter: 'brightness(0.7)' }}
+              >
+                <source src="/hero-video.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40" />
               
-              {/* Badge */}
-              <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12">
-                <div className="bg-gold text-foreground rounded-full w-20 h-20 flex flex-col items-center justify-center text-center">
-                  <span className="text-xl font-semibold">50K+</span>
-                  <span className="text-[8px] uppercase tracking-wider">Downloads</span>
+              {/* Left Hero Content */}
+              <div className="relative z-10 h-full flex flex-col justify-center p-8 lg:p-12 xl:p-16">
+                <div className="max-w-lg">
+                  <p className="text-background/90 text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4" style={{ fontStyle: 'italic' }}>
+                    Join 50,000+ people starting every day with intention.
+                  </p>
+                  <p className="text-background/80 text-base lg:text-lg mb-8">
+                    Your daily affirmation ritual. New designs weekly.
+                  </p>
+                  <Link 
+                    to="/shop?tab=affirmations"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background text-sm font-medium uppercase tracking-wide hover:bg-foreground/90 transition-colors"
+                  >
+                    Shop Affirmations
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+                
+                {/* Badge */}
+                <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12">
+                  <div className="bg-gold text-foreground rounded-full w-20 h-20 flex flex-col items-center justify-center text-center">
+                    <span className="text-xl font-semibold">50K+</span>
+                    <span className="text-[8px] uppercase tracking-wider">Downloads</span>
+                  </div>
+                </div>
+                
+                {/* Mobile Scroll Indicator */}
+                <div className="absolute bottom-8 right-8 lg:hidden flex items-center gap-2 text-background/70 text-xs">
+                  <span>Swipe</span>
+                  <ArrowRight className="h-3 w-3 animate-pulse" />
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Hero - Product Showcase */}
-          <div className="relative h-[50vh] lg:h-auto overflow-hidden">
-            {/* Background Image */}
-            <img 
-              src={powerHourImg} 
-              alt="I celebrate every small win affirmation" 
-              className="absolute inset-0 w-full h-full object-cover scale-[1.1]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/20" />
-            
-            {/* Content Overlay */}
-            <div className="relative z-10 h-full flex items-center justify-center p-8 lg:p-12">
-              <div className="text-center max-w-md">
-                <p className="text-background text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4 drop-shadow-md" style={{ fontStyle: 'italic' }}>
-                  Step into 2025 with clarity and confidence.
-                </p>
-                <p className="text-background/90 text-base lg:text-lg mb-8 drop-shadow-sm">
-                  Mindful tools for connection, gratitude, and growth.
-                </p>
-                <Link 
-                  to="/collections"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-background/90 backdrop-blur-sm text-foreground text-sm font-medium uppercase tracking-wide hover:bg-background transition-colors"
-                >
-                  Shop Now
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+            {/* Right Hero - Product Showcase */}
+            <div className="relative min-w-full lg:min-w-0 h-[85vh] lg:h-auto overflow-hidden snap-center">
+              {/* Background Image */}
+              <img 
+                src={powerHourImg} 
+                alt="I celebrate every small win affirmation" 
+                className="absolute inset-0 w-full h-full object-cover scale-[1.1]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/20" />
+              
+              {/* Content Overlay */}
+              <div className="relative z-10 h-full flex items-center justify-center p-8 lg:p-12">
+                <div className="text-center max-w-md">
+                  <p className="text-background text-3xl lg:text-4xl xl:text-5xl font-display font-light leading-tight mb-4 drop-shadow-md" style={{ fontStyle: 'italic' }}>
+                    Step into 2025 with clarity and confidence.
+                  </p>
+                  <p className="text-background/90 text-base lg:text-lg mb-8 drop-shadow-sm">
+                    Mindful tools for connection, gratitude, and growth.
+                  </p>
+                  <Link 
+                    to="/collections"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-background/90 backdrop-blur-sm text-foreground text-sm font-medium uppercase tracking-wide hover:bg-background transition-colors"
+                  >
+                    Shop Now
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

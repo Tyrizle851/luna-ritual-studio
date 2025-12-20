@@ -105,15 +105,25 @@ export const FeaturedProducts = () => {
   };
 
   return (
-    <section className="section-padding bg-secondary">
+    <section className="section-padding bg-gradient-to-b from-secondary via-secondary to-background/50">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Sparkles className="h-6 w-6 text-clay" />
-            <h2 className="mb-0 text-3xl sm:text-4xl md:text-5xl">The Ritual Edit</h2>
-            <Sparkles className="h-6 w-6 text-clay" />
+        {/* Premium Header */}
+        <div className="text-center mb-14 lg:mb-16">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <div className="h-px w-8 bg-clay/40" />
+            <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Thoughtfully Selected</span>
+            <div className="h-px w-8 bg-clay/40" />
           </div>
-          <p className="text-lg text-text-secondary">Curated finds for intentional living</p>
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <Sparkles className="h-5 w-5 text-clay/70" />
+            <h2 className="mb-0 text-3xl sm:text-4xl md:text-5xl font-display font-semibold tracking-tight text-foreground">
+              The Ritual Edit
+            </h2>
+            <Sparkles className="h-5 w-5 text-clay/70" />
+          </div>
+          <p className="text-base sm:text-lg text-foreground/60 max-w-md mx-auto leading-relaxed">
+            Curated essentials for intentional living—each piece chosen to elevate your daily rituals
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
