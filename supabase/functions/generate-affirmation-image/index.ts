@@ -55,14 +55,20 @@ Deno.serve(async (req) => {
 
     console.log('Generating final affirmation image with prompt length:', prompt.length);
 
-    // Enhance the prompt with print-quality requirements
+    // Enhance the prompt with print-quality requirements including full-bleed
     const enhancedPrompt = `${prompt}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         PRINT QUALITY STANDARDS
+         CRITICAL DESIGN REQUIREMENTS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Technical Output:
+FULL BLEED DESIGN (MANDATORY):
+• The artwork MUST extend edge-to-edge, filling the ENTIRE canvas
+• NO white borders, NO margins, NO empty space around any edges
+• Background elements, colors, textures, and design elements MUST reach all four edges
+• The design should look like it was intentionally cropped from a larger piece
+
+PRINT QUALITY STANDARDS:
 • Resolution: 300 DPI (print-ready)
 • Dimensions: 2400×3000 pixels exact (8×10" format)
 • Aspect Ratio: Exactly 4:5 portrait
@@ -73,11 +79,10 @@ Technical Output:
 Quality Benchmark - Should Match:
 • A professionally printed art piece from Minted or Artifact Uprising
 • Editorial design from Kinfolk or Cereal magazine
-• Boutique wedding stationery ($8-12 per card quality level)
 • Museum gift shop art prints ($40-60 price point)
 • Something a professional interior designer would specify for a client
 
-Final Check: Would this look professionally printed and worth framing in a $3000+ home?`;
+Final Check: Would this look professionally printed, full-bleed, and worth framing?`;
 
     console.log('Calling Lovable Gemini API for final generation...');
 

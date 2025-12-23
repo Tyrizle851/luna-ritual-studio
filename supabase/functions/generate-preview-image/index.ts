@@ -34,10 +34,20 @@ serve(async (req) => {
       );
     }
 
-    // Enhance the prompt with quality requirements for preview
+    // Enhance the prompt with quality requirements for preview including full-bleed
     const enhancedPrompt = `${prompt}
 
-ADDITIONAL PREVIEW REQUIREMENTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         CRITICAL DESIGN REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FULL BLEED DESIGN (MANDATORY):
+• The artwork MUST extend edge-to-edge, filling the ENTIRE canvas
+• NO white borders, NO margins, NO empty space around any edges
+• Background elements, colors, textures, and design elements MUST reach all four edges
+• The design should look like it was intentionally cropped from a larger piece
+
+Technical Output:
 • Output: 512×640px, 4:5 portrait ratio
 • Instagram-optimized quality
 • Text must be PERFECTLY readable - no artistic distortion
