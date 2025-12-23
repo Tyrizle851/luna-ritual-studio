@@ -1,4 +1,4 @@
-import { Star, Quote, Heart } from "lucide-react";
+import { Star, Heart } from "lucide-react";
 
 const testimonials = [
   {
@@ -6,33 +6,36 @@ const testimonials = [
     name: "Jessica M.",
     location: "California",
     content: "I hang 'I am worthy of rest' above my desk. It's a daily reminder that taking breaks isn't lazy—it's necessary. The print quality exceeded my expectations.",
-    rating: 5,
+    rating: 4.4,
     product: "I am worthy of rest",
     verified: true,
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces",
   },
   {
     id: 2,
     name: "Amanda R.",
     location: "Texas",
     content: "Started using these as phone wallpapers and now I have three framed in my apartment. My friends always ask where I got them. The designs are so thoughtful.",
-    rating: 5,
+    rating: 4.4,
     product: "Digital Bundle",
     verified: true,
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=faces",
   },
   {
     id: 3,
     name: "Taylor K.",
     location: "New York",
     content: "Bought the canvas print for my sister's birthday. She teared up when she opened it. Something about seeing 'I attract what I believe' every morning really shifts your mindset.",
-    rating: 5,
+    rating: 4.4,
     product: "Canvas Print",
     verified: true,
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces",
   },
 ];
 
 const stats = [
   { value: "50,000+", label: "Happy customers" },
-  { value: "4.9", label: "Average rating" },
+  { value: "4.5", label: "Average rating" },
   { value: "200+", label: "5-star reviews" },
 ];
 
@@ -72,18 +75,31 @@ export const Testimonials = () => {
               key={testimonial.id} 
               className="bg-background border border-border/50 p-6 lg:p-8 rounded-sm hover:shadow-medium transition-all duration-300"
             >
-              {/* Quote Icon */}
-              <Quote className="h-6 w-6 text-clay/30 mb-4" />
+              {/* Avatar & Name Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <img 
+                  src={testimonial.avatar} 
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-clay/20"
+                />
+                <div>
+                  <p className="font-medium text-sm text-foreground">{testimonial.name}</p>
+                  <p className="text-xs text-muted-foreground">{testimonial.location}</p>
+                </div>
+              </div>
               
-              {/* Rating */}
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-gold text-gold" />
-                ))}
+              {/* Rating with number */}
+              <div className="flex items-center gap-1.5 mb-4">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={`h-4 w-4 ${i < Math.floor(testimonial.rating) ? 'fill-gold text-gold' : 'fill-gold/30 text-gold/30'}`} />
+                  ))}
+                </div>
+                <span className="text-sm font-medium text-foreground">{testimonial.rating}</span>
               </div>
               
               {/* Content */}
-              <p className="text-foreground leading-relaxed mb-6">
+              <p className="text-foreground/80 leading-relaxed mb-6">
                 "{testimonial.content}"
               </p>
               
@@ -92,16 +108,12 @@ export const Testimonials = () => {
                 {testimonial.product}
               </div>
               
-              {/* Author */}
-              <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                <div>
-                  <p className="font-medium text-sm text-foreground">{testimonial.name}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.location}</p>
-                </div>
+              {/* Verified */}
+              <div className="flex items-center justify-end pt-4 border-t border-border/50">
                 {testimonial.verified && (
                   <div className="flex items-center gap-1 text-[10px] text-clay">
                     <Heart className="h-3 w-3 fill-clay" />
-                    <span>Verified</span>
+                    <span>Verified Purchase</span>
                   </div>
                 )}
               </div>

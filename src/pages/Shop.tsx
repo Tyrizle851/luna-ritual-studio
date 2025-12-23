@@ -502,11 +502,10 @@ const Shop = () => {
                             <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                               <span className="text-primary">★</span>
                               <span className="font-semibold">{product.rating}</span>
-                              <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-                                {product.rating >= 4.5 ? 'Top Rated' : product.rating >= 4.0 ? 'Popular' : 'Verified'}
-                              </span>
-                              <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-                                {product.badge === 'Best Seller' ? 'Trending' : product.reviewCount && product.reviewCount > 500 ? 'Fan Favorite' : 'Quality Pick'}
+                              <span className="px-1.5 py-0.5 bg-clay/15 text-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                                {product.category === 'Loungewear' ? 'Cozy' : 
+                                 product.category === 'Sleepwear' ? 'Dreamy' : 
+                                 product.category === 'Accessories' ? 'Stylish' : 'Curated'}
                               </span>
                               {product.reviewCount && (
                                 <span className="text-muted-foreground hidden sm:inline">({product.reviewCount.toLocaleString()})</span>
@@ -613,11 +612,10 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{candle.rating}</span>
-                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-                              {candle.rating >= 4.5 ? 'Top Rated' : candle.rating >= 4.0 ? 'Popular' : 'Verified'}
-                            </span>
-                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-                              {candle.badge === 'Best Seller' ? 'Trending' : candle.reviewCount && candle.reviewCount > 500 ? 'Fan Favorite' : 'Artisan'}
+                            <span className="px-1.5 py-0.5 bg-clay/15 text-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {candle.scent?.includes('Warm') ? 'Cozy' : 
+                               candle.scent?.includes('Fresh') ? 'Refreshing' : 
+                               candle.scent?.includes('Floral') ? 'Botanical' : 'Artisan'}
                             </span>
                             {candle.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({candle.reviewCount.toLocaleString()})</span>
@@ -724,11 +722,10 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{supplement.rating}</span>
-                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-                              {supplement.rating >= 4.5 ? 'Top Rated' : supplement.rating >= 4.0 ? 'Popular' : 'Verified'}
-                            </span>
-                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-                              {supplement.badge === 'Best Value' ? 'Premium' : supplement.reviewCount && supplement.reviewCount > 500 ? 'Trusted' : 'Wellness'}
+                            <span className="px-1.5 py-0.5 bg-clay/15 text-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {supplement.category === 'Beauty & Wellness' ? 'Beauty' : 
+                               supplement.category === 'Digestive Health' ? 'Gut Health' : 
+                               supplement.category === 'Sleep & Relaxation' ? 'Calming' : 'Wellness'}
                             </span>
                             {supplement.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({supplement.reviewCount.toLocaleString()})</span>
@@ -878,11 +875,10 @@ const Shop = () => {
                           <div className="flex items-center gap-0.5 sm:gap-1 mb-1 sm:mb-2 text-[10px] sm:text-xs flex-wrap">
                             <span className="text-primary">★</span>
                             <span className="font-semibold">{book.rating}</span>
-                            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-                              {book.rating >= 4.5 ? 'Top Rated' : book.rating >= 4.0 ? 'Popular' : 'Verified'}
-                            </span>
-                            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-                              {book.badge === 'Best Seller' ? 'Bestseller' : book.reviewCount && book.reviewCount > 500 ? 'Must Read' : 'Curated'}
+                            <span className="px-1.5 py-0.5 bg-clay/15 text-foreground rounded text-[8px] sm:text-[10px] font-medium">
+                              {book.category === 'Fantasy' ? 'Epic' : 
+                               book.category === 'Self-Help' ? 'Inspiring' : 
+                               book.category === 'Romance' ? 'Heartfelt' : 'Curated'}
                             </span>
                             {book.reviewCount && (
                               <span className="text-muted-foreground hidden sm:inline">({book.reviewCount.toLocaleString()})</span>
@@ -907,13 +903,13 @@ const Shop = () => {
                             {book.originalPrice ? (
                               <>
                                 <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${book.originalPrice.toFixed(2)}</span>
-                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-clay text-cream-text rounded font-medium">
                                   -{Math.round(((book.originalPrice - book.price) / book.originalPrice) * 100)}%
                                 </span>
                               </>
                             ) : (
-                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
-                                Great Deal
+                              <span className="text-[8px] sm:text-[10px] text-clay font-medium">
+                                Great Value
                               </span>
                             )}
                             <span className="text-sm sm:text-base font-semibold text-text-primary">${book.price.toFixed(2)}</span>

@@ -250,7 +250,7 @@ export const FeaturedProducts = () => {
                     {product.originalPrice && (
                       <div className="flex items-center gap-1">
                         <span className="text-[10px] sm:text-sm text-text-muted line-through">${product.originalPrice.toFixed(2)}</span>
-                        <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded font-medium">
+                        <span className="text-[8px] sm:text-xs bg-primary/10 text-primary px-1 sm:px-1.5 py-0.5 rounded font-medium">
                           -{calculateDiscount(product.originalPrice, product.price)}%
                         </span>
                       </div>

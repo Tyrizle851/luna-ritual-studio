@@ -58,11 +58,12 @@ export const AffirmationProductCard = ({
           <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
             ({affirmation.rating || 4.9})
           </span>
-          <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-            {(affirmation.rating || 4.9) >= 4.5 ? 'Top Rated' : (affirmation.rating || 4.9) >= 4.0 ? 'Popular' : 'Verified'}
-          </span>
-          <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-            {affirmation.badge === 'Most Popular' ? 'Trending' : affirmation.reviewCount && affirmation.reviewCount > 500 ? 'Inspiring' : 'Digital'}
+          <span className="px-1.5 py-0.5 bg-clay/15 text-foreground rounded text-[8px] sm:text-[10px] font-medium">
+            {affirmation.category === 'Joy' ? 'Joyful' : 
+             affirmation.category === 'Self-Love' ? 'Self-Love' : 
+             affirmation.category === 'Rest' ? 'Restful' :
+             affirmation.category === 'Abundance' ? 'Abundant' :
+             affirmation.category === 'Strength' ? 'Empowering' : 'Digital'}
           </span>
           {affirmation.reviewCount && (
             <span className="text-[10px] sm:text-xs text-text-muted hidden sm:inline">

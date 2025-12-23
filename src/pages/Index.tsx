@@ -164,10 +164,12 @@ const Index = () => {
           <div className="container-custom">
             {/* Premium Section Header */}
             <div className="text-center mb-10 lg:mb-14">
-              <div className="inline-flex items-center gap-2 mb-4">
-                <div className="h-px w-8 bg-clay/40" />
-                <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Words to Live By</span>
-                <div className="h-px w-8 bg-clay/40" />
+              <div className="inline-block relative mb-6">
+                <div className="absolute -left-12 top-1/2 -translate-y-1/2 w-8 h-px bg-gradient-to-r from-transparent to-clay/60" />
+                <div className="absolute -right-12 top-1/2 -translate-y-1/2 w-8 h-px bg-gradient-to-l from-transparent to-clay/60" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-clay font-medium px-4 py-2 border border-clay/20 bg-background/80 backdrop-blur-sm">
+                  Words to Live By
+                </span>
               </div>
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display font-semibold text-foreground mb-4 tracking-tight">
                 Featured Affirmations
