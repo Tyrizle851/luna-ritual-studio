@@ -42,8 +42,8 @@ export function ImageGalleryGrid({
         )}
       </div>
 
-      {/* Image Grid */}
-      <div className={`grid ${isFinal ? 'grid-cols-2 gap-3' : 'grid-cols-1 gap-4'}`}>
+      {/* Image Grid - 2 columns for both preview and final */}
+      <div className="grid grid-cols-2 gap-3">
         {images.map((imageUrl, index) => (
           <div
             key={index}
@@ -53,7 +53,7 @@ export function ImageGalleryGrid({
                 : 'border-[#3a2817] hover:border-[#5a3817] hover:scale-[1.02]'
             }`}
             onClick={() => onImageClick(imageUrl, type)}
-            style={{ aspectRatio: isFinal ? '4/5' : '3/4' }}
+            style={{ aspectRatio: '3/4' }}
           >
             <img
               src={imageUrl}
