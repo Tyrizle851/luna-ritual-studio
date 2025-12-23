@@ -2,86 +2,202 @@
  * Generates random prompts for affirmation images and derives color palettes from prompts
  */
 
-// Affirmation headlines by theme
+// Affirmation headlines - powerful, meaningful statements
 const HEADLINES: Record<string, string[]> = {
-  confidence: ["I AM ENOUGH", "BOLD AND BRAVE", "FEARLESS FORWARD", "UNSTOPPABLE FORCE", "I RISE"],
-  peace: ["INNER STILLNESS", "CALM WITHIN", "SERENITY NOW", "PEACE FLOWS THROUGH ME", "QUIET STRENGTH"],
-  focus: ["CLARITY OF PURPOSE", "SINGLE MINDED", "LASER FOCUSED", "INTENTIONAL LIVING", "PRESENT MOMENT"],
-  gratitude: ["GRATEFUL HEART", "ABUNDANCE FLOWS", "BLESSED BEYOND MEASURE", "THANKFUL TODAY", "JOY IN ALL THINGS"],
-  abundance: ["PROSPERITY MINDSET", "WEALTH FLOWS TO ME", "I AM ABUNDANT", "UNLIMITED POTENTIAL", "OPEN TO RECEIVE"],
-  healing: ["HEALING LIGHT", "RENEWAL BEGINS", "RESTORATION", "GENTLE RECOVERY", "WHOLE AND WELL"],
-  strength: ["UNBREAKABLE SPIRIT", "INNER POWER", "RESILIENT SOUL", "MIGHTY AND STRONG", "I ENDURE"],
-  joy: ["RADIANT JOY", "HAPPINESS BLOOMS", "LIGHT HEARTED", "PURE DELIGHT", "JOYFUL LIVING"],
-  balance: ["HARMONIOUS LIFE", "CENTERED AND CALM", "PERFECT BALANCE", "EQUILIBRIUM", "ALIGNED"],
-  courage: ["BRAVE HEART", "COURAGE RISES", "FEARLESS SOUL", "BOLD STEPS", "I AM COURAGEOUS"],
-  clarity: ["CRYSTAL CLEAR", "VISION UNVEILED", "PURE INSIGHT", "MIND AWAKENS", "SHARP FOCUS"],
-  renewal: ["FRESH START", "NEW BEGINNINGS", "REBIRTH", "SPRING AWAKENS", "TRANSFORMED"],
-  freedom: ["LIBERATED SPIRIT", "WILD AND FREE", "UNBOUND SOUL", "FREEDOM CALLS", "I AM FREE"],
-  passion: ["FIRE WITHIN", "BURNING BRIGHT", "PASSIONATE HEART", "ALIVE WITH PURPOSE", "IGNITED"],
-  wisdom: ["ANCIENT WISDOM", "INNER KNOWING", "SAGE HEART", "DEEP UNDERSTANDING", "WISE SOUL"],
+  confidence: [
+    "I AM WORTHY OF LOVE AND BELONGING",
+    "MY CONFIDENCE GROWS STRONGER EVERY DAY",
+    "I TRUST MYSELF TO HANDLE WHATEVER COMES",
+    "I AM BECOMING THE PERSON I AM MEANT TO BE",
+    "MY VOICE MATTERS AND DESERVES TO BE HEARD",
+  ],
+  peace: [
+    "I RELEASE WHAT I CANNOT CONTROL",
+    "PEACE FLOWS THROUGH ME WITH EVERY BREATH",
+    "I CHOOSE CALM OVER CHAOS",
+    "MY MIND IS QUIET, MY HEART IS STILL",
+    "I AM EXACTLY WHERE I NEED TO BE",
+  ],
+  focus: [
+    "I AM FOCUSED ON WHAT TRULY MATTERS",
+    "MY MIND IS CLEAR AND MY PATH IS CERTAIN",
+    "I GIVE MYSELF PERMISSION TO PRIORITIZE",
+    "EACH STEP I TAKE IS INTENTIONAL",
+    "I AM PRESENT IN THIS MOMENT",
+  ],
+  gratitude: [
+    "I AM GRATEFUL FOR THIS BEAUTIFUL LIFE",
+    "ABUNDANCE SURROUNDS ME IN ALL FORMS",
+    "I APPRECIATE THE SMALL JOYS THAT FILL MY DAYS",
+    "MY HEART OVERFLOWS WITH THANKFULNESS",
+    "EVERY DAY BRINGS NEW BLESSINGS TO EMBRACE",
+  ],
+  abundance: [
+    "I AM OPEN TO RECEIVING ALL GOOD THINGS",
+    "PROSPERITY FLOWS TO ME NATURALLY AND EASILY",
+    "I DESERVE SUCCESS AND WELCOME IT FULLY",
+    "THE UNIVERSE SUPPORTS MY DREAMS",
+    "I ATTRACT WHAT I NEED AT THE PERFECT TIME",
+  ],
+  healing: [
+    "I AM HEALING A LITTLE MORE EACH DAY",
+    "MY BODY KNOWS HOW TO RESTORE ITSELF",
+    "I HONOR MY JOURNEY TOWARD WHOLENESS",
+    "HEALING IS NOT LINEAR AND THAT IS OKAY",
+    "I AM GENTLE WITH MYSELF AS I GROW",
+  ],
+  strength: [
+    "I HAVE SURVIVED EVERY CHALLENGE SO FAR",
+    "MY STRENGTH RUNS DEEPER THAN I KNOW",
+    "I AM RESILIENT AND I WILL RISE AGAIN",
+    "DIFFICULT ROADS LEAD TO BEAUTIFUL DESTINATIONS",
+    "I CARRY WITHIN ME THE POWER TO OVERCOME",
+  ],
+  joy: [
+    "I CHOOSE JOY IN EVERY MOMENT I CAN",
+    "HAPPINESS IS MY NATURAL STATE OF BEING",
+    "I ALLOW MYSELF TO FEEL PURE DELIGHT",
+    "MY JOY COMES FROM WITHIN",
+    "I CELEBRATE THE GIFT OF BEING ALIVE",
+  ],
+  balance: [
+    "I HONOR MY NEED FOR REST AND RENEWAL",
+    "I CREATE HARMONY IN MY LIFE EACH DAY",
+    "BALANCE IS A PRACTICE, NOT A DESTINATION",
+    "I GIVE AND RECEIVE IN EQUAL MEASURE",
+    "I LISTEN TO WHAT MY BODY NEEDS",
+  ],
+  courage: [
+    "I FEEL THE FEAR AND DO IT ANYWAY",
+    "COURAGE IS NOT THE ABSENCE OF FEAR",
+    "I AM BRAVER THAN I BELIEVE",
+    "I TAKE THE NEXT RIGHT STEP",
+    "MY COURAGE INSPIRES OTHERS TO BE BRAVE",
+  ],
+  clarity: [
+    "I TRUST MY INTUITION TO GUIDE ME",
+    "THE ANSWERS I SEEK ARE WITHIN ME",
+    "I SEE MY PATH WITH CRYSTAL CLARITY",
+    "I RELEASE CONFUSION AND EMBRACE KNOWING",
+    "MY VISION FOR MY LIFE IS BECOMING CLEARER",
+  ],
+  renewal: [
+    "EVERY DAY IS A CHANCE TO BEGIN AGAIN",
+    "I SHED WHAT NO LONGER SERVES ME",
+    "TRANSFORMATION IS ALWAYS POSSIBLE",
+    "I EMBRACE THE PERSON I AM BECOMING",
+    "NEW CHAPTERS BRING NEW OPPORTUNITIES",
+  ],
+  freedom: [
+    "I AM FREE TO CREATE THE LIFE I DESIRE",
+    "I RELEASE THE EXPECTATIONS OF OTHERS",
+    "MY SPIRIT CANNOT BE CONTAINED",
+    "I GIVE MYSELF PERMISSION TO CHANGE",
+    "FREEDOM IS MY BIRTHRIGHT",
+  ],
+  passion: [
+    "I PURSUE WHAT SETS MY SOUL ON FIRE",
+    "MY PASSION IS THE COMPASS FOR MY LIFE",
+    "I AM FULLY ALIVE AND PRESENT",
+    "I HONOR THE DREAMS THAT WON'T LET ME GO",
+    "MY ENERGY AND ENTHUSIASM ARE CONTAGIOUS",
+  ],
+  wisdom: [
+    "I LEARN VALUABLE LESSONS FROM EVERY EXPERIENCE",
+    "MY INNER WISDOM KNOWS THE WAY",
+    "I TRUST THE TIMING OF MY LIFE",
+    "EVERY CHAPTER HAS PREPARED ME FOR THIS",
+    "I AM WISER TODAY THAN I WAS YESTERDAY",
+  ],
+  love: [
+    "I AM WORTHY OF DEEP, UNCONDITIONAL LOVE",
+    "LOVE FLOWS TO ME AND THROUGH ME",
+    "I LOVE MYSELF EXACTLY AS I AM",
+    "MY CAPACITY FOR LOVE IS INFINITE",
+    "I ATTRACT LOVING RELATIONSHIPS INTO MY LIFE",
+  ],
+  growth: [
+    "I AM A WORK IN PROGRESS AND THAT IS BEAUTIFUL",
+    "EVERY DAY I BECOME MORE OF WHO I AM",
+    "I EMBRACE CHANGE AS A CATALYST FOR GROWTH",
+    "MY POTENTIAL IS LIMITLESS",
+    "I AM COMMITTED TO MY PERSONAL EVOLUTION",
+  ],
 };
 
-// Visual styles
+// Visual styles with diverse aesthetics
 const VISUAL_STYLES = [
   {
     name: "Watercolor Botanical",
     description: "Soft watercolor washes with delicate botanical elements, organic flowing edges, hand-painted texture on cotton paper",
     keywords: ["watercolor", "botanical", "soft", "organic", "flowing"],
-    colors: ["#F5F1E8", "#D4B896", "#8B7355"], // warm cream, dusty gold, warm brown
+    colors: ["#F5F1E8", "#D4B896", "#8B7355"],
   },
   {
     name: "Minimalist Editorial",
     description: "Clean cream background, elegant serif typography, subtle geometric accents, editorial sophistication",
     keywords: ["minimalist", "editorial", "clean", "geometric", "sophisticated"],
-    colors: ["#FAFAF8", "#2D2D2D", "#C9B8A8"], // pure cream, charcoal, warm taupe
+    colors: ["#FAFAF8", "#2D2D2D", "#C9B8A8"],
   },
   {
     name: "Cosmic Mystical",
     description: "Deep indigo and violet gradients, constellation patterns, ethereal glow, celestial imagery",
     keywords: ["cosmic", "mystical", "celestial", "ethereal", "stars"],
-    colors: ["#1A1A2E", "#E8D5B7", "#4A4063"], // deep indigo, soft gold, dusty violet
+    colors: ["#1A1A2E", "#E8D5B7", "#4A4063"],
   },
   {
     name: "Earth & Nature",
     description: "Forest greens and terracotta, winding paths, natural textures, grounded organic elements",
     keywords: ["earth", "nature", "forest", "grounded", "organic"],
-    colors: ["#F4EDE4", "#5C6B54", "#C4A77D"], // warm linen, sage green, warm ochre
+    colors: ["#F4EDE4", "#5C6B54", "#C4A77D"],
   },
   {
     name: "Soft Gradient",
     description: "Blush pinks and lavender, smooth color transitions, dreamy atmosphere, gentle warmth",
     keywords: ["gradient", "soft", "blush", "dreamy", "gentle"],
-    colors: ["#FDF6F4", "#E8C4C4", "#D4B8C4"], // soft white, dusty rose, mauve
+    colors: ["#FDF6F4", "#E8C4C4", "#D4B8C4"],
   },
   {
     name: "Modern Typography",
     description: "Bold text-focused design, paper textures, minimal decoration, architectural precision",
     keywords: ["typography", "modern", "bold", "minimal", "architectural"],
-    colors: ["#F8F5F0", "#1C1C1C", "#B8A99A"], // warm white, near black, warm gray
+    colors: ["#F8F5F0", "#1C1C1C", "#B8A99A"],
   },
   {
     name: "Warm Golden Hour",
     description: "Honey gold and amber gradients, sun-kissed warmth, radiant glow, luminous atmosphere",
     keywords: ["golden", "warm", "amber", "radiant", "luminous"],
-    colors: ["#FFF8E7", "#D4A574", "#8B6914"], // warm cream, warm gold, amber
+    colors: ["#FFF8E7", "#D4A574", "#8B6914"],
   },
   {
     name: "Serene Blue",
     description: "Cool blues and seafoam, still water reflections, peaceful zen elements, calm atmosphere",
     keywords: ["serene", "blue", "calm", "zen", "peaceful"],
-    colors: ["#F5F9FA", "#7BA3A8", "#445A5E"], // cool white, seafoam, deep teal
+    colors: ["#F5F9FA", "#7BA3A8", "#445A5E"],
   },
   {
     name: "Abstract Expressionist",
     description: "Bold brushstrokes, dynamic color splashes, artistic freedom, gallery-worthy abstraction",
     keywords: ["abstract", "expressionist", "bold", "artistic", "dynamic"],
-    colors: ["#FAF7F2", "#A67C52", "#5A4A3A"], // cream, burnt sienna, deep brown
+    colors: ["#FAF7F2", "#A67C52", "#5A4A3A"],
   },
   {
     name: "Vintage Paper",
     description: "Aged paper texture, sepia tones, antique typography, nostalgic warmth, timeless elegance",
     keywords: ["vintage", "antique", "sepia", "nostalgic", "timeless"],
-    colors: ["#F5ECD7", "#8B7355", "#463A2A"], // aged cream, warm brown, dark brown
+    colors: ["#F5ECD7", "#8B7355", "#463A2A"],
+  },
+  {
+    name: "Japanese Minimalism",
+    description: "Wabi-sabi aesthetic, natural imperfection, zen simplicity, black ink on rice paper",
+    keywords: ["japanese", "zen", "wabi-sabi", "ink", "minimal"],
+    colors: ["#F9F6F0", "#2C2C2C", "#8B8B7A"],
+  },
+  {
+    name: "Tropical Paradise",
+    description: "Lush palm fronds, coral and teal accents, island vibes, exotic botanical elements",
+    keywords: ["tropical", "paradise", "coral", "palm", "exotic"],
+    colors: ["#FFF5E6", "#FF7B7B", "#2E8B8B"],
   },
 ];
 
@@ -97,14 +213,23 @@ const COMPOSITIONS = [
   "radial composition emanating from center text",
 ];
 
-// Typography styles
+// Typography styles - expanded variety
 const TYPOGRAPHY = [
-  "elegant high-contrast serif (Didot, Bodoni style)",
-  "warm humanist serif (Cormorant, Freight style)",
-  "refined transitional serif (Baskerville, Caslon style)",
-  "bold modern serif (Playfair Display style)",
-  "geometric sans-serif for modern edge (Futura, Avant Garde style)",
-  "calligraphic script with editorial restraint",
+  "elegant high-contrast serif with dramatic thick-thin strokes (Didot, Bodoni style)",
+  "warm humanist serif with organic curves (Cormorant, Freight style)",
+  "refined transitional serif with timeless elegance (Baskerville, Caslon style)",
+  "bold modern serif with striking presence (Playfair Display style)",
+  "geometric sans-serif with modernist precision (Futura, Avant Garde style)",
+  "calligraphic script with editorial restraint and flowing curves",
+  "condensed display type with vertical emphasis",
+  "rounded friendly sans-serif with approachable warmth",
+  "art deco inspired lettering with geometric flair",
+  "hand-lettered brush script with organic imperfection",
+  "minimal grotesque sans-serif with clean lines (Helvetica, Aktiv style)",
+  "slab serif with strong presence and confident weight (Rockwell, Clarendon style)",
+  "elegant copperplate script with refined flourishes",
+  "bold extended sans-serif with commanding presence",
+  "vintage inspired display type with nostalgic character",
 ];
 
 // Decorative elements
@@ -119,6 +244,8 @@ const ELEMENTS = [
   "fine grain paper texture",
   "gentle gradient backdrop",
   "constellation or dot pattern",
+  "hand-drawn illustrations",
+  "textured brushwork borders",
 ];
 
 /**
@@ -169,8 +296,8 @@ Accent: ${style.colors[2]}
 VISUAL ELEMENTS:
 ${selectedElements.map(e => `• ${e}`).join('\n')}
 
-QUALITY: Gallery-worthy, $40-60 art print quality
-Should look like professional design from Rifle Paper Co or Kinfolk magazine`;
+QUALITY: Museum gallery-worthy, $50,000+ fine art quality
+Should look like a professionally commissioned piece from a renowned contemporary artist`;
 
   return {
     prompt,
