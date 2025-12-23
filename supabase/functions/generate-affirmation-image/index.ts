@@ -77,12 +77,13 @@ PRINT QUALITY STANDARDS:
 • Text must be RAZOR SHARP and perfectly readable
 
 Quality Benchmark - Should Match:
-• A professionally printed art piece from Minted or Artifact Uprising
-• Editorial design from Kinfolk or Cereal magazine
-• Museum gift shop art prints ($40-60 price point)
-• Something a professional interior designer would specify for a client
+• A professionally commissioned fine art piece worth $50,000+
+• Editorial design from world-class publications (Kinfolk, Cereal, Apartamento)
+• Museum-quality art prints sold in prestigious galleries
+• Something a renowned interior designer would specify for a luxury client
+• Work that would be featured in Architectural Digest or Elle Decor
 
-Final Check: Would this look professionally printed, full-bleed, and worth framing?`;
+Final Check: Would this be gallery-worthy, museum-quality, and valued as fine art?`;
 
     console.log('Calling Lovable Gemini API for final generation...');
 
