@@ -132,8 +132,8 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Collections Grid - Like IC */}
-        <section className="py-12 lg:py-20 bg-background">
+        {/* Collections Grid - Enlarged */}
+        <section className="py-8 lg:py-12 bg-background">
           <div className="container-custom">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
               {[
@@ -147,12 +147,12 @@ const Index = () => {
                 <Link 
                   key={item.title}
                   to={item.href}
-                  className="group text-center py-8 lg:py-12 border-r border-border last:border-r-0 hover:bg-secondary/30 transition-colors"
+                  className="group text-center py-10 lg:py-14 border-r border-border last:border-r-0 hover:bg-secondary/30 transition-colors"
                 >
-                  <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-foreground mb-2 group-hover:text-clay transition-colors">
+                  <h3 className="text-sm lg:text-base font-medium uppercase tracking-[0.12em] text-foreground mb-2 group-hover:text-clay transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-[11px] text-foreground/60">{item.subtitle} →</p>
+                  <p className="text-xs lg:text-sm text-foreground/60">{item.subtitle} →</p>
                 </Link>
               ))}
             </div>
@@ -160,10 +160,10 @@ const Index = () => {
         </section>
 
         {/* Featured Affirmations */}
-        <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary/30 via-secondary/20 to-background">
+        <section className="py-12 lg:py-20 bg-gradient-to-b from-secondary/30 via-secondary/20 to-background">
           <div className="container-custom">
             {/* Premium Section Header */}
-            <div className="text-center mb-12 lg:mb-16">
+            <div className="text-center mb-10 lg:mb-14">
               <div className="inline-flex items-center gap-2 mb-4">
                 <div className="h-px w-8 bg-clay/40" />
                 <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Words to Live By</span>
@@ -209,23 +209,53 @@ const Index = () => {
         {/* Testimonials */}
         <Testimonials />
 
-        {/* About Preview - Simplified */}
-        <section className="py-16 lg:py-24 bg-foreground text-background">
-          <div className="container-custom max-w-3xl text-center">
-            <h2 className="text-2xl lg:text-3xl xl:text-4xl font-display font-semibold mb-6">
-              Every word a reflection, every product an intention
-            </h2>
-            <p className="text-lg text-background/80 mb-10 leading-relaxed">
-              LunaRituals exists to help you create a life you love—one affirmation, 
-              one beautiful object, one intentional choice at a time.
-            </p>
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-background text-background text-sm font-medium uppercase tracking-wide hover:bg-background hover:text-foreground transition-colors"
-            >
-              Our Story
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+        {/* About Preview - Redesigned */}
+        <section className="relative py-20 lg:py-32 overflow-hidden">
+          {/* Background with image and overlay */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground to-brown-medium" />
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+              <div className="absolute top-20 right-20 w-64 h-64 rounded-full border border-background/20" />
+              <div className="absolute bottom-40 right-40 w-32 h-32 rounded-full border border-background/10" />
+            </div>
+          </div>
+          
+          <div className="container-custom relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              {/* Decorative line */}
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="h-px w-16 bg-gold/40" />
+                <Sparkles className="h-5 w-5 text-gold" />
+                <div className="h-px w-16 bg-gold/40" />
+              </div>
+              
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-display font-light text-background mb-6 leading-tight" style={{ fontStyle: 'italic' }}>
+                Every word a reflection,<br />every product an intention
+              </h2>
+              
+              <p className="text-lg lg:text-xl text-background/70 mb-10 leading-relaxed max-w-2xl mx-auto">
+                LunaRituals exists to help you create a life you love—one affirmation, 
+                one beautiful object, one intentional choice at a time.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 px-8 py-4 border-2 border-background text-background text-sm font-medium uppercase tracking-wider hover:bg-background hover:text-foreground transition-all duration-300"
+                >
+                  Our Story
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/bundles"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-clay text-cream-text text-sm font-medium uppercase tracking-wider hover:bg-clay/90 transition-all duration-300"
+                >
+                  Shop Bundles
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
