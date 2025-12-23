@@ -5,9 +5,7 @@ import type { GeneratedData } from '../types';
 
 interface StaticPreviewDisplayProps {
   generatedData: GeneratedData;
-  theme: string;
-  mood: string;
-  layoutStyle: string;
+  prompt: string;
   isEditing: boolean;
   editedHeadline: string;
   editedLines: string[];
@@ -15,7 +13,7 @@ interface StaticPreviewDisplayProps {
   onLineChange: (index: number, value: string) => void;
   loading: boolean;
   onGenerate: () => void;
-  isMobile?: boolean; // Controls sizing and line count
+  isMobile?: boolean;
 }
 
 /**
@@ -25,9 +23,7 @@ interface StaticPreviewDisplayProps {
  */
 export function StaticPreviewDisplay({
   generatedData,
-  theme,
-  mood,
-  layoutStyle,
+  prompt,
   isEditing,
   editedHeadline,
   editedLines,
@@ -41,6 +37,11 @@ export function StaticPreviewDisplay({
   const headlineSize = isMobile ? 'text-2xl md:text-4xl' : 'text-3xl md:text-4xl';
   const lineSize = isMobile ? 'text-sm md:text-base' : 'text-sm md:text-base';
   const padding = isMobile ? 'p-6' : 'p-10';
+
+  // Extract a short description from the prompt for display
+  const promptPreview = prompt 
+    ? prompt.slice(0, 100) + (prompt.length > 100 ? '...' : '')
+    : 'Click "Randomize" to generate a prompt';
 
   return (
     <div className="space-y-4">
@@ -126,40 +127,13 @@ export function StaticPreviewDisplay({
         </div>
       </div>
 
-      {/* Metadata Section */}
+      {/* Metadata Section - simplified to show prompt preview and palette */}
       <div className={isMobile ? 'space-y-3' : 'grid grid-cols-1 md:grid-cols-2 gap-4'}>
         <div className={`${isMobile ? 'bg-muted/30 p-3 rounded-lg' : 'space-y-3 bg-muted/30 p-4 rounded-lg'}`}>
-          {isMobile ? (
-            <div className="grid grid-cols-3 gap-3 mb-3">
-              <div>
-                <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
-                <p className="text-foreground text-xs font-medium capitalize">{theme}</p>
-              </div>
-              <div>
-                <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
-                <p className="text-foreground text-xs font-medium capitalize">{mood}</p>
-              </div>
-              <div>
-                <p className="font-semibold mb-1 text-xs uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
-                <p className="text-foreground text-xs font-medium capitalize">{layoutStyle || 'Auto'}</p>
-              </div>
-            </div>
-          ) : (
-            <>
-              <div>
-                <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Theme</p>
-                <p className="text-foreground text-sm font-medium capitalize">{theme}</p>
-              </div>
-              <div>
-                <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Mood</p>
-                <p className="text-foreground text-sm font-medium capitalize">{mood}</p>
-              </div>
-              <div>
-                <p className="font-semibold mb-2 text-sm uppercase tracking-wide" style={{ color: generatedData.palette[1] || '#c9a961' }}>Layout</p>
-                <p className="text-foreground text-sm font-medium capitalize">{layoutStyle || 'Auto'}</p>
-              </div>
-            </>
-          )}
+          <div>
+            <p className={`font-semibold ${isMobile ? 'mb-1.5 text-xs' : 'mb-2 text-sm'} uppercase tracking-wide`} style={{ color: generatedData.palette[1] || '#c9a961' }}>Prompt Preview</p>
+            <p className={`text-muted-foreground ${isMobile ? 'text-[10px]' : 'text-xs'} leading-relaxed`}>{promptPreview}</p>
+          </div>
         </div>
 
         <div className={`${isMobile ? 'bg-muted/30 p-3 rounded-lg' : 'space-y-3 bg-muted/30 p-4 rounded-lg'}`}>
