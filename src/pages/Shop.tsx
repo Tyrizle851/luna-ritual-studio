@@ -544,16 +544,15 @@ const Shop = () => {
                             </div>
                             <Button
                               size="sm"
-                              variant="outline"
-                              className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+                              className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 window.open(product.affiliateUrl, '_blank');
                               }}
                             >
+                              <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                               <span className="hidden sm:inline">Shop Now</span>
                               <span className="sm:hidden">Shop</span>
-                              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                             </Button>
                           </div>
                         </div>
@@ -656,16 +655,15 @@ const Shop = () => {
                           </div>
                           <Button
                             size="sm"
-                            variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+                            className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(candle.affiliateUrl, '_blank');
                             }}
                           >
+                            <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                             <span className="hidden sm:inline">Shop Now</span>
                             <span className="sm:hidden">Shop</span>
-                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                           </Button>
                         </div>
                       </div>
@@ -769,17 +767,17 @@ const Shop = () => {
                           </div>
                           <Button
                             size="sm"
-                            variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+                            className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               supplement.affiliateUrl ? window.open(supplement.affiliateUrl, '_blank') : handleAddToCart(supplement, "supplement");
                             }}
                           >
+                            <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                             {supplement.affiliateUrl ? (
-                              <><span className="hidden sm:inline">Shop Now</span><span className="sm:hidden">Shop</span> <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" /></>
+                              <><span className="hidden sm:inline">Shop Now</span><span className="sm:hidden">Shop</span></>
                             ) : (
-                              <><span className="hidden sm:inline">Add to Cart</span><span className="sm:hidden">Add</span> <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" /></>
+                              <><span className="hidden sm:inline">Add to Cart</span><span className="sm:hidden">Add</span></>
                             )}
                           </Button>
                         </div>
@@ -922,16 +920,15 @@ const Shop = () => {
                           </div>
                           <Button
                             size="sm"
-                            variant="outline"
-                            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+                            className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(book.affiliateUrl, '_blank');
                             }}
                           >
+                            <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                             <span className="hidden sm:inline">Shop Now</span>
                             <span className="sm:hidden">Shop</span>
-                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
                           </Button>
                         </div>
                       </div>

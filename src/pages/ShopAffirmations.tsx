@@ -13,7 +13,7 @@ import { WishlistButton } from "@/components/WishlistButton";
 import { MobileFilterDrawer } from "@/components/MobileFilterDrawer";
 import { ProductGridSkeleton } from "@/components/ProductSkeleton";
 import { ProductCard } from "@/components/ProductCard";
-import { Star } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
 
 const ShopAffirmations = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -204,28 +204,16 @@ const ShopAffirmations = () => {
                     <div className="flex gap-1 sm:gap-2">
                       <Button
                         size="sm"
-                        variant="outline"
-                        className="border-clay text-clay hover:bg-clay/10 text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedProduct(affirmation);
                           setModalOpen(true);
                         }}
                       >
-                        <span className="hidden sm:inline">Preview</span>
+                        <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
+                        <span className="hidden sm:inline">View Options</span>
                         <span className="sm:hidden">View</span>
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="bg-clay hover:bg-clay-dark text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedProduct(affirmation);
-                          setModalOpen(true);
-                        }}
-                      >
-                        <span className="hidden sm:inline">Add to Cart</span>
-                        <span className="sm:hidden">Add</span>
                       </Button>
                     </div>
                   </div>

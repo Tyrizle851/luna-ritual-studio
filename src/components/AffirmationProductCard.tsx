@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
@@ -51,30 +51,27 @@ export const AffirmationProductCard = ({
       </div>
       
       <div className="p-2 sm:p-3 lg:p-4">
-        <p className="text-[10px] sm:text-xs text-text-muted mb-1 sm:mb-2 uppercase tracking-wider truncate">{affirmation.category}</p>
+        <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2 flex-wrap items-center">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-gold text-gold" />
+          ))}
+          <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
+            ({affirmation.rating || 4.9})
+          </span>
+          <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+            {(affirmation.rating || 4.9) >= 4.5 ? 'Top Rated' : (affirmation.rating || 4.9) >= 4.0 ? 'Popular' : 'Verified'}
+          </span>
+          <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+            {affirmation.badge === 'Most Popular' ? 'Trending' : affirmation.reviewCount && affirmation.reviewCount > 500 ? 'Inspiring' : 'Digital'}
+          </span>
+          {affirmation.reviewCount && (
+            <span className="text-[10px] sm:text-xs text-text-muted hidden sm:inline">
+              ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount})
+            </span>
+          )}
+        </div>
+        
         <h3 className="font-medium mb-1 sm:mb-2 text-xs sm:text-sm lg:text-base group-hover:text-clay transition-colors line-clamp-2">{affirmation.title}</h3>
-
-        {affirmation.rating && (
-          <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
-              ))}
-            </div>
-            <span className="text-[10px] sm:text-xs font-medium text-text-primary">{affirmation.rating}</span>
-            <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
-              {affirmation.rating >= 4.5 ? 'Top Rated' : affirmation.rating >= 4.0 ? 'Popular' : 'Verified'}
-            </span>
-            <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
-              {affirmation.badge === 'Most Popular' ? 'Trending' : affirmation.reviewCount && affirmation.reviewCount > 500 ? 'Inspiring' : 'Digital'}
-            </span>
-            {affirmation.reviewCount && (
-              <span className="text-[10px] sm:text-xs text-text-muted hidden sm:inline">
-                ({affirmation.reviewCount >= 1000 ? `${(affirmation.reviewCount / 1000).toFixed(1)}K` : affirmation.reviewCount})
-              </span>
-            )}
-          </div>
-        )}
 
         {affirmation.socialProof && (
           <p className="text-[10px] sm:text-xs text-text-muted mb-2 hidden sm:block">{affirmation.socialProof}</p>
@@ -101,10 +98,10 @@ export const AffirmationProductCard = ({
           </div>
           <Button
             size="sm"
-            variant="outline"
-            className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs lg:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
             onClick={onAddToCart}
           >
+            <ShoppingBag className="h-3 w-3 mr-1" />
             <span className="hidden sm:inline">View Options</span>
             <span className="sm:hidden">View</span>
           </Button>
