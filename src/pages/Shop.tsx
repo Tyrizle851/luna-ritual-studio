@@ -327,7 +327,7 @@ const Shop = () => {
         <meta name="keywords" content={currentMeta.keywords} />
       </Helmet>
       {/* Category Navigation - Attached directly under header */}
-      <div className="sticky top-14 lg:top-16 z-40 bg-muted/50 border-b border-border/40">
+      <div className="sticky top-14 lg:top-16 z-40 bg-muted/95 backdrop-blur-sm border-b border-border/50">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex items-center gap-2 px-4 py-3 min-w-max">
             <button
@@ -528,19 +528,19 @@ const Shop = () => {
 
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                             <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                              {product.originalPrice ? (
-                                <>
-                                  <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${product.originalPrice}</span>
-                                  <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
-                                    -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
-                                  Great Deal
+                            {product.originalPrice ? (
+                              <>
+                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${product.originalPrice}</span>
+                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-clay text-cream-text rounded font-medium">
+                                  -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                 </span>
-                              )}
-                              <span className="text-sm sm:text-base font-semibold text-text-primary">${product.price}</span>
+                              </>
+                            ) : (
+                              <span className="text-[8px] sm:text-[10px] text-clay font-medium">
+                                Great Value
+                              </span>
+                            )}
+                            <span className="text-sm sm:text-base font-semibold text-text-primary">${product.price}</span>
                             </div>
                             <Button
                               size="sm"
@@ -639,19 +639,19 @@ const Shop = () => {
 
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                           <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                            {candle.originalPrice ? (
-                              <>
-                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${candle.originalPrice}</span>
-                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
-                                  -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
-                                Great Deal
+                          {candle.originalPrice ? (
+                            <>
+                              <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${candle.originalPrice}</span>
+                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-clay text-cream-text rounded font-medium">
+                                -{Math.round(((candle.originalPrice - candle.price) / candle.originalPrice) * 100)}%
                               </span>
-                            )}
-                            <span className="text-sm sm:text-base font-semibold text-text-primary">${candle.price}</span>
+                            </>
+                          ) : (
+                            <span className="text-[8px] sm:text-[10px] text-clay font-medium">
+                              Great Value
+                            </span>
+                          )}
+                          <span className="text-sm sm:text-base font-semibold text-text-primary">${candle.price}</span>
                           </div>
                           <Button
                             size="sm"
@@ -751,19 +751,19 @@ const Shop = () => {
 
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
                           <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                            {supplement.originalPrice ? (
-                              <>
-                                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${supplement.originalPrice}</span>
-                                <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-foreground text-background rounded">
-                                  -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
-                                Great Deal
+                          {supplement.originalPrice ? (
+                            <>
+                              <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${supplement.originalPrice}</span>
+                              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-clay text-cream-text rounded font-medium">
+                                -{Math.round(((supplement.originalPrice - supplement.price) / supplement.originalPrice) * 100)}%
                               </span>
-                            )}
-                            <span className="text-sm sm:text-base font-semibold text-text-primary">${supplement.price}</span>
+                            </>
+                          ) : (
+                            <span className="text-[8px] sm:text-[10px] text-clay font-medium">
+                              Great Value
+                            </span>
+                          )}
+                          <span className="text-sm sm:text-base font-semibold text-text-primary">${supplement.price}</span>
                           </div>
                           <Button
                             size="sm"

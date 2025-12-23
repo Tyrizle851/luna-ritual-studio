@@ -84,10 +84,10 @@ export const Header = () => {
               Shop All
             </Link>
             <Link 
-              to="/shop?filter=bestsellers" 
-              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors"
+              to="/bundles" 
+              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-clay hover:text-clay-dark transition-colors"
             >
-              Bestsellers
+              Bundles
             </Link>
             <Link 
               to="/collections" 
@@ -98,14 +98,8 @@ export const Header = () => {
               Collections
             </Link>
             <Link 
-              to="/shop?filter=new" 
-              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors"
-            >
-              New
-            </Link>
-            <Link 
               to="/affirmation-builder" 
-              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-clay hover:text-clay-dark transition-colors"
+              className="px-3 py-2 text-[11px] xl:text-xs font-medium uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors"
             >
               Studio
             </Link>

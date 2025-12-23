@@ -1,67 +1,111 @@
-import { Star } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Star, Quote, Heart } from "lucide-react";
 
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Mitchell",
-    role: "Wellness Coach",
-    content: "These affirmations have become part of my daily ritual. The quality and design are absolutely stunning.",
+    name: "Jessica M.",
+    location: "California",
+    content: "I hang 'I am worthy of rest' above my desk. It's a daily reminder that taking breaks isn't lazy—it's necessary. The print quality exceeded my expectations.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
+    product: "I am worthy of rest",
+    verified: true,
   },
   {
     id: 2,
-    name: "Emma Rodriguez",
-    role: "Creative Director",
-    content: "I've purchased multiple affirmations and each one brings such calm energy to my space. Highly recommend!",
+    name: "Amanda R.",
+    location: "Texas",
+    content: "Started using these as phone wallpapers and now I have three framed in my apartment. My friends always ask where I got them. The designs are so thoughtful.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
+    product: "Digital Bundle",
+    verified: true,
   },
   {
     id: 3,
-    name: "Maya Chen",
-    role: "Entrepreneur",
-    content: "The custom builder is brilliant! I created affirmations that perfectly align with my goals. Worth every penny.",
+    name: "Taylor K.",
+    location: "New York",
+    content: "Bought the canvas print for my sister's birthday. She teared up when she opened it. Something about seeing 'I attract what I believe' every morning really shifts your mindset.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop"
+    product: "Canvas Print",
+    verified: true,
   },
+];
+
+const stats = [
+  { value: "50,000+", label: "Happy customers" },
+  { value: "4.9", label: "Average rating" },
+  { value: "200+", label: "5-star reviews" },
 ];
 
 export const Testimonials = () => {
   return (
-    <section className="section-padding bg-secondary">
+    <section className="py-16 lg:py-24 bg-secondary/50">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="mb-4">Loved by Our Community</h2>
-          <p className="text-text-secondary max-w-2xl mx-auto">
-            See what our customers are saying about their LunaRituals experience
+        {/* Header */}
+        <div className="text-center mb-12 lg:mb-16">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <div className="h-px w-8 bg-clay/40" />
+            <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Real Stories</span>
+            <div className="h-px w-8 bg-clay/40" />
+          </div>
+          <h2 className="text-2xl lg:text-3xl xl:text-4xl font-display font-semibold text-foreground mb-4 tracking-tight">
+            Loved by Our Community
+          </h2>
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Join thousands who have transformed their daily rituals with intentional reminders
           </p>
         </div>
 
+        {/* Stats Row */}
+        <div className="flex flex-wrap justify-center gap-8 lg:gap-16 mb-12 lg:mb-16">
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-2xl lg:text-3xl font-display font-bold text-foreground">{stat.value}</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="p-6 bg-background border-border hover:shadow-lg transition-shadow duration-300">
-              <div className="flex gap-1 mb-4">
+            <div 
+              key={testimonial.id} 
+              className="bg-background border border-border/50 p-6 lg:p-8 rounded-sm hover:shadow-medium transition-all duration-300"
+            >
+              {/* Quote Icon */}
+              <Quote className="h-6 w-6 text-clay/30 mb-4" />
+              
+              {/* Rating */}
+              <div className="flex gap-0.5 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-gold text-gold" />
                 ))}
               </div>
-              <p className="text-text-secondary mb-6 leading-relaxed italic">
+              
+              {/* Content */}
+              <p className="text-foreground leading-relaxed mb-6">
                 "{testimonial.content}"
               </p>
-              <div className="flex items-center gap-3">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-medium text-sm">{testimonial.name}</p>
-                  <p className="text-xs text-text-muted">{testimonial.role}</p>
-                </div>
+              
+              {/* Product Tag */}
+              <div className="inline-block px-2.5 py-1 bg-secondary text-foreground/70 text-[10px] font-medium uppercase tracking-wider rounded mb-4">
+                {testimonial.product}
               </div>
-            </Card>
+              
+              {/* Author */}
+              <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                <div>
+                  <p className="font-medium text-sm text-foreground">{testimonial.name}</p>
+                  <p className="text-xs text-muted-foreground">{testimonial.location}</p>
+                </div>
+                {testimonial.verified && (
+                  <div className="flex items-center gap-1 text-[10px] text-clay">
+                    <Heart className="h-3 w-3 fill-clay" />
+                    <span>Verified</span>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </div>
