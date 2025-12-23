@@ -40,7 +40,7 @@ export function StaticPreviewDisplay({
   const lineCount = isMobile ? 4 : 6;
   const headlineSize = isMobile ? 'text-2xl md:text-5xl' : 'text-4xl md:text-5xl';
   const lineSize = isMobile ? 'text-sm md:text-lg' : 'text-base md:text-lg';
-  const minHeight = isMobile ? 'min-h-[400px]' : 'min-h-[600px]';
+  const minHeight = isMobile ? 'min-h-[450px]' : 'min-h-[700px]';
   const padding = isMobile ? 'p-6' : 'p-12';
 
   return (
