@@ -1,14 +1,10 @@
 import { toast } from 'sonner';
-import { generatePreviewData as generatePreviewDataUtil } from '../utils/affirmationDataGenerator';
+import { generateRandomPrompt, deriveColorsFromPrompt, extractHeadlineFromPrompt } from '../utils/promptGenerator';
 import type { GeneratedData, FavoriteConfig } from '../types';
 
 interface UseAffirmationActionsProps {
-  theme: string;
-  setTheme: (value: string) => void;
-  mood: string;
-  setMood: (value: string) => void;
-  layoutStyle: string;
-  setLayoutStyle: (value: string) => void;
+  prompt: string;
+  setPrompt: (value: string) => void;
   userKeywords: string;
   seed: string;
   generatedData: GeneratedData;
@@ -28,7 +24,6 @@ interface UseAffirmationActionsProps {
   setPreviewImagesB64: (images: string[]) => void;
   setFinalImagesB64: (images: string[]) => void;
   setGeneratedImageB64: (image: string | null) => void;
-  handleGenerate: () => void;
 }
 
 /**
@@ -36,12 +31,8 @@ interface UseAffirmationActionsProps {
  * Encapsulates all user interaction logic separate from the main component
  */
 export function useAffirmationActions({
-  theme,
-  setTheme,
-  mood,
-  setMood,
-  layoutStyle,
-  setLayoutStyle,
+  prompt,
+  setPrompt,
   userKeywords,
   seed,
   generatedData,
@@ -61,30 +52,27 @@ export function useAffirmationActions({
   setPreviewImagesB64,
   setFinalImagesB64,
   setGeneratedImageB64,
-  handleGenerate,
 }: UseAffirmationActionsProps) {
 
   const handleRandomize = () => {
-    const themes = ["confidence", "peace", "focus", "gratitude", "abundance", "healing", "strength", "joy", "balance", "courage", "clarity", "renewal", "freedom", "passion", "wisdom"];
-    const moods = ["minimalist", "bohemian", "modern-serif", "coastal", "earthy", "vibrant", "pastel", "monochrome", "sunset", "forest"];
-    const allLayouts = ["centered-serenity", "vertical-flow", "floating-cluster", "asymmetric-balance", "arc-flow", "golden-spiral", "botanical-frame", "minimal-horizon", "radiant-center-burst", "soft-anchor-left", "soft-anchor-right", "gentle-column", "pebble-scatter", "circle-harmony", "prayer-stack", "ribbon-drift", "editorial-grid-luxe", "calm-waterfall", "sacred-geometry", "breath-space-minimal"];
-
-    const newTheme = themes[Math.floor(Math.random() * themes.length)];
-    const newMood = moods[Math.floor(Math.random() * moods.length)];
-    const newLayout = allLayouts[Math.floor(Math.random() * allLayouts.length)];
-
-    setTheme(newTheme);
-    setMood(newMood);
-    setLayoutStyle(newLayout);
+    // Generate a new random prompt
+    const { prompt: newPrompt, colors, headline } = generateRandomPrompt();
+    
+    setPrompt(newPrompt);
+    setCustomPalette(colors);
     setPreviewImagesB64([]);
     setFinalImagesB64([]);
     setGeneratedImageB64(null);
 
-    // Generate new preview data immediately with the new selections
-    const newData = generatePreviewDataUtil(newTheme, newMood, newLayout);
-    setGeneratedData(newData);
+    // Update generated data with new headline and colors
+    setGeneratedData({
+      ...generatedData,
+      headline,
+      palette: colors,
+      paletteNames: colors,
+    });
 
-    toast.success('Randomized! Preview updated.');
+    toast.success('New prompt generated!');
   };
 
   const startEditing = () => {
@@ -111,10 +99,10 @@ export function useAffirmationActions({
 
   const toggleFavorite = () => {
     const currentConfig: FavoriteConfig = {
-      id: `${theme}-${mood}-${Date.now()}`,
-      theme,
-      mood,
-      layoutStyle,
+      id: `prompt-${Date.now()}`,
+      theme: 'custom',
+      mood: 'custom',
+      layoutStyle: '',
       userKeywords,
       seed,
       generatedData,
@@ -124,9 +112,7 @@ export function useAffirmationActions({
     let updatedFavorites: FavoriteConfig[];
     if (isFavorite) {
       // Remove from favorites
-      updatedFavorites = favorites.filter(f =>
-        !(f.theme === theme && f.mood === mood && f.layoutStyle === layoutStyle)
-      );
+      updatedFavorites = favorites.filter(f => f.id !== currentConfig.id);
       setIsFavorite(false);
       toast.success('Removed from favorites');
     } else {
@@ -141,7 +127,10 @@ export function useAffirmationActions({
   };
 
   const updatePaletteColor = (index: number, color: string) => {
-    const newPalette = [...(customPalette.length > 0 ? customPalette : generatedData.palette)];
+    const currentPalette = customPalette.length >= 3 
+      ? customPalette 
+      : ["#F5F1E8", "#D4B896", "#8B7355"];
+    const newPalette = [...currentPalette];
     newPalette[index] = color;
     setCustomPalette(newPalette);
     setGeneratedData({
@@ -152,9 +141,15 @@ export function useAffirmationActions({
   };
 
   const resetPalette = () => {
-    setCustomPalette([]);
-    handleGenerate();
-    toast.success('Palette reset to default');
+    // Derive colors from current prompt
+    const derivedColors = deriveColorsFromPrompt(prompt);
+    setCustomPalette(derivedColors);
+    setGeneratedData({
+      ...generatedData,
+      palette: derivedColors,
+      paletteNames: derivedColors
+    });
+    toast.success('Colors derived from prompt');
   };
 
   const shareToSocial = (platform: string) => {

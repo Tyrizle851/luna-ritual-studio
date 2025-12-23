@@ -43,9 +43,8 @@ import { PageHeader } from "./AffirmationBuilder/components/PageHeader";
 import type { GeneratedData, FavoriteConfig, HistoryItem } from "./AffirmationBuilder/types";
 
 const AffirmationBuilder = () => {
-  const [theme, setTheme] = useState("confidence");
-  const [mood, setMood] = useState("minimalist");
-  const [layoutStyle, setLayoutStyle] = useState("");
+  // Main prompt state - this is what gets sent to the AI
+  const [prompt, setPrompt] = useState("");
   const [userKeywords, setUserKeywords] = useState("");
   const [seed, setSeed] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,7 +71,7 @@ const AffirmationBuilder = () => {
   const [editedLines, setEditedLines] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<FavoriteConfig[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [customPalette, setCustomPalette] = useState<string[]>([]);
+  const [customPalette, setCustomPalette] = useState<string[]>(["#F5F1E8", "#D4B896", "#8B7355"]);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showGallery, setShowGallery] = useState(false);
@@ -94,15 +93,12 @@ const AffirmationBuilder = () => {
     generateFinal,
     cancelGeneration,
   } = useAffirmationGeneration({
-    theme,
-    mood,
-    layoutStyle,
+    prompt,
     userKeywords,
     seed,
     customPalette,
     generatedData,
     setGeneratedData,
-    generatePreviewData: () => generatePreviewData(),
   });
 
   // Custom hook for user actions (editing, favorites, sharing, randomization)
@@ -116,12 +112,8 @@ const AffirmationBuilder = () => {
     resetPalette,
     shareToSocial,
   } = useAffirmationActions({
-    theme,
-    setTheme,
-    mood,
-    setMood,
-    layoutStyle,
-    setLayoutStyle,
+    prompt,
+    setPrompt,
     userKeywords,
     seed,
     generatedData,
@@ -141,7 +133,6 @@ const AffirmationBuilder = () => {
     setPreviewImagesB64,
     setFinalImagesB64,
     setGeneratedImageB64,
-    handleGenerate: async () => await generatePreviews(),
   });
 
   // Sync hook state with component state
