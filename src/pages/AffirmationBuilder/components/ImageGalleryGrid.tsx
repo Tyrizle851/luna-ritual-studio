@@ -42,8 +42,8 @@ export function ImageGalleryGrid({
         )}
       </div>
 
-      {/* Image Grid - single column for preview, 2 columns for final */}
-      <div className={`grid ${isFinal ? 'grid-cols-2' : 'grid-cols-1'} gap-3`}>
+      {/* Image Grid */}
+      <div className={`grid ${isFinal ? 'grid-cols-2 gap-3' : 'grid-cols-1 gap-4'}`}>
         {images.map((imageUrl, index) => (
           <div
             key={index}
@@ -53,12 +53,12 @@ export function ImageGalleryGrid({
                 : 'border-[#3a2817] hover:border-[#5a3817] hover:scale-[1.02]'
             }`}
             onClick={() => onImageClick(imageUrl, type)}
-            style={{ aspectRatio: isFinal ? '4/5' : '16/10' }}
+            style={{ aspectRatio: isFinal ? '4/5' : '3/4' }}
           >
             <img
               src={imageUrl}
               alt={`${isFinal ? 'Final' : 'Preview'} Affirmation ${index + 1}`}
-              className={`w-full h-full object-contain bg-muted/30 ${isFinal ? 'group-hover:scale-105 transition-transform duration-500' : ''}`}
+              className={`w-full h-full object-cover ${isFinal ? 'group-hover:scale-105 transition-transform duration-500' : ''}`}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
               <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">

@@ -22,22 +22,22 @@ export function MobilePreviewGrid({
 }: MobilePreviewGridProps) {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-4">
         {images.map((imageUrl, index) => (
           <div
             key={index}
-            className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+            className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:shadow-xl ${
               selectedImages.includes(index) ? 'border-primary ring-2 ring-primary shadow-lg' : 'border-[#3a2817]'
             }`}
-            style={{ aspectRatio: '4/5' }}
+            style={{ aspectRatio: '3/4' }}
           >
             <img
               src={imageUrl}
               alt={`Preview ${index + 1}`}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover"
               onClick={() => onImageClick(imageUrl)}
             />
-            <div className="absolute top-1 right-1 bg-muted text-muted-foreground px-1.5 py-0.5 rounded text-xs font-semibold">
+            <div className="absolute top-2 right-2 bg-muted text-muted-foreground px-2 py-1 rounded text-xs font-semibold">
               Preview
             </div>
             <button
@@ -45,7 +45,7 @@ export function MobilePreviewGrid({
                 e.stopPropagation();
                 onToggleSelection(index);
               }}
-              className="absolute top-1 left-1 w-6 h-6 rounded-full bg-background border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
+              className="absolute top-2 left-2 w-7 h-7 rounded-full bg-background border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
             >
               {selectedImages.includes(index) && <Check className="h-4 w-4" />}
             </button>
