@@ -26,16 +26,20 @@ export const WhyLunaRituals = () => {
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-center">
           {/* Images Grid */}
           <div className="grid grid-cols-2 gap-4 lg:gap-6">
-            <img 
-              src={sampleImg1} 
-              alt="Luna Rituals product" 
-              className="w-full aspect-[3/4] object-cover"
-            />
-            <img 
-              src={sampleImg2} 
-              alt="Luna Rituals lifestyle" 
-              className="w-full aspect-[3/4] object-cover mt-8"
-            />
+            <div className="border-2 border-foreground/80 rounded-sm overflow-hidden">
+              <img 
+                src={sampleImg1} 
+                alt="Luna Rituals product" 
+                className="w-full aspect-[3/4] object-cover"
+              />
+            </div>
+            <div className="border-2 border-foreground/80 rounded-sm overflow-hidden mt-8">
+              <img 
+                src={sampleImg2} 
+                alt="Luna Rituals lifestyle" 
+                className="w-full aspect-[3/4] object-cover"
+              />
+            </div>
           </div>
 
           {/* Content */}
