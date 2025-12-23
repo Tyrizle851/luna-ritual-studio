@@ -38,14 +38,17 @@ export function StaticPreviewDisplay({
   isMobile = false,
 }: StaticPreviewDisplayProps) {
   const lineCount = isMobile ? 4 : 6;
-  const headlineSize = isMobile ? 'text-2xl md:text-5xl' : 'text-4xl md:text-5xl';
-  const lineSize = isMobile ? 'text-sm md:text-lg' : 'text-base md:text-lg';
-  const minHeight = isMobile ? 'min-h-[450px]' : 'min-h-[700px]';
-  const padding = isMobile ? 'p-6' : 'p-12';
+  const headlineSize = isMobile ? 'text-2xl md:text-4xl' : 'text-3xl md:text-4xl';
+  const lineSize = isMobile ? 'text-sm md:text-base' : 'text-sm md:text-base';
+  const padding = isMobile ? 'p-6' : 'p-10';
 
   return (
     <div className="space-y-4">
-      <div className={`bg-gradient-to-br from-background to-muted/20 ${padding} rounded-lg border-2 border-muted ${minHeight} flex flex-col justify-between relative overflow-hidden`}>
+      {/* Full-size preview container - matches the space of 4 generated images in 2x2 grid */}
+      <div 
+        className={`bg-gradient-to-br from-background to-muted/20 ${padding} rounded-lg border-2 border-muted flex flex-col justify-between relative overflow-hidden`}
+        style={{ aspectRatio: isMobile ? '3/4' : '1/1' }}
+      >
         {/* Decorative corner elements */}
         <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-muted-foreground/30"></div>
         <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-muted-foreground/30"></div>
