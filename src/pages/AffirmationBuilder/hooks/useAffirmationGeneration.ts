@@ -2,21 +2,15 @@ import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/integrations/supabase/client';
-import { buildDesignSpec } from '@/lib/designSpecBuilder';
-import type { ThemeSlug, MoodSlug } from '@/types/design-spec';
-import { getLayoutArchetype } from '../utils/layoutMapping';
 import type { GeneratedData } from '../types';
 
 interface UseAffirmationGenerationProps {
-  theme: string;
-  mood: string;
-  layoutStyle: string;
+  prompt: string;
   userKeywords: string;
   seed: string;
   customPalette: string[];
   generatedData: GeneratedData | null;
   setGeneratedData: (data: GeneratedData) => void;
-  generatePreviewData: () => GeneratedData;
 }
 
 interface UseAffirmationGenerationReturn {
@@ -31,15 +25,12 @@ interface UseAffirmationGenerationReturn {
 }
 
 export function useAffirmationGeneration({
-  theme,
-  mood,
-  layoutStyle,
+  prompt,
   userKeywords,
   seed,
   customPalette,
   generatedData,
   setGeneratedData,
-  generatePreviewData,
 }: UseAffirmationGenerationProps): UseAffirmationGenerationReturn {
   const [loading, setLoading] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -62,6 +53,12 @@ export function useAffirmationGeneration({
   };
 
   const generatePreviews = async () => {
+    // Validate prompt exists
+    if (!prompt.trim()) {
+      toast.error('Please enter a prompt or click Randomize to generate one');
+      return;
+    }
+
     // Cancel any existing generation
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -76,19 +73,21 @@ export function useAffirmationGeneration({
     setLoadingMessage('Preparing your design...');
 
     try {
-      // Use existing preview data or generate new
-      const preview = generatedData || generatePreviewData();
-      if (!generatedData) {
-        // Apply custom palette if set
-        if (customPalette.length > 0) {
-          preview.palette = customPalette;
-          preview.paletteNames = customPalette;
-        }
-        setGeneratedData(preview);
+      // Build full prompt with keywords and colors
+      let fullPrompt = prompt;
+      
+      // Append user keywords if provided
+      if (userKeywords.trim()) {
+        fullPrompt += `\n\nAdditional elements to include: ${userKeywords}`;
+      }
+      
+      // Append custom colors if provided
+      if (customPalette.length >= 3) {
+        fullPrompt += `\n\nUse these specific colors: Primary: ${customPalette[0]}, Secondary: ${customPalette[1]}, Accent: ${customPalette[2]}`;
       }
 
       setLoadingProgress(10);
-      setLoadingMessage('Creating 4 unique watercolor variations...');
+      setLoadingMessage('Creating 4 unique variations...');
 
       toast.info('✨ Creating 4 preview variations for you... (~30 seconds)');
 
@@ -97,17 +96,12 @@ export function useAffirmationGeneration({
         setLoadingProgress(prev => Math.min(prev + 5, 90));
       }, 1500);
 
-      // Generate 4 preview images in parallel
+      // Generate 4 preview images in parallel - send the full prompt directly
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-preview-image', {
           body: {
-            headline: preview.headline,
-            supportingLines: preview.supportingLines,
-            theme,
-            mood,
-            layout: preview.layoutStyle,
-            palette: preview.palette,
-            accentElements: preview.accentElements,
+            prompt: fullPrompt,
+            headline: generatedData?.headline || 'AFFIRMATION',
           },
         })
       );
@@ -166,6 +160,12 @@ export function useAffirmationGeneration({
   };
 
   const generateFinal = async () => {
+    // Validate prompt exists
+    if (!prompt.trim()) {
+      toast.error('Please enter a prompt or click Randomize to generate one');
+      return;
+    }
+
     // Cancel any existing generation
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -180,32 +180,28 @@ export function useAffirmationGeneration({
     setLoadingMessage('Preparing print-quality designs...');
 
     try {
-      // Ensure we have preview data first
-      if (!generatedData) {
-        toast.error('Please generate previews first');
-        return;
-      }
-
       setLoadingProgress(10);
       setLoadingMessage('Building your high-resolution designs...');
 
-      // Get layout archetype using shared utility
-      const layoutArchetype = getLayoutArchetype(layoutStyle);
+      // Build full prompt with keywords and colors - enhanced for print quality
+      let fullPrompt = prompt;
+      
+      // Append user keywords if provided
+      if (userKeywords.trim()) {
+        fullPrompt += `\n\nAdditional elements to include: ${userKeywords}`;
+      }
+      
+      // Append custom colors if provided
+      if (customPalette.length >= 3) {
+        fullPrompt += `\n\nUse these specific colors: Primary: ${customPalette[0]}, Secondary: ${customPalette[1]}, Accent: ${customPalette[2]}`;
+      }
 
-      // Get active palette
-      const activePalette = customPalette.length > 0 ? customPalette : generatedData.palette;
-
-      // Build design spec
-      const designSpec = buildDesignSpec({
-        theme: theme as ThemeSlug,
-        mood: mood as MoodSlug,
-        layoutOverride: layoutArchetype,
-        keywords: userKeywords,
-        seed: seed ? parseInt(seed) : undefined,
-        customPaletteHex: activePalette,
-        customHeadline: generatedData.headline,
-        customSupportingPhrases: generatedData.supportingLines,
-      });
+      // Add print quality requirements
+      fullPrompt += `\n\nPRINT QUALITY REQUIREMENTS:
+• Resolution: 300 DPI, print-ready
+• Dimensions: 2400×3000 pixels (8×10" format)
+• Text must be RAZOR SHARP and perfectly readable
+• Gallery-worthy, professional quality`;
 
       toast.info('✨ Creating your print-quality affirmations... (~60 seconds)');
 
@@ -217,10 +213,13 @@ export function useAffirmationGeneration({
         setLoadingProgress(prev => Math.min(prev + 3, 90));
       }, 2000);
 
-      // Generate 4 final images in parallel
+      // Generate 4 final images in parallel - send the full prompt directly
       const requests = Array(4).fill(null).map(() =>
         supabase.functions.invoke('generate-affirmation-image', {
-          body: { designSpec },
+          body: { 
+            prompt: fullPrompt,
+            headline: generatedData?.headline || 'AFFIRMATION',
+          },
         })
       );
 

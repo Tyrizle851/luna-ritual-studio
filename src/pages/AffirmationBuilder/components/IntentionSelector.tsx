@@ -1,100 +1,60 @@
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Palette, ChevronDown } from 'lucide-react';
-import type { GeneratedData } from '../types';
 
 interface IntentionSelectorProps {
-  theme: string;
-  setTheme: (value: string) => void;
-  mood: string;
-  setMood: (value: string) => void;
-  layoutStyle: string;
-  setLayoutStyle: (value: string) => void;
+  prompt: string;
+  setPrompt: (value: string) => void;
   userKeywords: string;
   setUserKeywords: (value: string) => void;
   showAdvanced: boolean;
   setShowAdvanced: (value: boolean) => void;
   customPalette: string[];
-  generatedData: GeneratedData;
   updatePaletteColor: (index: number, color: string) => void;
   resetPalette: () => void;
-  idSuffix?: string; // Optional suffix for form IDs (e.g., "-desktop" for desktop version)
+  idSuffix?: string;
 }
 
 /**
- * Intention selection form with theme, mood, layout, and advanced options
- * Reusable for both mobile and desktop layouts
+ * Intention selection form with visible prompt textarea and custom colors
+ * The prompt is fully visible and editable by the user
  */
 export function IntentionSelector({
-  theme,
-  setTheme,
-  mood,
-  setMood,
-  layoutStyle,
-  setLayoutStyle,
+  prompt,
+  setPrompt,
   userKeywords,
   setUserKeywords,
   showAdvanced,
   setShowAdvanced,
   customPalette,
-  generatedData,
   updatePaletteColor,
   resetPalette,
   idSuffix = '',
 }: IntentionSelectorProps) {
+  // Ensure we always have 3 colors to display
+  const displayPalette = customPalette.length >= 3 
+    ? customPalette 
+    : ["#F5F1E8", "#D4B896", "#8B7355"];
+
   return (
     <div className="space-y-4">
-      {/* Theme Selection */}
+      {/* Main Prompt Textarea */}
       <div className="space-y-2">
-        <Label htmlFor={`theme${idSuffix}`}>Theme</Label>
-        <Select value={theme} onValueChange={setTheme}>
-          <SelectTrigger id={`theme${idSuffix}`}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="confidence">Confidence</SelectItem>
-            <SelectItem value="peace">Peace</SelectItem>
-            <SelectItem value="focus">Focus</SelectItem>
-            <SelectItem value="gratitude">Gratitude</SelectItem>
-            <SelectItem value="abundance">Abundance</SelectItem>
-            <SelectItem value="healing">Healing</SelectItem>
-            <SelectItem value="strength">Strength</SelectItem>
-            <SelectItem value="joy">Joy</SelectItem>
-            <SelectItem value="balance">Balance</SelectItem>
-            <SelectItem value="courage">Courage</SelectItem>
-            <SelectItem value="clarity">Clarity</SelectItem>
-            <SelectItem value="renewal">Renewal</SelectItem>
-            <SelectItem value="freedom">Freedom</SelectItem>
-            <SelectItem value="passion">Passion</SelectItem>
-            <SelectItem value="wisdom">Wisdom</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Mood Selection */}
-      <div className="space-y-2">
-        <Label htmlFor={`mood${idSuffix}`}>Mood</Label>
-        <Select value={mood} onValueChange={setMood}>
-          <SelectTrigger id={`mood${idSuffix}`}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="minimalist">Minimalist</SelectItem>
-            <SelectItem value="bohemian">Bohemian</SelectItem>
-            <SelectItem value="modern-serif">Modern Serif</SelectItem>
-            <SelectItem value="coastal">Coastal</SelectItem>
-            <SelectItem value="earthy">Earthy</SelectItem>
-            <SelectItem value="vibrant">Vibrant</SelectItem>
-            <SelectItem value="pastel">Pastel</SelectItem>
-            <SelectItem value="monochrome">Monochrome</SelectItem>
-            <SelectItem value="sunset">Sunset</SelectItem>
-            <SelectItem value="forest">Forest</SelectItem>
-          </SelectContent>
-        </Select>
+        <Label htmlFor={`prompt${idSuffix}`}>Your Prompt</Label>
+        <Textarea
+          id={`prompt${idSuffix}`}
+          placeholder='Click "Randomize" to generate a creative prompt, or write your own...'
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          rows={8}
+          className="font-mono text-sm leading-relaxed"
+        />
+        <p className="text-xs text-muted-foreground">
+          This is the exact prompt sent to the AI. Edit it directly or click Randomize to generate a new one.
+        </p>
       </div>
 
       {/* Advanced Options - Collapsible */}
@@ -106,42 +66,9 @@ export function IntentionSelector({
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="space-y-4 pt-2">
-          {/* Layout Style Selection */}
-          <div className="space-y-2">
-            <Label htmlFor={`layout${idSuffix}`}>Layout Style</Label>
-            <Select value={layoutStyle || "auto"} onValueChange={(val) => setLayoutStyle(val === "auto" ? "" : val)}>
-              <SelectTrigger id={`layout${idSuffix}`}>
-                <SelectValue placeholder="Auto" />
-              </SelectTrigger>
-              <SelectContent className="max-h-[300px] bg-background z-50">
-                <SelectItem value="auto">Auto</SelectItem>
-                <SelectItem value="centered-serenity">Centered Serenity</SelectItem>
-                <SelectItem value="vertical-flow">Vertical Flow</SelectItem>
-                <SelectItem value="floating-cluster">Floating Cluster</SelectItem>
-                <SelectItem value="asymmetric-balance">Asymmetric Balance</SelectItem>
-                <SelectItem value="arc-flow">Arc Flow</SelectItem>
-                <SelectItem value="golden-spiral">Golden Spiral</SelectItem>
-                <SelectItem value="botanical-frame">Botanical Frame</SelectItem>
-                <SelectItem value="minimal-horizon">Minimal Horizon</SelectItem>
-                <SelectItem value="radiant-center-burst">Radiant Center Burst</SelectItem>
-                <SelectItem value="soft-anchor-left">Soft Anchor Left</SelectItem>
-                <SelectItem value="soft-anchor-right">Soft Anchor Right</SelectItem>
-                <SelectItem value="gentle-column">Gentle Column</SelectItem>
-                <SelectItem value="pebble-scatter">Pebble Scatter</SelectItem>
-                <SelectItem value="circle-harmony">Circle Harmony</SelectItem>
-                <SelectItem value="prayer-stack">Prayer Stack</SelectItem>
-                <SelectItem value="ribbon-drift">Ribbon Drift</SelectItem>
-                <SelectItem value="editorial-grid-luxe">Editorial Grid Luxe</SelectItem>
-                <SelectItem value="calm-waterfall">Calm Waterfall</SelectItem>
-                <SelectItem value="sacred-geometry">Sacred Geometry</SelectItem>
-                <SelectItem value="breath-space-minimal">Breath Space Minimal</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* User Keywords */}
           <div className="space-y-2">
-            <Label htmlFor={`keywords${idSuffix}`}>Keywords (adds objects to image)</Label>
+            <Label htmlFor={`keywords${idSuffix}`}>Additional Keywords</Label>
             <Textarea
               id={`keywords${idSuffix}`}
               placeholder="e.g., mountains, ocean, stars, flowers..."
@@ -149,6 +76,9 @@ export function IntentionSelector({
               onChange={(e) => setUserKeywords(e.target.value)}
               rows={2}
             />
+            <p className="text-xs text-muted-foreground">
+              These keywords will be appended to your prompt.
+            </p>
           </div>
 
           {/* Color Customization */}
@@ -158,14 +88,15 @@ export function IntentionSelector({
                 <Palette className="h-4 w-4" />
                 Custom Colors
               </Label>
-              {customPalette.length > 0 && (
-                <Button variant="ghost" size="sm" onClick={resetPalette}>
-                  Reset
-                </Button>
-              )}
+              <Button variant="ghost" size="sm" onClick={resetPalette}>
+                Reset
+              </Button>
             </div>
+            <p className="text-xs text-muted-foreground mb-3">
+              Colors are auto-derived from your prompt. Customize them here.
+            </p>
             <div className="grid grid-cols-3 gap-2">
-              {(customPalette.length > 0 ? customPalette : generatedData.palette).map((color, i) => (
+              {displayPalette.map((color, i) => (
                 <div key={i} className="flex flex-col gap-1">
                   <Input
                     type="color"
