@@ -120,8 +120,8 @@ const Shop = () => {
   };
 
   const scrollToProducts = () => {
-    // Scroll to just below main header (64px) + some breathing room
-    window.scrollTo({ top: 200, behavior: "smooth" });
+    // Scroll to the very top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePageChange = (onPageChange: (page: number) => void) => (page: number) => {
@@ -329,7 +329,7 @@ const Shop = () => {
       {/* Category Navigation - Attached directly under header */}
       <div className="sticky top-14 lg:top-16 z-40 bg-muted/95 backdrop-blur-sm border-b border-border/50">
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-2 px-4 py-3 min-w-max">
+          <div className="flex items-center justify-center gap-6 px-4 py-3 min-w-max">
             <button
               onClick={() => {
                 setSelectedTab("fashion");
