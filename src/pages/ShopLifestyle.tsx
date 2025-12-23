@@ -52,12 +52,11 @@ const ShopLifestyle = () => {
                 <span className="text-sm font-semibold">{product.priceRange}</span>
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="border-clay text-clay hover:bg-clay/10"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
                   asChild
                 >
                   <a href={product.affiliateLink} target="_blank" rel="noopener noreferrer">
-                    View <ExternalLink className="ml-1 h-3 w-3" />
+                    Shop <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
                 </Button>
               </div>

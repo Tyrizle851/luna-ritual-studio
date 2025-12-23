@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/WishlistButton";
 import { ProductModal } from "@/components/ProductModal";
+import { ProductCard } from "@/components/ProductCard";
 import { Affirmation } from "@/data/affirmations";
 import { useAffirmationDigitalImage } from "@/hooks/useAffirmationDigitalImage";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,7 +12,7 @@ interface AffirmationCarouselProps {
   affirmations: Affirmation[];
 }
 
-// Individual carousel card with dynamic image loading
+// Individual carousel card matching shop product cards exactly
 const CarouselCard = ({ 
   affirmation, 
   onCardClick 
@@ -19,25 +20,25 @@ const CarouselCard = ({
   affirmation: Affirmation; 
   onCardClick: () => void;
 }) => {
-  // Use generated digital image from storage, fallback to local asset
   const { imageUrl, isLoading } = useAffirmationDigitalImage(affirmation.id);
   const displayImage = imageUrl || affirmation.image;
   
   return (
-    <div 
-      onClick={onCardClick}
-      className="group cursor-pointer bg-card rounded-sm overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 border border-border/30"
-    >
+    <ProductCard onClick={onCardClick}>
       <WishlistButton productId={affirmation.id} />
-      
       {affirmation.badge && (
-        <span className="absolute top-3 left-3 z-10 bg-clay text-background text-[10px] px-3 py-1 font-medium uppercase tracking-wide">
+        <div className={`absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold shadow-sm ${
+          affirmation.badge === 'Sale' ? 'bg-foreground text-background' :
+          affirmation.badge === 'Best Seller' ? 'bg-primary text-primary-foreground' :
+          affirmation.badge === 'Most Popular' ? 'bg-accent text-accent-foreground' :
+          affirmation.badge === 'Staff Pick' ? 'bg-clay text-white' :
+          'bg-secondary text-foreground'
+        }`}>
           {affirmation.badge}
-        </span>
+        </div>
       )}
       
-      {/* Image Container with Elegant Hover */}
-      <div className="overflow-hidden aspect-[3/4] bg-secondary relative">
+      <div className="overflow-hidden aspect-[4/5] bg-secondary">
         {isLoading ? (
           <Skeleton className="w-full h-full" />
         ) : (
@@ -46,59 +47,75 @@ const CarouselCard = ({
             alt={affirmation.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform group-hover:scale-105"
           />
         )}
-        {/* Subtle overlay on hover */}
-        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
       </div>
       
-      {/* Content */}
-      <div className="p-4 sm:p-5">
-        {affirmation.category && (
-          <p className="text-[10px] text-clay mb-2 uppercase tracking-[0.15em] font-medium">
-            {affirmation.category}
-          </p>
-        )}
+      <div className="p-2 sm:p-3 lg:p-4">
+        <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2 flex-wrap items-center">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-gold text-gold" />
+          ))}
+          <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
+            ({affirmation.rating || 4.9})
+          </span>
+          <span className="px-1 py-0.5 bg-primary/10 text-primary rounded text-[8px] sm:text-[10px] font-medium">
+            {(affirmation.rating || 4.9) >= 4.5 ? 'Top Rated' : (affirmation.rating || 4.9) >= 4.0 ? 'Popular' : 'Verified'}
+          </span>
+          <span className="px-1 py-0.5 bg-accent/15 text-accent-foreground rounded text-[8px] sm:text-[10px] font-medium">
+            {affirmation.badge === 'Most Popular' ? 'Trending' : affirmation.reviewCount && affirmation.reviewCount > 500 ? 'Inspiring' : 'Digital'}
+          </span>
+          {affirmation.reviewCount && <span className="hidden sm:inline text-[10px] sm:text-xs text-text-muted"> · {(affirmation.reviewCount / 1000).toFixed(1)}K reviews</span>}
+        </div>
         
-        <h3 className="font-display font-semibold text-foreground mb-2 text-base sm:text-lg leading-snug line-clamp-2 group-hover:text-clay transition-colors duration-300">
-          {affirmation.title}
-        </h3>
-        
-        {affirmation.rating && (
-          <div className="flex items-center gap-1.5 mb-3">
-            <span className="text-gold text-xs">★</span>
-            <span className="text-xs font-medium text-foreground">{affirmation.rating}</span>
-            <span className="text-xs text-foreground/50">({affirmation.reviewCount?.toLocaleString()})</span>
+        <h3 className="font-display text-sm sm:text-lg lg:text-xl mb-1 sm:mb-2 line-clamp-2">{affirmation.title}</h3>
+        <p className="text-[10px] sm:text-xs lg:text-sm text-text-secondary mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{affirmation.description}</p>
+
+        {affirmation.certifications && affirmation.certifications.length > 0 && (
+          <div className="hidden lg:flex flex-wrap gap-1.5 mb-3">
+            {affirmation.certifications.map((cert, idx) => (
+              <span
+                key={idx}
+                className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border"
+              >
+                {cert}
+              </span>
+            ))}
           </div>
         )}
-        
-        {affirmation.description && (
-          <p className="text-sm text-foreground/60 leading-relaxed mb-4 line-clamp-2 hidden sm:block">
-            {affirmation.description}
-          </p>
-        )}
-        
-        {/* Price & CTA */}
-        <div className="flex items-center justify-between pt-4 border-t border-border/40">
-          <div className="flex flex-col">
-            <span className="text-xs text-foreground/50 uppercase tracking-wide">From</span>
-            <span className="font-semibold text-lg text-foreground">${affirmation.price.toFixed(2)}</span>
+
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+            {affirmation.originalPrice ? (
+              <>
+                <span className="text-[10px] sm:text-xs lg:text-sm text-text-muted line-through">${affirmation.originalPrice}</span>
+                <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded">
+                  Save ${affirmation.originalPrice - affirmation.price}
+                </span>
+              </>
+            ) : (
+              <span className="text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded font-medium">
+                Great Deal
+              </span>
+            )}
+            <span className="text-sm sm:text-base font-semibold">${affirmation.price}</span>
           </div>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            className="border-clay/30 text-clay hover:bg-clay hover:text-background hover:border-clay text-xs px-4 h-9 transition-all duration-300"
+          <Button
+            size="sm"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto"
             onClick={(e) => {
               e.stopPropagation();
               onCardClick();
             }}
           >
-            View Options
+            <ShoppingBag className="h-3 w-3 mr-1" />
+            <span className="hidden sm:inline">View Options</span>
+            <span className="sm:hidden">View</span>
           </Button>
         </div>
       </div>
-    </div>
+    </ProductCard>
   );
 };
 
@@ -108,6 +125,7 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Affirmation | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const updateScrollButtons = () => {
@@ -118,6 +136,12 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
     setCanScrollRight(
       container.scrollLeft < container.scrollWidth - container.clientWidth - 10
     );
+    
+    // Calculate active index
+    const cardWidth = 300;
+    const gap = 24;
+    const index = Math.round(container.scrollLeft / (cardWidth + gap));
+    setActiveIndex(Math.min(index, affirmations.length - 1));
   };
 
   useEffect(() => {
@@ -132,14 +156,14 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
       container.removeEventListener("scroll", updateScrollButtons);
       window.removeEventListener("resize", updateScrollButtons);
     };
-  }, []);
+  }, [affirmations.length]);
   
   const scroll = (direction: "left" | "right") => {
     const container = containerRef.current;
     if (!container) return;
     
     const cardWidth = 300;
-    const gap = 32;
+    const gap = 24;
     const scrollAmount = cardWidth + gap;
     const newPosition = direction === "left" 
       ? Math.max(0, scrollPosition - scrollAmount)
@@ -148,42 +172,45 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
     container.scrollTo({ left: newPosition, behavior: "smooth" });
     setScrollPosition(newPosition);
   };
+  
+  const scrollToIndex = (index: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const cardWidth = 300;
+    const gap = 24;
+    container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
+  };
 
   return (
     <div className="relative">
-      {/* Desktop Side Navigation Buttons - Elegant */}
+      {/* Desktop Navigation */}
       <div className="hidden lg:block">
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
           onClick={() => scroll("left")}
-          className="absolute -left-4 xl:-left-8 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-foreground/70 hover:bg-clay hover:text-background hover:border-clay transition-all duration-300 shadow-md disabled:opacity-0 disabled:pointer-events-none"
           disabled={!canScrollLeft}
+          className="absolute -left-6 xl:-left-10 top-1/2 -translate-y-1/2 z-10 h-14 w-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none"
         >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
           onClick={() => scroll("right")}
-          className="absolute -right-4 xl:-right-8 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-foreground/70 hover:bg-clay hover:text-background hover:border-clay transition-all duration-300 shadow-md disabled:opacity-0 disabled:pointer-events-none"
           disabled={!canScrollRight}
+          className="absolute -right-6 xl:-right-10 top-1/2 -translate-y-1/2 z-10 h-14 w-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none"
         >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
+          <ChevronRight className="h-6 w-6" />
+        </button>
       </div>
 
-      {/* Scroll Container */}
+      {/* Carousel Container */}
       <div
         ref={containerRef}
-        className="flex gap-5 sm:gap-6 lg:gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-2 snap-x snap-mandatory"
+        className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {affirmations.map((affirmation, index) => (
           <div 
             key={affirmation.id} 
-            className="flex-none w-[280px] sm:w-[300px] lg:w-[340px] animate-fade-up snap-start first:ml-4 last:mr-4 lg:first:ml-0 lg:last:mr-0"
-            style={{ animationDelay: `${index * 80}ms` }}
+            className="flex-none w-[260px] sm:w-[280px] lg:w-[320px] snap-start first:ml-0 last:mr-0"
           >
             <CarouselCard 
               affirmation={affirmation}
@@ -196,45 +223,39 @@ export const AffirmationCarousel = ({ affirmations }: AffirmationCarouselProps) 
         ))}
       </div>
 
-      {/* Mobile/Tablet Navigation - Clean Minimal */}
-      <div className="flex lg:hidden justify-center items-center gap-6 mt-8">
-        <Button
-          variant="ghost"
-          size="icon"
+      {/* Mobile/Tablet Navigation & Indicators */}
+      <div className="flex lg:hidden justify-center items-center gap-4 mt-6">
+        <button
           onClick={() => scroll("left")}
-          className="h-10 w-10 rounded-full border border-foreground/20 text-foreground/60 hover:bg-foreground hover:text-background transition-all duration-300 disabled:opacity-20"
           disabled={!canScrollLeft}
+          className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-all duration-300 disabled:opacity-30"
         >
           <ChevronLeft className="h-4 w-4" />
-        </Button>
+        </button>
         
-        {/* Dot indicators */}
-        <div className="flex gap-2">
+        {/* Active dot indicators */}
+        <div className="flex gap-1.5">
           {affirmations.map((_, index) => (
             <button
               key={index}
-              onClick={() => {
-                const container = containerRef.current;
-                if (!container) return;
-                const cardWidth = 300;
-                const gap = 24;
-                container.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
-              }}
-              className="w-2 h-2 rounded-full bg-foreground/20 hover:bg-clay transition-colors duration-300"
+              onClick={() => scrollToIndex(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === index 
+                  ? "w-6 bg-primary" 
+                  : "w-2 bg-foreground/20 hover:bg-foreground/40"
+              }`}
               aria-label={`Go to affirmation ${index + 1}`}
             />
           ))}
         </div>
 
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
           onClick={() => scroll("right")}
-          className="h-10 w-10 rounded-full border border-foreground/20 text-foreground/60 hover:bg-foreground hover:text-background transition-all duration-300 disabled:opacity-20"
           disabled={!canScrollRight}
+          className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-all duration-300 disabled:opacity-30"
         >
           <ChevronRight className="h-4 w-4" />
-        </Button>
+        </button>
       </div>
 
       {selectedProduct && (

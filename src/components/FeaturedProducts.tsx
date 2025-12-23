@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExternalLink, ShoppingBag, Sparkles } from "lucide-react";
+import { ExternalLink, ShoppingBag, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { FashionProductModal } from "@/components/FashionProductModal";
@@ -104,293 +104,181 @@ export const FeaturedProducts = () => {
     return Math.round(((original - current) / original) * 100);
   };
 
+  const products = [
+    {
+      type: 'fashion',
+      item: featuredFashion,
+      onClick: handleFashionClick,
+      name: featuredFashion.name,
+      brand: featuredFashion.brand,
+      image: featuredFashion.image,
+      description: featuredFashion.description,
+      price: featuredFashion.price,
+      originalPrice: featuredFashion.originalPrice,
+      rating: featuredFashion.rating,
+      reviewCount: featuredFashion.reviewCount,
+      badge: featuredFashion.badge,
+      certifications: featuredFashion.certifications,
+      affiliateUrl: featuredFashion.affiliateUrl,
+    },
+    {
+      type: 'candle',
+      item: featuredCandle,
+      onClick: handleCandleClick,
+      name: featuredCandle.name,
+      brand: featuredCandle.brand,
+      image: featuredCandle.image,
+      description: featuredCandle.description,
+      price: featuredCandle.price,
+      originalPrice: undefined,
+      rating: featuredCandle.rating,
+      reviewCount: featuredCandle.reviewCount,
+      badge: undefined,
+      certifications: featuredCandle.certifications,
+      affiliateUrl: featuredCandle.affiliateUrl,
+    },
+    {
+      type: 'book',
+      item: featuredBook,
+      onClick: handleBookClick,
+      name: featuredBook.title,
+      brand: featuredBook.author,
+      image: featuredBook.image,
+      description: featuredBook.description,
+      price: featuredBook.price,
+      originalPrice: featuredBook.originalPrice,
+      rating: featuredBook.rating,
+      reviewCount: featuredBook.reviewCount,
+      badge: featuredBook.badge,
+      certifications: undefined,
+      affiliateUrl: featuredBook.affiliateUrl,
+    },
+    {
+      type: 'supplement',
+      item: featuredSupplement,
+      onClick: handleSupplementClick,
+      name: featuredSupplement.name,
+      brand: featuredSupplement.category,
+      image: featuredSupplement.image,
+      description: featuredSupplement.description,
+      price: featuredSupplement.price,
+      originalPrice: featuredSupplement.originalPrice,
+      rating: featuredSupplement.rating,
+      reviewCount: featuredSupplement.reviewCount,
+      badge: featuredSupplement.badge,
+      certifications: featuredSupplement.certifications,
+      affiliateUrl: featuredSupplement.affiliateUrl,
+    },
+  ];
+
   return (
-    <section className="section-padding bg-gradient-to-b from-secondary via-secondary to-background/50">
-      <div className="container-custom">
-        {/* Premium Header */}
-        <div className="text-center mb-14 lg:mb-16">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="h-px w-8 bg-clay/40" />
-            <span className="text-[10px] uppercase tracking-[0.25em] text-clay font-medium">Thoughtfully Selected</span>
-            <div className="h-px w-8 bg-clay/40" />
+    <section className="section-padding relative overflow-hidden">
+      {/* Unique background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-secondary via-background to-secondary/50" />
+      <div className="absolute inset-0 opacity-[0.03]" style={{ 
+        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
+        backgroundSize: '32px 32px'
+      }} />
+      
+      <div className="container-custom relative">
+        {/* Unique Header Design */}
+        <div className="text-center mb-12 lg:mb-16">
+          <div className="inline-block relative mb-6">
+            <div className="absolute -left-12 top-1/2 -translate-y-1/2 w-8 h-px bg-gradient-to-r from-transparent to-clay/60" />
+            <div className="absolute -right-12 top-1/2 -translate-y-1/2 w-8 h-px bg-gradient-to-l from-transparent to-clay/60" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-clay font-medium px-4 py-2 border border-clay/20 bg-background/80 backdrop-blur-sm">
+              Curated Collection
+            </span>
           </div>
-          <div className="flex items-center justify-center gap-4 mb-5">
-            <Sparkles className="h-5 w-5 text-clay/70" />
-            <h2 className="mb-0 text-3xl sm:text-4xl md:text-5xl font-display font-semibold tracking-tight text-foreground">
-              The Ritual Edit
-            </h2>
-            <Sparkles className="h-5 w-5 text-clay/70" />
-          </div>
-          <p className="text-base sm:text-lg text-foreground/60 max-w-md mx-auto leading-relaxed">
-            Curated essentials for intentional living—each piece chosen to elevate your daily rituals
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-semibold tracking-tight text-foreground mb-4">
+            The Ritual Edit
+          </h2>
+          <p className="text-base text-foreground/60 max-w-lg mx-auto leading-relaxed">
+            Handpicked essentials for intentional living—each piece chosen to elevate your daily rituals
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
-          {/* Fashion Product Card */}
-          <ProductCard onClick={handleFashionClick} className="animate-fade-up">
-            {featuredFashion.badge && (
-              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-accent text-accent-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
-                {featuredFashion.badge}
-              </span>
-            )}
-            <WishlistButton productId={featuredFashion.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <img
-                src={featuredFashion.image}
-                alt={featuredFashion.name}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-3 sm:p-4">
-              <p className="product-brand mb-1 sm:mb-2">{featuredFashion.brand}</p>
-              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredFashion.name}</h3>
-              
-              {featuredFashion.rating && (
-                <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-gold text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredFashion.rating}</span>
-                  <span className="text-[10px] sm:text-xs text-text-muted">({featuredFashion.reviewCount?.toLocaleString()})</span>
-                </div>
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-5xl mx-auto">
+          {products.map((product, index) => (
+            <ProductCard key={product.type} onClick={product.onClick} className="animate-fade-up" style={{ animationDelay: `${index * 100}ms` }}>
+              {product.badge && (
+                <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-primary text-primary-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
+                  {product.badge}
+                </span>
               )}
+              <WishlistButton productId={product.type} />
               
-              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredFashion.description}</p>
+              <div className="overflow-hidden aspect-[4/5] bg-secondary">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                />
+              </div>
               
-              {featuredFashion.certifications && featuredFashion.certifications.length > 0 && (
-                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
-                  {featuredFashion.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                      {cert}
+              <div className="p-2 sm:p-3 lg:p-4">
+                <p className="product-brand mb-1 sm:mb-2">{product.brand}</p>
+                <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{product.name}</h3>
+                
+                {product.rating && (
+                  <div className="flex gap-0.5 sm:gap-1 mb-1 sm:mb-2 flex-wrap items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-gold text-gold" />
+                    ))}
+                    <span className="text-[10px] sm:text-xs text-text-muted ml-0.5 sm:ml-1">
+                      ({product.rating})
                     </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
-                  {featuredFashion.originalPrice && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredFashion.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
-                        -{calculateDiscount(featuredFashion.originalPrice, featuredFashion.price)}%
+                    {product.reviewCount && <span className="hidden sm:inline text-[10px] sm:text-xs text-text-muted"> · {(product.reviewCount / 1000).toFixed(1)}K reviews</span>}
+                  </div>
+                )}
+                
+                <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{product.description}</p>
+                
+                {product.certifications && product.certifications.length > 0 && (
+                  <div className="hidden lg:flex flex-wrap gap-1.5 mb-3">
+                    {product.certifications.slice(0, 2).map((cert, idx) => (
+                      <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                        {cert}
                       </span>
-                    </div>
-                  )}
-                  <span className="product-price">${featuredFashion.price.toFixed(2)}</span>
-                </div>
+                    ))}
+                  </div>
+                )}
                 
-                <Button
-                  size="sm"
-                  variant="clay"
-                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <a href={featuredFashion.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    <span className="hidden sm:inline">Shop Now</span>
-                    <span className="sm:hidden">Shop</span>
-                    <ExternalLink className="ml-1 h-3 w-3" />
-                  </a>
-                </Button>
+                <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border/50 gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
+                    {product.originalPrice && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] sm:text-sm text-text-muted line-through">${product.originalPrice.toFixed(2)}</span>
+                        <span className="text-[8px] sm:text-xs bg-destructive/10 text-destructive px-1 sm:px-1.5 py-0.5 rounded font-medium">
+                          -{calculateDiscount(product.originalPrice, product.price)}%
+                        </span>
+                      </div>
+                    )}
+                    <span className="product-price">${product.price.toFixed(2)}</span>
+                  </div>
+                  
+                  <Button
+                    size="sm"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                      <ShoppingBag className="h-3 w-3 mr-1" />
+                      <span className="hidden sm:inline">Shop Now</span>
+                      <span className="sm:hidden">Shop</span>
+                    </a>
+                  </Button>
+                </div>
               </div>
-            </div>
-          </ProductCard>
-
-          {/* Candle Product Card */}
-          <ProductCard onClick={handleCandleClick} className="animate-fade-up">
-            <WishlistButton productId={featuredCandle.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <img
-                src={featuredCandle.image}
-                alt={featuredCandle.name}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-3 sm:p-4">
-              <p className="product-brand mb-1 sm:mb-2">{featuredCandle.brand}</p>
-              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredCandle.name}</h3>
-              
-              {featuredCandle.rating && (
-                <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-gold text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredCandle.rating}</span>
-                  <span className="text-[10px] sm:text-xs text-text-muted">({featuredCandle.reviewCount?.toLocaleString()})</span>
-                </div>
-              )}
-              
-              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredCandle.description}</p>
-              
-              {featuredCandle.certifications && featuredCandle.certifications.length > 0 && (
-                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
-                  {featuredCandle.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
-                <span className="product-price">${featuredCandle.price.toFixed(2)}</span>
-                
-                <Button
-                  size="sm"
-                  variant="clay"
-                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <a href={featuredCandle.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    <span className="hidden sm:inline">Shop Now</span>
-                    <span className="sm:hidden">Shop</span>
-                    <ExternalLink className="ml-1 h-3 w-3" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </ProductCard>
-
-          {/* Book Product Card */}
-          <ProductCard onClick={handleBookClick} className="animate-fade-up">
-            {featuredBook.badge && (
-              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-primary text-primary-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
-                {featuredBook.badge}
-              </span>
-            )}
-            <WishlistButton productId={featuredBook.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <img
-                src={featuredBook.image}
-                alt={featuredBook.title}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-3 sm:p-4">
-              <p className="product-brand mb-1 sm:mb-2">{featuredBook.author}</p>
-              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredBook.title}</h3>
-              
-              {featuredBook.rating && (
-                <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-gold text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredBook.rating}</span>
-                  <span className="text-[10px] sm:text-xs text-text-muted">({featuredBook.reviewCount?.toLocaleString()})</span>
-                </div>
-              )}
-              
-              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredBook.description}</p>
-              
-              {featuredBook.awards && featuredBook.awards.length > 0 && (
-                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
-                  {featuredBook.awards.slice(0, 2).map((award, idx) => (
-                    <span key={idx} className="text-[10px] bg-clay/10 text-clay px-2 py-0.5 rounded-full">
-                      {award}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
-                  {featuredBook.originalPrice && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredBook.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
-                        -{calculateDiscount(featuredBook.originalPrice, featuredBook.price)}%
-                      </span>
-                    </div>
-                  )}
-                  <span className="product-price">${featuredBook.price.toFixed(2)}</span>
-                </div>
-                
-                <Button
-                  size="sm"
-                  variant="clay"
-                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <a href={featuredBook.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    <span className="hidden sm:inline">Shop Now</span>
-                    <span className="sm:hidden">Shop</span>
-                    <ExternalLink className="ml-1 h-3 w-3" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </ProductCard>
-
-          {/* Supplement Product Card */}
-          <ProductCard onClick={handleSupplementClick} className="animate-fade-up">
-            {featuredSupplement.badge && (
-              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 bg-accent text-accent-foreground text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
-                {featuredSupplement.badge}
-              </span>
-            )}
-            <WishlistButton productId={featuredSupplement.id} />
-            <div className="overflow-hidden aspect-[4/5] bg-secondary">
-              <img
-                src={featuredSupplement.image}
-                alt={featuredSupplement.name}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-3 sm:p-4">
-              <p className="product-brand mb-1 sm:mb-2">{featuredSupplement.category}</p>
-              <h3 className="product-title mb-1 sm:mb-2 group-hover:text-clay transition-colors line-clamp-2">{featuredSupplement.name}</h3>
-              
-              {featuredSupplement.rating && (
-                <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                  <span className="text-gold text-[10px] sm:text-xs">★</span>
-                  <span className="text-[10px] sm:text-xs font-medium text-text-primary">{featuredSupplement.rating}</span>
-                  <span className="text-[10px] sm:text-xs text-text-muted">({featuredSupplement.reviewCount?.toLocaleString()})</span>
-                </div>
-              )}
-              
-              <p className="product-description mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{featuredSupplement.description}</p>
-              
-              {featuredSupplement.certifications && featuredSupplement.certifications.length > 0 && (
-                <div className="hidden sm:flex flex-wrap gap-1.5 mb-4">
-                  {featuredSupplement.certifications.slice(0, 2).map((cert, idx) => (
-                    <span key={idx} className="text-[10px] bg-clay/10 text-clay px-2 py-0.5 rounded-full">
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
-                  {featuredSupplement.originalPrice && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-[10px] sm:text-sm text-text-muted line-through">${featuredSupplement.originalPrice.toFixed(2)}</span>
-                      <span className="text-[8px] sm:text-xs bg-primary text-primary-foreground px-1 sm:px-1.5 py-0.5 rounded font-medium">
-                        -{calculateDiscount(featuredSupplement.originalPrice, featuredSupplement.price)}%
-                      </span>
-                    </div>
-                  )}
-                  <span className="product-price">${featuredSupplement.price.toFixed(2)}</span>
-                </div>
-                
-                <Button
-                  size="sm"
-                  variant="clay"
-                  className="text-[10px] sm:text-xs px-2 sm:px-3 h-7 sm:h-8"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <a href={featuredSupplement.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    <span className="hidden sm:inline">Shop Now</span>
-                    <span className="sm:hidden">Shop</span>
-                    <ExternalLink className="ml-1 h-3 w-3" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </ProductCard>
+            </ProductCard>
+          ))}
         </div>
 
-        <div className="text-center mt-8">
-          <Button asChild variant="outline" className="border-clay text-clay hover:bg-clay hover:text-white transition-all duration-300 btn-premium">
+        {/* View All Button */}
+        <div className="text-center mt-10 lg:mt-14">
+          <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 h-auto">
             <Link to="/shop">
               <ShoppingBag className="mr-2 h-4 w-4" />
               View All Products
