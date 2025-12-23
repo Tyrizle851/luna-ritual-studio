@@ -42,23 +42,23 @@ export function ImageGalleryGrid({
         )}
       </div>
 
-      {/* Image Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Image Grid - single column for preview, 2 columns for final */}
+      <div className={`grid ${isFinal ? 'grid-cols-2' : 'grid-cols-1'} gap-3`}>
         {images.map((imageUrl, index) => (
           <div
             key={index}
             className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
               isFinal
                 ? 'border-[#3a2817] hover:border-primary duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1'
-                : 'border-[#3a2817] hover:border-[#5a3817] hover:scale-105'
+                : 'border-[#3a2817] hover:border-[#5a3817] hover:scale-[1.02]'
             }`}
             onClick={() => onImageClick(imageUrl, type)}
-            style={{ aspectRatio: '4/5' }}
+            style={{ aspectRatio: isFinal ? '4/5' : '16/10' }}
           >
             <img
               src={imageUrl}
               alt={`${isFinal ? 'Final' : 'Preview'} Affirmation ${index + 1}`}
-              className={`w-full h-full object-cover ${isFinal ? 'group-hover:scale-105 transition-transform duration-500' : ''}`}
+              className={`w-full h-full object-contain bg-muted/30 ${isFinal ? 'group-hover:scale-105 transition-transform duration-500' : ''}`}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
               <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
