@@ -1,25 +1,11 @@
-import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import confetti from "canvas-confetti";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Loader2, Sparkles, Heart, Edit2, Check, X, Download, Share2, Palette, History, ChevronDown, Wand2, Shield, Award, Zap } from "lucide-react";
 import { LOCAL_DIGITAL_IMAGES } from "@/lib/localDigitalImages";
 
 const miraclesPreviewImg = LOCAL_DIGITAL_IMAGES["aff-017"]; // "I am open to miracles" preview
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { buildDesignSpec } from "@/lib/designSpecBuilder";
-import type { ThemeSlug, MoodSlug, LayoutArchetype } from "@/types/design-spec";
-import { downloadImage } from "./AffirmationBuilder/utils/imageProcessing";
 import { useAffirmationGeneration } from "./AffirmationBuilder/hooks/useAffirmationGeneration";
 import { generatePreviewData as generatePreviewDataUtil } from "./AffirmationBuilder/utils/affirmationDataGenerator";
 import { useAffirmationActions } from "./AffirmationBuilder/hooks/useAffirmationActions";
@@ -293,6 +279,7 @@ const AffirmationBuilder = () => {
                   handleRandomize={handleRandomize}
                   handleGenerateUnique={handleGenerateUnique}
                   showHelpText={true}
+                  prompt={prompt}
                 />
               </CardContent>
             </Card>
@@ -383,6 +370,7 @@ const AffirmationBuilder = () => {
                   handleRandomize={handleRandomize}
                   handleGenerateUnique={handleGenerateUnique}
                   showHelpText={false}
+                  prompt={prompt}
                 />
               </CardContent>
             </Card>
