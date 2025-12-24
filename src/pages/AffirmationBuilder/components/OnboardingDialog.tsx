@@ -30,7 +30,7 @@ export function OnboardingDialog({ open, onOpenChange }: OnboardingDialogProps) 
             Welcome to Affirmation Studio!
           </DialogTitle>
           <DialogDescription className="text-base pt-2">
-            Create personalized watercolor affirmations in 3 easy steps
+            Create personalized affirmation art in 3 easy steps
           </DialogDescription>
         </DialogHeader>
 
@@ -41,9 +41,9 @@ export function OnboardingDialog({ open, onOpenChange }: OnboardingDialogProps) 
               <span className="text-lg font-semibold text-primary">1</span>
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-foreground mb-1">Choose Your Theme</h3>
+              <h3 className="font-semibold text-foreground mb-1">Describe Your Vision</h3>
               <p className="text-sm text-muted-foreground">
-                Select a theme that matches your intention (Confidence, Peace, Focus, etc.)
+                Type what you want or click "Randomize" for instant inspiration
               </p>
             </div>
           </div>
@@ -54,9 +54,9 @@ export function OnboardingDialog({ open, onOpenChange }: OnboardingDialogProps) 
               <span className="text-lg font-semibold text-primary">2</span>
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-foreground mb-1">Preview Options</h3>
+              <h3 className="font-semibold text-foreground mb-1">Generate Previews</h3>
               <p className="text-sm text-muted-foreground">
-                Generate 4 quick previews (~30 sec) to explore different styles
+                Create 4 unique variations (~30 sec) and pick your favorite
               </p>
             </div>
           </div>
@@ -67,9 +67,9 @@ export function OnboardingDialog({ open, onOpenChange }: OnboardingDialogProps) 
               <span className="text-lg font-semibold text-primary">3</span>
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-foreground mb-1">Create Print-Quality</h3>
+              <h3 className="font-semibold text-foreground mb-1">Download Print-Ready</h3>
               <p className="text-sm text-muted-foreground">
-                Generate 4 high-resolution versions (300 DPI) perfect for printing
+                Get 4 high-resolution versions (300 DPI) ready for framing
               </p>
             </div>
           </div>

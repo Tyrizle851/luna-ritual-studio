@@ -115,13 +115,23 @@ Final Check: Would this be gallery-worthy, museum-quality, and valued as fine ar
       );
     }
 
-    const aiData = await aiResponse.json();
+    let aiData;
+    try {
+      aiData = await aiResponse.json();
+    } catch (parseError) {
+      console.error('Failed to parse AI response:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid response from AI service. Please try again.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
     const imageUrl = aiData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
     if (!imageUrl) {
-      console.error('No image data in Lovable response');
+      console.error('No image data in Lovable response:', JSON.stringify(aiData).slice(0, 500));
       return new Response(
-        JSON.stringify({ error: 'No image generated' }),
+        JSON.stringify({ error: 'No image generated. The AI may be busy - please try again.' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

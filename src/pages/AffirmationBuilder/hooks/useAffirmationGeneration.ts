@@ -236,7 +236,7 @@ export function useAffirmationGeneration({
       setLoadingProgress(95);
       setLoadingMessage('Finalizing your print-ready images...');
 
-      // Check for errors
+      // Check for errors with improved messaging
       const hasErrors = results.some(result => {
         if (result.error) {
           console.error('Edge function error:', result.error);
@@ -246,24 +246,29 @@ export function useAffirmationGeneration({
             errorMessage.includes('credits depleted') ||
             errorMessage.includes('payment')
           ) {
-            toast.error('Generation limit reached. Please check your account to continue creating.');
+            toast.error("You've used your free generations. Upgrade your plan to continue creating beautiful affirmations.", {
+              duration: 6000,
+            });
             return true;
           } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
-            toast.error('Rate limit exceeded. Please wait a moment and try again.');
+            toast.error('Too many requests. Please wait 30 seconds and try again.');
             return true;
           }
           return true;
         }
         if (result.data?.error) {
           console.error('API error:', result.data.error);
+          const errorDetail = typeof result.data.error === 'string' ? result.data.error : JSON.stringify(result.data.error);
           if (
-            result.data.error.includes('credits depleted') ||
-            result.data.error.includes('payment')
+            errorDetail.includes('credits depleted') ||
+            errorDetail.includes('payment')
           ) {
-            toast.error('Generation limit reached. Please check your account to continue creating.');
+            toast.error("You've used your free generations. Upgrade your plan to continue creating beautiful affirmations.", {
+              duration: 6000,
+            });
             return true;
-          } else if (result.data.error.includes('rate limit')) {
-            toast.error('Rate limit exceeded. Please wait a moment and try again.');
+          } else if (errorDetail.includes('rate limit')) {
+            toast.error('Too many requests. Please wait 30 seconds and try again.');
             return true;
           }
           return true;

@@ -10,6 +10,7 @@ interface GenerationControlsProps {
   handleRandomize: () => void;
   handleGenerateUnique: () => void;
   showHelpText?: boolean; // Whether to show explanatory text under buttons (mobile)
+  prompt?: string; // For validation - disable generate if empty
 }
 
 /**
@@ -25,7 +26,10 @@ export function GenerationControls({
   handleRandomize,
   handleGenerateUnique,
   showHelpText = false,
+  prompt = '',
 }: GenerationControlsProps) {
+  const isPromptEmpty = !prompt.trim();
+
   return (
     <div className="space-y-3 pt-4">
       {/* Preview and Randomize Buttons */}
@@ -35,7 +39,8 @@ export function GenerationControls({
             onClick={handleGenerate}
             variant="outline"
             className="h-11 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-            disabled={loading}
+            disabled={loading || isPromptEmpty}
+            title={isPromptEmpty ? "Enter a prompt or click Randomize first" : undefined}
           >
             {loading && !generatedImageB64 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
             See Previews
@@ -53,7 +58,7 @@ export function GenerationControls({
         </div>
         {showHelpText && (
           <p className="text-xs text-muted-foreground text-center">
-            Preview first to explore options (~30 seconds)
+            {isPromptEmpty ? "Click Randomize to get started!" : "Preview first to explore options (~30 seconds)"}
           </p>
         )}
       </div>
@@ -63,7 +68,8 @@ export function GenerationControls({
         <Button
           onClick={handleGenerateUnique}
           className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-          disabled={loading || (showHelpText && previewImagesB64.length === 0)}
+          disabled={loading || isPromptEmpty || (showHelpText && previewImagesB64.length === 0)}
+          title={isPromptEmpty ? "Enter a prompt or click Randomize first" : undefined}
         >
           {loading && (showHelpText ? generatedImageB64 === null : finalImagesB64.length === 0) && previewImagesB64.length > 0 ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

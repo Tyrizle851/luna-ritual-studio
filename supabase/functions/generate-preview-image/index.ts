@@ -83,15 +83,24 @@ Technical Output:
       );
     }
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('Failed to parse AI response:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid response from AI service. Please try again.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Extract image URL from Lovable's response format
     const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
     if (!imageUrl) {
-      console.error('No image data in response:', data);
+      console.error('No image data in response:', JSON.stringify(data).slice(0, 500));
       return new Response(
-        JSON.stringify({ error: 'No image generated', details: data }),
+        JSON.stringify({ error: 'No image generated. The AI may be busy - please try again.' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
